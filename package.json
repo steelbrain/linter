@@ -1,0 +1,15 @@
+{
+  "name": "linter",
+  "main": "./index.js",
+  "version": "1.0.5",
+  "private": true,
+  "description": "Validates your code using linters.",
+  "repository": "https://github.com/hd-deman/AtomLinter.git",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+    "emissary": "1.x"
+  }
+}
