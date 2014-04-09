@@ -1,9 +1,5 @@
 Linter = require './linter'
 LinterView = require './linter-view'
-App = require './app'
-
-LinterPhpcs = require './linter-phpcs'
-LinterPhp = require './linter-php'
 
 module.exports =
   configDefaults:
@@ -14,16 +10,17 @@ module.exports =
   activate: ->
     atom.workspaceView.command 'linter:toggle', => @toggle()
     @lintViews = []
+    @linters = []
+    for atomPackage in atom.packages.getAvailablePackageNames()
+      if atomPackage.match(/^linter-/)
+        if atom.packages.getLoadedPackage(atomPackage).metadata['linter-package'] is true
+          @linters.push(require "#{atom.packages.getLoadedPackage(atomPackage).path}/lib/#{atomPackage}")
     @enable()
 
     # App = new App
 
   enable: ->
     @enabled = true
-
-    @linters = [
-        LinterPhp
-    ]
     # Subscribing to every current and future editor
     @editorViewSubscription = atom.workspaceView.eachEditorView (editorView) =>
       lintView = @injectLintViewIntoEditorView(editorView)
