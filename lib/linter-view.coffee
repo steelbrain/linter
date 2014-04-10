@@ -3,9 +3,9 @@ fs = require 'fs'
 temp = require 'temp'
 {XRegExp} = require 'xregexp'
 GutterView = require './gutter-view'
+StatusBarView = require './statusbar-view'
 
 temp.track()
-
 # The base class for linters.
 # Subclasses must at a minimum define the attributes syntax, cmd, and regex.
 class LinterView
@@ -23,11 +23,19 @@ class LinterView
     @editor = editorView.editor
     @editorView = editorView
     @gutterView = new GutterView(editorView)
+    @statusBarView = new StatusBarView()
+    atom.workspaceView.prependToBottom(@statusBarView)
+
     @handleBufferEvents()
+
     @editorView.on 'editor:display-updated', =>
       @gutterView.render @messages
 
+    @editorView.on 'cursor:moved', =>
+      @statusBarView.render @messages
+
     @lint()
+
 
   unsetLinters: ->
     @linters = []

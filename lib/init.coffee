@@ -9,7 +9,7 @@ module.exports =
   # Activate the plugin
   activate: ->
     atom.workspaceView.command 'linter:toggle', => @toggle()
-    @lintViews = []
+    @linterViews = []
     @linters = []
     for atomPackage in atom.packages.getAvailablePackageNames()
       if atomPackage.match(/^linter-/)
@@ -23,27 +23,26 @@ module.exports =
     @enabled = true
     # Subscribing to every current and future editor
     @editorViewSubscription = atom.workspaceView.eachEditorView (editorView) =>
-      lintView = @injectLintViewIntoEditorView(editorView)
+      linterView = @injectLinterViewIntoEditorView(editorView)
       editorView.editor.on 'grammar-changed', =>
         console.log 'linter: grammar changed'
-        lintView.unsetLinters()
+        linterView.unsetLinters()
 
         for linter in @initLinters(editorView.editor.getGrammar().scopeName)
-          lintView.initLinter(linter)
-        lintView.lint()
+          linterView.initLinter(linter)
+        linterView.lint()
 
-  injectLintViewIntoEditorView: (editorView) ->
+  injectLinterViewIntoEditorView: (editorView) ->
     return unless editorView.getPane()?
     return unless editorView.attached
-    return if editorView.lintView?
-    console.log @initLinters(editorView.editor.getGrammar().scopeName)
+    return if editorView.linterView?
+    @initLinters(editorView.editor.getGrammar().scopeName)
     new LinterView editorView
 
   initLinters: (grammarName) ->
     linters = []
     for linter in @linters
       sytaxType = {}.toString.call(linter.syntax)
-      console.log grammarName, sytaxType, linter.syntax, sytaxType is '[object Array]' && grammarName in linter.syntax or sytaxType is '[object String]' && grammarName is linter.syntax
       if sytaxType is '[object Array]' && grammarName in linter.syntax or sytaxType is '[object String]' && grammarName is linter.syntax
         linters.push(linter)
     linters
