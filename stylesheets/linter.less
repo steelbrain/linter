@@ -7,27 +7,56 @@
 @fa-font-path: "https://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts"; // for referencing Bootstrap CDN font files directly
 @import '../node_modules/font-awesome/less/path';
 
-  .line-number:before {
-      visibility: hidden;
-      position: relative;
-      bottom: .19em;
-      margin-right: .6em;
-      content: "\f111";
-      font-size:  0.7em;
-      display: inline-block;
-      font-family: FontAwesome;
-      font-style: normal;
-      font-weight: normal;
-      -webkit-font-smoothing: antialiased;
+.line-number:before {
+  visibility: hidden;
+  position: relative;
+  bottom: .19em;
+  margin-right: .6em;
+  content: "\f111";
+  font-size:  0.7em;
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+.linter-warning:before {
+  visibility: visible !important;
+  color: #DAA520;
+
+}
+
+.linter-error:before {
+  visibility: visible !important;
+  color: #b22222;
+}
+
+.linter-statusbar {
+    margin-bottom: 0;
+    dd {
+      &:before,
+      &:after {
+        content: " ";
+        display: table;
+      }
+      &:after {
+        clear: both;
+      }
     }
 
-    .linter-warning:before {
-      visibility: visible !important;
-      color: #DAA520;
-
+    dt {
+      float: left;
+      width: 70px;
+      clear: left;
+      text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: normal !important;
     }
-
-    .linter-error:before {
-      visibility: visible !important;
-      color: #b22222;
+    dd {
+      padding-left: 25px;
+      margin-left: 50px;
     }
+}

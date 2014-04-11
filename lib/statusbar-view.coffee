@@ -5,7 +5,7 @@ class StatusBarView extends View
 
   @content: ->
     @div class: 'tool-panel panel-bottom padded text-smaller', =>
-      @ul 'linter-statusbar text-smaller text-error', outlet: 'violations',
+      @dl class: 'linter-statusbar text-smaller', outlet: 'violations',
 
   # Render the view
   render: (messages) ->
@@ -22,7 +22,7 @@ class StatusBarView extends View
     for item in messages
       if parseInt(item.line) is currentLine
         console.log @violations
-        @violations.append "<li>#{item.message}</li>"
+        @violations.append "<dt><span class=\"highlight-#{item.level}\">#{item.linter}</span></dt><dd>#{item.message}</dd>"
         @show()
 
 module.exports = StatusBarView
