@@ -68,7 +68,6 @@ class LinterView
     @gutterView.clear()
     if @linters.length > 0
       temp.open 'linter', (err, info) =>
-        console.log(info)
         @tempFile = info.path
         fs.write info.fd, @editor.getText(), =>
           fs.close info.fd, (err) =>
@@ -83,7 +82,7 @@ class LinterView
     @messages = @messages.concat(messages)
     if @totalProcessed == @linters.length
       fs.unlink @tempFile
-      @dislay()
+    @dislay()
 
   dislay: ->
     @dislayGutterMarkers()

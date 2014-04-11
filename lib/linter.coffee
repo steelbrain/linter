@@ -16,20 +16,41 @@ class Linter
   # A regex pattern used to extract information from the executable's output.
   regex: ''
 
+  defaultLevel: 'error'
+
+  linterName: null
+
+  executablePath: null
+
+  getCmd: (filePath)->
+    if /@filename/i.test(@cmd)
+      cmd = @cmd.replace('@filename', filePath)
+    else
+      cmd = "#{@cmd} #{filePath}"
+    if @executablePath
+      cmd = "#{@executablePath}/#{cmd}"
+    cmd
+
   lintFile: (filePath, callback) ->
     console.log 'linter: run linter command'
-    console.log @
-    exec "#{@cmd} #{filePath}", (error, stdout, stderr) =>
+    console.log @getCmd(filePath)
+    exec @getCmd(filePath), (error, stdout, stderr) =>
+      if stderr
+        console.log stderr
       @processMessage(stdout, callback)
 
   processMessage: (message, callback) ->
+    messages = []
     regex = XRegExp @regex
-    callback XRegExp.forEach message, regex, (match, i) ->
+    XRegExp.forEach message, regex, (match, i) =>
         if match.error
           level = 'error'
-        else
+        else if match.warning
           level = 'warning'
-        @.push({line: match.line, col: match.col, level: level, message: match.message})
-    , []
+        else
+          level = @defaultLevel
+        messages.push({line: match.line, col: match.col, level: level, message: match.message, linter: @linterName})
+    , @
+    callback messages
 
 module.exports = Linter
