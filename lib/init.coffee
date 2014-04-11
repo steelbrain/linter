@@ -30,9 +30,7 @@ module.exports =
       linterView = @injectLinterViewIntoEditorView(editorView, @statusBarView)
       editorView.editor.on 'grammar-changed', =>
         console.log 'linter: grammar changed'
-        linterView.unsetLinters()
-
-        @initLinters(linterView, editorView.editor.getGrammar().scopeName)
+        linterView.initLinters(@linters)
         linterView.lint()
 
   injectLinterViewIntoEditorView: (editorView, statusBarView) ->
@@ -40,14 +38,5 @@ module.exports =
     return unless editorView.attached
     return if editorView.linterView?
     console.log "editorView.editor.getGrammar().scopeName"+editorView.editor.getGrammar().scopeName
-    linterView = new LinterView editorView, statusBarView
-    @initLinters(linterView, editorView.editor.getGrammar().scopeName)
-    linterView.lint()
+    linterView = new LinterView editorView, statusBarView, @linters
     linterView
-
-  initLinters: (linterView, grammarName) ->
-    linters = []
-    for linter in @linters
-      sytaxType = {}.toString.call(linter.syntax)
-      if sytaxType is '[object Array]' && grammarName in linter.syntax or sytaxType is '[object String]' && grammarName is linter.syntax
-        linterView.initLinter(linter)

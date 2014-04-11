@@ -17,15 +17,18 @@ class LinterView
   # Instantiate the views
   #
   # editorView      The editor view
-  constructor: (editorView, statusBarView)->
+  constructor: (editorView, statusBarView, linters)->
 
     @editor = editorView.editor
     @editorView = editorView
     @gutterView = new GutterView(editorView)
     @statusBarView = statusBarView
+
+    @initLinters(linters)
+
     atom.workspaceView.on 'pane:active-item-changed', =>
       @statusBarView.hide()
-      if atom.workspace.getActiveEditor() and @editor.id is atom.workspace.getActiveEditor().id
+      if @editor.id is atom.workspace.getActiveEditor().id
         @dislayStatusBar()
 
     @handleBufferEvents()
@@ -36,11 +39,15 @@ class LinterView
     @editorView.on 'cursor:moved', =>
       @statusBarView.render @messages
 
-  unsetLinters: ->
-    @linters = []
+    @lint()
 
-  initLinter: (linterClass) ->
-    @linters.push(new linterClass())
+  initLinters: (linters) ->
+    @linters = []
+    grammarName = @editor.getGrammar().scopeName
+    for linter in linters
+      sytaxType = {}.toString.call(linter.syntax)
+      if sytaxType is '[object Array]' && grammarName in linter.syntax or sytaxType is '[object String]' && grammarName is linter.syntax
+        @linters.push(new linter())
 
   handleBufferEvents: () =>
     buffer = @editor.getBuffer()
