@@ -3,7 +3,6 @@ fs = require 'fs'
 temp = require 'temp'
 {XRegExp} = require 'xregexp'
 GutterView = require './gutter-view'
-StatusBarView = require './statusbar-view'
 
 temp.track()
 # The base class for linters.
@@ -18,13 +17,15 @@ class LinterView
   # Instantiate the views
   #
   # editorView      The editor view
-  constructor: (editorView)->
+  constructor: (editorView, statusBarView)->
 
     @editor = editorView.editor
     @editorView = editorView
     @gutterView = new GutterView(editorView)
-    @statusBarView = new StatusBarView()
-    atom.workspaceView.prependToBottom(@statusBarView)
+    @statusBarView = statusBarView
+    atom.workspaceView.on 'pane:active-item-changed', =>
+      if @editor.id == atom.workspace.getActiveEditor().id
+        @dislayStatusBar()
 
     @handleBufferEvents()
 
@@ -33,9 +34,6 @@ class LinterView
 
     @editorView.on 'cursor:moved', =>
       @statusBarView.render @messages
-
-    @lint()
-
 
   unsetLinters: ->
     @linters = []
@@ -86,8 +84,12 @@ class LinterView
 
   dislay: ->
     @dislayGutterMarkers()
+    @dislayStatusBar()
 
   dislayGutterMarkers: ->
     @gutterView.render @messages
+
+  dislayStatusBar: ->
+    @statusBarView.render @messages, @editor
 
 module.exports = LinterView

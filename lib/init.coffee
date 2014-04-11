@@ -1,5 +1,6 @@
 Linter = require './linter'
 LinterView = require './linter-view'
+StatusBarView = require './statusbar-view'
 
 module.exports =
   configDefaults:
@@ -10,6 +11,7 @@ module.exports =
   activate: ->
     atom.workspaceView.command 'linter:toggle', => @toggle()
     @linterViews = []
+
     @linters = []
     for atomPackage in atom.packages.getAvailablePackageNames()
       if atomPackage.match(/^linter-/)
@@ -21,28 +23,31 @@ module.exports =
 
   enable: ->
     @enabled = true
+    @statusBarView = new StatusBarView()
+
     # Subscribing to every current and future editor
     @editorViewSubscription = atom.workspaceView.eachEditorView (editorView) =>
-      linterView = @injectLinterViewIntoEditorView(editorView)
+      linterView = @injectLinterViewIntoEditorView(editorView, @statusBarView)
       editorView.editor.on 'grammar-changed', =>
         console.log 'linter: grammar changed'
         linterView.unsetLinters()
 
-        for linter in @initLinters(editorView.editor.getGrammar().scopeName)
-          linterView.initLinter(linter)
+        @initLinters(linterView, editorView.editor.getGrammar().scopeName)
         linterView.lint()
 
-  injectLinterViewIntoEditorView: (editorView) ->
+  injectLinterViewIntoEditorView: (editorView, statusBarView) ->
     return unless editorView.getPane()?
     return unless editorView.attached
     return if editorView.linterView?
-    @initLinters(editorView.editor.getGrammar().scopeName)
-    new LinterView editorView
+    console.log "editorView.editor.getGrammar().scopeName"+editorView.editor.getGrammar().scopeName
+    linterView = new LinterView editorView, statusBarView
+    @initLinters(linterView, editorView.editor.getGrammar().scopeName)
+    linterView.lint()
+    linterView
 
-  initLinters: (grammarName) ->
+  initLinters: (linterView, grammarName) ->
     linters = []
     for linter in @linters
       sytaxType = {}.toString.call(linter.syntax)
       if sytaxType is '[object Array]' && grammarName in linter.syntax or sytaxType is '[object String]' && grammarName is linter.syntax
-        linters.push(linter)
-    linters
+        linterView.initLinter(linter)
