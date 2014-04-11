@@ -24,7 +24,8 @@ class LinterView
     @gutterView = new GutterView(editorView)
     @statusBarView = statusBarView
     atom.workspaceView.on 'pane:active-item-changed', =>
-      if @editor.id == atom.workspace.getActiveEditor().id
+      @statusBarView.hide()
+      if atom.workspace.getActiveEditor() and @editor.id is atom.workspace.getActiveEditor().id
         @dislayStatusBar()
 
     @handleBufferEvents()

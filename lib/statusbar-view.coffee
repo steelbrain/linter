@@ -19,7 +19,7 @@ class StatusBarView extends View
       currentLine = position.row + 1
     @violations.empty()
     for item in messages
-      if parseInt(item.line) == currentLine
+      if parseInt(item.line) is currentLine
         @violations.append "<dt><span class=\"highlight-#{item.level}\">#{item.linter}</span></dt><dd>#{item.message}</dd>"
         @show()
 
