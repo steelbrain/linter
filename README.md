@@ -14,7 +14,8 @@ $ apm install linter
 
 ### Available linters
 - [linter-phpcs](https://atom.io/packages/linter-phpcs) - Linter plugin for PHP, using phpcs.
-- [linter-phpmd](https://atom.io/packages/linter-phpmd) - Linter plugin for php, using phpmd.
+- [linter-phpmd](https://atom.io/packages/linter-phpmd) - Linter plugin for PHP, using phpmd.
+- [linter-jshint](https://atom.io/packages/linter-jshint) - Linter plugin for JavaScript, using jshint.
 
 ### Coming soon
 
@@ -34,10 +35,8 @@ $ apm install linter
 - linter-jsxhint - Linter plugin for JSX (React.js), using jsxhint.
 - linter-json - Linter plugin for JSON.
 - linter-jsl - Linter plugin for JavaScript, using JavaScript Linter (jsl).
-- linter-jshint - Linter plugin for JavaScript, using jshint.
 - linter-jscs - Linter plugin for jscs
 
 #Donation#
 ![Share the love!](https://chewbacco-stuff.s3.amazonaws.com/donate.png)
 [![donate-paypal](https://s3-eu-west-1.amazonaws.com/chewbacco-stuff/donate-paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KXUYS4ARNHCN8)
-
