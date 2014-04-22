@@ -18,9 +18,11 @@ class StatusBarView extends View
     if position = paneItem?.getCursorBufferPosition?()
       currentLine = position.row + 1
     @violations.empty()
+    i = 0
     for item in messages
-      if parseInt(item.line) is currentLine
+      if parseInt(item.line) is currentLine and i <= 10
         @violations.append "<dt><span class=\"highlight-#{item.level}\">#{item.linter}</span></dt><dd>#{item.message}</dd>"
         @show()
+        i++
 
 module.exports = StatusBarView
