@@ -16,6 +16,9 @@ class Linter
   # A regex pattern used to extract information from the executable's output.
   regex: ''
 
+  # current working directory, overridden in linters that need it
+  cwd: null
+
   defaultLevel: 'error'
 
   linterName: null
@@ -34,7 +37,7 @@ class Linter
   lintFile: (filePath, callback) ->
     console.log 'linter: run linter command'
     console.log @getCmd(filePath)
-    exec @getCmd(filePath), (error, stdout, stderr) =>
+    exec @getCmd(filePath), {cwd: @cwd}, (error, stdout, stderr) =>
       if stderr
         console.log stderr
       @processMessage(stdout, callback)

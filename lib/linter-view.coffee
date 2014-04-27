@@ -47,7 +47,7 @@ class LinterView
     for linter in linters
       sytaxType = {}.toString.call(linter.syntax)
       if sytaxType is '[object Array]' && grammarName in linter.syntax or sytaxType is '[object String]' && grammarName is linter.syntax
-        @linters.push(new linter())
+        @linters.push(new linter(@editor))
 
   handleBufferEvents: () =>
     buffer = @editor.getBuffer()
