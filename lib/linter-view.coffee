@@ -44,7 +44,6 @@ class LinterView
   initLinters: (linters) ->
     @linters = []
     grammarName = @editor.getGrammar().scopeName
-    console.log grammarName
     for linter in linters
       sytaxType = {}.toString.call(linter.syntax)
       if sytaxType is '[object Array]' && grammarName in linter.syntax or sytaxType is '[object String]' && grammarName is linter.syntax
