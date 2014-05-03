@@ -87,8 +87,8 @@ class LinterView
   processMessage: (messages)=>
     @totalProcessed++
     @messages = @messages.concat(messages)
-    # if @totalProcessed == @linters.length
-      # fs.unlink @tempFile
+    if @totalProcessed == @linters.length
+      fs.unlink @tempFile
     @dislay()
 
   dislay: ->
