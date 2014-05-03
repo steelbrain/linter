@@ -44,6 +44,7 @@ class LinterView
   initLinters: (linters) ->
     @linters = []
     grammarName = @editor.getGrammar().scopeName
+    console.log grammarName
     for linter in linters
       sytaxType = {}.toString.call(linter.syntax)
       if sytaxType is '[object Array]' && grammarName in linter.syntax or sytaxType is '[object String]' && grammarName is linter.syntax
@@ -73,7 +74,7 @@ class LinterView
     @messages = []
     @gutterView.clear()
     if @linters.length > 0
-      temp.open 'linter', (err, info) =>
+      temp.open {suffix: @editor.getGrammar().scopeName}, (err, info) =>
         @tempFile = info.path
         fs.write info.fd, @editor.getText(), =>
           fs.close info.fd, (err) =>
@@ -86,8 +87,8 @@ class LinterView
   processMessage: (messages)=>
     @totalProcessed++
     @messages = @messages.concat(messages)
-    if @totalProcessed == @linters.length
-      fs.unlink @tempFile
+    # if @totalProcessed == @linters.length
+      # fs.unlink @tempFile
     @dislay()
 
   dislay: ->

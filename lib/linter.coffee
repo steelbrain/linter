@@ -46,13 +46,13 @@ class Linter
     messages = []
     regex = XRegExp @regex
     XRegExp.forEach message, regex, (match, i) =>
-        if match.error
-          level = 'error'
-        else if match.warning
-          level = 'warning'
-        else
-          level = @defaultLevel
-        messages.push({line: match.line, col: match.col, level: level, message: match.message, linter: @linterName})
+      if match.error
+        level = 'error'
+      else if match.warning
+        level = 'warning'
+      else
+        level = @defaultLevel
+      messages.push({line: match.line, col: match.col, level: level, message: match.message, linter: @linterName})
     , @
     callback messages
 
