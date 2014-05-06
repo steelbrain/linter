@@ -7,6 +7,8 @@ This project was inspired by SublimeLinter plugin. So if you like SublimeLinter,
 
 ![example](https://www.evernote.com/shard/s281/sh/eb18f96a-662f-4b1d-89e7-19a7b3d753a7/3366c837aa0ab31f31bb12730e675c61/deep/0/true.php----Users-deman-projects-vifeed-vifeed-cookbook.png)
 
+![linter-jscs](https://github.com/iam4x/linter-jscs/raw/master/example.gif)
+
 ### Plugin installation
 ```
 $ apm install linter
