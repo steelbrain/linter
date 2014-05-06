@@ -16,6 +16,8 @@ class Linter
   # A regex pattern used to extract information from the executable's output.
   regex: ''
 
+  regexFlags: ''
+
   # current working directory, overridden in linters that need it
   cwd: null
 
@@ -44,7 +46,7 @@ class Linter
 
   processMessage: (message, callback) ->
     messages = []
-    regex = XRegExp @regex
+    regex = XRegExp @regex, @regexFlags
     XRegExp.forEach message, regex, (match, i) =>
       if match.error
         level = 'error'
