@@ -1,7 +1,7 @@
 {
   "name": "linter",
   "main": "./lib/init",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "private": true,
   "description": "Validates your code using linters.",
   "repository": "https://github.com/AtomLinter/Linter.git",
