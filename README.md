@@ -16,8 +16,9 @@ $ apm install linter
 - [linter-phpcs](https://atom.io/packages/linter-phpcs) - Linter plugin for PHP, using phpcs.
 - [linter-phpmd](https://atom.io/packages/linter-phpmd) - Linter plugin for PHP, using phpmd.
 - [linter-jshint](https://atom.io/packages/linter-jshint) - Linter plugin for JavaScript, using jshint.
-- [linter-jscs](https://atom.io/packages/linter-jscs) - Linter plugin for jscs.
+- [linter-jscs](https://atom.io/packages/linter-jscs) - Linter plugin for JavaScript, using jscs.
 - [linter-scss-lint](https://atom.io/packages/linter-scss-lint) - Sass Linter plugin for SCSS, using scss-lint.
+- [linter-coffeelint](https://atom.io/packages/linter-coffeelint) Linter plugin for CoffeeScript, using coffeelint.
 
 ### Coming soon
 
