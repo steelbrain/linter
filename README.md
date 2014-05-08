@@ -22,6 +22,7 @@ $ apm install linter
 - [linter-scss-lint](https://atom.io/packages/linter-scss-lint) - Sass Linter plugin for SCSS, using scss-lint.
 - [linter-coffeelint](https://atom.io/packages/linter-coffeelint) Linter plugin for CoffeeScript, using coffeelint.
 - [linter-csslint](https://atom.io/packages/linter-csslint) Linter plugin for CSS, using csslint.
+- [linter-rubocop](https://atom.io/packages/linter-rubocop) - Linter plugin for Ruby, using rubocop.
 
 ### Coming soon
 
@@ -29,7 +30,6 @@ $ apm install linter
 - linter-xmllint - Linter plugin for XML, using xmllint.
 - linter-shellcheck - Linter plugin for SublimeLinter provides an interface to shellcheck.
 - linter-ruby - Linter plugin for ruby, using ruby -wc.
-- linter-rubocop - Linter plugin for Ruby, using rubocop.
 - linter-rst - Linter plugin for reStructuredText, using docutils.
 - linter-pylint - Linter plugin for python, using pylint.
 - linter-pyflakes - Linter plugin for python, using pyflakes.
