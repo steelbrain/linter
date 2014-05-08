@@ -41,12 +41,26 @@ class LinterView
 
     @lint()
 
+  getSyntax: (linter) ->
+    sytaxType = {}.toString.call(linter.syntax)
+    if sytaxType is '[object Array]'
+      return linter.syntax
+
+    else if sytaxType is '[object String]'
+      return [linter.syntax]
+
+    return []
+
+  isLinterInScope: (linter, scopeName) ->
+    return true for syntax in @getSyntax linter when scopeName.startsWith syntax
+
+    false
+
   initLinters: (linters) ->
     @linters = []
-    grammarName = @editor.getGrammar().scopeName
+    scopeName = @editor.getGrammar().scopeName
     for linter in linters
-      sytaxType = {}.toString.call(linter.syntax)
-      if sytaxType is '[object Array]' && grammarName in linter.syntax or sytaxType is '[object String]' && grammarName is linter.syntax
+      if @isLinterInScope linter, scopeName
         @linters.push(new linter(@editor))
 
   handleBufferEvents: () =>
