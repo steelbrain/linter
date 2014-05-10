@@ -1,5 +1,6 @@
 {exec, child} = require 'child_process'
 {XRegExp} = require 'xregexp'
+path = require 'path'
 
 # The base class for linters.
 # Subclasses must at a minimum define the attributes syntax, cmd, and regex.
@@ -26,6 +27,9 @@ class Linter
   linterName: null
 
   executablePath: null
+
+  constructor: (editor)->
+    @cwd = path.dirname(editor.getUri())
 
   getCmd: (filePath)->
     if /@filename/i.test(@cmd)
