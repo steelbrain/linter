@@ -9,7 +9,6 @@ module.exports =
 
   # Activate the plugin
   activate: ->
-    atom.workspaceView.command 'linter:toggle', => @toggle()
     @linterViews = []
 
     @linters = []
@@ -17,11 +16,7 @@ module.exports =
       if atomPackage.match(/^linter-/)
         if atom.packages.getLoadedPackage(atomPackage).metadata['linter-package'] is true
           @linters.push(require "#{atom.packages.getLoadedPackage(atomPackage).path}/lib/#{atomPackage}")
-    @enable()
 
-    # App = new App
-
-  enable: ->
     @enabled = true
     @statusBarView = new StatusBarView()
 
