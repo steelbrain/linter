@@ -28,7 +28,7 @@ $ apm install linter
 
 - linter-pep257 - Linter plugin for python, using pep257.
 - linter-xmllint - Linter plugin for XML, using xmllint.
-- linter-shellcheck - Linter plugin for SublimeLinter provides an interface to shellcheck.
+- linter-shellcheck - Linter plugin for Bash, using shellcheck.
 - linter-ruby - Linter plugin for ruby, using ruby -wc.
 - linter-rst - Linter plugin for reStructuredText, using docutils.
 - linter-pylint - Linter plugin for python, using pylint.
@@ -40,6 +40,8 @@ $ apm install linter
 - linter-jsxhint - Linter plugin for JSX (React.js), using jsxhint.
 - linter-json - Linter plugin for JSON.
 - linter-jsl - Linter plugin for JavaScript, using JavaScript Linter (jsl).
+- linter-oclitnt - Linter plugin for C / C++ / Objective-C, using OCLint.
+- linter-clang - Linter plugin for C / C++, using clang.
 
 #Donation#
 ![Share the love!](https://chewbacco-stuff.s3.amazonaws.com/donate.png)
