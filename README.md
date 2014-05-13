@@ -7,6 +7,7 @@ Lint you code with ease in [Atom](http://atom.io).
 The idea is to stop linters plugins war, by providing top level api for linters to parse and display errors in Atom editor.
 
 ## Available linters
+- [linter-php](https://atom.io/packages/linter-php), for PHP using `php -l`
 - [linter-phpcs](https://atom.io/packages/linter-phpcs), for PHP, using `phpc`
 - [linter-phpmd](https://atom.io/packages/linter-phpmd), for PHP, using `phpmd`
 - [linter-jshint](https://atom.io/packages/linter-jshint), for JavaScript, using `jshint`
@@ -42,7 +43,6 @@ The idea is to stop linters plugins war, by providing top level api for linters 
 - linter-pylint, for python using `pylint`.
 - linter-pyflakes, for python using `pyflakes`.
 - linter-phplint, for PHP using `phplint`.
-- linter-php, for PHP using `php -l`.
 - linter-pep8, for python using `pep8`.
 - linter-lua, for Lua using `luac -p`.
 - linter-jsxhint, for JSX (React.js) using `jsxhint`.
