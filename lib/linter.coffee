@@ -43,23 +43,36 @@ class Linter
   lintFile: (filePath, callback) ->
     console.log 'linter: run linter command'
     console.log @getCmd(filePath)
+    console.log @cwd
     exec @getCmd(filePath), {cwd: @cwd}, (error, stdout, stderr) =>
       if stderr
         console.log stderr
+      console.log stdout
       @processMessage(stdout, callback)
 
   processMessage: (message, callback) ->
     messages = []
     regex = XRegExp @regex, @regexFlags
     XRegExp.forEach message, regex, (match, i) =>
-      if match.error
-        level = 'error'
-      else if match.warning
-        level = 'warning'
-      else
-        level = @defaultLevel
-      messages.push({line: match.line, col: match.col, level: level, message: match.message, linter: @linterName})
+      console.log match
+      messages.push(@createMessage(match))
     , @
     callback messages
+
+  createMessage: (match) ->
+    if match.error
+      level = 'error'
+    else if match.warning
+      level = 'warning'
+    else
+      level = @defaultLevel
+
+    return {
+      line: match.line,
+      col: match.col,
+      level: level,
+      message: match.message,
+      linter: @linterName
+    }
 
 module.exports = Linter
