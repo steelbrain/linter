@@ -28,17 +28,27 @@ class Linter
 
   executablePath: null
 
-  constructor: (editor)->
+  isNodeExecutable: no
+
+  constructor: (editor) ->
     @cwd = path.dirname(editor.getUri())
 
-  getCmd: (filePath)->
+  getCmd: (filePath) ->
     if /@filename/i.test(@cmd)
       cmd = @cmd.replace('@filename', filePath)
     else
       cmd = "#{@cmd} #{filePath}"
+
     if @executablePath
       cmd = "#{@executablePath}/#{cmd}"
+
+    if @isNodeExecutable
+      cmd = "#{@getNodeExecutablePath()} #{cmd}"
+
     cmd
+
+  getNodeExecutablePath: ->
+    path.join require.resolve('package'), '..', 'apm/node_modules/atom-package-manager/bin/node'
 
   lintFile: (filePath, callback) ->
     console.log 'linter: run linter command'
