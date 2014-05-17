@@ -3,6 +3,7 @@ fs = require 'fs'
 temp = require 'temp'
 {XRegExp} = require 'xregexp'
 GutterView = require './gutter-view'
+HighlightsView = require './highlights-view'
 
 temp.track()
 # The base class for linters.
@@ -22,6 +23,7 @@ class LinterView
     @editor = editorView.editor
     @editorView = editorView
     @gutterView = new GutterView(editorView)
+    @HighlightsView = new HighlightsView(editorView)
     @statusBarView = statusBarView
 
     @initLinters(linters)
@@ -92,6 +94,8 @@ class LinterView
 
   dislay: ->
     @dislayGutterMarkers()
+    @HighlightsView.setHighlights(@messages);
+
     @dislayStatusBar()
 
   dislayGutterMarkers: ->

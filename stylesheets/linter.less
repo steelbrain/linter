@@ -7,6 +7,9 @@
 @fa-font-path: "https://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts"; // for referencing Bootstrap CDN font files directly
 @import '../node_modules/font-awesome/less/path';
 
+@error-color: #b22222;
+@warning-color: #b22222;
+
 .line-number:before {
   visibility: hidden;
   position: relative;
@@ -23,13 +26,13 @@
 
 .linter-warning:before {
   visibility: visible !important;
-  color: #DAA520;
+  color: @warning-color;
 
 }
 
 .linter-error:before {
   visibility: visible !important;
-  color: #b22222;
+  color: @error-color;
 }
 
 .linter-statusbar {
@@ -58,5 +61,25 @@
     dd {
       padding-left: 25px;
       margin-left: 50px;
+    }
+}
+
+.linter-highlight {
+    .region {
+        position: absolute;
+        opacity: 0.50;
+        padding: 0px 4px;
+        margin-left: -4px;
+        box-sizing: content-box;
+    }
+    &.warning .region{
+        background: linear-gradient(to bottom, @warning-color 0%, fadeout(@warning-color, 70%) 20%, fadeout(@warning-color, 70%) 80%, @warning-color 100%);
+        border-left: 2px solid @warning-color;
+        border-right: 2px solid @warning-color;
+    }
+    &.error .region{
+        background: linear-gradient(to bottom, @error-color 0%, fadeout(@error-color, 70%) 20%, fadeout(@error-color, 70%) 80%, @error-color 100%);
+        border-left: 2px solid @error-color;
+        border-right: 2px solid @error-color;
     }
 }
