@@ -2,7 +2,8 @@
 //
 // See https://github.com/atom/atom-dark-ui/blob/master/stylesheets/ui-variables.less
 // for a full listing of what's available.
-@import "ui-variables";
+// @import 'ui-variables';
+
 @import '../node_modules/font-awesome/less/variables';
 @fa-font-path: "https://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts"; // for referencing Bootstrap CDN font files directly
 @import '../node_modules/font-awesome/less/path';
@@ -33,30 +34,30 @@
 }
 
 .linter-statusbar {
-    margin-bottom: 0;
-    dd {
-      &:before,
-      &:after {
-        content: " ";
-        display: table;
-      }
-      &:after {
-        clear: both;
-      }
+  margin-bottom: 0;
+  dd {
+    &:before,
+    &:after {
+      content: " ";
+      display: table;
     }
+    &:after {
+      clear: both;
+    }
+  }
 
-    dt {
-      float: left;
-      width: 70px;
-      clear: left;
-      text-align: right;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-weight: normal !important;
-    }
-    dd {
-      padding-left: 25px;
-      margin-left: 50px;
-    }
+  dt {
+    float: left;
+    width: 70px;
+    clear: left;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: normal !important;
+  }
+  dd {
+    padding-left: 25px;
+    margin-left: 50px;
+  }
 }
