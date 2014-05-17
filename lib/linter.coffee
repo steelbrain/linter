@@ -1,6 +1,7 @@
 {exec, child} = require 'child_process'
 {XRegExp} = require 'xregexp'
 path = require 'path'
+{Range} = require 'atom'
 
 # The base class for linters.
 # Subclasses must at a minimum define the attributes syntax, cmd, and regex.
@@ -30,7 +31,7 @@ class Linter
 
   isNodeExecutable: no
 
-  constructor: (editor) ->
+  constructor: (@editor) ->
     @cwd = path.dirname(editor.getUri())
 
   getCmd: (filePath) ->
@@ -84,7 +85,19 @@ class Linter
       col: match.col,
       level: level,
       message: match.message,
-      linter: @linterName
+      linter: @linterName,
+      range: @computeRange match
     }
+
+  computeRange: (match) ->
+    rowStart = parseInt(match.lineStart ? match.line) - 1
+    rowEnd = parseInt(match.lineEnd ? match.line) - 1
+    match.callStart ?= match.col
+    colStart = parseInt(match.colStart ? 0)
+    colEnd = parseInt(match.colEnd ? @editor.buffer.lineLengthForRow rowEnd)
+    return new Range(
+      [rowStart, colStart],
+      [rowEnd, colEnd]
+    )
 
 module.exports = Linter
