@@ -12,10 +12,10 @@ module.exports =
     @linterViews = []
 
     @linters = []
-    for atomPackage in atom.packages.getAvailablePackageNames()
-      if atomPackage.match(/^linter-/)
-        if atom.packages.getLoadedPackage(atomPackage).metadata['linter-package'] is true
-          @linters.push(require "#{atom.packages.getLoadedPackage(atomPackage).path}/lib/#{atomPackage}")
+    for atomPackage in atom.packages.getLoadedPackages()
+      if atomPackage.metadata['linter-package'] is true
+        implemention = atomPackage.metadata['linter-implementation'] ? atomPackage.name
+        @linters.push(require "#{atomPackage.path}/lib/#{implemention}")
 
     @enabled = true
     @statusBarView = new StatusBarView()
