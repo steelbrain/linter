@@ -4,6 +4,22 @@ files =
   less: ['stylesheets/**/*.less']
   tmp: ['.tmp']
 
+aliases =
+  grunt: [
+    'coffeelint:grunt',
+    'lintspaces:grunt'
+  ]
+  lib: [
+    'coffeelint:lib',
+    'lintspaces:lib',
+    'coffee:lib',
+    'clean:tmp'
+  ]
+  less: [
+    'lesslint',
+    'lintspaces:less'
+  ]
+
 module.exports = (grunt) ->
   'use strict'
 
@@ -14,21 +30,17 @@ module.exports = (grunt) ->
     watch:
       gruntfile:
         files: files.grunt
-        tasks: ['coffeelint:gruntfile']
+        tasks: aliases.grunt
       lib:
         files: files.lib
-        tasks: [
-          'coffeelint:lib',
-          'coffee:compile',
-          'clean:tmp'
-        ]
+        tasks: aliases.lib
       less:
         files: files.less
-        tasks: ['lesslint']
+        tasks: aliases.less
     # `grunt-coffeelint` configuration
     coffeelint:
       lib: files.lib
-      gruntfile: files.grunt
+      grunt: files.grunt
       options:
         configFile: 'coffeelint.json'
     # `grunt-lesslint` configuration
@@ -39,7 +51,7 @@ module.exports = (grunt) ->
           'important': false
     # `grunt-contrib-coffee` configuration
     coffee:
-      compile:
+      lib:
         expand: true
         flatten: true
         src: files.lib
@@ -48,6 +60,13 @@ module.exports = (grunt) ->
     # `grunt-contrib-clean` configuration
     clean:
       tmp: files.tmp
+    # `grunt-lintspaces` configuration
+    lintspaces:
+      options:
+        editorconfig: '.editorconfig'
+      grunt: files.grunt
+      lib: files.lib
+      less: files.less
 
   # Load grunt tasks
   grunt.loadNpmTasks 'grunt-coffeelint'
@@ -55,9 +74,10 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-lesslint'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-clean'
+  grunt.loadNpmTasks 'grunt-lintspaces'
 
   # Grunt tasks
   # -----------
   #
   # * `$ grunt dev`
-  grunt.registerTask 'dev', ['watch']
+  grunt.registerTask 'dev', aliases.grunt.concat aliases.lib, aliases.less, 'watch'
