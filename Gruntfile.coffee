@@ -3,6 +3,7 @@ files =
   lib: ['lib/**/*.coffee']
   less: ['stylesheets/**/*.less']
   tmp: ['.tmp/']
+  doc: ['doc/']
 
 aliases =
   grunt: [
@@ -60,6 +61,7 @@ module.exports = (grunt) ->
     # `grunt-contrib-clean` configuration
     clean:
       tmp: files.tmp
+      doc: files.doc
     # `grunt-lintspaces` configuration
     lintspaces:
       options:
@@ -70,6 +72,16 @@ module.exports = (grunt) ->
     # `grunt-docco` configuration
     groc:
       src: files.lib.concat files.less, files.grunt
+    # `grunt-contrib-connect` configuration
+    connect:
+      doc:
+        options:
+          port: '9001'
+          base: files.doc
+          keepalive: yes
+          open:
+            target: 'http://localhost:9001/lib/init.html'
+            app: 'open'
 
   # Load grunt tasks
   grunt.loadNpmTasks 'grunt-coffeelint'
@@ -77,10 +89,11 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-lesslint'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-clean'
+  grunt.loadNpmTasks 'grunt-contrib-connect'
   grunt.loadNpmTasks 'grunt-lintspaces'
   grunt.loadNpmTasks 'grunt-groc'
 
   # Grunt tasks
   # -----------
   grunt.registerTask 'dev', aliases.grunt.concat aliases.lib, aliases.less, 'watch'
-  grunt.registerTask 'doc', ['groc']
+  grunt.registerTask 'doc', ['clean:doc', 'groc', 'connect:doc']
