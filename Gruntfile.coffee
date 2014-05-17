@@ -29,6 +29,9 @@ module.exports = (grunt) ->
     # `grunt-lesslint` configuration
     lesslint:
       src: files.less
+      options:
+        csslint:
+          'important': false
 
   # Load grunt tasks
   grunt.loadNpmTasks 'grunt-coffeelint'
