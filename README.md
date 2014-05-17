@@ -65,7 +65,7 @@ Also, run `$ grunt dev` before any submission and while developing, it will achi
 * Lint the stylesheets
 * Lint any trailing spaces and ensure new line at end of file
 
-You can generate the doc with `$ grunt doc`, it will opens in your default browser.
+You can generate the doc with `$ grunt doc`, it will open in your default browser.
 
 ## Donation
 ![Share the love!](https://chewbacco-stuff.s3.amazonaws.com/donate.png)
