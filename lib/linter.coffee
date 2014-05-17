@@ -94,7 +94,8 @@ class Linter
     rowEnd = parseInt(match.lineEnd ? match.line) - 1
     match.callStart ?= match.col
     colStart = parseInt(match.colStart ? 0)
-    colEnd = parseInt(match.colEnd ? @editor.buffer.lineLengthForRow rowEnd)
+    colEnd = if match.colEnd then parseInt(match.colEnd) else
+      (parseInt(@editor.buffer.lineLengthForRow rowEnd) - 1)
     return new Range(
       [rowStart, colStart],
       [rowEnd, colEnd]

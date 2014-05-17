@@ -14,10 +14,7 @@ class GutterView
     return unless @gutter.isVisible()
 
     for message in messages
-      if message.range
-        line = message.range.start.row
-      else
-        line = message.line - 1
+      line = message.range.start.row
       if message.level == 'error'
         @gutter.addClassToLine(line, 'linter-error')
 

@@ -17,24 +17,22 @@ class HighLightView extends View
     @render()
 
   render: ->
-    newRange = @marker.getScreenRange()
-    @range.start = newRange.start
-    @range.end = newRange.end
+    screenRange = @marker.getScreenRange()
 
     @removeRegions()
     @addClass(@level)
-    if @range.start.isEqual(@range.end)
-      @range.end = new Point(@range.end + 1, 0)
-    rowSpan = @range.end.row - @range.start.row
+    if screenRange.start.isEqual(screenRange.end)
+      screenRange.end = new Point(screenRange.end + 1, 0)
+    rowSpan = screenRange.end.row - screenRange.start.row
 
     for rowIndex in [0..rowSpan]
-      row = @range.start.row + rowIndex
+      row = screenRange.start.row + rowIndex
       if rowIndex == 0
-        columnStart = @range.start.column
+        columnStart = screenRange.start.column
       else
         columnStart = 0
       if rowIndex == rowSpan
-        columnEnd = @range.end.column
+        columnEnd = screenRange.end.column
       else
         columnEnd = (@editorView.editor.displayBuffer.lineForRow row)
           .text.length - 1
