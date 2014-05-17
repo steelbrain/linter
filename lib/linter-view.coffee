@@ -29,7 +29,7 @@ class LinterView
     atom.workspaceView.on 'pane:active-item-changed', =>
       @statusBarView.hide()
       if @editor.id is atom.workspace.getActiveEditor()?.id
-        @dislayStatusBar()
+        @displayStatusBar()
 
     @handleBufferEvents()
 
@@ -88,16 +88,16 @@ class LinterView
     @messages = @messages.concat(messages)
     if @totalProcessed == @linters.length
       fs.unlink @tempFile
-    @dislay()
+    @display()
 
-  dislay: ->
-    @dislayGutterMarkers()
-    @dislayStatusBar()
+  display: ->
+    @displayGutterMarkers()
+    @displayStatusBar()
 
-  dislayGutterMarkers: ->
+  displayGutterMarkers: ->
     @gutterView.render @messages
 
-  dislayStatusBar: ->
+  displayStatusBar: ->
     @statusBarView.render @messages, @editor
 
 module.exports = LinterView
