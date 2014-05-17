@@ -1,7 +1,7 @@
 {exec, child} = require 'child_process'
 {XRegExp} = require 'xregexp'
 path = require 'path'
-{Range} = require 'atom'
+{Range, Point} = require 'atom'
 
 # The base class for linters.
 # Subclasses must at a minimum define the attributes syntax, cmd, and regex.
@@ -92,7 +92,20 @@ class Linter
   computeRange: (match) ->
     rowStart = parseInt(match.lineStart ? match.line) - 1
     rowEnd = parseInt(match.lineEnd ? match.line) - 1
-    match.callStart ?= match.col
+    match.col ?=  0
+    unless match.colStart
+      position = new Point(rowStart, match.col)
+      scopes = @editor.displayBuffer.tokenizedBuffer.scopesForPosition(position)
+
+      while innerMostScope = scopes.pop()
+        range = @editor
+          .displayBuffer
+            .tokenizedBuffer
+              .bufferRangeForScopeAtPosition(innerMostScope, position)
+        if range?
+          return range
+
+    match.colStart ?= match.col
     colStart = parseInt(match.colStart ? 0)
     colEnd = if match.colEnd then parseInt(match.colEnd) else
       (parseInt(@editor.buffer.lineLengthForRow rowEnd) - 1)
