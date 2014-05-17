@@ -14,7 +14,8 @@ module.exports =
     @linters = []
     for atomPackage in atom.packages.getLoadedPackages()
       if atomPackage.metadata['linter-package'] is true
-        implemention = atomPackage.metadata['linter-implementation'] ? atomPackage.name
+        implemention =
+          atomPackage.metadata['linter-implementation'] ? atomPackage.name
         @linters.push(require "#{atomPackage.path}/lib/#{implemention}")
 
     @enabled = true
@@ -32,6 +33,7 @@ module.exports =
     return unless editorView.getPane()?
     return unless editorView.attached
     return if editorView.linterView?
-    console.log "editorView.editor.getGrammar().scopeName"+editorView.editor.getGrammar().scopeName
+    console.log "editorView.editor.getGrammar().scopeName" +
+      editorView.editor.getGrammar().scopeName
     linterView = new LinterView editorView, statusBarView, @linters
     linterView

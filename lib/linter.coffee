@@ -48,7 +48,9 @@ class Linter
     cmd
 
   getNodeExecutablePath: ->
-    path.join require.resolve('package'), '..', 'apm/node_modules/atom-package-manager/bin/node'
+    path.join require.resolve('package'),
+      '..',
+      'apm/node_modules/atom-package-manager/bin/node'
 
   lintFile: (filePath, callback) ->
     console.log 'linter: run linter command'

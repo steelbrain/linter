@@ -20,7 +20,7 @@ class HighLightView extends View
     newRange = @marker.getScreenRange()
     @range.start = newRange.start
     @range.end = newRange.end
-    
+
     @removeRegions()
     @addClass(@level)
     if @range.start.isEqual(@range.end)
@@ -32,7 +32,7 @@ class HighLightView extends View
     else
       @appendRegion(1, @range.start, null)
       if rowSpan > 1
-        @appendRegion(rowSpan - 1, { row: @range.start.row + 1, column: 0}, null)
+        @appendRegion(rowSpan - 1, row: @range.start.row + 1, column: 0, null)
       @appendRegion(1, { row: @range.end.row, column: 0 }, @range.end)
 
   appendRegion: (rows, start, end) ->
@@ -41,7 +41,8 @@ class HighLightView extends View
       css = @editorView.pixelPositionForScreenPosition(start)
       css.height = lineHeight * rows
       if end and end.row <= @editorView.editor.getLineCount()
-        css.width = @editorView.pixelPositionForScreenPosition(end).left - css.left
+        css.width = @editorView.pixelPositionForScreenPosition(end).left -
+          css.left
       else
         css.right = 0
 
@@ -61,7 +62,9 @@ class HighLightView extends View
     startRow = start.row
     endRow = end.row
     endRow-- if end.column == 0
-    @editorView.pixelPositionForScreenPosition([((startRow + endRow + 1) / 2), start.column])
+    @editorView.pixelPositionForScreenPosition(
+      [((startRow + endRow + 1) / 2), start.column]
+    )
 
   remove: ->
     @marker.destroy()

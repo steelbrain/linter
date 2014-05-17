@@ -15,11 +15,16 @@ class HighLightsView extends View
   setHighlights: (messages) ->
     @removeHighlights()
     for message in messages
-      message.range ?= new Range([parseInt(message.line) - 1, 0],[parseInt(message.line), 0])
-      highlightView = new HighLightView(range: message.range, editorView: @editorView, level: message.level)
+      message.range ?= new Range(
+        [parseInt(message.line) - 1, 0],
+        [parseInt(message.line), 0]
+      )
+      highlightView = new HighLightView(
+        range: message.range,
+        editorView: @editorView,
+        level: message.level)
       @editorView.underlayer.append(highlightView)
       @highlights.push(highlightView)
-
 
   removeHighlights: ->
     for highlight in @highlights

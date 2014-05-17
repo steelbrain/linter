@@ -20,8 +20,15 @@ class StatusBarView extends View
     @violations.empty()
     i = 0
     for item in messages
-      if (item.range?.containsPoint?(position) or (not item.range? and parseInt(item.line) is currentLine) ) and i <= 10
-        @violations.append "<dt><span class=\"highlight-#{item.level}\">#{item.linter}</span></dt><dd>#{item.message}</dd>"
+      if (item.range?.containsPoint?(position) or
+      not item.range? and parseInt(item.line) is currentLine) and
+      i <= 10
+        @violations.append "<dt>
+            <span class=\"highlight-#{item.level}\">
+              #{item.linter}
+            </span>
+          </dt>
+          <dd>#{item.message}</dd>"
         @show()
         i++
 
