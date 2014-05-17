@@ -17,7 +17,7 @@ class LinterView
   # Instantiate the views
   #
   # editorView      The editor view
-  constructor: (editorView, statusBarView, linters)->
+  constructor: (editorView, statusBarView, linters) ->
 
     @editor = editorView.editor
     @editorView = editorView
@@ -83,7 +83,7 @@ class LinterView
               # if error is not null
               #  console.log 'stderr: ' + error
 
-  processMessage: (messages)=>
+  processMessage: (messages) =>
     @totalProcessed++
     @messages = @messages.concat(messages)
     if @totalProcessed == @linters.length
