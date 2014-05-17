@@ -2,6 +2,7 @@ files =
   grunt: ['Gruntfile.coffee']
   lib: ['lib/**/*.coffee']
   less: ['stylesheets/**/*.less']
+  tmp: ['.tmp']
 
 module.exports = (grunt) ->
   'use strict'
@@ -18,7 +19,8 @@ module.exports = (grunt) ->
         files: files.lib
         tasks: [
           'coffeelint:lib',
-          'coffee:compile'
+          'coffee:compile',
+          'clean:tmp'
         ]
       less:
         files: files.less
@@ -43,12 +45,16 @@ module.exports = (grunt) ->
         src: files.lib
         dest: '.tmp/'
         ext: '.js'
+    # `grunt-contrib-clean` configuration
+    clean:
+      tmp: files.tmp
 
   # Load grunt tasks
   grunt.loadNpmTasks 'grunt-coffeelint'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-lesslint'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-clean'
 
   # Grunt tasks
   # -----------
