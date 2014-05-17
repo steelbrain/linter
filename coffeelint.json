@@ -44,9 +44,9 @@
     "name": "colon_assignment_spacing",
     "level": "warn",
     "spacing": {
-        "left": 0,
-        "right": 1
-      }
+      "left": 0,
+      "right": 1
+    }
   },
   "no_implicit_braces": {
     "name": "no_implicit_braces",
