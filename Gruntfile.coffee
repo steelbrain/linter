@@ -16,7 +16,7 @@ aliases =
     'clean:tmp'
   ]
   less: [
-    'lesslint',
+    'lesslint:less',
     'lintspaces:less'
   ]
 
@@ -45,7 +45,7 @@ module.exports = (grunt) ->
         configFile: 'coffeelint.json'
     # `grunt-lesslint` configuration
     lesslint:
-      src: files.less
+      less: files.less
       options:
         csslint:
           'important': false
