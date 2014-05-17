@@ -9,16 +9,22 @@ class HighLightView extends View
   regions: null
 
   initialize: ({@editorView, @range, @level} = {}) ->
-    @marker = @editorView.editor.buffer.markRange(@range, invalidate: 'never')
+    @marker = @editorView.editor.buffer.markRange(@range)
+    @marker = @editorView.editor.displayBuffer.getMarker(@marker.id)
+
     @regions = []
     @marker.on 'changed', => @render()
     @render()
 
   render: ->
+    newRange = @marker.getScreenRange()
+    @range.start = newRange.start
+    @range.end = newRange.end
+    
     @removeRegions()
     @addClass(@level)
-    return if @range.isEmpty()
-
+    if @range.start.isEqual(@range.end)
+      @range.end = new Point(@range.end + 1, 0)
     rowSpan = @range.end.row - @range.start.row
 
     if rowSpan == 0
