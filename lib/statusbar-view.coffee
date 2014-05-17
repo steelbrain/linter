@@ -9,7 +9,7 @@ class StatusBarView extends View
 
   # Render the view
   render: (messages, paneItem) ->
-    atom.workspaceView.prependToBottom(@)
+    atom.workspaceView.prependToBottom(this)
     @hide()
     return unless messages.length > 0
     if not paneItem

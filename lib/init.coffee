@@ -32,6 +32,6 @@ module.exports =
     return unless editorView.getPane()?
     return unless editorView.attached
     return if editorView.linterView?
-    console.log "editorView.editor.getGrammar().scopeName"+editorView.editor.getGrammar().scopeName
-    linterView = new LinterView editorView, statusBarView, @linters
+    console.log "editorView.editor.getGrammar().scopeName" + editorView.editor.getGrammar().scopeName
+    linterView = new LinterView(editorView, statusBarView, @linters)
     linterView
