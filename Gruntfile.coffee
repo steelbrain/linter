@@ -2,7 +2,7 @@ files =
   grunt: ['Gruntfile.coffee']
   lib: ['lib/**/*.coffee']
   less: ['stylesheets/**/*.less']
-  tmp: ['.tmp']
+  tmp: ['.tmp/']
 
 aliases =
   grunt: [
@@ -67,6 +67,9 @@ module.exports = (grunt) ->
       grunt: files.grunt
       lib: files.lib
       less: files.less
+    # `grunt-docco` configuration
+    groc:
+      src: files.lib.concat files.less, files.grunt
 
   # Load grunt tasks
   grunt.loadNpmTasks 'grunt-coffeelint'
@@ -75,9 +78,9 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-lintspaces'
+  grunt.loadNpmTasks 'grunt-groc'
 
   # Grunt tasks
   # -----------
-  #
-  # * `$ grunt dev`
   grunt.registerTask 'dev', aliases.grunt.concat aliases.lib, aliases.less, 'watch'
+  grunt.registerTask 'doc', ['groc']
