@@ -22,6 +22,7 @@
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-coffeelint": "^0.0.10",
+    "grunt-contrib-coffee": "^0.10.1",
     "grunt-contrib-watch": "^0.5.3",
     "grunt-lesslint": "^1.1.3"
   }

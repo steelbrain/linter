@@ -16,7 +16,10 @@ module.exports = (grunt) ->
         tasks: ['coffeelint:gruntfile']
       lib:
         files: files.lib
-        tasks: ['coffeelint:lib']
+        tasks: [
+          'coffeelint:lib',
+          'coffee:compile'
+        ]
       less:
         files: files.less
         tasks: ['lesslint']
@@ -32,11 +35,20 @@ module.exports = (grunt) ->
       options:
         csslint:
           'important': false
+    # `grunt-contrib-coffee` configuration
+    coffee:
+      compile:
+        expand: true
+        flatten: true
+        src: files.lib
+        dest: '.tmp/'
+        ext: '.js'
 
   # Load grunt tasks
   grunt.loadNpmTasks 'grunt-coffeelint'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-lesslint'
+  grunt.loadNpmTasks 'grunt-contrib-coffee'
 
   # Grunt tasks
   # -----------
