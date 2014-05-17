@@ -49,7 +49,7 @@ class LinterView
       if sytaxType is '[object Array]' && grammarName in linter.syntax or sytaxType is '[object String]' && grammarName is linter.syntax
         @linters.push(new linter(@editor))
 
-  handleBufferEvents: () =>
+  handleBufferEvents: =>
     buffer = @editor.getBuffer()
 
     buffer.on 'saved', (buffer) =>

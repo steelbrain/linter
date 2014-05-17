@@ -1,7 +1,7 @@
 path = require 'path'
 fs = require 'fs'
 
-findFile = (startDir, name, parent=false, limit=null, aux_dirs=[]) ->
+findFile = (startDir, name, parent = false, limit = null, aux_dirs = []) ->
   # Find the given file by searching up the file hierarchy from startDir.
   #
   # If the file is found and parent is false, returns the path to the file.
