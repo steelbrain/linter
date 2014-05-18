@@ -12,12 +12,14 @@ class GutterView
 
   render: (messages) ->
     return unless @gutter.isVisible()
-
+    @clear()
+    
     for message in messages
+      line = message.range.start.row
       if message.level == 'error'
-        @gutter.addClassToLine(message.line - 1, 'linter-error')
+        @gutter.addClassToLine(line, 'linter-error')
 
       if message.level == 'warning'
-        @gutter.addClassToLine(message.line - 1, 'linter-warning')
+        @gutter.addClassToLine(line, 'linter-warning')
 
 module.exports = GutterView

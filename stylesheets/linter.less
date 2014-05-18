@@ -7,6 +7,9 @@
 @fa-font-path: "https://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts"; // for referencing Bootstrap CDN font files directly
 @import '../node_modules/font-awesome/less/path';
 
+@error-color: #b22222;
+@warning-color: #DAA520;
+
 .line-number:before {
   visibility: hidden;
   position: relative;
@@ -23,40 +26,60 @@
 
 .linter-warning:before {
   visibility: visible !important;
-  color: #DAA520;
+  color: @warning-color;
 
 }
 
 .linter-error:before {
   visibility: visible !important;
-  color: #b22222;
+  color: @error-color;
 }
 
 .linter-statusbar {
-    margin-bottom: 0;
-    dd {
-      &:before,
-      &:after {
-        content: " ";
-        display: table;
-      }
-      &:after {
-        clear: both;
-      }
+  margin-bottom: 0;
+  dd {
+    &:before,
+    &:after {
+      content: " ";
+      display: table;
     }
+    &:after {
+      clear: both;
+    }
+  }
 
-    dt {
-      float: left;
-      width: 70px;
-      clear: left;
-      text-align: right;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-weight: normal !important;
-    }
-    dd {
-      padding-left: 25px;
-      margin-left: 50px;
-    }
+  dt {
+    float: left;
+    width: 70px;
+    clear: left;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: normal !important;
+  }
+  dd {
+    padding-left: 25px;
+    margin-left: 50px;
+  }
+}
+
+.linter-highlight {
+  .region {
+    position: absolute;
+    opacity: 0.50;
+    padding: 0px 2px;
+    margin-left: -2px;
+    box-sizing: content-box;
+  }
+  &.warning .region{
+    background: linear-gradient(to bottom, @warning-color 0%, fadeout(@warning-color, 70%) 20%, fadeout(@warning-color, 70%) 80%, @warning-color 100%);
+    border-left: 2px solid @warning-color;
+    border-right: 2px solid @warning-color;
+  }
+  &.error .region{
+    background: linear-gradient(to bottom, @error-color 0%, fadeout(@error-color, 70%) 20%, fadeout(@error-color, 70%) 80%, @error-color 100%);
+    border-left: 2px solid @error-color;
+    border-right: 2px solid @error-color;
+  }
 }

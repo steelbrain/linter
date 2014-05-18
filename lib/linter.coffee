@@ -1,6 +1,7 @@
 {exec, child} = require 'child_process'
 {XRegExp} = require 'xregexp'
 path = require 'path'
+{Range, Point} = require 'atom'
 
 # The base class for linters.
 # Subclasses must at a minimum define the attributes syntax, cmd, and regex.
@@ -30,7 +31,7 @@ class Linter
 
   isNodeExecutable: no
 
-  constructor: (editor) ->
+  constructor: (@editor) ->
     @cwd = path.dirname(editor.getUri())
 
   getCmd: (filePath) ->
@@ -48,7 +49,9 @@ class Linter
     cmd
 
   getNodeExecutablePath: ->
-    path.join require.resolve('package'), '..', 'apm/node_modules/atom-package-manager/bin/node'
+    path.join require.resolve('package'),
+      '..',
+      'apm/node_modules/atom-package-manager/bin/node'
 
   lintFile: (filePath, callback) ->
     console.log 'linter: run linter command'
@@ -82,7 +85,33 @@ class Linter
       col: match.col,
       level: level,
       message: match.message,
-      linter: @linterName
+      linter: @linterName,
+      range: @computeRange match
     }
+
+  computeRange: (match) ->
+    rowStart = parseInt(match.lineStart ? match.line) - 1
+    rowEnd = parseInt(match.lineEnd ? match.line) - 1
+    match.col ?=  0
+    unless match.colStart
+      position = new Point(rowStart, match.col)
+      scopes = @editor.displayBuffer.tokenizedBuffer.scopesForPosition(position)
+
+      while innerMostScope = scopes.pop()
+        range = @editor
+          .displayBuffer
+            .tokenizedBuffer
+              .bufferRangeForScopeAtPosition(innerMostScope, position)
+        if range?
+          return range
+
+    match.colStart ?= match.col
+    colStart = parseInt(match.colStart ? 0)
+    colEnd = if match.colEnd then parseInt(match.colEnd) else
+      (parseInt(@editor.buffer.lineLengthForRow rowEnd) - 1)
+    return new Range(
+      [rowStart, colStart],
+      [rowEnd, colEnd]
+    )
 
 module.exports = Linter

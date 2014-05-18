@@ -6,16 +6,20 @@ module.exports =
   configDefaults:
     lintOnSave: true
     lintOnModified: true
+    showHightlighting: true
+    showGutters: true
+    showMessagesAroundCursor: true
 
   # Activate the plugin
   activate: ->
     @linterViews = []
-
     @linters = []
-    for atomPackage in atom.packages.getAvailablePackageNames()
-      if atomPackage.match(/^linter-/)
-        if atom.packages.getLoadedPackage(atomPackage).metadata['linter-package'] is true
-          @linters.push(require "#{atom.packages.getLoadedPackage(atomPackage).path}/lib/#{atomPackage}")
+
+    for atomPackage in atom.packages.getLoadedPackages()
+      if atomPackage.metadata['linter-package'] is true
+        implemention =
+          atomPackage.metadata['linter-implementation'] ? atomPackage.name
+        @linters.push(require "#{atomPackage.path}/lib/#{implemention}")
 
     @enabled = true
     @statusBarView = new StatusBarView()
@@ -27,11 +31,18 @@ module.exports =
         console.log 'linter: grammar changed'
         linterView.initLinters(@linters)
         linterView.lint()
+        @linterViews.push(linterView)
 
   injectLinterViewIntoEditorView: (editorView, statusBarView) ->
     return unless editorView.getPane()?
     return unless editorView.attached
     return if editorView.linterView?
-    console.log "editorView.editor.getGrammar().scopeName"+editorView.editor.getGrammar().scopeName
+    console.log "editorView.editor.getGrammar().scopeName" +
+      editorView.editor.getGrammar().scopeName
     linterView = new LinterView editorView, statusBarView, @linters
     linterView
+
+  deactivate: () ->
+    @editorViewSubscription.off()
+    @statusBarView.remove()
+    linterView.remove() for linterView in @linterViews
