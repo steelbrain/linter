@@ -69,7 +69,7 @@ class Linter
     XRegExp.forEach message, regex, (match, i) =>
       console.log match
       messages.push(@createMessage(match))
-    , @
+    , this
     callback messages
 
   createMessage: (match) ->

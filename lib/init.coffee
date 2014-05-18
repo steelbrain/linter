@@ -39,10 +39,10 @@ module.exports =
     return if editorView.linterView?
     console.log "editorView.editor.getGrammar().scopeName" +
       editorView.editor.getGrammar().scopeName
-    linterView = new LinterView editorView, statusBarView, @linters
+    linterView = new LinterView(editorView, statusBarView, @linters)
     linterView
 
-  deactivate: () ->
+  deactivate: ->
     @editorViewSubscription.off()
     @statusBarView.remove()
     linterView.remove() for linterView in @linterViews

@@ -52,6 +52,22 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - linter-oclitnt, for C / C++ / Objective-C, using `OCLint`.
 - linter-clang, for C / C++, using `clang`.
 
+## Contributing
+
+If you're going to submit a pull request, please try to follow
+[the official contribution guidelines of Atom](https://atom.io/docs/latest/contributing).
+
+You need `nodejs` and `grunt-cli` installed before contributing.
+Run `bower install node` then `npm install -g grunt-cli`.
+
+Also, run `$ grunt dev` before any submission and while developing, it will achieves severals tasks:
+
+* Compile and lint the CoffeeScript files
+* Lint the stylesheets
+* Lint any trailing spaces and ensure new line at end of file
+
+You can generate the doc with `$ grunt doc`, it will open in your default browser.
+
 ## Donation
 ![Share the love!](https://chewbacco-stuff.s3.amazonaws.com/donate.png)
 [![donate-paypal](https://s3-eu-west-1.amazonaws.com/chewbacco-stuff/donate-paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KXUYS4ARNHCN8)

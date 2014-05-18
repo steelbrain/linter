@@ -19,7 +19,7 @@ class LinterView
   # Instantiate the views
   #
   # editorView      The editor view
-  constructor: (editorView, statusBarView, linters)->
+  constructor: (editorView, statusBarView, linters) ->
 
     @editor = editorView.editor
     @editorView = editorView
@@ -56,7 +56,7 @@ class LinterView
       grammarName is linter.syntax
         @linters.push(new linter(@editor))
 
-  handleConfigChanges: () ->
+  handleConfigChanges: ->
     @subscriptions.push atom.config.observe 'linter.lintOnSave',
       (lintOnSave) => @lintOnSave = lintOnSave
 
@@ -78,7 +78,7 @@ class LinterView
         @showHightlighting = showHightlighting
         @displayHighlights()
 
-  handleBufferEvents: () =>
+  handleBufferEvents: =>
     buffer = @editor.getBuffer()
 
     @subscriptions.push buffer.on 'saved', (buffer) =>
@@ -109,7 +109,7 @@ class LinterView
             for linter in @linters
               linter.lintFile(info.path, @processMessage)
 
-  processMessage: (messages)=>
+  processMessage: (messages) =>
     @totalProcessed++
     @messages = @messages.concat(messages)
     if @totalProcessed == @linters.length
@@ -118,7 +118,6 @@ class LinterView
 
   display: ->
     @displayGutterMarkers()
-<<<<<<< HEAD
 
     @displayHighlights()
 
@@ -144,14 +143,6 @@ class LinterView
 
   remove: ->
     subscription.off() for subscription in @subscriptions
-=======
-    @displayStatusBar()
 
-  displayGutterMarkers: ->
-    @gutterView.render @messages
-
-  displayStatusBar: ->
-    @statusBarView.render @messages, @editor
->>>>>>> origin/master
 
 module.exports = LinterView
