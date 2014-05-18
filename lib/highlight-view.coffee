@@ -28,7 +28,7 @@ class HighLightView extends View
     for rowIndex in [0..rowSpan]
       row = screenRange.start.row + rowIndex
       if rowIndex == 0
-        columnStart = screenRange.start.column
+        columnStart = screenRange.start.column - 1
       else
         columnStart = 0
       if rowIndex == rowSpan
@@ -59,15 +59,6 @@ class HighLightView extends View
     for region in @regions
       region.remove()
     @regions = []
-
-  getCenterPixelPosition: ->
-    { start, end } = @range
-    startRow = start.row
-    endRow = end.row
-    endRow-- if end.column == 0
-    @editorView.pixelPositionForScreenPosition(
-      [((startRow + endRow + 1) / 2), start.column]
-    )
 
   remove: ->
     @marker.destroy()
