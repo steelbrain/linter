@@ -144,5 +144,4 @@ class LinterView
   remove: ->
     subscription.off() for subscription in @subscriptions
 
-
 module.exports = LinterView
