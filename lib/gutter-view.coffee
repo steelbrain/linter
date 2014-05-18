@@ -12,7 +12,8 @@ class GutterView
 
   render: (messages) ->
     return unless @gutter.isVisible()
-
+    @clear()
+    
     for message in messages
       line = message.range.start.row
       if message.level == 'error'

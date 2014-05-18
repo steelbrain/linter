@@ -6,12 +6,15 @@ module.exports =
   configDefaults:
     lintOnSave: true
     lintOnModified: true
+    showHightlighting: true
+    showGutters: true
+    showMessagesAroundCursor: true
 
   # Activate the plugin
   activate: ->
     @linterViews = []
-
     @linters = []
+
     for atomPackage in atom.packages.getLoadedPackages()
       if atomPackage.metadata['linter-package'] is true
         implemention =
@@ -28,6 +31,7 @@ module.exports =
         console.log 'linter: grammar changed'
         linterView.initLinters(@linters)
         linterView.lint()
+        @linterViews.push(linterView)
 
   injectLinterViewIntoEditorView: (editorView, statusBarView) ->
     return unless editorView.getPane()?
@@ -37,3 +41,8 @@ module.exports =
       editorView.editor.getGrammar().scopeName
     linterView = new LinterView editorView, statusBarView, @linters
     linterView
+
+  deactivate: () ->
+    @editorViewSubscription.off()
+    @statusBarView.remove()
+    linterView.remove() for linterView in @linterViews

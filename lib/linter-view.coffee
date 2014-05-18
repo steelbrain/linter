@@ -14,6 +14,7 @@ class LinterView
   totalProcessed: 0
   tempFile: ''
   messages: []
+  subscriptions: []
 
   # Instantiate the views
   #
@@ -28,18 +29,19 @@ class LinterView
 
     @initLinters(linters)
 
-    atom.workspaceView.on 'pane:active-item-changed', =>
+    @subscriptions.push atom.workspaceView.on 'pane:active-item-changed', =>
       @statusBarView.hide()
       if @editor.id is atom.workspace.getActiveEditor()?.id
-        @dislayStatusBar()
+        @displayStatusBar()
 
     @handleBufferEvents()
+    @handleConfigChanges()
 
-    @editorView.on 'editor:display-updated', =>
-      @gutterView.render @messages
+    @subscriptions.push @editorView.on 'editor:display-updated', =>
+      @displayGutterMarkers()
 
-    @editorView.on 'cursor:moved', =>
-      @statusBarView.render @messages
+    @subscriptions.push @editorView.on 'cursor:moved', =>
+      @displayStatusBar()
 
     @lint()
 
@@ -54,21 +56,43 @@ class LinterView
       grammarName is linter.syntax
         @linters.push(new linter(@editor))
 
+  handleConfigChanges: () ->
+    @subscriptions.push atom.config.observe 'linter.lintOnSave',
+      (lintOnSave) => @lintOnSave = lintOnSave
+
+    @subscriptions.push atom.config.observe 'linter.lintOnModified',
+      (lintOnModified) => @lintOnModified = lintOnModified
+
+    @subscriptions.push atom.config.observe 'linter.showGutters',
+      (showGutters) =>
+        @showGutters = showGutters
+        @displayGutterMarkers()
+
+    @subscriptions.push atom.config.observe 'linter.showMessagesAroundCursor',
+      (showMessagesAroundCursor) =>
+        @showMessagesAroundCursor = showMessagesAroundCursor
+        @displayStatusBar()
+
+    @subscriptions.push atom.config.observe 'linter.showHightlighting',
+      (showHightlighting) =>
+        @showHightlighting = showHightlighting
+        @displayHighlights()
+
   handleBufferEvents: () =>
     buffer = @editor.getBuffer()
 
-    buffer.on 'saved', (buffer) =>
-      if atom.config.get 'linter.lintOnSave'
+    @subscriptions.push buffer.on 'saved', (buffer) =>
+      if @lintOnSave
         if buffer.previousModifiedStatus
           console.log 'linter: lintOnSave'
           @lint()
 
-    buffer.on 'destroyed', ->
+    @subscriptions.push buffer.on 'destroyed', ->
       buffer.off 'saved'
       buffer.off 'destroyed'
 
-    @editor.on 'contents-modified', =>
-      if atom.config.get 'linter.lintOnModified'
+    @subscriptions.push @editor.on 'contents-modified', =>
+      if @lintOnModified
         console.log 'linter: lintOnModified'
         @lint()
 
@@ -84,27 +108,40 @@ class LinterView
           fs.close info.fd, (err) =>
             for linter in @linters
               linter.lintFile(info.path, @processMessage)
-              # console.log 'stderr: ' + stderr
-              # if error is not null
-              #  console.log 'stderr: ' + error
 
   processMessage: (messages)=>
     @totalProcessed++
     @messages = @messages.concat(messages)
     if @totalProcessed == @linters.length
       fs.unlink @tempFile
-    @dislay()
+    @display()
 
-  dislay: ->
-    @dislayGutterMarkers()
-    @HighlightsView.setHighlights(@messages)
+  display: ->
+    @displayGutterMarkers()
 
-    @dislayStatusBar()
+    @displayHighlights()
 
-  dislayGutterMarkers: ->
-    @gutterView.render @messages
+    @displayStatusBar()
 
-  dislayStatusBar: ->
-    @statusBarView.render @messages, @editor
+  displayGutterMarkers: ->
+    if @showGutters
+      @gutterView.render @messages
+    else
+      @gutterView.render []
+
+  displayHighlights: ->
+    if @showHightlighting
+      @HighlightsView.setHighlights(@messages)
+    else
+      @HighlightsView.removeHighlights()
+
+  displayStatusBar: ->
+    if @showMessagesAroundCursor
+      @statusBarView.render @messages, @editor
+    else
+      @statusBarView.render [], @editor
+
+  remove: ->
+    subscription.off() for subscription in @subscriptions
 
 module.exports = LinterView
