@@ -2,7 +2,10 @@ Linter = require './linter'
 LinterView = require './linter-view'
 StatusBarView = require './statusbar-view'
 
-module.exports =
+# Public: linter package initialization, sets up the linter for ussages by atom
+class LinterInitializer
+
+  # Internal: Configuration Option defaults
   configDefaults:
     lintOnSave: true
     lintOnModified: true
@@ -10,7 +13,7 @@ module.exports =
     showGutters: true
     showMessagesAroundCursor: true
 
-  # Activate the plugin
+  # Public: Activate the plugin setting up StatusBarView and dicovering linters
   activate: ->
     @linterViews = []
     @linters = []
@@ -33,6 +36,7 @@ module.exports =
         linterView.lint()
         @linterViews.push(linterView)
 
+  # Internal: add a linter to a new editor view
   injectLinterViewIntoEditorView: (editorView, statusBarView) ->
     return unless editorView.getPane()?
     return unless editorView.attached
@@ -42,7 +46,10 @@ module.exports =
     linterView = new LinterView(editorView, statusBarView, @linters)
     linterView
 
+  # Public: deactivate the plugin and unregister all subscriptions
   deactivate: ->
     @editorViewSubscription.off()
     @statusBarView.remove()
     linterView.remove() for linterView in @linterViews
+
+module.exports = new LinterInitializer()

@@ -3,7 +3,7 @@
 path = require 'path'
 {Range, Point} = require 'atom'
 
-# The base class for linters.
+# Public: The base class for linters.
 # Subclasses must at a minimum define the attributes syntax, cmd, and regex.
 class Linter
 
@@ -16,6 +16,16 @@ class Linter
   cmd: ''
 
   # A regex pattern used to extract information from the executable's output.
+  # regex should construct match results for the following keys
+  #
+  # message: the message to show in the linter views (required)
+  # line: the line number on which to mark error (required if not lineStart)
+  # lineStart: the line number to start the error mark (optional)
+  # lineEnd: the line number on end the error mark (optional)
+  # col: the column on which to mark, will utilize syntax scope to higlight the
+  #      closest matching syntax element based on your code syntax (optional)
+  # colStart: column to on which to start a higlight (optional)
+  # colEnd: column to end highlight (optional)
   regex: ''
 
   regexFlags: ''
@@ -31,9 +41,11 @@ class Linter
 
   isNodeExecutable: no
 
+  # Public: Construct a linter passing it's base editor
   constructor: (@editor) ->
     @cwd = path.dirname(editor.getUri())
 
+  # Private: base command construction used to execute external linter binaries
   getCmd: (filePath) ->
     if /@filename/i.test(@cmd)
       cmd = @cmd.replace('@filename', filePath)
@@ -48,11 +60,17 @@ class Linter
 
     cmd
 
+  # Private: Provide the node executable path for use when executing a node
+  #          linter
   getNodeExecutablePath: ->
     path.join require.resolve('package'),
       '..',
       'apm/node_modules/atom-package-manager/bin/node'
 
+  # Public: Primary entry point for a linter, executes the linter then calls
+  #         processMessage in order to handle standard output
+  #
+  # Override this if you don't intend to use base command execution logic
   lintFile: (filePath, callback) ->
     console.log 'linter: run linter command'
     console.log @getCmd(filePath)
@@ -63,6 +81,11 @@ class Linter
       console.log stdout
       @processMessage(stdout, callback)
 
+  # Private: process the string result of a linter execution using the regex
+  #          as the message builder
+  #
+  # Override this in order to handle message processing in a differen manner
+  # for instance if the linter returns json or xml data
   processMessage: (message, callback) ->
     messages = []
     regex = XRegExp @regex, @regexFlags
@@ -72,6 +95,18 @@ class Linter
     , this
     callback messages
 
+  # Private: create a message from the regex match return
+  #
+  # match - Options used to configure linting messages
+  #   message: the message to show in the linter views (required)
+  #   line: the line number on which to mark error (required if not lineStart)
+  #   lineStart: the line number to start the error mark (optional)
+  #   lineEnd: the line number on end the error mark (optional)
+  #   col: the column on which to mark, will utilize syntax scope to higlight
+  #        the closest matching syntax element based on your code syntax
+  #        (optional)
+  #   colStart: column to on which to start a higlight (optional)
+  #   colEnd: column to end highlight (optional)
   createMessage: (match) ->
     if match.error
       level = 'error'
@@ -89,6 +124,24 @@ class Linter
       range: @computeRange match
     }
 
+  # Private: This is the logic by which we automatically determine the range
+  #          in the buffer that we should highlight for various combinations
+  #          of line, lineStart, lineEnd, col, colStart, and colEnd values
+  #          passed by the regex match.
+  #
+  # It is highly recommended that you utilize this logic if you are not managing
+  # your own range construction logic in your linter
+  #
+  # match - Options used to configure linting messages
+  #   message: the message to show in the linter views (required)
+  #   line: the line number on which to mark error (required if not lineStart)
+  #   lineStart: the line number to start the error mark (optional)
+  #   lineEnd: the line number on end the error mark (optional)
+  #   col: the column on which to mark, will utilize syntax scope to higlight
+  #        the closest matching syntax element based on your code syntax
+  #        (optional)
+  #   colStart: column to on which to start a higlight (optional)
+  #   colEnd: column to end highlight (optional)
   computeRange: (match) ->
     rowStart = parseInt(match.lineStart ? match.line) - 1
     rowEnd = parseInt(match.lineEnd ? match.line) - 1

@@ -71,9 +71,11 @@ module.exports = (grunt) ->
       grunt: files.grunt
       lib: files.lib
       less: files.less
-    # `grunt-docco` configuration
-    groc:
-      src: files.lib.concat files.less, files.grunt
+    # Execute documentation builder biscotto
+    exec:
+      build_docs:
+        command: "./node_modules/.bin/biscotto"
+        cwd: './'
     # `grunt-contrib-connect` configuration
     connect:
       doc:
@@ -82,7 +84,7 @@ module.exports = (grunt) ->
           base: files.doc
           keepalive: yes
           open:
-            target: 'http://localhost:9001/lib/init.html'
+            target: 'http://localhost:9001/index.html'
             app: 'open'
 
   # Load grunt tasks
@@ -91,4 +93,4 @@ module.exports = (grunt) ->
   # Grunt tasks
   # -----------
   grunt.registerTask 'dev', aliases.grunt.concat aliases.lib, aliases.less, 'watch'
-  grunt.registerTask 'doc', ['clean:doc', 'groc', 'connect:doc']
+  grunt.registerTask 'doc', ['clean:doc', 'exec:build_docs', 'connect:doc']

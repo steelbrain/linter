@@ -6,8 +6,8 @@ GutterView = require './gutter-view'
 HighlightsView = require './highlights-view'
 
 temp.track()
-# The base class for linters.
-# Subclasses must at a minimum define the attributes syntax, cmd, and regex.
+
+# Public: The base linter view
 class LinterView
 
   linters: []
@@ -16,9 +16,12 @@ class LinterView
   messages: []
   subscriptions: []
 
-  # Instantiate the views
+  # Pubic: Instantiate the views
   #
-  # editorView      The editor view
+  # editorView - the atom editor view on which to place highlighting and gutter
+  #              annotations
+  # statusBarView - shared StatusBarView between all linters
+  # linters - global linter set to utilize for linting
   constructor: (editorView, statusBarView, linters) ->
 
     @editor = editorView.editor
@@ -45,6 +48,9 @@ class LinterView
 
     @lint()
 
+  # Public: Initialize new linters (used on grammar chagne)
+  #
+  # linters - global linter set to utilize for linting
   initLinters: (linters) ->
     @linters = []
     grammarName = @editor.getGrammar().scopeName
@@ -56,6 +62,7 @@ class LinterView
       grammarName is linter.syntax
         @linters.push(new linter(@editor))
 
+  # Internal: register config modifications handlers
   handleConfigChanges: ->
     @subscriptions.push atom.config.observe 'linter.lintOnSave',
       (lintOnSave) => @lintOnSave = lintOnSave
@@ -78,6 +85,7 @@ class LinterView
         @showHightlighting = showHightlighting
         @displayHighlights()
 
+  # Internal: register handlers for editor buffer events
   handleBufferEvents: =>
     buffer = @editor.getBuffer()
 
@@ -96,6 +104,7 @@ class LinterView
         console.log 'linter: lintOnModified'
         @lint()
 
+  # Public: lint the current file in the editor using the live buffer
   lint: ->
     console.log 'linter: run commands'
     @totalProcessed = 0
@@ -109,6 +118,11 @@ class LinterView
             for linter in @linters
               linter.lintFile(info.path, @processMessage)
 
+  # Internal: Process the messages returned by linters and render them.
+  #
+  # messages - An array of messages to annotate:
+  #           :level  - the annotation error level ('error', 'warning')
+  #           :range - The buffer range that the annotation should be placed
   processMessage: (messages) =>
     @totalProcessed++
     @messages = @messages.concat(messages)
@@ -116,6 +130,7 @@ class LinterView
       fs.unlink @tempFile
     @display()
 
+  # Internal: Render all the linter messages
   display: ->
     @displayGutterMarkers()
 
@@ -123,24 +138,28 @@ class LinterView
 
     @displayStatusBar()
 
+  # Internal: Render gutter markers
   displayGutterMarkers: ->
     if @showGutters
       @gutterView.render @messages
     else
       @gutterView.render []
 
+  # Internal: Render code highlighting for message ranges
   displayHighlights: ->
     if @showHightlighting
       @HighlightsView.setHighlights(@messages)
     else
       @HighlightsView.removeHighlights()
 
+  # Internal: Update the status bar for new messages
   displayStatusBar: ->
     if @showMessagesAroundCursor
       @statusBarView.render @messages, @editor
     else
       @statusBarView.render [], @editor
 
+  # Public: remove this view and unregister all it's subscriptions
   remove: ->
     subscription.off() for subscription in @subscriptions
 
