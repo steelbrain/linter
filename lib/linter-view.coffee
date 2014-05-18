@@ -118,6 +118,7 @@ class LinterView
 
   display: ->
     @displayGutterMarkers()
+<<<<<<< HEAD
 
     @displayHighlights()
 
@@ -143,5 +144,14 @@ class LinterView
 
   remove: ->
     subscription.off() for subscription in @subscriptions
+=======
+    @displayStatusBar()
+
+  displayGutterMarkers: ->
+    @gutterView.render @messages
+
+  displayStatusBar: ->
+    @statusBarView.render @messages, @editor
+>>>>>>> origin/master
 
 module.exports = LinterView
