@@ -69,5 +69,5 @@ Also, run `$ grunt dev` before any submission and while developing, it will achi
 You can generate the doc with `$ grunt doc`, it will open in your default browser.
 
 ## Donation
-![Share the love!](https://chewbacco-stuff.s3.amazonaws.com/donate.png)
+[![Share the love!](https://chewbacco-stuff.s3.amazonaws.com/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KXUYS4ARNHCN8)
 [![donate-paypal](https://s3-eu-west-1.amazonaws.com/chewbacco-stuff/donate-paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KXUYS4ARNHCN8)
