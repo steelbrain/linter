@@ -11,7 +11,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-phpcs](https://atom.io/packages/linter-phpcs), for PHP, using `phpc`
 - [linter-phpmd](https://atom.io/packages/linter-phpmd), for PHP, using `phpmd`
 - [linter-javac](https://atom.io/packages/linter-javac), for Java, using `javac`
-- [linter-jshint](https://atom.io/packages/linter-jshint), for JavaScript, using `jshint`
+- [linter-jshint](https://atom.io/packages/linter-jshint), for JavaScript and JSON, using `jshint`
 - [linter-jscs](https://atom.io/packages/linter-jscs), for JavaScript, using `jscs`
 - [linter-scss-lint](https://atom.io/packages/linter-scss-lint), for SASS/SCSS, using `scss-lint`
 - [linter-coffeelint](https://atom.io/packages/linter-coffeelint), for CoffeeScript, using `coffeelint`
@@ -47,7 +47,6 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - linter-pep8, for python, using `pep8`.
 - linter-lua, for Lua, using `luac -p`.
 - linter-jsxhint, for JSX (React.js), using `jsxhint`.
-- linter-json, for JSON, using `json-lint`.
 - linter-jsl, for JavaScript, using `jsl`.
 - linter-oclitnt, for C / C++ / Objective-C, using `OCLint`.
 - linter-clang, for C / C++, using `clang`.
