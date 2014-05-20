@@ -41,6 +41,8 @@ class Linter
 
   isNodeExecutable: no
 
+  errorStream: 'stdout'
+
   # Public: Construct a linter passing it's base editor
   constructor: (@editor) ->
     @cwd = path.dirname(editor.getUri())
@@ -79,7 +81,10 @@ class Linter
       if stderr
         console.log stderr
       console.log stdout
-      @processMessage(stdout, callback)
+      if @errorStream == 'stdout'
+        @processMessage(stdout, callback)
+      else if @errorStream == 'stderr'
+        @processMessage(stderr, callback)
 
   # Private: process the string result of a linter execution using the regex
   #          as the message builder
