@@ -112,22 +112,22 @@ class LinterView
     @gutterView.clear()
     if @linters.length > 0
       temp.open {suffix: @editor.getGrammar().scopeName}, (err, info) =>
-        @tempFile = info.path
+        info.completedLinters = 0
         fs.write info.fd, @editor.getText(), =>
           fs.close info.fd, (err) =>
             for linter in @linters
-              linter.lintFile(info.path, @processMessage)
+              linter.lintFile(info.path, (messages) => @processMessage(messages, info))
 
   # Internal: Process the messages returned by linters and render them.
   #
   # messages - An array of messages to annotate:
   #           :level  - the annotation error level ('error', 'warning')
   #           :range - The buffer range that the annotation should be placed
-  processMessage: (messages) =>
-    @totalProcessed++
+  processMessage: (messages, tempFileInfo) =>
+    tempFileInfo.completedLinters++
     @messages = @messages.concat(messages)
-    if @totalProcessed == @linters.length
-      fs.unlink @tempFile
+    if tempFileInfo.completedLinters == @linters.length
+      fs.unlink tempFileInfo.path
     @display()
 
   # Internal: Render all the linter messages
