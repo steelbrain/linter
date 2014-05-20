@@ -19,6 +19,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-rubocop](https://atom.io/packages/linter-rubocop), for Ruby, using `rubocop`
 - [linter-tslint](https://atom.io/packages/linter-tslint), for JavaScript, using `tslint`
 - [linter-xmllint](https://atom.io/packages/linter-xmllint), for XML, using `xmllint`
+- [linter-shellcheck](https://atom.io/packages/linter-shellcheck), for Bash, using `shellcheck`.
 
 ## Features
 
@@ -38,7 +39,6 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 ## Coming soon
 
 - linter-pep257, for python, using `pep257`.
-- linter-shellcheck, for Bash, using `shellcheck`.
 - linter-ruby, for ruby, using `ruby -wc`.
 - linter-rst, for reStructuredText, using `docutils`.
 - linter-pylint, for python, using `pylint`.
