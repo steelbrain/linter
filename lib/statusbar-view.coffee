@@ -9,7 +9,7 @@ class StatusBarView extends View
 
   # Render the view
   render: (messages, paneItem) ->
-    atom.workspaceView.prependToBottom(@)
+    atom.workspaceView.prependToBottom(this)
     @hide()
     return unless messages.length > 0
     if not paneItem
@@ -20,8 +20,15 @@ class StatusBarView extends View
     @violations.empty()
     i = 0
     for item in messages
-      if parseInt(item.line) is currentLine and i <= 10
-        @violations.append "<dt><span class=\"highlight-#{item.level}\">#{item.linter}</span></dt><dd>#{item.message}</dd>"
+      if (item.range?.containsPoint?(position) or
+      not item.range? and parseInt(item.line) is currentLine) and
+      i <= 10
+        @violations.append "<dt>
+            <span class=\"highlight-#{item.level}\">
+              #{item.linter}
+            </span>
+          </dt>
+          <dd>#{item.message}</dd>"
         @show()
         i++
 
