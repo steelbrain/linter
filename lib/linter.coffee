@@ -58,7 +58,7 @@ class Linter
       cmd = "#{@executablePath}/#{cmd}"
 
     if @isNodeExecutable
-      cmd = "#{@getNodeExecutablePath()} #{cmd}"
+      cmd = "'#{@getNodeExecutablePath()}' #{cmd}"
 
     cmd
 
