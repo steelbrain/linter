@@ -166,7 +166,7 @@ class Linter
     match.colStart ?= match.col
     colStart = parseInt(match.colStart ? 0)
     colEnd = if match.colEnd then parseInt(match.colEnd) else
-      (parseInt(@editor.buffer.lineLengthForRow rowEnd) - 1)
+      (parseInt(@editor.lineLengthForBufferRow rowEnd))
     return new Range(
       [rowStart, colStart],
       [rowEnd, colEnd]
