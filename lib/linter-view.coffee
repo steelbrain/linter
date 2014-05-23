@@ -15,6 +15,7 @@ class LinterView
   tempFile: ''
   messages: []
   subscriptions: []
+  modifiedTimeout: null
 
   # Pubic: Instantiate the views
   #
@@ -101,8 +102,12 @@ class LinterView
 
     @subscriptions.push @editor.on 'contents-modified', =>
       if @lintOnModified
-        console.log 'linter: lintOnModified'
-        @lint()
+        if @modifiedTimeout? then clearTimeout(@modifiedTimeout)
+        
+        @modifiedTimeout = setTimeout(
+          (=> console.log 'linter: lintOnModified'; @lint()),
+          750
+        )
 
   # Public: lint the current file in the editor using the live buffer
   lint: ->
