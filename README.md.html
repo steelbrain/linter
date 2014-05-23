@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>CoffeeScript API Documentation</title>
+  <link rel='stylesheet' href='assets/biscotto.css' type='text/css'>
+  <script src='assets/biscotto.js'></script>
+  <script src='assets/search_data.js'></script>
+</head>
+  <body>
+    <div id='base' data-path=''></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='README.md.html' title='Linter'>Linter</a>
+    &raquo;
+    <a href='class_index.html' title='Index'>Index</a>
+    &raquo;
+    <span class='title'>README.md</span>
+    <nav>
+      <ul>
+        <li class='noframes'>
+          (<a class='noframes' href='#'>no frames</a>)
+        </li>
+      </ul>
+    </nav>
+    <div id='search'>
+      <a id='class_list_link' href='class_list.html'>Classes</a>
+      <a id='method_list_link' href='method_list.html'>Methods</a>
+      <a id='extra_list_link' href='extra_list.html'>Extras</a>
+    </div>
+  </div>
+  <iframe id='search_frame'></iframe>
+  <div id='fuzzySearch'>
+    <input type='text'>
+    <ol></ol>
+  </div>
+  <div id='help'>
+    <p>
+      Quickly fuzzy find classes, mixins, methods, file:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-T</span>
+        Open fuzzy finder dialog
+      </li>
+    </ul>
+    <p>
+      In frame mode you can toggle the list naviation frame on the left side:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-L</span>
+        Toggle list view
+      </li>
+    </ul>
+    <p>
+      You can focus a list in frame mode or toggle a tab in frameless mode:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-C</span>
+        Class list
+      </li>
+      <li>
+        <span>Ctrl-I</span>
+        Mixin list
+      </li>
+      <li>
+        <span>Ctrl-F</span>
+        File list
+      </li>
+      <li>
+        <span>Ctrl-M</span>
+        Method list
+      </li>
+      <li>
+        <span>Ctrl-E</span>
+        Extras list
+      </li>
+    </ul>
+    <p>
+      You can focus and blur the search input:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-S</span>
+        Focus search input
+      </li>
+      <li>
+        <span>Esc</span>
+        Blur search input
+      </li>
+    </ul>
+    <p>
+      In frameless mode you can close the list tab:
+    </p>
+    <ul>
+      <li>
+        <span>Esc</span>
+        Close list tab
+      </li>
+    </ul>
+  </div>
+</div>
+    <div id='content'>
+      <nav class='toc'>
+        <p class='title'>
+          <a class='hide_toc' href='#'>
+            <strong>Table of Contents</strong>
+          </a>
+          <small>
+            (<a class='float_toc' href='#'>left</a>)
+          </small>
+        </p>
+      </nav>
+      <div id='filecontents'>
+        <h1 id="linter">Linter</h1><p>Lint your code with ease in <a href="http://atom.io">Atom</a>.</p><p><img src="https://github.com/AtomLinter/linter-jscs/raw/master/example.gif" alt="linter-jscs"></p><p>The idea is to stop the linter plugins war, by providing a top level API for linters to parse and display errors in the Atom editor.</p><h2 id="available-linters">Available linters</h2>
+<ul>
+<li><a href="https://atom.io/packages/linter-php">linter-php</a>, for PHP using <code>php -l</code></li>
+<li><a href="https://atom.io/packages/linter-phpcs">linter-phpcs</a>, for PHP, using <code>phpc</code></li>
+<li><a href="https://atom.io/packages/linter-phpmd">linter-phpmd</a>, for PHP, using <code>phpmd</code></li>
+<li><a href="https://atom.io/packages/linter-javac">linter-javac</a>, for Java, using <code>javac</code></li>
+<li><a href="https://atom.io/packages/linter-jshint">linter-jshint</a>, for JavaScript, using <code>jshint</code></li>
+<li><a href="https://atom.io/packages/linter-jscs">linter-jscs</a>, for JavaScript, using <code>jscs</code></li>
+<li><a href="https://atom.io/packages/linter-scss-lint">linter-scss-lint</a>, for SASS/SCSS, using <code>scss-lint</code></li>
+<li><a href="https://atom.io/packages/linter-coffeelint">linter-coffeelint</a>, for CoffeeScript, using <code>coffeelint</code></li>
+<li><a href="https://atom.io/packages/linter-csslint">linter-csslint</a>, for CSS, using <code>csslint</code></li>
+<li><a href="https://atom.io/packages/linter-rubocop">linter-rubocop</a>, for Ruby, using <code>rubocop</code></li>
+<li><a href="https://atom.io/packages/linter-tslint">linter-tslint</a>, for JavaScript, using <code>tslint</code></li>
+<li><a href="https://atom.io/packages/linter-xmllint">linter-xmllint</a>, for XML, using <code>xmllint</code></li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Lint on edit</strong> – Instant error reporting for you! (And it&#39;s fast!)</li>
+<li><strong>Modular</strong> – You install only the linters you need.</li>
+<li><strong>Active</strong> – New linters are out every week.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<ol>
+<li><code>$ apm install linter</code> – Install the main package.</li>
+<li><code>$ apm install linter-jshint</code> – Install the linter you need, here <code>jshint</code>.</li>
+</ol>
+<h2 id="commons-errors">Commons errors</h2>
+<ul>
+<li><code>env: node: No such file or directory</code> – There&#39;s a problem with your node path – <a href="http://stackoverflow.com/a/20077620">check this</a>.</li>
+</ul>
+<h2 id="coming-soon">Coming soon</h2>
+<ul>
+<li>linter-pep257, for python, using <code>pep257</code>.</li>
+<li>linter-shellcheck, for Bash, using <code>shellcheck</code>.</li>
+<li>linter-ruby, for ruby, using <code>ruby -wc</code>.</li>
+<li>linter-rst, for reStructuredText, using <code>docutils</code>.</li>
+<li>linter-pylint, for python, using <code>pylint</code>.</li>
+<li>linter-pyflakes, for python, using <code>pyflakes</code>.</li>
+<li>linter-phplint, for PHP, using <code>phplint</code>.</li>
+<li>linter-pep8, for python, using <code>pep8</code>.</li>
+<li>linter-lua, for Lua, using <code>luac -p</code>.</li>
+<li>linter-jsxhint, for JSX (React.js), using <code>jsxhint</code>.</li>
+<li>linter-json, for JSON, using <code>json-lint</code>.</li>
+<li>linter-jsl, for JavaScript, using <code>jsl</code>.</li>
+<li>linter-oclitnt, for C / C++ / Objective-C, using <code>OCLint</code>.</li>
+<li>linter-clang, for C / C++, using <code>clang</code>.</li>
+</ul>
+<h2 id="contributing">Contributing</h2><p>If you&#39;re going to submit a pull request, please try to follow
+<a href="https://atom.io/docs/latest/contributing">the official contribution guidelines of Atom</a>.</p><p>You need <code>nodejs</code> and <code>grunt-cli</code> installed before contributing.
+Run <code>bower install node</code> then <code>npm install -g grunt-cli</code>.</p><p>Also, run <code>$ grunt dev</code> before any submission and while developing, it will achieves severals tasks:</p><ul>
+<li>Compile and lint the CoffeeScript files</li>
+<li>Lint the stylesheets</li>
+<li>Lint any trailing spaces and ensure new line at end of file</li>
+</ul><p>You can generate the doc with <code>$ grunt doc</code>, it will open in your default browser.</p><h2 id="donation">Donation</h2><p><img src="https://chewbacco-stuff.s3.amazonaws.com/donate.png" alt="Share the love!">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=KXUYS4ARNHCN8"><img src="https://s3-eu-west-1.amazonaws.com/chewbacco-stuff/donate-paypal.png" alt="donate-paypal"></a></p>
+      </div>
+    </div>
+    <div id='footer'>
+  Generated on
+  Thu May 22 2014 23:11:51 GMT-0700 (PDT)
+  by
+  <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
+  v2.1.1
+  (Node.js v0.10.28).
+  &#10034;
+  Press Ctrl-h to see the keyboard shortcuts
+</div>
+  </body>
+</html>
