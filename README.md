@@ -36,7 +36,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 * `env: node: No such file or directory` – There's a problem with your node path – [check this](http://stackoverflow.com/a/20077620).
 
 ## Documentation
-http://atomlinter.github.io/linter/
+http://atomlinter.github.io/Linter/
 
 ## Coming soon
 
