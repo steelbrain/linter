@@ -1,7 +1,8 @@
-{exec, child} = require 'child_process'
+{child} = require 'child_process'
 {XRegExp} = require 'xregexp'
 path = require 'path'
 {Range, Point} = require 'atom'
+exec = require './exec.coffee'
 
 # Public: The base class for linters.
 # Subclasses must at a minimum define the attributes syntax, cmd, and regex.
@@ -75,9 +76,12 @@ class Linter
   # Override this if you don't intend to use base command execution logic
   lintFile: (filePath, callback) ->
     console.log 'linter: run linter command'
-    console.log @getCmd(filePath)
+    command = @getCmd(filePath)
+    command = @getNodeExecutablePath()
+    args = "#{@executablePath}/#{@cmd}".split(' ').concat [filePath]
+    console.log command, args
     console.log @cwd
-    exec @getCmd(filePath), {cwd: @cwd}, (error, stdout, stderr) =>
+    exec command, args, {cwd: @cwd}, (code, stdout, stderr) =>
       if stderr
         console.log stderr
       console.log stdout
