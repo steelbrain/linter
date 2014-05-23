@@ -89,11 +89,10 @@ class LinterView
   handleBufferEvents: =>
     buffer = @editor.getBuffer()
 
-    @subscriptions.push buffer.on 'saved', (buffer) =>
+    @subscriptions.push buffer.on 'reloaded saved', (buffer) =>
       if @lintOnSave
-        if buffer.previousModifiedStatus
-          console.log 'linter: lintOnSave'
-          @lint()
+        console.log 'linter: lintOnSave'
+        @lint()
 
     @subscriptions.push buffer.on 'destroyed', ->
       buffer.off 'saved'
