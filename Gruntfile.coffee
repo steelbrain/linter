@@ -64,6 +64,11 @@ module.exports = (grunt) ->
     clean:
       tmp: files.tmp
       doc: files.doc
+    # `grunt-gh-pages` configuration
+    'gh-pages':
+      options:
+        base: "doc"
+      src: ['**']
     # `grunt-lintspaces` configuration
     lintspaces:
       options:
@@ -93,4 +98,6 @@ module.exports = (grunt) ->
   # Grunt tasks
   # -----------
   grunt.registerTask 'dev', aliases.grunt.concat aliases.lib, aliases.less, 'watch'
-  grunt.registerTask 'doc', ['clean:doc', 'exec:build_docs', 'connect:doc']
+  grunt.registerTask 'doc', ['doc-build', 'connect:doc']
+  grunt.registerTask 'doc-build', ['clean:doc', 'exec:build_docs']
+  grunt.registerTask 'publish-doc', ['doc-build', 'gh-pages']
