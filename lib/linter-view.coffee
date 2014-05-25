@@ -109,6 +109,7 @@ class LinterView
     @totalProcessed = 0
     @messages = []
     @gutterView.clear()
+    @HighlightsView.removeHighlights()
     if @linters.length > 0
       temp.open {suffix: @editor.getGrammar().scopeName}, (err, info) =>
         info.completedLinters = 0
