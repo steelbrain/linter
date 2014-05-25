@@ -95,7 +95,7 @@ class LinterView
         @lint()
 
     @subscriptions.push buffer.on 'destroyed', ->
-      buffer.off 'saved'
+      buffer.off 'reloaded saved'
       buffer.off 'destroyed'
 
     @subscriptions.push @editor.on 'contents-modified', =>
