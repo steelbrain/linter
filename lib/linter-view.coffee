@@ -1,7 +1,10 @@
-{exec, child} = require 'child_process'
 fs = require 'fs'
 temp = require 'temp'
+{exec, child} = require 'child_process'
+
+_ = require 'underscore'
 {XRegExp} = require 'xregexp'
+
 GutterView = require './gutter-view'
 HighlightsView = require './highlights-view'
 
@@ -90,18 +93,20 @@ class LinterView
     buffer = @editor.getBuffer()
 
     @subscriptions.push buffer.on 'reloaded saved', (buffer) =>
-      if @lintOnSave
-        console.log 'linter: lintOnSave'
-        @lint()
+      @lint() if @lintOnSave
 
     @subscriptions.push buffer.on 'destroyed', ->
       buffer.off 'reloaded saved'
       buffer.off 'destroyed'
 
+    # Create throttled version of `@lint`
+    # It will lint the file only with an interval between every lint
+    interval = atom.config.get 'linter.Lint on modified interval (in ms)'
+    # If text instead of number into user config
+    interval = 1000 unless isNaN parseInt(interval)
+    throttledLint = _.throttle @lint, interval
     @subscriptions.push @editor.on 'contents-modified', =>
-      if @lintOnModified
-        console.log 'linter: lintOnModified'
-        @lint()
+      _.bind(throttledLint, this)() if @lintOnModified
 
   # Public: lint the current file in the editor using the live buffer
   lint: ->
