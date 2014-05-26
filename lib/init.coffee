@@ -13,6 +13,7 @@ class LinterInitializer
     showGutters: true
     showMessagesAroundCursor: true
     'Lint on modify interval (in ms)': 1000
+    showStatusBarWhenCursorOnErrorRange: false
 
   # Public: Activate the plugin setting up StatusBarView and dicovering linters
   activate: ->
