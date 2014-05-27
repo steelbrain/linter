@@ -13,6 +13,7 @@ class LinterInitializer
     showGutters: true
     showMessagesAroundCursor: true
     'Lint on modify interval (in ms)': 1000
+    'Show Status Bar when cursor is in error range': false
 
   # Public: Activate the plugin setting up StatusBarView and dicovering linters
   activate: ->
@@ -21,8 +22,7 @@ class LinterInitializer
 
     for atomPackage in atom.packages.getLoadedPackages()
       if atomPackage.metadata['linter-package'] is true
-        implemention =
-          atomPackage.metadata['linter-implementation'] ? atomPackage.name
+        implemention = atomPackage.metadata['linter-implementation'] ? atomPackage.name
         @linters.push(require "#{atomPackage.path}/lib/#{implemention}")
 
     @enabled = true
