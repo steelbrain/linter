@@ -1,3 +1,4 @@
+_ = require 'lodash'
 fs = require 'fs'
 temp = require 'temp'
 {exec, child} = require 'child_process'
@@ -6,7 +7,6 @@ temp = require 'temp'
 
 GutterView = require './gutter-view'
 HighlightsView = require './highlights-view'
-_ = require 'lodash'
 
 temp.track()
 
@@ -75,7 +75,7 @@ class LinterView
         # If text instead of number into user config
         debounceInterval = parseInt(lintOnModifiedDelayMS)
         debounceInterval = 1000 if isNaN debounceInterval
-        console.log(debounceInterval)
+        # create debounced lint command
         @debouncedLint = (_.debounce @lint, debounceInterval).bind this
 
     @subscriptions.push atom.config.observe 'linter.lintOnModified',
