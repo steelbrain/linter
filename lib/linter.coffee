@@ -124,6 +124,19 @@ class Linter
       range: @computeRange match
     }
 
+
+  lineLengthForRow: (row) ->
+    return @editor.lineLengthForBufferRow row
+
+  getEditorScopesForPosition: (position) ->
+    return @editor.displayBuffer.tokenizedBuffer.scopesForPosition(position)
+
+  getGetRangeForScopeAtPosition: (innerMostScope, position) ->
+    return @editor
+      .displayBuffer
+        .tokenizedBuffer
+          .bufferRangeForScopeAtPosition(innerMostScope, position)
+
   # Private: This is the logic by which we automatically determine the range
   #          in the buffer that we should highlight for various combinations
   #          of line, lineStart, lineEnd, col, colStart, and colEnd values
@@ -154,21 +167,16 @@ class Linter
     match.col ?=  0
     unless match.colStart
       position = new Point(rowStart, match.col)
-      scopes = @editor.displayBuffer.tokenizedBuffer.scopesForPosition(position)
+      scopes = @getEditorScopesForPosition(position)
 
       while innerMostScope = scopes.pop()
-        range = @editor
-          .displayBuffer
-            .tokenizedBuffer
-              .bufferRangeForScopeAtPosition(innerMostScope, position)
+        range = @getGetRangeForScopeAtPosition(innerMostScope, position)
         if range?
           return range
 
     match.colStart ?= match.col
     colStart = parseInt(match.colStart ? 0)
-    colEnd = if match.colEnd then parseInt(match.colEnd) else
-      (parseInt(@editor.lineLengthForBufferRow rowEnd))
-
+    colEnd = if match.colEnd then parseInt(match.colEnd) else parseInt(@lineLengthForRow(rowEnd))
     return new Range(
       [rowStart, colStart],
       [rowEnd, colEnd]
