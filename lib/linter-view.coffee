@@ -112,7 +112,6 @@ class LinterView
 
   # Public: lint the current file in the editor using the live buffer
   lint: ->
-    console.log 'linter: run commands'
     @totalProcessed = 0
     @messages = []
     @gutterView.clear()

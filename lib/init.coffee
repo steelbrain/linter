@@ -32,7 +32,6 @@ class LinterInitializer
     @editorViewSubscription = atom.workspaceView.eachEditorView (editorView) =>
       linterView = @injectLinterViewIntoEditorView(editorView, @statusBarView)
       editorView.editor.on 'grammar-changed', =>
-        console.log 'linter: grammar changed'
         linterView.initLinters(@linters)
         linterView.lint()
         @linterViews.push(linterView)
@@ -42,8 +41,7 @@ class LinterInitializer
     return unless editorView.getPane()?
     return unless editorView.attached
     return if editorView.linterView?
-    console.log "editorView.editor.getGrammar().scopeName" +
-      editorView.editor.getGrammar().scopeName
+
     linterView = new LinterView(editorView, statusBarView, @linters)
     linterView
 
