@@ -1,0 +1,57 @@
+Linter = require "../lib/linter.coffee"
+sinon = require "sinon"
+
+{Range, Point} = require 'atom'
+
+describe "Linter::computeRange", ->
+  [linter, scopesForPosition, rangeForScopeAtPosition, lineLengthForRow] = []
+
+  beforeEach ->
+    linter = new Linter({getUri: -> "path"})
+    scopesForPosition = sinon.stub linter, "getEditorScopesForPosition"
+    rangeForScopeAtPosition = sinon.stub linter, "getGetRangeForScopeAtPosition"
+    lineLengthForRow = sinon.stub linter, "lineLengthForRow"
+
+  it "should return a complete range if all parameters provided, line numbers switched to zero index", ->
+    range = linter.computeRange(
+      colStart: "1",
+      colEnd: "3",
+      lineStart: "1",
+      lineEnd: "2"
+    )
+    expect(range.serialize()).toEqual([[0, 1], [1, 3]])
+
+  it "should support only getting a line number", ->
+    range = linter.computeRange(
+      colStart: "1",
+      colEnd: "3",
+      line: "1"
+    )
+    expect(range.serialize()).toEqual([[0, 1], [0, 3]])
+
+  it "should support only getting a col number and retrieve range based on scope", ->
+    scopesForPosition.returns(["scope.function"])
+    rangeForScopeAtPosition.returns(new Range([0, 3], [2, 3]))
+
+    range = linter.computeRange(
+      col: "1",
+      line: "1"
+    )
+
+    sinon.assert.calledWith rangeForScopeAtPosition, "scope.function"
+
+    expect(range.serialize()).toEqual([[0, 3], [2, 3]])
+
+
+  it "should support only getting a col number and use full line when no scope is found", ->
+    scopesForPosition.returns([])
+    lineLengthForRow.returns(20)
+
+    range = linter.computeRange(
+      col: "1",
+      line: "1"
+    )
+
+    sinon.assert.notCalled rangeForScopeAtPosition
+    sinon.assert.calledWith lineLengthForRow, 0
+    expect(range.serialize()).toEqual([[0, 1], [0, 20]])
