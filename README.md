@@ -21,6 +21,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-tslint](https://atom.io/packages/linter-tslint), for Typescript, using `tslint`
 - [linter-xmllint](https://atom.io/packages/linter-xmllint), for XML, using `xmllint`
 - [linter-shellcheck](https://atom.io/packages/linter-shellcheck), for Bash, using `shellcheck`.
+- [linter-scalac](https://atom.io/packages/linter-scalac), for Scala, using `scalac`.
 
 ## Features
 
