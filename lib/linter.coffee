@@ -1,7 +1,8 @@
-{exec, child} = require 'child_process'
+{child} = require 'child_process'
 {XRegExp} = require 'xregexp'
 path = require 'path'
 {Range, Point} = require 'atom'
+exec = require './exec.coffee'
 
 # Public: The base class for linters.
 # Subclasses must at a minimum define the attributes syntax, cmd, and regex.
@@ -47,20 +48,29 @@ class Linter
   constructor: (@editor) ->
     @cwd = path.dirname(editor.getUri())
 
-  # Private: base command construction used to execute external linter binaries
-  getCmd: (filePath) ->
-    if /@filename/i.test(@cmd)
-      cmd = @cmd.replace('@filename', filePath)
-    else
-      cmd = "#{@cmd} #{filePath}"
+  # Private: get command and args for child_process.spawn for execution
+  getCmdAndArgs: (filePath) ->
+    cmd = @cmd
+
+    # if `cmd` contains "@filename" placeholder, replace it with real file path
+    if /@filename/i.test(cmd)
+      cmd = cmd.replace(/@filename/gi, filePath)
+
+    # here guarantee `cmd` does not have space or quote mark issue
+    cmd_list = cmd.split(' ').concat [filePath]
 
     if @executablePath
-      cmd = "#{@executablePath}/#{cmd}"
+      cmd_list[0] = "#{@executablePath}/#{cmd_list[0]}"
 
     if @isNodeExecutable
-      cmd = "#{@getNodeExecutablePath()} #{cmd}"
+      cmd_list = [@getNodeExecutablePath()].concat cmd_list
 
-    cmd
+    console.log cmd_list
+
+    {
+      command: cmd_list[0],
+      args: cmd_list.slice(1)
+    }
 
   # Private: Provide the node executable path for use when executing a node
   #          linter
@@ -75,9 +85,10 @@ class Linter
   # Override this if you don't intend to use base command execution logic
   lintFile: (filePath, callback) ->
     console.log 'linter: run linter command'
-    console.log @getCmd(filePath)
+    {command, args} = @getCmdAndArgs(filePath)
+    console.log command, args
     console.log @cwd
-    exec @getCmd(filePath), {cwd: @cwd}, (error, stdout, stderr) =>
+    exec command, args, {cwd: @cwd}, (code, stdout, stderr) =>
       if stderr
         console.log stderr
       console.log stdout
