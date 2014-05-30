@@ -73,7 +73,7 @@ class LinterView
     @subscriptions.push atom.config.observe 'linter.lintOnSave',
       (lintOnSave) => @lintOnSave = lintOnSave
 
-    @subscriptions.push atom.config.observe 'linter.lintOnModifyDebounceInterval',
+    @subscriptions.push atom.config.observe 'linter.lintOnChangeInterval',
       (lintOnModifiedDelayMS) =>
         # If text instead of number into user config
         debounceInterval = parseInt(lintOnModifiedDelayMS)
@@ -81,7 +81,7 @@ class LinterView
         # create debounced lint command
         @debouncedLint = (_.debounce @lint, debounceInterval).bind this
 
-    @subscriptions.push atom.config.observe 'linter.lintOnModified',
+    @subscriptions.push atom.config.observe 'linter.lintOnChange',
       (lintOnModified) => @lintOnModified = lintOnModified
 
     @subscriptions.push atom.config.observe 'linter.showGutters',
@@ -89,7 +89,7 @@ class LinterView
         @showGutters = showGutters
         @displayGutterMarkers()
 
-    @subscriptions.push atom.config.observe 'linter.showMessagesAroundCursor',
+    @subscriptions.push atom.config.observe 'linter.showErrorInStatusBar',
       (showMessagesAroundCursor) =>
         @showMessagesAroundCursor = showMessagesAroundCursor
         @displayStatusBar()
