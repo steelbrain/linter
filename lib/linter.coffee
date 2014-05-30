@@ -119,7 +119,7 @@ class Linter
       level = 'warning'
     else
       level = @defaultLevel
-      
+
     return {
       line: match.line,
       col: match.col,
