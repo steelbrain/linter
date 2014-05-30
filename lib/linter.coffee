@@ -74,13 +74,9 @@ class Linter
   #
   # Override this if you don't intend to use base command execution logic
   lintFile: (filePath, callback) ->
-    console.log 'linter: run linter command'
-    console.log @getCmd(filePath)
-    console.log @cwd
     exec @getCmd(filePath), {cwd: @cwd}, (error, stdout, stderr) =>
       if stderr
-        console.log stderr
-      console.log stdout
+        console.warn stderr
       if @errorStream == 'stdout'
         @processMessage(stdout, callback)
       else if @errorStream == 'stderr'
@@ -95,7 +91,6 @@ class Linter
     messages = []
     regex = XRegExp @regex, @regexFlags
     XRegExp.forEach message, regex, (match, i) =>
-      console.log match
       messages.push(@createMessage(match))
     , this
     callback messages
