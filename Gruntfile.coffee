@@ -49,9 +49,10 @@ module.exports = (grunt) ->
       less: files.less
       options:
         csslint:
-          'important': false,
-          'box-sizing': false,
+          'important': false
+          'box-sizing': false
           'adjoining-classes': false
+          'fallback-colors': false
     # `grunt-contrib-coffee` configuration
     coffee:
       lib:
