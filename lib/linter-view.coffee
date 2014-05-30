@@ -35,6 +35,9 @@ class LinterView
 
     @initLinters(linters)
 
+    @subscriptions.push atom.workspaceView.on 'pane:item-removed', =>
+      @statusBarView.hide()
+
     @subscriptions.push atom.workspaceView.on 'pane:active-item-changed', =>
       @statusBarView.hide()
       if @editor.id is atom.workspace.getActiveEditor()?.id
