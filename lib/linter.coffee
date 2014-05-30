@@ -150,6 +150,12 @@ class Linter
   computeRange: (match) ->
     rowStart = parseInt(match.lineStart ? match.line) - 1
     rowEnd = parseInt(match.lineEnd ? match.line) - 1
+
+    # some linters utilize line 0 to denote full file errors, position these
+    # errors on line 1
+    if (rowStart == -1)
+      rowStart = rowEnd = 0
+
     match.col ?=  0
     unless match.colStart
       position = new Point(rowStart, match.col)
@@ -167,9 +173,11 @@ class Linter
     colStart = parseInt(match.colStart ? 0)
     colEnd = if match.colEnd then parseInt(match.colEnd) else
       (parseInt(@editor.lineLengthForBufferRow rowEnd))
+
     return new Range(
       [rowStart, colStart],
       [rowEnd, colEnd]
     )
+
 
 module.exports = Linter
