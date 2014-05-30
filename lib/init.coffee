@@ -12,8 +12,8 @@ class LinterInitializer
     showHightlighting: true
     showGutters: true
     showMessagesAroundCursor: true
-    'Lint on modify debounce interval (in ms)': 1000
-    'Show Status Bar when cursor is in error range': false
+    lintOnModifyDebounceInterval: 1000
+    showStatusBarWhenCursorIsInErrorRange: false
 
   # Public: Activate the plugin setting up StatusBarView and dicovering linters
   activate: ->

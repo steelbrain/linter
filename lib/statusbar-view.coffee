@@ -13,7 +13,7 @@ class StatusBarView extends View
 
     # Config value if you want to limit the status bar report
     # if your cursor is in the range or error, or on the line
-    limitOnErrorRange = atom.config.get 'linter.Show Status Bar when cursor is in error range'
+    limitOnErrorRange = atom.config.get 'linter.showStatusBarWhenCursorIsInErrorRange'
 
     # Hide the last version of this view
     @hide()

@@ -70,7 +70,7 @@ class LinterView
     @subscriptions.push atom.config.observe 'linter.lintOnSave',
       (lintOnSave) => @lintOnSave = lintOnSave
 
-    @subscriptions.push atom.config.observe 'linter.Lint on modify debounce interval (in ms)',
+    @subscriptions.push atom.config.observe 'linter.lintOnModifyDebounceInterval',
       (lintOnModifiedDelayMS) =>
         # If text instead of number into user config
         debounceInterval = parseInt(lintOnModifiedDelayMS)
