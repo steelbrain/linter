@@ -76,7 +76,7 @@ class LinterView
         debounceInterval = parseInt(lintOnModifiedDelayMS)
         debounceInterval = 1000 if isNaN debounceInterval
         # create debounced lint command
-        @debouncedLint = (_.debounce @lint, debounceInterval).bind this
+        @debouncedLint = (_.throttle @lint, debounceInterval).bind this
 
     @subscriptions.push atom.config.observe 'linter.lintOnModified',
       (lintOnModified) => @lintOnModified = lintOnModified
