@@ -34,6 +34,16 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 1. `$ apm install linter` – Install the main package.
 2. `$ apm install linter-jshint` – Install the linter you need, here `jshint`.
 
+## Configuration
+
+* **Lint on save** [On / Off] - Lint the file when you save it
+* **Lint on change** [On / Off] - Lint the file as you type
+* **Show hightlighting** [On / Off] - Highlight the range of wrong code
+* **Show gutters**: [On / Off] - Show dot in the gutter on line error
+* **Show messages around cursor** [On / Off] - Show error description in the status bar
+* **Show status bar when cursor is in error range** [On / Off] - Either show status bar when the cursor is on the error line, or show it when the cursor is focus the range of wrong code
+* **Lint on change interval** [in ms] - Interval between two lints while you are writing code
+
 ## Commons errors
 
 * `env: node: No such file or directory` – There's a problem with your node path – [check this](http://stackoverflow.com/a/20077620).

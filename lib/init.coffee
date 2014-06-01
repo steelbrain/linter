@@ -8,11 +8,11 @@ class LinterInitializer
   # Internal: Configuration Option defaults
   configDefaults:
     lintOnSave: true
-    lintOnModified: true
+    lintOnChange: true
     showHightlighting: true
     showGutters: true
-    showMessagesAroundCursor: true
-    lintOnModifyDebounceInterval: 1000
+    showErrorInStatusBar: true
+    lintOnChangeInterval: 1000
     showStatusBarWhenCursorIsInErrorRange: false
 
   # Public: Activate the plugin setting up StatusBarView and dicovering linters
