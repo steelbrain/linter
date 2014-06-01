@@ -52,8 +52,6 @@ class LinterView
     @subscriptions.push @editorView.on 'cursor:moved', =>
       @displayStatusBar()
 
-    @lint()
-
   # Public: Initialize new linters (used on grammar chagne)
   #
   # linters - global linter set to utilize for linting
