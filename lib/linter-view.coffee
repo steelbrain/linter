@@ -118,7 +118,7 @@ class LinterView
 
     @subscriptions.push atom.workspaceView.on 'pane:active-item-changed', =>
       if @editor.id is atom.workspace.getActiveEditor()?.id
-        @lint() if @lintOnEditorFocus
+        @debouncedLint() if @lintOnEditorFocus
 
   # Public: lint the current file in the editor using the live buffer
   lint: ->
