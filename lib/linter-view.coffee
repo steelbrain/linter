@@ -102,7 +102,7 @@ class LinterView
     buffer = @editor.getBuffer()
 
     @subscriptions.push buffer.on 'reloaded saved', (buffer) =>
-      @lint() if @lintOnSave
+      @debouncedLint() if @lintOnSave
 
     @subscriptions.push buffer.on 'destroyed', ->
       buffer.off 'reloaded saved'
