@@ -11,6 +11,7 @@
     "node": ">= 0.10.0"
   },
   "dependencies": {
+    "copy-paste": "^0.2.2",
     "emissary": "^1.0.0",
     "font-awesome": "4.0.3",
     "jshint": "^2.4.4",
