@@ -84,6 +84,9 @@ class LinterView
     @subscriptions.push atom.config.observe 'linter.lintOnChange',
       (lintOnModified) => @lintOnModified = lintOnModified
 
+    @subscriptions.push atom.config.observe 'linter.lintOnFocus',
+      (lintOnFocus) => @lintOnFocus = lintOnFocus
+
     @subscriptions.push atom.config.observe 'linter.showGutters',
       (showGutters) =>
         @showGutters = showGutters
@@ -112,6 +115,10 @@ class LinterView
 
     @subscriptions.push @editor.on 'contents-modified', =>
       @debouncedLint() if @lintOnModified
+
+    @subscriptions.push atom.workspaceView.on 'pane:active-item-changed', =>
+      if @editor.id is atom.workspace.getActiveEditor()?.id
+        @lint() if @lintOnFocus
 
   # Public: lint the current file in the editor using the live buffer
   lint: ->
