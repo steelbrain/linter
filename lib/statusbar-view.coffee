@@ -1,11 +1,27 @@
 {View} = require 'atom'
 
+copyPaste = require('copy-paste')
+  .noConflict()
+  .silent()
+
 # Status Bar View
 class StatusBarView extends View
 
   @content: ->
     @div class: 'tool-panel panel-bottom padded text-smaller', =>
       @dl class: 'linter-statusbar text-smaller', outlet: 'violations',
+
+  show: ->
+    super
+    # Bind `.error-message` to copy the text on click
+    @find('.error-message').on 'click', ->
+      copyPaste.copy @innerText
+
+  hide: ->
+    # Remove registred events before hidding the status bar
+    # Avoid memory leaks after long usage
+    @find('.error-message').off()
+    super
 
   # Render the view
   render: (messages, paneItem) ->
@@ -49,7 +65,9 @@ class StatusBarView extends View
               </span>
             </dt>
             <dd>
-              #{item.message}
+              <span class='error-message'>
+                #{item.message}
+              </span>
               <span class='pos'>
                 #{pos}
               </span>
