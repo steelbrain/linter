@@ -23,8 +23,40 @@ class StatusBarView extends View
     @find('.error-message').off()
     super
 
+  computeMessages: (messages, position, currentLine, limitOnErrorRange) ->
+    # Clear `violations` div
+    @violations.empty()
+
+    # Let's go through all the violations reported
+    for item, index in messages
+      # Condition for cursor into error range
+      showInRange = (item.range?.containsPoint(position)) and index <= 10 and limitOnErrorRange
+      # Condition for cursor on error line
+      showOnline = (item.range?.start.row + 1) is currentLine and not limitOnErrorRange
+
+      # If one of the conditions is true, let's show the StatusBar
+      if showInRange or showOnline
+        pos = "line: #{item.line}"
+        if item.col? then pos = "#{pos} / col: #{item.col}"
+        violation =
+          """
+            <dt>
+              <span class='highlight-#{item.level}'>#{item.linter}</span>
+            </dt>
+            <dd>
+              <span class='error-message'>#{item.message}</span>
+              <span class='pos'>#{pos}</span>
+            </dd>
+          """
+
+        # Add the violation to the StatusBar
+        @violations.append violation
+        # Show the StatusBar
+        @show()
+
   # Render the view
   render: (messages, paneItem) ->
+    # preppend this view the bottom
     atom.workspaceView.prependToBottom this
 
     # Config value if you want to limit the status bar report
@@ -43,40 +75,6 @@ class StatusBarView extends View
     if position = paneItem?.getCursorBufferPosition?()
       currentLine = position.row + 1
 
-    # Remove all old violations
-    @violations.empty()
-
-    # Let's go through all the violations reported
-    for item, index in messages
-      # Condition for cursor into error range
-      showInRange = (item.range?.containsPoint(position)) and index <= 10 and limitOnErrorRange
-      # Condition for cursor on error line
-      showOnline = (item.range?.start.row + 1) is currentLine and not limitOnErrorRange
-
-      # If one of the conditions is true, let's show the StatusBar
-      if showInRange or showOnline
-        pos = "line: #{item.line}"
-        if item.col? then pos = "#{pos} / col: #{item.col}"
-        violation =
-          """
-            <dt>
-              <span class='highlight-#{item.level}'>
-                #{item.linter}
-              </span>
-            </dt>
-            <dd>
-              <span class='error-message'>
-                #{item.message}
-              </span>
-              <span class='pos'>
-                #{pos}
-              </span>
-            </dd>
-          """
-
-        # Add the violation to the StatusBar
-        @violations.append violation
-        # Show the StatusBar
-        @show()
+    @computeMessages messages, position, currentLine, limitOnErrorRange
 
 module.exports = StatusBarView
