@@ -52,8 +52,6 @@ class LinterView
     @subscriptions.push @editorView.on 'cursor:moved', =>
       @displayStatusBar()
 
-    @lint()
-
   # Public: Initialize new linters (used on grammar chagne)
   #
   # linters - global linter set to utilize for linting
@@ -107,7 +105,7 @@ class LinterView
     buffer = @editor.getBuffer()
 
     @subscriptions.push buffer.on 'reloaded saved', (buffer) =>
-      @lint() if @lintOnSave
+      @debouncedLint() if @lintOnSave
 
     @subscriptions.push buffer.on 'destroyed', ->
       buffer.off 'reloaded saved'
