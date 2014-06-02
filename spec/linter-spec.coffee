@@ -42,7 +42,6 @@ describe "Linter::computeRange", ->
 
     expect(range.serialize()).toEqual([[0, 3], [2, 3]])
 
-
   it "should support only getting a col number and use full line when no scope is found", ->
     scopesForPosition.returns([])
     lineLengthForRow.returns(20)
@@ -55,3 +54,42 @@ describe "Linter::computeRange", ->
     sinon.assert.notCalled rangeForScopeAtPosition
     sinon.assert.calledWith lineLengthForRow, 0
     expect(range.serialize()).toEqual([[0, 1], [0, 20]])
+
+describe "Linter:lintFile", ->
+  [linter] = []
+
+  class CatFileLinter extends Linter
+    cmd: 'cat'
+    regex: '(?<line>[0-9]+):(?<message>.+)'
+    constructor: (editor) ->
+      super editor
+
+  beforeEach ->
+    editor = atom.workspace.openSync 'linter-spec.coffee'
+    linter = new CatFileLinter(editor)
+
+  it "lints file whose name is without space", ->
+    flag = false
+
+    runs ->
+      linter.lintFile "fixture/messages.txt", (messages) ->
+        console.log messages
+        expect(messages.length).toBe(2)
+        flag = true
+
+    waitsFor ->
+      flag
+    , "lint file finished"
+
+  it "lints file whose name is with space", ->
+    flag = false
+
+    runs ->
+      linter.lintFile "fixture/messages with space.txt", (messages) ->
+        console.log messages
+        expect(messages.length).toBe(2)
+        flag = true
+
+    waitsFor ->
+      flag
+    , "lint file finished"
