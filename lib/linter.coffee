@@ -64,7 +64,8 @@ class Linter
       else
         return cmd_item
 
-    console.log cmd_list
+    if atom.inDevMode()
+      console.log 'command and arguments', cmd_list
 
     {
       command: cmd_list[0],
@@ -83,28 +84,30 @@ class Linter
   #
   # Override this if you don't intend to use base command execution logic
   lintFile: (filePath, callback) ->
-    console.log 'linter: run linter command'
-
+    # build the command with arguments to lint the file
     {command, args} = @getCmdAndArgs(filePath)
-    console.log command, args
 
+    if atom.inDevMode()
+      console.log 'is node executable: ' + @isNodeExecutable
+
+    # use BufferedNodeProcess if the linter is node executable
     if @isNodeExecutable
-      console.log 'node executable command'
       Process = BufferedNodeProcess
     else
-      console.log 'regular executable command'
       Process = BufferedProcess
 
-    console.log 'current directory: ', @cwd
+    # options for BufferedProcess, same syntax with child_process.spawn
     options = {cwd: @cwd}
 
     stdout = (output) =>
-      console.log 'stdout: ', output
+      if atom.inDevMode()
+        console.log 'stdout', output
       if @errorStream == 'stdout'
         @processMessage(output, callback)
 
     stderr = (output) =>
-      console.warn 'stderr: ', output
+      if atom.inDevMode()
+        console.warn 'stderr', output
       if @errorStream == 'stderr'
         @processMessage(output, callback)
 
