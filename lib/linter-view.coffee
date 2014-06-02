@@ -76,8 +76,8 @@ class LinterView
         # If text instead of number into user config
         throttleInterval = parseInt(lintOnModifiedDelayMS)
         throttleInterval = 1000 if isNaN throttleInterval
-        # create debounced lint command
-        @debouncedLint = (_.throttle @lint, throttleInterval).bind this
+        # create throttled lint command
+        @throttledLint = (_.throttle @lint, throttleInterval).bind this
 
     @subscriptions.push atom.config.observe 'linter.lintOnChange',
       (lintOnModified) => @lintOnModified = lintOnModified
@@ -105,18 +105,18 @@ class LinterView
     buffer = @editor.getBuffer()
 
     @subscriptions.push buffer.on 'reloaded saved', (buffer) =>
-      @debouncedLint() if @lintOnSave
+      @throttledLint() if @lintOnSave
 
     @subscriptions.push buffer.on 'destroyed', ->
       buffer.off 'reloaded saved'
       buffer.off 'destroyed'
 
     @subscriptions.push @editor.on 'contents-modified', =>
-      @debouncedLint() if @lintOnModified
+      @throttledLint() if @lintOnModified
 
     @subscriptions.push atom.workspaceView.on 'pane:active-item-changed', =>
       if @editor.id is atom.workspace.getActiveEditor()?.id
-        @debouncedLint() if @lintOnEditorFocus
+        @throttledLint() if @lintOnEditorFocus
 
   # Public: lint the current file in the editor using the live buffer
   lint: ->
