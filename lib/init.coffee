@@ -2,7 +2,7 @@ Linter = require './linter'
 LinterView = require './linter-view'
 StatusBarView = require './statusbar-view'
 
-# Public: linter package initialization, sets up the linter for ussages by atom
+# Public: linter package initialization, sets up the linter for usages by atom
 class LinterInitializer
 
   # Internal: Configuration Option defaults
