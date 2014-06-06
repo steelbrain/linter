@@ -30,7 +30,7 @@ class HighLightView extends View
     @removeRegions()
     @addClass(@level)
     if screenRange.start.isEqual(screenRange.end)
-      screenRange.end = new Point(screenRange.end + 1, 0)
+      screenRange.end.column = new Point(screenRange.end.column + 1, 0)
     rowSpan = screenRange.end.row - screenRange.start.row
 
     for rowIndex in [0..rowSpan]
@@ -53,7 +53,7 @@ class HighLightView extends View
   # Private: create a higlight region for a single line of the range
   appendRegion: (start, end) ->
     try
-      { lineHeight, charWidth } = @editorView
+      { lineHeight } = @editorView
       css = @editorView.pixelPositionForScreenPosition(start)
       css.height = lineHeight
       css.width = @editorView.pixelPositionForScreenPosition(end).left -
