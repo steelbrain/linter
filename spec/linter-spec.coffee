@@ -56,40 +56,66 @@ describe "Linter::computeRange", ->
     expect(range.serialize()).toEqual([[0, 1], [0, 20]])
 
 describe "Linter:lintFile", ->
-  [linter] = []
-
-  class CatFileLinter extends Linter
-    cmd: 'cat'
-    regex: '(?<line>[0-9]+):(?<message>.+)'
-    constructor: (editor) ->
-      super editor
+  [editor, linter] = []
 
   beforeEach ->
     editor = atom.workspace.openSync 'linter-spec.coffee'
-    linter = new CatFileLinter(editor)
 
-  it "lints file whose name is without space", ->
-    flag = false
+  describe "CatFileLinter", ->
 
-    runs ->
+    class CatFileLinter extends Linter
+      cmd: 'cat'
+      regex: '(?<line>[0-9]+):(?<message>.+)'
+      constructor: (editor) ->
+        super editor
+
+    beforeEach ->
+      linter = new CatFileLinter(editor)
+
+    it "lints file whose name is without space", ->
+      flag = false
+
+      runs ->
+        linter.lintFile "fixture/messages.txt", (messages) ->
+          console.log messages
+          expect(messages.length).toBe(2)
+          flag = true
+
+      waitsFor ->
+        flag
+      , "lint file finished"
+
+    it "lints file whose name is with space", ->
+      flag = false
+
+      runs ->
+        linter.lintFile "fixture/messages with space.txt", (messages) ->
+          console.log messages
+          expect(messages.length).toBe(2)
+          flag = true
+
+      waitsFor ->
+        flag
+      , "lint file finished"
+
+  describe "CommandNotExistLinter", ->
+
+    class CommandNotExistLinter extends Linter
+      cmd: 'this_command_does_not_exist'
+      constructor: (editor) ->
+        super editor
+
+    beforeEach ->
+      linter = new CommandNotExistLinter(editor)
+
+    it "should silently disable if its command does not exist", ->
+      flag = false
+
       linter.lintFile "fixture/messages.txt", (messages) ->
         console.log messages
-        expect(messages.length).toBe(2)
+        expect(message).toBe("")
         flag = true
 
-    waitsFor ->
-      flag
-    , "lint file finished"
-
-  it "lints file whose name is with space", ->
-    flag = false
-
-    runs ->
-      linter.lintFile "fixture/messages with space.txt", (messages) ->
-        console.log messages
-        expect(messages.length).toBe(2)
-        flag = true
-
-    waitsFor ->
-      flag
-    , "lint file finished"
+      waitsFor ->
+        flag
+      , "lint file finished"
