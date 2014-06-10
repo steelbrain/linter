@@ -113,7 +113,7 @@ describe "Linter:lintFile", ->
 
       linter.lintFile "fixture/messages.txt", (messages) ->
         console.log messages
-        expect(message).toBe("")
+        expect(messages).toBe("")
         flag = true
 
       waitsFor ->
