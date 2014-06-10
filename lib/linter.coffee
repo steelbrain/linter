@@ -1,6 +1,6 @@
-{child} = require 'child_process'
 {XRegExp} = require 'xregexp'
 path = require 'path'
+which = require 'which'
 {Range, Point, BufferedProcess, BufferedNodeProcess} = require 'atom'
 
 # Public: The base class for linters.
@@ -87,6 +87,11 @@ class Linter
     # build the command with arguments to lint the file
     {command, args} = @getCmdAndArgs(filePath)
 
+    # silently disable the linter if its command does not exist
+    if not @doesCommandExist(command)
+      callback "" # pass empty string to callback, like promise resolve action
+      return
+
     if atom.inDevMode()
       console.log 'is node executable: ' + @isNodeExecutable
 
@@ -155,7 +160,6 @@ class Linter
       range: @computeRange match
     }
 
-
   lineLengthForRow: (row) ->
     return @editor.lineLengthForBufferRow row
 
@@ -213,5 +217,20 @@ class Linter
       [rowEnd, colEnd]
     )
 
+  # Private: This method will examine the command does exist on the machine.
+  #          If the command does not exist, the lintFile method will silently
+  #          disable this linter.
+  # command - The target command to examine
+  doesCommandExist: (command) ->
+    # TODO judge if a node executable exists. because the node executable will
+    # not throw an exception if it does not exist, it is safe to return true
+    return true if @isNodeExecutable
+
+    try
+      which.sync command
+    catch e
+      console.log "command [#{command}] is not found" if atom.inDevMode()
+      return false
+    return true
 
 module.exports = Linter
