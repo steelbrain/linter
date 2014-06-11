@@ -119,3 +119,16 @@ describe "Linter:lintFile", ->
       waitsFor ->
         flag
       , "lint file finished"
+
+    it "should disable if the dummy command is a full path", ->
+      flag = false
+
+      linter.cmd = '/this/is/a/dummy/command'
+      linter.lintFile "fixture/messages.txt", (messages) ->
+        console.log messages
+        expect(messages.length).toBe(0)
+        flag = true
+
+      waitsFor ->
+        flag
+      , "lint file finished"
