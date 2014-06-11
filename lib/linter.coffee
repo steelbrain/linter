@@ -1,6 +1,7 @@
 {XRegExp} = require 'xregexp'
 path = require 'path'
 which = require 'which'
+Q = require 'q'
 {Range, Point, BufferedProcess, BufferedNodeProcess} = require 'atom'
 
 # Public: The base class for linters.
@@ -88,35 +89,35 @@ class Linter
     {command, args} = @getCmdAndArgs(filePath)
 
     # silently disable the linter if its command does not exist
-    if not @doesCommandExist(command)
-      callback "" # pass empty string to callback, like promise resolve action
-      return
+    @doesCommandExist(command).then =>
+      console.log "is node executable: #{@isNodeExecutable}" if atom.inDevMode()
 
-    if atom.inDevMode()
-      console.log 'is node executable: ' + @isNodeExecutable
+      # use BufferedNodeProcess if the linter is node executable
+      if @isNodeExecutable
+        Process = BufferedNodeProcess
+      else
+        Process = BufferedProcess
 
-    # use BufferedNodeProcess if the linter is node executable
-    if @isNodeExecutable
-      Process = BufferedNodeProcess
-    else
-      Process = BufferedProcess
+      # options for BufferedProcess, same syntax with child_process.spawn
+      options = {cwd: @cwd}
 
-    # options for BufferedProcess, same syntax with child_process.spawn
-    options = {cwd: @cwd}
+      stdout = (output) =>
+        if atom.inDevMode()
+          console.log 'stdout', output
+        if @errorStream == 'stdout'
+          @processMessage(output, callback)
 
-    stdout = (output) =>
-      if atom.inDevMode()
-        console.log 'stdout', output
-      if @errorStream == 'stdout'
-        @processMessage(output, callback)
+      stderr = (output) =>
+        if atom.inDevMode()
+          console.warn 'stderr', output
+        if @errorStream == 'stderr'
+          @processMessage(output, callback)
 
-    stderr = (output) =>
-      if atom.inDevMode()
-        console.warn 'stderr', output
-      if @errorStream == 'stderr'
-        @processMessage(output, callback)
+      new Process({command, args, options, stdout, stderr})
 
-    new Process({command, args, options, stdout, stderr})
+    , ->
+      console.log "command [#{command}] is not found" if atom.inDevMode()
+      callback [] # pass empty messages to callback, like promise resolve action
 
   # Private: process the string result of a linter execution using the regex
   #          as the message builder
@@ -222,15 +223,18 @@ class Linter
   #          disable this linter.
   # command - The target command to examine
   doesCommandExist: (command) ->
+    defer = Q.defer()
+
     # TODO judge if a node executable exists. because the node executable will
     # not throw an exception if it does not exist, it is safe to return true
-    return true if @isNodeExecutable
+    defer.resolve() if @isNodeExecutable
 
-    try
-      which.sync command
-    catch e
-      console.log "command [#{command}] is not found" if atom.inDevMode()
-      return false
-    return true
+    which command, (err) ->
+      if (err)
+        defer.reject()
+      else
+        defer.resolve()
+
+    defer.promise
 
 module.exports = Linter
