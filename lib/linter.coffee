@@ -1,6 +1,7 @@
 {XRegExp} = require 'xregexp'
 path = require 'path'
 which = require 'which'
+fs = require 'fs'
 Q = require 'q'
 {Range, Point, BufferedProcess, BufferedNodeProcess} = require 'atom'
 
@@ -229,11 +230,15 @@ class Linter
     # not throw an exception if it does not exist, it is safe to return true
     defer.resolve() if @isNodeExecutable
 
-    which command, (err) ->
+    which command, (err, cmdPath) ->
       if (err)
         defer.reject()
       else
-        defer.resolve()
+        fs.stat cmdPath, (err, stats) ->
+          if (err || not stats.isFile())
+            defer.reject()
+          else
+            defer.resolve()
 
     defer.promise
 
