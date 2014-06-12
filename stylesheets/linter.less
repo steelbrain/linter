@@ -4,35 +4,14 @@
 // for a full listing of what's available.
 // @import 'ui-variables';
 
-@import '../node_modules/font-awesome/less/variables';
-@fa-font-path: "https://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts"; // for referencing Bootstrap CDN font files directly
-@import '../node_modules/font-awesome/less/path';
-
 @error-color: #b22222;
 @warning-color: #DAA520;
 
-.line-number:before {
-  visibility: hidden;
-  position: relative;
-  bottom: .19em;
-  margin-right: .6em;
-  content: "\f111";
-  font-size:  0.7em;
-  display: inline-block;
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-  -webkit-font-smoothing: antialiased;
-}
-
-.linter-warning:before {
-  visibility: visible !important;
+.linter-warning {
   color: @warning-color;
-
 }
 
-.linter-error:before {
-  visibility: visible !important;
+.linter-error {
   color: @error-color;
 }
 
