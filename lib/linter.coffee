@@ -187,6 +187,7 @@ class Linter
   #   colStart: column to on which to start a higlight (optional)
   #   colEnd: column to end highlight (optional)
   computeRange: (match) ->
+    match.line ?= 0 # Assume if no line is found that it denotes a full file error.
     rowStart = parseInt(match.lineStart ? match.line) - 1
     rowEnd = parseInt(match.lineEnd ? match.line) - 1
 
