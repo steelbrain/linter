@@ -22,6 +22,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-xmllint](https://atom.io/packages/linter-xmllint), for XML, using `xmllint`
 - [linter-shellcheck](https://atom.io/packages/linter-shellcheck), for Bash, using `shellcheck`.
 - [linter-scalac](https://atom.io/packages/linter-scalac), for Scala, using `scalac`.
+- [linter-clang](https://atom.io/packages/linter-clang), for C / C++, using `clang`.
 
 ## Features
 
@@ -63,7 +64,6 @@ http://atomlinter.github.io/Linter/
 - linter-jsxhint, for JSX (React.js), using `jsxhint`.
 - linter-jsl, for JavaScript, using `jsl`.
 - linter-oclitnt, for C / C++ / Objective-C, using `OCLint`.
-- linter-clang, for C / C++, using `clang`.
 
 ## Contributing
 
