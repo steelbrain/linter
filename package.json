@@ -16,8 +16,10 @@
     "font-awesome": "4.0.3",
     "jshint": "^2.4.4",
     "lodash": "^2.4.1",
+    "q": "^1.0.1",
     "shelljs": "^0.2.6",
     "temp": "~0.8.0",
+    "which": "^1.0.5",
     "xregexp": "2.0.0"
   },
   "devDependencies": {
