@@ -15,6 +15,7 @@ class LinterInitializer
     showErrorInStatusBar: true
     lintOnChangeInterval: 1000
     showStatusBarWhenCursorIsInErrorRange: false
+    lintDebug: false
 
   # Public: Activate the plugin setting up StatusBarView and dicovering linters
   activate: ->
