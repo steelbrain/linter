@@ -64,7 +64,7 @@ class Linter
       else
         return cmd_item
 
-    if atom.inDevMode()
+    if atom.config.get('linter.lintDebug')
       console.log 'command and arguments', cmd_list
 
     {
@@ -87,7 +87,7 @@ class Linter
     # build the command with arguments to lint the file
     {command, args} = @getCmdAndArgs(filePath)
 
-    if atom.inDevMode()
+    if atom.config.get('linter.lintDebug')
       console.log 'is node executable: ' + @isNodeExecutable
 
     # use BufferedNodeProcess if the linter is node executable
@@ -100,13 +100,13 @@ class Linter
     options = {cwd: @cwd}
 
     stdout = (output) =>
-      if atom.inDevMode()
+      if atom.config.get('linter.lintDebug')
         console.log 'stdout', output
       if @errorStream == 'stdout'
         @processMessage(output, callback)
 
     stderr = (output) =>
-      if atom.inDevMode()
+      if atom.config.get('linter.lintDebug')
         console.warn 'stderr', output
       if @errorStream == 'stderr'
         @processMessage(output, callback)
