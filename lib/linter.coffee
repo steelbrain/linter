@@ -102,16 +102,21 @@ class Linter
     stdout = (output) =>
       if atom.config.get('linter.lintDebug')
         console.log 'stdout', output
-      if @errorStream == 'stdout'
+      if @errorStream is 'stdout'
         @processMessage(output, callback)
 
     stderr = (output) =>
       if atom.config.get('linter.lintDebug')
         console.warn 'stderr', output
-      if @errorStream == 'stderr'
+      if @errorStream is 'stderr'
         @processMessage(output, callback)
 
-    new Process({command, args, options, stdout, stderr})
+    process = new Process({command, args, options, stdout, stderr})
+
+    # Don't block UI more than 5seconds, it's really annoying on big files
+    setTimeout ->
+      process.kill()
+    , 5000
 
   # Private: process the string result of a linter execution using the regex
   #          as the message builder
