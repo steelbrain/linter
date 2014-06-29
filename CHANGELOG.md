@@ -1,3 +1,21 @@
+# v0.4.11
+
+### Bug Fixes
+
+* Fix `getBufferPosition` bug ([#99](https://github.com/AtomLinter/Linter/issues/99))
+* Don't block UI more than 5s
+* Fix bug when running specs
+* Fix bug when full line error ([#103](https://github.com/AtomLinter/Linter/pull/103))
+
+# v0.4.10
+---------
+
+### Bug Fixes
+
+* Fix bug when linter provides 0 length range
+* Fix a bug when special characters appeared in command ([#81](https://github.com/AtomLinter/Linter/pull/81))
+* Update `temp` package
+
 # v0.4.9
 --------
 
