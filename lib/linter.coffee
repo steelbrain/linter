@@ -165,7 +165,9 @@ class Linter
     return @editor.lineLengthForBufferRow row
 
   getEditorScopesForPosition: (position) ->
-    return @editor.displayBuffer.tokenizedBuffer.scopesForPosition(position)
+    # Easy fix when line is removed before it can get lighted
+    try
+      @editor.displayBuffer.tokenizedBuffer.scopesForPosition position
 
   getGetRangeForScopeAtPosition: (innerMostScope, position) ->
     return @editor
