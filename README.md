@@ -23,6 +23,8 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-shellcheck](https://atom.io/packages/linter-shellcheck), for Bash, using `shellcheck`.
 - [linter-scalac](https://atom.io/packages/linter-scalac), for Scala, using `scalac`.
 - [linter-clang](https://atom.io/packages/linter-clang), for C / C++, using `clang`.
+- [linter-ruby](https://atom.io/packages/linter-ruby)linter-ruby, for ruby, using `ruby -wc`.
+- [linter-lua](https://atom.io/packages/linter-lua)linter-lua, for Lua, using `luac -p`.
 
 ## Features
 
@@ -55,12 +57,10 @@ http://atomlinter.github.io/Linter/
 ## Coming soon
 
 - linter-pep257, for python, using `pep257`.
-- linter-ruby, for ruby, using `ruby -wc`.
 - linter-rst, for reStructuredText, using `docutils`.
 - linter-pyflakes, for python, using `pyflakes`.
 - linter-phplint, for PHP, using `phplint`.
 - linter-pep8, for python, using `pep8`.
-- linter-lua, for Lua, using `luac -p`.
 - linter-jsxhint, for JSX (React.js), using `jsxhint`.
 - linter-jsl, for JavaScript, using `jsl`.
 - linter-oclitnt, for C / C++ / Objective-C, using `OCLint`.
