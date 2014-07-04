@@ -155,11 +155,17 @@ class Linter
       line: match.line,
       col: match.col,
       level: level,
-      message: match.message,
+      message: @formatMessage(match),
       linter: @linterName,
       range: @computeRange match
     }
 
+  # Public: This is the method to override if you want to set a custom message
+  #         not only the match.message but maybe concatenate an error|warning code
+  #
+  # By default it returns the message field.
+  formatMessage: (match) ->
+    match.message
 
   lineLengthForRow: (row) ->
     return @editor.lineLengthForBufferRow row
