@@ -47,7 +47,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 * **Show status bar when cursor is in error range** [On / Off] - Either show status bar when the cursor is on the error line, or show it when the cursor is focus the range of wrong code
 * **Lint on change interval** [in ms] - Interval between two lints while you are writing code
 
-## Commons errors
+## Common errors
 
 * `env: node: No such file or directory` – There's a problem with your node path – [check this](http://stackoverflow.com/a/20077620).
 
