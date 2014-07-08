@@ -45,7 +45,7 @@ class Linter
 
   # Public: Construct a linter passing it's base editor
   constructor: (@editor) ->
-    @cwd = path.dirname(editor.getUri())
+    @cwd = atom.project.path ? path.dirname(editor.getUri())
 
   # Private: get command and args for atom.BufferedProcess for execution
   getCmdAndArgs: (filePath) ->
