@@ -35,7 +35,7 @@ class GutterView
       if message.level == 'warning'
         @gutter.addClassToLine(line, 'linter-warning')
 
-  enable(): =>
+  enable: =>
     unless @enabled
       @enabled = true
       @gutter.addClass('linter-gutter-enabled')
