@@ -29,6 +29,7 @@ class LinterView
 
     @editor = editorView.editor
     @editorView = editorView
+    # TODO: don't bother creating this unless @showGutters
     @gutterView = new GutterView(editorView)
     @HighlightsView = new HighlightsView(editorView)
     @statusBarView = statusBarView
@@ -155,8 +156,10 @@ class LinterView
   # Internal: Render gutter markers
   displayGutterMarkers: ->
     if @showGutters
+      @gutterView.enable()
       @gutterView.render @messages
     else
+      @gutterView.disable()
       @gutterView.render []
 
   # Internal: Render code highlighting for message ranges

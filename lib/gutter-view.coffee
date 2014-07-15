@@ -10,6 +10,7 @@ class GutterView
   constructor: (editorView) ->
     @editorView = editorView
     @gutter = @editorView.gutter
+    @enabled = false
 
   # Public: Clear previously rendered annotations
   clear: ->
@@ -23,6 +24,7 @@ class GutterView
   #           :range - The buffer range that the annotation should be placed on
   render: (messages) ->
     return unless @gutter.isVisible()
+    return unless @enabled
     @clear()
 
     for message in messages
@@ -32,5 +34,15 @@ class GutterView
 
       if message.level == 'warning'
         @gutter.addClassToLine(line, 'linter-warning')
+
+  enable(): =>
+    unless @enabled
+      @enabled = true
+      @gutter.addClass('linter-gutter-enabled')
+
+  disable: =>
+    if @enabled
+      @enabled = false
+      @gutter.removeClass('linter-gutter-enabled')
 
 module.exports = GutterView
