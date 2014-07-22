@@ -95,9 +95,9 @@ class LinterView
         @showMessagesAroundCursor = showMessagesAroundCursor
         @displayStatusBar()
 
-    @subscriptions.push atom.config.observe 'linter.showHightlighting',
-      (showHightlighting) =>
-        @showHightlighting = showHightlighting
+    @subscriptions.push atom.config.observe 'linter.showHighlighting',
+      (showHighlighting) =>
+        @showHighlighting = showHighlighting
         @displayHighlights()
 
   # Internal: register handlers for editor buffer events
@@ -161,7 +161,7 @@ class LinterView
 
   # Internal: Render code highlighting for message ranges
   displayHighlights: ->
-    if @showHightlighting
+    if @showHighlighting
       @HighlightsView.setHighlights(@messages)
     else
       @HighlightsView.removeHighlights()

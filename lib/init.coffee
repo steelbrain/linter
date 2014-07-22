@@ -10,7 +10,7 @@ class LinterInitializer
     lintOnSave: true
     lintOnChange: true
     lintOnEditorFocus: true
-    showHightlighting: true
+    showHighlighting: true
     showGutters: true
     showErrorInStatusBar: true
     lintOnChangeInterval: 1000
