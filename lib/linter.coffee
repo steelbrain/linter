@@ -55,7 +55,7 @@ class Linter
     cmd_list = cmd.split(' ').concat [filePath]
 
     if @executablePath
-      cmd_list[0] = @executablePath + path.sep + cmd_list[0]
+      cmd_list[0] = path.join @executablePath,cmd_list[0]
 
     # if there are "@filename" placeholders, replace them with real file path
     cmd_list = cmd_list.map (cmd_item) ->
