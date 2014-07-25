@@ -105,3 +105,31 @@ describe "Linter:lintFile", ->
     waitsFor ->
       flag
     , "lint file finished"
+
+  it "lints when command is an array", ->
+    flag = false
+
+    runs ->
+      linter.cmd = ['cat']
+      linter.lintFile "fixture/messages.txt", (messages) ->
+        console.log messages
+        expect(messages.length).toBe(2)
+        flag = true
+
+    waitsFor ->
+      flag
+    , "lint file finished"
+
+  it "lints when command is an array with arguments containing spaces", ->
+    flag = false
+
+    runs ->
+      linter.cmd = ['cat', 'fixture/messages with space.txt']
+      linter.lintFile "fixture/messages.txt", (messages) ->
+        console.log messages
+        expect(messages.length).toBe(4)
+        flag = true
+
+    waitsFor ->
+      flag
+    , "lint file finished"
