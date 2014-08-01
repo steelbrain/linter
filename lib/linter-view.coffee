@@ -30,7 +30,7 @@ class LinterView
     @editor = editorView.editor
     @editorView = editorView
     @gutterView = new GutterView(editorView)
-    @HighlightsView = new HighlightsView(editorView)
+    @highlightsView = new HighlightsView(@editor)
     @statusBarView = statusBarView
 
     @initLinters(linters)
@@ -120,7 +120,7 @@ class LinterView
     @totalProcessed = 0
     @messages = []
     @gutterView.clear()
-    @HighlightsView.removeHighlights()
+    @highlightsView.removeHighlights()
     if @linters.length > 0
       temp.open {suffix: @editor.getGrammar().scopeName}, (err, info) =>
         info.completedLinters = 0
@@ -159,9 +159,9 @@ class LinterView
   # Internal: Render code highlighting for message ranges
   displayHighlights: ->
     if @showHightlighting
-      @HighlightsView.setHighlights(@messages)
+      @highlightsView.setHighlights(@messages)
     else
-      @HighlightsView.removeHighlights()
+      @highlightsView.removeHighlights()
 
   # Internal: Update the status bar for new messages
   displayStatusBar: ->

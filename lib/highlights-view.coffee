@@ -1,21 +1,16 @@
 {Point, Range, View, $$} = require 'atom'
-HighLightView = require './highlight-view'
 
 # Public: Represents a collection of code highlights
 module.exports =
-class HighLightsView extends View
-
-  @content: ->
-    @div class: 'linter-highlights'
-
-  highlights: []
+class HighLightsView
 
   # Public: Initialization of a highlights view for rendering a set of code
   # highlight messages
   #
-  # editorView - Atom.EditorView instance on which to highlight code
-  initialize: (@editorView) ->
-    @highlights = []
+  # editor - Atom.Editor instance on which to highlight code
+  constructor: (editor) ->
+    @editor = editor
+    @markers = null
 
   # Public: Render messages on this highlights view
   #
@@ -24,16 +19,21 @@ class HighLightsView extends View
   #           :range - The buffer range that the annotation should be placed
   setHighlights: (messages) ->
     @removeHighlights()
+
+    @markers ?= []
     for message in messages
-      highlightView = new HighLightView(
-        range: message.range,
-        editorView: @editorView,
-        level: message.level)
-      @editorView.underlayer.append(highlightView)
-      @highlights.push(highlightView)
+      klass = if message.level == 'error'
+        'linter-error'
+      else if message.level == 'warning'
+        'linter-warning'
+      return unless klass?  # skip other messages
+
+      marker = @editor.markBufferRange message.range, invalidate: 'never'
+      @editor.decorateMarker marker, type: 'highlight', class: klass
+      @markers.push marker
 
   # Public: Remove highlights from the view
   removeHighlights: ->
-    for highlight in @highlights
-      highlight.remove()
-    @highlights = []
+    return unless @markers
+    m.destroy() for m in @markers
+    @markers = null
