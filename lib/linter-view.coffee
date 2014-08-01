@@ -46,9 +46,6 @@ class LinterView
     @handleBufferEvents()
     @handleConfigChanges()
 
-    @subscriptions.push @editorView.on 'editor:display-updated', =>
-      @displayGutterMarkers()
-
     @subscriptions.push @editorView.on 'cursor:moved', =>
       @displayStatusBar()
 

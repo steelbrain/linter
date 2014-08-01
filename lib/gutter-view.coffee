@@ -8,13 +8,15 @@ class GutterView
   #
   # editorView  - Atom.EditorView instance with the gutter to annotate
   constructor: (editorView) ->
-    @editorView = editorView
-    @gutter = @editorView.gutter
+    @editor = editorView.getEditor()
+    @gutter = editorView.gutter
+    @markers = null
 
   # Public: Clear previously rendered annotations
   clear: ->
-    @gutter.removeClassFromAllLines('linter-error')
-    @gutter.removeClassFromAllLines('linter-warning')
+    return unless @markers
+    m.destroy() for m in @markers
+    @markers = null
 
   # Public: Render messages in on this gutter view
   #
@@ -25,12 +27,19 @@ class GutterView
     return unless @gutter.isVisible()
     @clear()
 
+    @markers ?= []
     for message in messages
-      line = message.range.start.row
-      if message.level == 'error'
-        @gutter.addClassToLine(line, 'linter-error')
+      klass = if message.level == 'error'
+        'linter-error'
+      else if message.level == 'warning'
+        'linter-warning'
+      return unless klass?  # skip other messages
 
-      if message.level == 'warning'
-        @gutter.addClassToLine(line, 'linter-warning')
+      startRow = message.range.start.row
+      marker = @editor.markBufferRange [[startRow, 0], [startRow, Infinity]],
+                                       invalidate: 'never'
+      @editor.decorateMarker marker, type: 'gutter', class: klass
+      @markers.push(marker)
+
 
 module.exports = GutterView
