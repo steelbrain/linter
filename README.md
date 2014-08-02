@@ -44,7 +44,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 
 * **Lint on save** [On / Off] - Lint the file when you save it
 * **Lint on change** [On / Off] - Lint the file as you type
-* **Show hightlighting** [On / Off] - Highlight the range of wrong code
+* **Show highlighting** [On / Off] - Highlight the range of wrong code
 * **Show gutters**: [On / Off] - Show dot in the gutter on line error
 * **Show messages around cursor** [On / Off] - Show error description in the status bar
 * **Show status bar when cursor is in error range** [On / Off] - Either show status bar when the cursor is on the error line, or show it when the cursor is focus the range of wrong code
