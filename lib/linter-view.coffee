@@ -90,7 +90,7 @@ class LinterView
 
     @subscriptions.push atom.config.observe 'linter.showHightlighting',
       (showHightlighting) =>
-        @showHightlighting = showHightlighting
+        @showHighlighting = showHighlighting
         @display()
 
   # Internal: register handlers for editor buffer events
@@ -160,7 +160,7 @@ class LinterView
       if @showGutters
         @editor.decorateMarker marker, type: 'gutter', class: klass
 
-      if @showHightlighting
+      if @showHighlighting
         @editor.decorateMarker marker, type: 'highlight', class: klass
 
     @displayStatusBar()
