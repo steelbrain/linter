@@ -118,6 +118,8 @@ class LinterView
       if @editor.id is atom.workspace.getActiveEditor()?.id
         @throttledLint() if @lintOnEditorFocus
 
+    atom.workspaceView.command "linter:lint", => @lint()
+
   # Public: lint the current file in the editor using the live buffer
   lint: ->
     @totalProcessed = 0
