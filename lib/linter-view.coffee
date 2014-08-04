@@ -5,6 +5,9 @@ temp = require 'temp'
 
 {XRegExp} = require 'xregexp'
 
+GutterView = require './gutter-view'
+HighlightsView = require './highlights-view'
+
 temp.track()
 
 # Public: The base linter view
@@ -26,8 +29,9 @@ class LinterView
 
     @editor = editorView.editor
     @editorView = editorView
+    @gutterView = new GutterView(editorView)
+    @HighlightsView = new HighlightsView(editorView)
     @statusBarView = statusBarView
-    @markers = null
 
     @initLinters(linters)
 
@@ -41,6 +45,9 @@ class LinterView
 
     @handleBufferEvents()
     @handleConfigChanges()
+
+    @subscriptions.push @editorView.on 'editor:display-updated', =>
+      @displayGutterMarkers()
 
     @subscriptions.push @editorView.on 'cursor:moved', =>
       @displayStatusBar()
@@ -81,17 +88,17 @@ class LinterView
     @subscriptions.push atom.config.observe 'linter.showGutters',
       (showGutters) =>
         @showGutters = showGutters
-        @display()
+        @displayGutterMarkers()
 
     @subscriptions.push atom.config.observe 'linter.showErrorInStatusBar',
       (showMessagesAroundCursor) =>
         @showMessagesAroundCursor = showMessagesAroundCursor
         @displayStatusBar()
 
-    @subscriptions.push atom.config.observe 'linter.showHightlighting',
-      (showHightlighting) =>
+    @subscriptions.push atom.config.observe 'linter.showHighlighting',
+      (showHighlighting) =>
         @showHighlighting = showHighlighting
-        @display()
+        @displayHighlights()
 
   # Internal: register handlers for editor buffer events
   handleBufferEvents: =>
@@ -115,7 +122,8 @@ class LinterView
   lint: ->
     @totalProcessed = 0
     @messages = []
-    @destroyMarkers()
+    @gutterView.clear()
+    @HighlightsView.removeHighlights()
     if @linters.length > 0
       temp.open {suffix: @editor.getGrammar().scopeName}, (err, info) =>
         info.completedLinters = 0
@@ -136,34 +144,27 @@ class LinterView
       fs.unlink tempFileInfo.path
     @display()
 
-  # Internal: Destroy all markers (and associated decorations)
-  destroyMarkers: ->
-    return unless @markers?
-    m.destroy() for m in @markers
-    @markers = null
-
   # Internal: Render all the linter messages
   display: ->
-    @destroyMarkers()
+    @displayGutterMarkers()
 
-    @markers ?= []
-    for message in @messages
-      klass = if message.level == 'error'
-        'linter-error'
-      else if message.level == 'warning'
-        'linter-warning'
-      continue unless klass?  # skip other messages
-
-      marker = @editor.markBufferRange message.range, invalidate: 'never'
-      @markers.push marker
-
-      if @showGutters
-        @editor.decorateMarker marker, type: 'gutter', class: klass
-
-      if @showHighlighting
-        @editor.decorateMarker marker, type: 'highlight', class: klass
+    @displayHighlights()
 
     @displayStatusBar()
+
+  # Internal: Render gutter markers
+  displayGutterMarkers: ->
+    if @showGutters
+      @gutterView.render @messages
+    else
+      @gutterView.render []
+
+  # Internal: Render code highlighting for message ranges
+  displayHighlights: ->
+    if @showHighlighting
+      @HighlightsView.setHighlights(@messages)
+    else
+      @HighlightsView.removeHighlights()
 
   # Internal: Update the status bar for new messages
   displayStatusBar: ->
