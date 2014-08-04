@@ -12,14 +12,14 @@ describe "Linter::computeRange", ->
     rangeForScopeAtPosition = sinon.stub linter, "getGetRangeForScopeAtPosition"
     lineLengthForRow = sinon.stub linter, "lineLengthForRow"
 
-  it "should return a complete range if all parameters provided, switched to zero index", ->
+  it "should return a complete range if all parameters provided, line numbers switched to zero index", ->
     range = linter.computeRange(
       colStart: "1",
       colEnd: "3",
       lineStart: "1",
       lineEnd: "2"
     )
-    expect(range.serialize()).toEqual([[0, 0], [1, 2]])
+    expect(range.serialize()).toEqual([[0, 1], [1, 3]])
 
   it "should support only getting a line number", ->
     range = linter.computeRange(
@@ -27,7 +27,7 @@ describe "Linter::computeRange", ->
       colEnd: "3",
       line: "1"
     )
-    expect(range.serialize()).toEqual([[0, 0], [0, 2]])
+    expect(range.serialize()).toEqual([[0, 1], [0, 3]])
 
   it "should support only getting a col number and retrieve range based on scope", ->
     scopesForPosition.returns(["scope.function"])
@@ -53,19 +53,7 @@ describe "Linter::computeRange", ->
 
     sinon.assert.notCalled rangeForScopeAtPosition
     sinon.assert.calledWith lineLengthForRow, 0
-    expect(range.serialize()).toEqual([[0, 0], [0, 20]])
-
-  it "should ensure a range off the end of a line is visible", ->
-    lineLengthForRow.returns(20)
-
-    # this kind of unusual match is returned by linter-jshint for a missing
-    # semi-colon
-    range = linter.computeRange
-      colStart: "21",
-      line: "1"
-
-    expect(range.serialize()).toEqual([[0, 19], [0, 20]])
-
+    expect(range.serialize()).toEqual([[0, 1], [0, 20]])
 
 describe "Linter:lintFile", ->
   [linter] = []
