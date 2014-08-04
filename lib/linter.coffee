@@ -55,7 +55,7 @@ class Linter
     cmd_list = cmd.split(' ').concat [filePath]
 
     if @executablePath
-      cmd_list[0] = @executablePath + path.sep + cmd_list[0]
+      cmd_list[0] = path.join @executablePath,cmd_list[0]
 
     # if there are "@filename" placeholders, replace them with real file path
     cmd_list = cmd_list.map (cmd_item) ->
@@ -201,13 +201,12 @@ class Linter
   #   colEnd: column to end highlight (optional)
   computeRange: (match) ->
     match.line ?= 0 # Assume if no line is found that it denotes a full file error.
-    rowStart = parseInt(match.lineStart ? match.line) - 1
-    rowEnd = parseInt(match.lineEnd ? match.line) - 1
 
-    # some linters utilize line 0 to denote full file errors, position these
-    # errors on line 1
-    if (rowStart == -1)
-      rowStart = rowEnd = 0
+    decrementParse = (x) ->
+      Math.max 0, parseInt(x) - 1
+
+    rowStart = decrementParse match.lineStart ? match.line
+    rowEnd = decrementParse match.lineEnd ? match.line
 
     match.col ?=  0
     unless match.colStart
@@ -220,8 +219,15 @@ class Linter
           return range
 
     match.colStart ?= match.col
-    colStart = parseInt(match.colStart ? 0)
-    colEnd = if match.colEnd then parseInt(match.colEnd) else parseInt(@lineLengthForRow(rowEnd))
+    colStart = decrementParse match.colStart
+    colEnd = if match.colEnd?
+      decrementParse match.colEnd
+    else
+      parseInt @lineLengthForRow(rowEnd)
+
+    # if range has no width, nudge the start back one column
+    colStart = decrementParse colStart if colStart is colEnd
+
     return new Range(
       [rowStart, colStart],
       [rowEnd, colEnd]

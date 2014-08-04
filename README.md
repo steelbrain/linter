@@ -13,6 +13,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-pylint](https://atom.io/packages/linter-pylint), for Python, using `pylint`
 - [linter-pyflakes](https://atom.io/packages/linter-pyflakes), for python, using `pyflakes`.
 - [linter-pep8](https://atom.io/packages/linter-pep8), for python, using `pep8`.
+- [linter-flake8](https://atom.io/packages/linter-flake8), for python, using `flake8`.
 - [linter-javac](https://atom.io/packages/linter-javac), for Java, using `javac`
 - [linter-jshint](https://atom.io/packages/linter-jshint), for JavaScript and JSON, using `jshint`
 - [linter-jscs](https://atom.io/packages/linter-jscs), for JavaScript, using `jscs`
@@ -43,7 +44,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 
 * **Lint on save** [On / Off] - Lint the file when you save it
 * **Lint on change** [On / Off] - Lint the file as you type
-* **Show hightlighting** [On / Off] - Highlight the range of wrong code
+* **Show highlighting** [On / Off] - Highlight the range of wrong code
 * **Show gutters**: [On / Off] - Show dot in the gutter on line error
 * **Show messages around cursor** [On / Off] - Show error description in the status bar
 * **Show status bar when cursor is in error range** [On / Off] - Either show status bar when the cursor is on the error line, or show it when the cursor is focus the range of wrong code

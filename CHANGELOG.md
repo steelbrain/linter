@@ -1,3 +1,19 @@
+# v0.5.1
+
+### New Features
+* Add keybinding to trigger linting manually ([#146](https://github.com/AtomLinter/Linter/issues/146))
+
+# v0.5.0
+
+### Bug Fixes
+* Fix when line is deleted before it can be [hightlig…](https://github.com/AtomLinter/Linter/commit/01786d4ec4cc6a946bf09e4024e22b0dfad858c6)
+* fix typo [(showHightlighting -> showHighlighting)](https://github.com/AtomLinter/Linter/commit/e06ad53bca201b108d5743b7966f8fad5050c74b)
+
+### New Features
+* Add `@formatMessage` to help any linter to customize message. ([#120](https://github.com/AtomLinter/Linter/pull/120))
+* Use decorations API to display gutter markers ([#147](https://github.com/AtomLinter/Linter/pull/147))
+* Better way to assemble path ([#142]https://github.com/AtomLinter/Linter/pull/142)
+
 # v0.4.11
 
 ### Bug Fixes

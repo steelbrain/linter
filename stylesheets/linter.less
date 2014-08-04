@@ -11,29 +11,31 @@
 @error-color: #b22222;
 @warning-color: #DAA520;
 
-.gutter.linter-gutter-enabled .line-number:before {
-  visibility: hidden;
-  position: relative;
-  bottom: .19em;
-  margin-right: .6em;
-  content: "\f111";
-  font-size:  0.7em;
-  display: inline-block;
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-  -webkit-font-smoothing: antialiased;
-}
+.gutter.linter-gutter-enabled .line-number {
+  &:before {
+    visibility: hidden;
+    position: relative;
+    bottom: .19em;
+    margin-right: .6em;
+    content: "\f111";
+    font-size:  0.7em;
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+  }
 
-.linter-warning:before {
-  visibility: visible !important;
-  color: @warning-color;
+  &.linter-warning:before {
+    visibility: visible !important;
+    color: @warning-color;
 
-}
+  }
 
-.linter-error:before {
-  visibility: visible !important;
-  color: @error-color;
+  &.linter-error:before {
+    visibility: visible !important;
+    color: @error-color;
+  }
 }
 
 .linter-statusbar {
@@ -73,20 +75,13 @@
   }
 }
 
-.linter-highlight {
-  .region {
-    position: absolute;
-    opacity: 0.50;
-    padding: 0 2px;
-    margin-left: -2px;
-    box-sizing: content-box;
-  }
-  &.warning .region{
+.highlight {
+  &.linter-warning .region {
     background: linear-gradient(to bottom, @warning-color 0%, fadeout(@warning-color, 70%) 20%, fadeout(@warning-color, 70%) 80%, @warning-color 100%);
     border-left: 2px solid @warning-color;
     border-right: 2px solid @warning-color;
   }
-  &.error .region{
+  &.linter-error .region {
     background: linear-gradient(to bottom, @error-color 0%, fadeout(@error-color, 70%) 20%, fadeout(@error-color, 70%) 80%, @error-color 100%);
     border-left: 2px solid @error-color;
     border-right: 2px solid @error-color;
