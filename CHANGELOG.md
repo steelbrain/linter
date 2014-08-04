@@ -1,3 +1,8 @@
+# v0.5.1
+
+### New Features
+* Add keybinding to trigger linting manually ([#146](https://github.com/AtomLinter/Linter/issues/146))
+
 # v0.5.0
 
 ### Bug Fixes
