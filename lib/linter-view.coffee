@@ -88,8 +88,8 @@ class LinterView
         @showMessagesAroundCursor = showMessagesAroundCursor
         @displayStatusBar()
 
-    @subscriptions.push atom.config.observe 'linter.showHightlighting',
-      (showHightlighting) =>
+    @subscriptions.push atom.config.observe 'linter.showHighlighting',
+      (showHighlighting) =>
         @showHighlighting = showHighlighting
         @display()
 
