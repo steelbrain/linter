@@ -1,4 +1,3 @@
-Linter = require './linter'
 LinterView = require './linter-view'
 StatusBarView = require './statusbar-view'
 
