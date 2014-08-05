@@ -25,6 +25,7 @@ class LinterView
     @editorView = editorView
     @statusBarView = statusBarView
     @markers = null
+    @guttersShowing = false
 
     @initLinters(linters)
 
@@ -144,6 +145,13 @@ class LinterView
   # Internal: Render all the linter messages
   display: ->
     @destroyMarkers()
+
+    if @showGutters and not @guttersShowing
+      @guttersShowing = true
+      @editorView.gutter.addClass("linter-gutter-enabled")
+    else if not @showGutters and @guttersShowing
+      @guttersShowing = false
+      @editorView.gutter.removeClass("linter-gutter-enabled")
 
     @markers ?= []
     for message in @messages
