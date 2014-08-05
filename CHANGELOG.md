@@ -1,3 +1,9 @@
+# v0.5.2
+
+### Bug Fixes
+* Only widen the gutter when showGutter is enabled ([#137](https://github.com/AtomLinter/Linter/issues/137))
+* Delete some unused imports ([#154](https://github.com/AtomLinter/Linter/issues/154))
+
 # v0.5.1
 
 ### New Features
