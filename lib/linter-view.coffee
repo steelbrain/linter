@@ -1,9 +1,6 @@
 _ = require 'lodash'
 fs = require 'fs'
 temp = require 'temp'
-{exec, child} = require 'child_process'
-
-{XRegExp} = require 'xregexp'
 
 temp.track()
 

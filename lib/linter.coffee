@@ -1,4 +1,3 @@
-{child} = require 'child_process'
 {XRegExp} = require 'xregexp'
 path = require 'path'
 {Range, Point, BufferedProcess, BufferedNodeProcess} = require 'atom'
