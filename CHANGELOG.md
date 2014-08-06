@@ -1,3 +1,8 @@
+# v0.5.3
+
+### New Linters
+* [linter-jsxhint](https://atom.io/packages/linter-jsxhint), for JSX (React.js), using `jsxhint`
+
 # v0.5.2
 
 ### Bug Fixes
