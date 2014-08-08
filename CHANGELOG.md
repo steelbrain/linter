@@ -1,3 +1,8 @@
+# v0.5.4
+
+### Bug Fixes
+* Resolve problem with mammoth linter status bar... ([#17](https://github.com/AtomLinter/linter-jscs/issues/17])
+
 # v0.5.3
 
 ### New Linters
