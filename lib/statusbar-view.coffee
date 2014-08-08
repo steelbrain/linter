@@ -9,7 +9,7 @@ class StatusBarView extends View
 
   @content: ->
     @div class: 'tool-panel panel-bottom padded text-smaller', =>
-      @dl class: 'linter-statusbar text-smaller', outlet: 'violations',
+      @dl class: 'linter-statusbar', outlet: 'violations',
 
   show: ->
     super
