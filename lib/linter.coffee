@@ -212,10 +212,9 @@ class Linter
       position = new Point(rowStart, match.col)
       scopes = @getEditorScopesForPosition(position)
 
-      while innerMostScope = scopes.pop()
+      while innerMostScope = scopes?.pop()
         range = @getGetRangeForScopeAtPosition(innerMostScope, position)
-        if range?
-          return range
+        return range if range?
 
     match.colStart ?= match.col
     colStart = decrementParse match.colStart
