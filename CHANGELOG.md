@@ -8,7 +8,7 @@
 # v0.5.6
 
 ### Bug Fixes
-* Resolve problem with mammoth linter status bar... ([#17](https://github.com/AtomLinter/linter-jscs/issues/17]))
+* Resolve Too many linter warnings cover screen bug ([##132](https://github.com/AtomLinter/Linter/issues/132]))
 
 # v0.5.3
 
