@@ -1,6 +1,6 @@
 {XRegExp} = require 'xregexp'
 path = require 'path'
-{Range, Point, BufferedProcess, BufferedNodeProcess} = require 'atom'
+{Range, Point, BufferedProcess} = require 'atom'
 
 # Public: The base class for linters.
 # Subclasses must at a minimum define the attributes syntax, cmd, and regex.
@@ -54,7 +54,10 @@ class Linter
     cmd_list = cmd.split(' ').concat [filePath]
 
     if @executablePath
-      cmd_list[0] = path.join @executablePath,cmd_list[0]
+      cmd_list[0] = path.join @executablePath, cmd_list[0]
+
+    if @isNodeExecutable
+      cmd_list.unshift(@getNodeExecutablePath())
 
     # if there are "@filename" placeholders, replace them with real file path
     cmd_list = cmd_list.map (cmd_item) ->
@@ -89,12 +92,6 @@ class Linter
     if atom.config.get('linter.lintDebug')
       console.log 'is node executable: ' + @isNodeExecutable
 
-    # use BufferedNodeProcess if the linter is node executable
-    if @isNodeExecutable
-      Process = BufferedNodeProcess
-    else
-      Process = BufferedProcess
-
     # options for BufferedProcess, same syntax with child_process.spawn
     options = {cwd: @cwd}
 
@@ -110,7 +107,7 @@ class Linter
       if @errorStream is 'stderr'
         @processMessage(output, callback)
 
-    process = new Process({command, args, options, stdout, stderr})
+    process = new BufferedProcess({command, args, options, stdout, stderr})
 
     # Don't block UI more than 5seconds, it's really annoying on big files
     setTimeout ->
