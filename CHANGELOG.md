@@ -1,3 +1,10 @@
+# v0.5.7
+
+### Bug Fixes
+* Fix linters not working on Windows ([#148](https://github.com/AtomLinter/linter/pull/148), [#112](https://github.com/AtomLinter/linter/issue/112))
+* Also fix [#157](https://github.com/AtomLinter/linter/issues/157])
+
+
 # v0.5.6
 
 ### Bug Fixes
