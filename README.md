@@ -54,6 +54,8 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 ## Common errors
 
 * `env: node: No such file or directory` – There's a problem with your node path – [check this](http://stackoverflow.com/a/20077620).
+* `spawn ENOENT` or `spawn ENOTDIR` - A linter can't find a path to the executable. Try starting Atom from a shell via `atom` to make sure it gets your `PATH`. See also [#102](https://github.com/AtomLinter/Linter/issues/102), [#150](https://github.com/AtomLinter/Linter/issues/150).
+* Gutters and highlights not working? Make sure you're using the React editor. The [old editor is deprecated](http://blog.atom.io/2014/07/22/default-to-react-editor.html).
 
 ## Documentation
 http://atomlinter.github.io/Linter/
