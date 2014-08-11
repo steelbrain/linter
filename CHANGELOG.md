@@ -2,7 +2,7 @@
 
 ### New Linters
 * [linter-puppet-lint](https://atom.io/packages/linter-puppet-lint), for Puppet, using `puppet-lint`
-* [linter-js-yaml](https://atom.io/packages/linter-js-yaml), for Puppet, using `js-yaml`
+* [linter-js-yaml](https://atom.io/packages/linter-js-yaml), for Yaml, using `js-yaml`
 
 # v0.5.8
 
