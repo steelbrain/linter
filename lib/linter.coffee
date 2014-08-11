@@ -50,10 +50,8 @@ class Linter
   getCmdAndArgs: (filePath) ->
     cmd = @cmd
 
-    if not Array.isArray(cmd)
-      cmd_list = cmd.split(' ').concat [filePath]
-    else
-      cmd_list = cmd.concat [filePath]
+    # here guarantee `cmd` does not have space or quote mark issue
+    cmd_list = cmd.split(' ').concat [filePath]
 
     if @executablePath
       cmd_list[0] = path.join @executablePath, cmd_list[0]
