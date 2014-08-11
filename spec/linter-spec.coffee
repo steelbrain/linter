@@ -77,8 +77,9 @@ describe "Linter:lintFile", ->
       super editor
 
   beforeEach ->
-    editor = atom.workspace.openSync 'linter-spec.coffee'
-    linter = new CatFileLinter(editor)
+    waitsForPromise ->
+      atom.workspace.open('linter-spec.coffee').then (editor) ->
+        linter = new CatFileLinter(editor)
 
   it "lints file whose name is without space", ->
     flag = false
