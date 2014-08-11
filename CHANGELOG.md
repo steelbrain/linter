@@ -1,4 +1,4 @@
-# v0.5.9
+# v0.5.10
 
 ### New Linters
 * [linter-puppet-lint](https://atom.io/packages/linter-puppet-lint), for Puppet, using `puppet-lint`
