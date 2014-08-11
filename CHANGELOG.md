@@ -1,3 +1,11 @@
+# v0.5.8
+
+### Bug Fixes
+* Fix for multiple linters on the same file (#139)
+
+### New Linters
+* [linter-clojure](https://atom.io/packages/linter-clojure), for Clojure, using clojure.
+
 # v0.5.7
 
 ### Bug Fixes
