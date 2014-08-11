@@ -1,4 +1,5 @@
 # Linter
+[![Build Status](https://travis-ci.org/AtomLinter/Linter.svg)](https://travis-ci.org/AtomLinter/Linter)
 
 Lint your code with ease in [Atom](http://atom.io).
 
