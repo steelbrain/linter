@@ -29,7 +29,9 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-clang](https://atom.io/packages/linter-clang), for C / C++, using `clang`.
 - [linter-ruby](https://atom.io/packages/linter-ruby), for ruby, using `ruby -wc`.
 - [linter-lua](https://atom.io/packages/linter-lua), for Lua, using `luac -p`.
-- [linter-clojure](https://atom.io/packages/linter-clojure), Linter plugin for Clojure, using clojure.
+- [linter-clojure](https://atom.io/packages/linter-clojure), for Clojure, using `clojure`.
+- [linter-puppet-lint](https://atom.io/packages/linter-puppet-lint), for Puppet, using `puppet-lint`
+- [linter-js-yaml](https://atom.io/packages/linter-js-yaml), for Puppet, using `js-yaml`
 
 ## Features
 
