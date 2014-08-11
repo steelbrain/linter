@@ -11,9 +11,9 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-phpcs](https://atom.io/packages/linter-phpcs), for PHP, using `phpc`
 - [linter-phpmd](https://atom.io/packages/linter-phpmd), for PHP, using `phpmd`
 - [linter-pylint](https://atom.io/packages/linter-pylint), for Python, using `pylint`
-- [linter-pyflakes](https://atom.io/packages/linter-pyflakes), for python, using `pyflakes`.
+- [linter-pyflakes](https://atom.io/packages/linter-pyflakes), for python, using `pyflakes`
 - [linter-pep8](https://atom.io/packages/linter-pep8), for python, using `pep8`.
-- [linter-flake8](https://atom.io/packages/linter-flake8), for python, using `flake8`.
+- [linter-flake8](https://atom.io/packages/linter-flake8), for python, using `flake8`
 - [linter-javac](https://atom.io/packages/linter-javac), for Java, using `javac`
 - [linter-jshint](https://atom.io/packages/linter-jshint), for JavaScript and JSON, using `jshint`
 - [linter-jscs](https://atom.io/packages/linter-jscs), for JavaScript, using `jscs`
@@ -24,12 +24,12 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-rubocop](https://atom.io/packages/linter-rubocop), for Ruby and Ruby on Rails, using `rubocop`
 - [linter-tslint](https://atom.io/packages/linter-tslint), for Typescript, using `tslint`
 - [linter-xmllint](https://atom.io/packages/linter-xmllint), for XML, using `xmllint`
-- [linter-shellcheck](https://atom.io/packages/linter-shellcheck), for Bash, using `shellcheck`.
-- [linter-scalac](https://atom.io/packages/linter-scalac), for Scala, using `scalac`.
-- [linter-clang](https://atom.io/packages/linter-clang), for C / C++, using `clang`.
-- [linter-ruby](https://atom.io/packages/linter-ruby), for ruby, using `ruby -wc`.
-- [linter-lua](https://atom.io/packages/linter-lua), for Lua, using `luac -p`.
-- [linter-clojure](https://atom.io/packages/linter-clojure), for Clojure, using `clojure`.
+- [linter-shellcheck](https://atom.io/packages/linter-shellcheck), for Bash, using `shellcheck`
+- [linter-scalac](https://atom.io/packages/linter-scalac), for Scala, using `scalac`
+- [linter-clang](https://atom.io/packages/linter-clang), for C / C++, using `clang`
+- [linter-ruby](https://atom.io/packages/linter-ruby), for ruby, using `ruby -wc`
+- [linter-lua](https://atom.io/packages/linter-lua), for Lua, using `luac -p`
+- [linter-clojure](https://atom.io/packages/linter-clojure), for Clojure, using `clojure`
 - [linter-puppet-lint](https://atom.io/packages/linter-puppet-lint), for Puppet, using `puppet-lint`
 - [linter-js-yaml](https://atom.io/packages/linter-js-yaml), for Puppet, using `js-yaml`
 
