@@ -1,3 +1,8 @@
+# v0.5.12
+
+### Bug Fixes
+* Fix "multiple linters on the same file" problem for real
+
 # v0.5.11
 
 ### New Linters
