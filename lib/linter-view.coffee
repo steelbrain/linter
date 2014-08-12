@@ -1,6 +1,8 @@
 _ = require 'lodash'
 fs = require 'fs'
 temp = require 'temp'
+{log, warn} = require './utils'
+
 
 temp.track()
 
@@ -122,22 +124,21 @@ class LinterView
         fs.write info.fd, @editor.getText(), =>
           fs.close info.fd, (err) =>
             for linter in @linters
-              linterInfo =
-                completed: false
-              linter.lintFile(info.path, (messages) => @processMessage(messages, info, linterInfo))
+              linter.lintFile(info.path, (messages) => @processMessage(messages, info, linter))
 
   # Internal: Process the messages returned by linters and render them.
   #
   # messages - An array of messages to annotate:
   #           :level  - the annotation error level ('error', 'warning')
   #           :range - The buffer range that the annotation should be placed
-  processMessage: (messages, tempFileInfo, linterInfo) =>
-    if !linterInfo.completed
-      linterInfo.completed = true;
-      tempFileInfo.completedLinters++
-    @messages = @messages.concat(messages)
+  processMessage: (messages, tempFileInfo, linter) =>
+    log "linter returned", linter, messages
+
+    tempFileInfo.completedLinters++
     if tempFileInfo.completedLinters == @linters.length
       fs.unlink tempFileInfo.path
+
+    @messages = @messages.concat(messages)
     @display()
 
   # Internal: Destroy all markers (and associated decorations)

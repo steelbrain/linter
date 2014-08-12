@@ -40,6 +40,7 @@ class Linter
 
   isNodeExecutable: no
 
+  # TODO: what does this mean?
   errorStream: 'stdout'
 
   # Public: Construct a linter passing it's base editor
@@ -97,19 +98,25 @@ class Linter
     # options for BufferedProcess, same syntax with child_process.spawn
     options = {cwd: @cwd}
 
-    stdout = (output) =>
+    dataStdout = []
+    dataStderr = []
+
+    stdout = (output) ->
       if atom.config.get('linter.lintDebug')
         console.log 'stdout', output
-      if @errorStream is 'stdout'
-        @processMessage(output, callback)
+      dataStdout += output
 
-    stderr = (output) =>
+    stderr = (output) ->
       if atom.config.get('linter.lintDebug')
         console.warn 'stderr', output
-      if @errorStream is 'stderr'
-        @processMessage(output, callback)
+      dataStderr += output
 
-    process = new BufferedProcess({command, args, options, stdout, stderr})
+    exit = =>
+      data = if @errorStream is 'stdout' then dataStdout else dataStderr
+      @processMessage data, callback
+
+    process = new BufferedProcess({command, args, options,
+                                   stdout, stderr, exit})
 
     # Don't block UI more than 5seconds, it's really annoying on big files
     setTimeout ->

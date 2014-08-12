@@ -37,4 +37,6 @@ findFile = (startDir, name, parent = false, limit = null, aux_dirs = []) ->
 
     climb.splice(-1,1)
 
+# TODO: deprecate this export because nothing else can be added to this
+# generically-name file without breaking the interface :/
 module.exports = findFile
