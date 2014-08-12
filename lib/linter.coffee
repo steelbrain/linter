@@ -1,6 +1,7 @@
 {XRegExp} = require 'xregexp'
 path = require 'path'
 {Range, Point, BufferedProcess} = require 'atom'
+{log, warn} = require './utils'
 
 # Public: The base class for linters.
 # Subclasses must at a minimum define the attributes syntax, cmd, and regex.
@@ -69,8 +70,7 @@ class Linter
       else
         return cmd_item
 
-    if atom.config.get('linter.lintDebug')
-      console.log 'command and arguments', cmd_list
+    log 'command and arguments', cmd_list
 
     {
       command: cmd_list[0],
@@ -92,8 +92,7 @@ class Linter
     # build the command with arguments to lint the file
     {command, args} = @getCmdAndArgs(filePath)
 
-    if atom.config.get('linter.lintDebug')
-      console.log 'is node executable: ' + @isNodeExecutable
+    log 'is node executable: ' + @isNodeExecutable
 
     # options for BufferedProcess, same syntax with child_process.spawn
     options = {cwd: @cwd}
@@ -102,13 +101,11 @@ class Linter
     dataStderr = []
 
     stdout = (output) ->
-      if atom.config.get('linter.lintDebug')
-        console.log 'stdout', output
+      log 'stdout', output
       dataStdout += output
 
     stderr = (output) ->
-      if atom.config.get('linter.lintDebug')
-        console.warn 'stderr', output
+      warn 'stderr', output
       dataStderr += output
 
     exit = =>

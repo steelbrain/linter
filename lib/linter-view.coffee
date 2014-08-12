@@ -1,7 +1,7 @@
 _ = require 'lodash'
 fs = require 'fs'
 temp = require 'temp'
-{log, warn} = require './utils'
+{log} = require './utils'
 
 
 temp.track()
