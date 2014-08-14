@@ -34,6 +34,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-clojure](https://atom.io/packages/linter-clojure), for Clojure, using `clojure`
 - [linter-puppet-lint](https://atom.io/packages/linter-puppet-lint), for Puppet, using `puppet-lint`
 - [linter-js-yaml](https://atom.io/packages/linter-js-yaml), for Yaml, using `js-yaml`
+- [linter-ruby-erb](https://atom.io/packages/linter-ruby-erb), for .erb files, using `erb -x`
 
 ## Features
 
