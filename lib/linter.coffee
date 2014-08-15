@@ -80,9 +80,9 @@ class Linter
   # Private: Provide the node executable path for use when executing a node
   #          linter
   getNodeExecutablePath: ->
-    path.join require.resolve('package'),
-      '..',
-      'apm/node_modules/atom-package-manager/bin/node'
+    path.join atom.packages.apmPath,
+      '..'
+      'node'
 
   # Public: Primary entry point for a linter, executes the linter then calls
   #         processMessage in order to handle standard output
