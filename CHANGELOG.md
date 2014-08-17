@@ -1,4 +1,4 @@
-# v0.5.12
+# v0.5.13
 
 ### Bug Fixes
 * Fix `spawn ENOENT` errors in projects that have `package.json` files (See [#119](https://github.com/AtomLinter/Linter/issues/119), [#179](https://github.com/AtomLinter/Linter/pull/179))
