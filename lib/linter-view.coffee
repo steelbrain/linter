@@ -52,11 +52,8 @@ class LinterView
     @linters = []
     grammarName = @editor.getGrammar().scopeName
     for linter in linters
-      sytaxType = {}.toString.call(linter.syntax)
-      if sytaxType is '[object Array]' and
-      grammarName in linter.syntax or
-      sytaxType is '[object String]' and
-      grammarName is linter.syntax
+      if (_.isArray(linter.syntax) and grammarName in linter.syntax or
+          _.isString(linter.syntax) and grammarName is linter.syntax)
         @linters.push(new linter(@editor))
 
   # Internal: register config modifications handlers
