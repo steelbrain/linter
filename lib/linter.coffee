@@ -11,8 +11,8 @@ class Linter
   # list/tuple of strings. Names should be all lowercase.
   @syntax: ''
 
-  # A string, list, tuple or callable that returns a string, list or tuple,
-  # containing the command line (with arguments) used to lint.
+  # A string or array containing the command line (with arguments) used to 
+  # lint.
   cmd: ''
 
   # A regex pattern used to extract information from the executable's output.
