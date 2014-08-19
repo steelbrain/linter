@@ -41,7 +41,19 @@
 .linter-statusbar {
   max-height: 140px;
   overflow-y: scroll;
-  margin-bottom: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: inline;
+    cursor: pointer;
+  }
+
+  li:hover {
+    color: red;
+  }
+
   dd {
     &:before,
     &:after {

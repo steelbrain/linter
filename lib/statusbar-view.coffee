@@ -1,4 +1,5 @@
-{View} = require 'atom'
+_ = require 'lodash'
+{View, Point} = require 'atom'
 
 copyPaste = require('copy-paste')
   .noConflict()
@@ -9,13 +10,25 @@ class StatusBarView extends View
 
   @content: ->
     @div class: 'tool-panel panel-bottom padded text-smaller', =>
-      @dl class: 'linter-statusbar', outlet: 'violations',
+      @ul class: 'linter-statusbar', outlet: 'violations',
 
   show: ->
     super
     # Bind `.error-message` to copy the text on click
     @find('.error-message').on 'click', ->
       copyPaste.copy @innerText
+
+    @find('li').on 'click', =>
+      stringPos = arguments[0].currentTarget.innerText.split('line: ')
+      stringPos = _.findLast(stringPos).split(' / col: ')
+      line = parseInt(stringPos[0], 10)
+      col = if stringPos.length > 0 then parseInt(stringPos[1], 10) else 0
+      @goToLine(line, col)
+
+  goToLine: (line, col) ->
+    editorView = atom.workspaceView.getActiveView()
+    editor = editorView.getEditor()
+    editor.setCursorBufferPosition(new Point(line-1, col))
 
   hide: ->
     # Remove registred events before hidding the status bar
@@ -40,13 +53,15 @@ class StatusBarView extends View
         if item.col? then pos = "#{pos} / col: #{item.col}"
         violation =
           """
-            <dt>
-              <span class='highlight-#{item.level}'>#{item.linter}</span>
-            </dt>
-            <dd>
-              <span class='error-message'>#{item.message}</span>
-              <span class='pos'>#{pos}</span>
-            </dd>
+            <li>
+              <dt>
+                <span class='highlight-#{item.level}'>#{item.linter}</span>
+              </dt>
+              <dd>
+                <span class='error-message'>#{item.message}</span>
+                <span class='pos'>#{pos}</span>
+              </dd>
+            </li>
           """
 
         # Add the violation to the StatusBar
