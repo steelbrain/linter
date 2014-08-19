@@ -23,7 +23,7 @@ class StatusBarView extends View
     @find('.error-message').off()
     super
 
-  computeMessages: (messages, position, currentLine, limitOnErrorRange) ->
+  computeMessages: (messages, position, currentLine, displayAll, limitOnErrorRange) ->
     # Clear `violations` div
     @violations.empty()
 
@@ -35,7 +35,7 @@ class StatusBarView extends View
       showOnline = (item.range?.start.row + 1) is currentLine and not limitOnErrorRange
 
       # If one of the conditions is true, let's show the StatusBar
-      if showInRange or showOnline
+      if showInRange or showOnline or displayAll
         pos = "line: #{item.line}"
         if item.col? then pos = "#{pos} / col: #{item.col}"
         violation =
@@ -55,7 +55,7 @@ class StatusBarView extends View
         @show()
 
   # Render the view
-  render: (messages, paneItem) ->
+  render: (messages, paneItem, displayAll) ->
     # preppend this view the bottom
     atom.workspaceView.prependToBottom this
 
@@ -79,6 +79,6 @@ class StatusBarView extends View
     catch e
       error = e
 
-    @computeMessages messages, position, currentLine, limitOnErrorRange unless error
+    @computeMessages messages, position, currentLine, displayAll, limitOnErrorRange unless error
 
 module.exports = StatusBarView
