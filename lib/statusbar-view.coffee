@@ -22,7 +22,7 @@ class StatusBarView extends View
       stringPos = arguments[0].currentTarget.innerText.split('line: ')
       stringPos = _.findLast(stringPos).split(' / col: ')
       line = parseInt(stringPos[0], 10)
-      col = if stringPos.length > 0 then parseInt(stringPos[1], 10) else 0
+      col = if stringPos[1] then parseInt(stringPos[1], 10) else 0
       @goToLine(line, col)
 
   goToLine: (line, col) ->
@@ -36,7 +36,7 @@ class StatusBarView extends View
     @find('.error-message').off()
     super
 
-  computeMessages: (messages, position, currentLine, displayAll, limitOnErrorRange) ->
+  computeMessages: (messages, position, currentLine, displayAllErrors, limitOnErrorRange) ->
     # Clear `violations` div
     @violations.empty()
 
@@ -48,7 +48,7 @@ class StatusBarView extends View
       showOnline = (item.range?.start.row + 1) is currentLine and not limitOnErrorRange
 
       # If one of the conditions is true, let's show the StatusBar
-      if showInRange or showOnline or displayAll
+      if showInRange or showOnline or displayAllErrors
         pos = "line: #{item.line}"
         if item.col? then pos = "#{pos} / col: #{item.col}"
         violation =
@@ -70,13 +70,15 @@ class StatusBarView extends View
         @show()
 
   # Render the view
-  render: (messages, paneItem, displayAll) ->
+  render: (messages, paneItem) ->
     # preppend this view the bottom
     atom.workspaceView.prependToBottom this
 
     # Config value if you want to limit the status bar report
     # if your cursor is in the range or error, or on the line
     limitOnErrorRange = atom.config.get 'linter.showStatusBarWhenCursorIsInErrorRange'
+    # Display all errors in the file if it set to true
+    displayAllErrors = atom.config.get 'linter.displayAllErrors'
 
     # Hide the last version of this view
     @hide()
@@ -94,6 +96,6 @@ class StatusBarView extends View
     catch e
       error = e
 
-    @computeMessages messages, position, currentLine, displayAll, limitOnErrorRange unless error
+    @computeMessages messages, position, currentLine, displayAllErrors, limitOnErrorRange unless error
 
 module.exports = StatusBarView

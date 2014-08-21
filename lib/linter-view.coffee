@@ -108,10 +108,10 @@ class LinterView
       if @editor.id is atom.workspace.getActiveEditor()?.id
         @throttledLint() if @lintOnEditorFocus
 
-    atom.workspaceView.command "linter:lint", => @lint(true)
+    atom.workspaceView.command "linter:lint", => @lint()
 
   # Public: lint the current file in the editor using the live buffer
-  lint: (displayAll) ->
+  lint: ->
     @totalProcessed = 0
     @messages = []
     @destroyMarkers()
@@ -121,14 +121,14 @@ class LinterView
         fs.write info.fd, @editor.getText(), =>
           fs.close info.fd, (err) =>
             for linter in @linters
-              linter.lintFile(info.path, (messages) => @processMessage(messages, info, linter, displayAll))
+              linter.lintFile(info.path, (messages) => @processMessage(messages, info, linter))
 
   # Internal: Process the messages returned by linters and render them.
   #
   # messages - An array of messages to annotate:
   #           :level  - the annotation error level ('error', 'warning')
   #           :range - The buffer range that the annotation should be placed
-  processMessage: (messages, tempFileInfo, linter, displayAll) =>
+  processMessage: (messages, tempFileInfo, linter) =>
     log "linter returned", linter, messages
 
     tempFileInfo.completedLinters++
@@ -136,7 +136,7 @@ class LinterView
       fs.unlink tempFileInfo.path
 
     @messages = @messages.concat(messages)
-    @display(displayAll)
+    @display()
 
   # Internal: Destroy all markers (and associated decorations)
   destroyMarkers: ->
@@ -145,7 +145,7 @@ class LinterView
     @markers = null
 
   # Internal: Render all the linter messages
-  display: (displayAll) ->
+  display: ->
     @destroyMarkers()
 
     if @showGutters and not @guttersShowing
@@ -172,14 +172,14 @@ class LinterView
       if @showHighlighting
         @editor.decorateMarker marker, type: 'highlight', class: klass
 
-    @displayStatusBar(displayAll)
+    @displayStatusBar()
 
   # Internal: Update the status bar for new messages
-  displayStatusBar: (displayAll) ->
+  displayStatusBar: ->
     if @showMessagesAroundCursor
-      @statusBarView.render @messages, @editor, displayAll
+      @statusBarView.render @messages, @editor
     else
-      @statusBarView.render [], @editor, displayAll
+      @statusBarView.render [], @editor
 
   # Public: remove this view and unregister all it's subscriptions
   remove: ->
