@@ -36,6 +36,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-js-yaml](https://atom.io/packages/linter-js-yaml), for Yaml, using `js-yaml`
 - [linter-erb](https://atom.io/packages/linter-erb), for .erb files, using `erb -x`
 - [linter-hlint](https://atom.io/packages/linter-hlint), for Haskell files, using `hlint`
+- [linter-tidy](https://atom.io/packages/linter-tidy), for HTML, using `tidy`
 
 ## Features
 
