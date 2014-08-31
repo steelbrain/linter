@@ -1,6 +1,8 @@
-{XRegExp} = require 'xregexp'
+fs = require 'fs'
 path = require 'path'
 {Range, Point, BufferedProcess} = require 'atom'
+_ = require 'lodash'
+{XRegExp} = require 'xregexp'
 {log, warn} = require './utils'
 
 # Public: The base class for linters.
@@ -11,7 +13,7 @@ class Linter
   # list/tuple of strings. Names should be all lowercase.
   @syntax: ''
 
-  # A string or array containing the command line (with arguments) used to 
+  # A string or array containing the command line (with arguments) used to
   # lint.
   cmd: ''
 
@@ -48,6 +50,11 @@ class Linter
   constructor: (@editor) ->
     @cwd = path.dirname(editor.getUri())
 
+  # Private: Exists mostly so we can use statSync without slowing down linting.
+  # TODO: Do this at constructor time?
+  _cachedStatSync: _.memoize (path) ->
+    fs.statSync path
+
   # Private: get command and args for atom.BufferedProcess for execution
   getCmdAndArgs: (filePath) ->
     cmd = @cmd
@@ -58,7 +65,13 @@ class Linter
       cmd_list = cmd.concat [filePath]
 
     if @executablePath
-      cmd_list[0] = path.join @executablePath, cmd_list[0]
+      stats = @_cachedStatSync @executablePath
+      if stats.isDirectory()
+        cmd_list[0] = path.join @executablePath, cmd_list[0]
+      else
+        # because of the name exectablePath, people sometimes set it to the
+        # full path of the linter executable
+        cmd_list[0] = @executablePath
 
     if @isNodeExecutable
       cmd_list.unshift(@getNodeExecutablePath())

@@ -134,3 +134,29 @@ describe "Linter:lintFile", ->
     waitsFor ->
       flag
     , "lint file finished"
+
+  it "lints when executablePath is a directory", ->
+    flag = false
+    linter.cmd = ['cat']
+    linter.executablePath = '/bin'
+
+    runs ->
+      linter.lintFile "fixture/messages.txt", ->
+        flag = true
+
+    waitsFor ->
+      flag
+    , "lint file finished"
+
+  it "lints when executablePath is an executable", ->
+    flag = false
+    linter.cmd = ['notcat']
+    linter.executablePath = '/bin/cat'
+
+    runs ->
+      linter.lintFile "fixture/messages.txt", ->
+        flag = true
+
+    waitsFor ->
+      flag
+    , "lint file finished"
