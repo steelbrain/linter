@@ -133,7 +133,7 @@ class LinterView
         for linter in @linters
           linter.lintFile tempFileInfo.path, (messages) =>
             @processMessage messages, tempFileInfo, linter
-          return
+            return
 
   # Internal: Process the messages returned by linters and render them.
   #
