@@ -6,7 +6,7 @@
 
 [95]: https://github.com/AtomLinter/Linter/issues/95#issuecomment-50035054
 [102]: https://github.com/AtomLinter/Linter/issues/102#issuecomment-47029312
-[190]: https://github.com/AtomLinter/Linter/issues/190)
+[190]: https://github.com/AtomLinter/Linter/issues/190
 
 # v0.5.14
 
