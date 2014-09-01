@@ -12,6 +12,7 @@ class LinterInitializer
     showHighlighting: true
     showGutters: true
     showErrorInStatusBar: true
+    displayAllErrors: false
     lintOnChangeInterval: 1000
     showStatusBarWhenCursorIsInErrorRange: false
     lintDebug: false
