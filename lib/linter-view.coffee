@@ -1,6 +1,7 @@
 _ = require 'lodash'
 fs = require 'fs'
 temp = require 'temp'
+path = require 'path'
 {log} = require './utils'
 
 
@@ -112,16 +113,27 @@ class LinterView
 
   # Public: lint the current file in the editor using the live buffer
   lint: ->
+    return if @linters.length is 0
     @totalProcessed = 0
     @messages = []
     @destroyMarkers()
-    if @linters.length > 0
-      temp.open {suffix: @editor.getGrammar().scopeName}, (err, info) =>
-        info.completedLinters = 0
-        fs.write info.fd, @editor.getText(), =>
-          fs.close info.fd, (err) =>
-            for linter in @linters
-              linter.lintFile(info.path, (messages) => @processMessage(messages, info, linter))
+
+    # create temp dir because some linters are sensitive to file names
+    temp.mkdir
+      prefix: 'AtomLinter'
+      suffix: @editor.getGrammar().scopeName
+    , (err, tmpDir) =>
+      throw err if err?
+      fileName = path.basename @editor.getPath()
+      tempFileInfo =
+        completedLinters: 0
+        path: path.join tmpDir, fileName
+      fs.writeFile tempFileInfo.path, @editor.getText(), (err) =>
+        throw err if err?
+        for linter in @linters
+          linter.lintFile tempFileInfo.path, (messages) =>
+            @processMessage messages, tempFileInfo, linter
+          return
 
   # Internal: Process the messages returned by linters and render them.
   #
