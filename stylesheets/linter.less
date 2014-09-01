@@ -7,6 +7,7 @@
 @import '../node_modules/font-awesome/less/variables';
 @fa-font-path: "https://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts"; // for referencing Bootstrap CDN font files directly
 @import '../node_modules/font-awesome/less/path';
+@import 'ui-variables';
 
 @error-color: #b22222;
 @warning-color: #DAA520;
@@ -88,4 +89,80 @@
     border-left: 2px solid @error-color;
     border-right: 2px solid @error-color;
   }
+}
+
+// Inline Messaging Styles
+
+// Neutral colors to use for mixing
+@msg-text-color:@text-color-highlight;
+@msg-bg-color:@app-background-color;
+
+
+//Highlight line marker decoration on selected line
+.editor.is-focused {
+  .line.cursor-line {
+    &.linter-error {
+      background-color:fadeout(@error-color, 70%);
+    }
+    &.linter-warning {
+      background-color:fadeout(@warning-color, 70%);
+    }
+  }
+}
+
+
+
+.message-state(@state-color) {
+  // background-color:average(average(@state-color, @msg-bg-color), @msg-bg-color);
+  border-color:average(@state-color, @msg-bg-color);
+
+  &:before {
+    position: absolute;
+    top: 1px;
+    left: -25px;
+    color:@state-color;
+    content: "\f060";
+    font-size:  0.8em;
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+  }
+  .message-content(:last-of-type) {
+    margin-bottom:5px;
+  }
+  .message-source {
+    background-color:average(@state-color, @msg-bg-color);
+    position:relative;
+    padding-left:5px;
+  }
+}
+
+.editor .inline-message {
+  z-index:1;
+  position:absolute;
+  height: auto;
+  width:550px;
+  margin-top:0px;
+  margin-left:14px;
+  background-color:@msg-bg-color;
+  border:1px solid #888888;
+  border-top:0px;
+  color:@msg-text-color;
+  &.comment-warning {
+    .message-state(@warning-color);
+  }
+  &.comment-error {
+    .message-state(@error-color);
+  }
+}
+
+// Allow messaging to be present when 'zen' package is invoked
+.zen .editor,.editor-contents,.scroll-view {
+  overflow:visible;
+}
+
+.zen .editor.react .scroll-view {
+  overflow:visible;
 }

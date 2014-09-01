@@ -22,11 +22,12 @@ class LinterView
   #              annotations
   # statusBarView - shared StatusBarView between all linters
   # linters - global linter set to utilize for linting
-  constructor: (editorView, statusBarView, linters) ->
+  constructor: (editorView, statusBarView, inlineView, linters) ->
 
     @editor = editorView.editor
     @editorView = editorView
     @statusBarView = statusBarView
+    @inlineView = inlineView
     @markers = null
     @guttersShowing = false
 
@@ -34,17 +35,19 @@ class LinterView
 
     @subscriptions.push atom.workspaceView.on 'pane:item-removed', =>
       @statusBarView.hide()
+      @inlineView.hide()
 
     @subscriptions.push atom.workspaceView.on 'pane:active-item-changed', =>
       @statusBarView.hide()
+      @inlineView.hide()
       if @editor.id is atom.workspace.getActiveEditor()?.id
-        @displayStatusBar()
+        @updateViews()
 
     @handleBufferEvents()
     @handleConfigChanges()
 
     @subscriptions.push @editorView.on 'cursor:moved', =>
-      @displayStatusBar()
+      @updateViews()
 
   # Public: Initialize new linters (used on grammar chagne)
   #
@@ -84,7 +87,12 @@ class LinterView
     @subscriptions.push atom.config.observe 'linter.showErrorInStatusBar',
       (showMessagesAroundCursor) =>
         @showMessagesAroundCursor = showMessagesAroundCursor
-        @displayStatusBar()
+        @updateViews()
+
+    @subscriptions.push atom.config.observe 'linter.showErrorInline',
+      (showErrorInline) =>
+        @showErrorInline = showErrorInline
+        @updateViews()
 
     @subscriptions.push atom.config.observe 'linter.showHighlighting',
       (showHighlighting) =>
@@ -117,7 +125,6 @@ class LinterView
     @totalProcessed = 0
     @messages = []
     @destroyMarkers()
-
     # create temp dir because some linters are sensitive to file names
     temp.mkdir
       prefix: 'AtomLinter'
@@ -133,7 +140,7 @@ class LinterView
         for linter in @linters
           linter.lintFile tempFileInfo.path, (messages) =>
             @processMessage messages, tempFileInfo, linter
-        return
+            return
 
   # Internal: Process the messages returned by linters and render them.
   #
@@ -184,14 +191,27 @@ class LinterView
       if @showHighlighting
         @editor.decorateMarker marker, type: 'highlight', class: klass
 
-    @displayStatusBar()
+      if @showErrorInline
+        #adding a line highlight because it visually tracks over to the message
+        #though, that only makes senes if the inline messages are on
+        @editor.decorateMarker marker, type: 'line', class: klass
 
-  # Internal: Update the status bar for new messages
-  displayStatusBar: ->
+    @updateViews()
+
+  # Internal: Update the views for new messages
+  updateViews: ->
     if @showMessagesAroundCursor
       @statusBarView.render @messages, @editor
     else
       @statusBarView.render [], @editor
+
+    if @showErrorInline
+      @inlineView.render @messages, @editor, @editorView
+    else
+      @inlineView.render [], @editor, @editorView
+
+
+
 
   # Public: remove this view and unregister all it's subscriptions
   remove: ->

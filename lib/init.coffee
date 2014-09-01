@@ -1,6 +1,6 @@
 LinterView = require './linter-view'
 StatusBarView = require './statusbar-view'
-
+InlineView = require './inline-view'
 # Public: linter package initialization, sets up the linter for usages by atom
 class LinterInitializer
 
@@ -11,7 +11,8 @@ class LinterInitializer
     lintOnEditorFocus: true
     showHighlighting: true
     showGutters: true
-    showErrorInStatusBar: true
+    showErrorInStatusBar: false
+    showErrorInline: true
     lintOnChangeInterval: 1000
     showStatusBarWhenCursorIsInErrorRange: false
     lintDebug: false
@@ -28,27 +29,29 @@ class LinterInitializer
 
     @enabled = true
     @statusBarView = new StatusBarView()
+    @inlineView = new InlineView()
 
     # Subscribing to every current and future editor
     @editorViewSubscription = atom.workspaceView.eachEditorView (editorView) =>
-      linterView = @injectLinterViewIntoEditorView(editorView, @statusBarView)
+      linterView = @injectLinterViewIntoEditorView(editorView, @statusBarView, @inlineView)
       editorView.editor.on 'grammar-changed', =>
         linterView.initLinters(@linters)
         linterView.lint()
-        @linterViews.push(linterView)
+        @linterViews.push(linterinterView)
 
   # Internal: add a linter to a new editor view
-  injectLinterViewIntoEditorView: (editorView, statusBarView) ->
+  injectLinterViewIntoEditorView: (editorView, statusBarView, inlineView) ->
     return unless editorView.getPane()?
     return unless editorView.attached
     return if editorView.linterView?
 
-    linterView = new LinterView(editorView, statusBarView, @linters)
+    linterView = new LinterView(editorView, statusBarView, inlineView, @linters)
     linterView
 
   # Public: deactivate the plugin and unregister all subscriptions
   deactivate: ->
     @editorViewSubscription.off()
+    @inlineView.remove()
     @statusBarView.remove()
     linterView.remove() for linterView in @linterViews
 
