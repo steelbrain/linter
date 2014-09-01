@@ -49,8 +49,12 @@
   dd {
     padding-left: 25px;
     margin-left: 50px;
-    .error-message {
+    & > span {
       cursor: pointer;
+
+      &:hover {
+        color: red;
+      }
     }
     .pos {
       color: rgba(255, 255, 255, 0.2);

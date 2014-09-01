@@ -9,6 +9,7 @@ class LinterInitializer
     lintOnSave: true
     lintOnChange: true
     lintOnEditorFocus: true
+    showAllErrorsInStatusBar: false
     showHighlighting: true
     showGutters: true
     showErrorInStatusBar: true
