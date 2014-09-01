@@ -116,7 +116,15 @@ class LinterView
     @messages = []
     @destroyMarkers()
     if @linters.length > 0
-      temp.open {suffix: @editor.getGrammar().scopeName}, (err, info) =>
+      
+      # get file extension
+      ext_list = @editor.getBuffer().file.path.split "."
+      if ext_list.length == 1 || (ext_list[0] == "" && ext_list.length == 2)
+          ext = @editor.getGrammar().scopeName
+      else
+          ext = "." + ext_list.pop()
+
+      temp.open {suffix: ext}, (err, info) =>
         info.completedLinters = 0
         fs.write info.fd, @editor.getText(), =>
           fs.close info.fd, (err) =>
