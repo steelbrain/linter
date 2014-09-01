@@ -59,10 +59,13 @@ class Linter
   getCmdAndArgs: (filePath) ->
     cmd = @cmd
 
-    if not Array.isArray(cmd)
-      cmd_list = cmd.split(' ').concat [filePath]
+    # ensure we have an array
+    cmd_list = if Array.isArray cmd
+      cmd.slice()  # copy since we're going to modify it
     else
-      cmd_list = cmd.concat [filePath]
+      cmd.split ' '
+
+    cmd_list.push filePath
 
     if @executablePath
       stats = @_cachedStatSync @executablePath
