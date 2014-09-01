@@ -1,3 +1,12 @@
+# v0.5.16
+
+### Bug Fixes
+* Better compatibility with `rubocop` and `GHC-mod` (See [#192][192],
+  [AtomLinter/rubocop#2][rubocop2])
+
+[192]: https://github.com/AtomLinter/Linter/issues/192
+[rubocop2]: https://github.com/AtomLinter/linter-rubocop/issues/2
+
 # v0.5.15
 
 ### New Features
