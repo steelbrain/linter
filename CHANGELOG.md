@@ -1,3 +1,12 @@
+# v0.5.17
+
+### Bug Fixes
+* Fix regression for multiple linters in one file (See [#193][193],
+  [#194][194])
+
+[193]: https://github.com/AtomLinter/Linter/issues/193
+[194]: https://github.com/AtomLinter/Linter/pull/194
+
 # v0.5.16
 
 ### Bug Fixes
