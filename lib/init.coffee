@@ -37,7 +37,7 @@ class LinterInitializer
       editorView.editor.on 'grammar-changed', =>
         linterView.initLinters(@linters)
         linterView.lint()
-        @linterViews.push(linterinterView)
+        @linterViews.push(linterView)
 
   # Internal: add a linter to a new editor view
   injectLinterViewIntoEditorView: (editorView, statusBarView, inlineView) ->
