@@ -132,6 +132,7 @@ class Linter
     # Don't block UI more than 5seconds, it's really annoying on big files
     setTimeout ->
       process.kill()
+      log 'process timed out'
     , 5000
 
   # Private: process the string result of a linter execution using the regex
