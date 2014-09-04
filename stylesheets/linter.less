@@ -1,9 +1,6 @@
 @import 'ui-variables';
 @import 'octicon-utf-codes.less';
 
-@error-color: #b22222;
-@warning-color: #DAA520;
-
 .gutter .line-number {
   &.linter-warning .icon-right {
     visibility: visible;
@@ -67,21 +64,21 @@
   &.linter-warning .region {
     background: linear-gradient(
       to bottom,
-      @warning-color 0%,
-      fadeout(@warning-color, 70%) 20%,
-      fadeout(@warning-color, 70%) 80%,
-      @warning-color 100%);
-    border-left: 2px solid @warning-color;
-    border-right: 2px solid @warning-color;
+      @background-color-warning 0%,
+      fadeout(@background-color-warning, 70%) 20%,
+      fadeout(@background-color-warning, 70%) 80%,
+      @background-color-warning 100%);
+    border-left: 2px solid @background-color-warning;
+    border-right: 2px solid @background-color-warning;
   }
   &.linter-error .region {
     background: linear-gradient(
       to bottom,
-      @error-color 0%,
-      fadeout(@error-color, 70%) 20%,
-      fadeout(@error-color, 70%) 80%,
-      @error-color 100%);
-    border-left: 2px solid @error-color;
-    border-right: 2px solid @error-color;
+      @background-color-error 0%,
+      fadeout(@background-color-error, 70%) 20%,
+      fadeout(@background-color-error, 70%) 80%,
+      @background-color-error 100%);
+    border-left: 2px solid @background-color-error;
+    border-right: 2px solid @background-color-error;
   }
 }
