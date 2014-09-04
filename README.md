@@ -1,7 +1,7 @@
 # Linter
 [![Build Status](https://travis-ci.org/AtomLinter/Linter.svg)](https://travis-ci.org/AtomLinter/Linter)
 
-Lint your code with ease in [Atom](http://atom.io) and see the messages right next to the linted code.
+Lint your code with ease in [Atom](http://atom.io).
 
 ![atom-inline-messages](https://raw.githubusercontent.com/mdgriffith/atom-inline-messages/master/img/inline-comments.gif)
 

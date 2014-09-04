@@ -1,5 +1,5 @@
 {View} = require 'atom'
-MessageBubble = require 'atom-inline-messages'
+# MessageBubble = require 'atom-inline-messages'
 
 copyPaste = require('copy-paste')
   .noConflict()
@@ -11,7 +11,8 @@ class InlineView
     if @message
       @message.remove()
 
-  render: (messages, editor, editorView) ->
+  render: (messages, editorView) ->
+    editor = editorView.editor
     # Config value if you want to limit the status bar report
     # if your cursor is in the range or error, or on the line
     limitOnErrorRange = atom.config.get 'linter.showStatusBarWhenCursorIsInErrorRange'
@@ -22,38 +23,88 @@ class InlineView
     # No more errors on the file, return
     return unless messages.length > 0
 
-    try
-      if not editor
-        editor = atom.workspaceView.getActivePaneItem()
-      currentLine = undefined
-      if position = editor?.getCursorBufferPosition?()
-        currentLine = position.row + 1
-    catch e
-      error = e
-
     if @message
       @message.remove()
       @message = null
 
-    for item, index in messages
-      # Condition for cursor into error range
-      showInRange = (item.range?.containsPoint(position)) and index <= 10 and limitOnErrorRange
-      # Condition for cursor on error line
-      showOnline = (item.range?.start.row + 1) is currentLine and not limitOnErrorRange
+    currentLine = undefined
+    if position = editor?.getCursorBufferPosition?()
+      currentLine = position.row + 1
 
-      if showInRange or showOnline
+    for item, index in messages
+      show = if limitOnErrorRange
+        item.range?.containsPoint(position) and index <= 10
+      else
+        item.range?.start.row + 1 is currentLine
+      if show
         if @message
-          @message.add(item.linter, "<pre>" + item.message + "</pre>")
+          @message.add(item.linter, item.message)
         else
           @message = new MessageBubble(
-            editor: editor
             editorView: editorView
             title: item.linter
             line: item.line
-            start: item.range.start.col
-            end: item.range.end.col
-            content: "<pre>" + item.message + "</pre>"
+            start: item.range.start.column
+            end: item.range.end.column
+            content: item.message
             klass: "comment-#{item.level}"
           )
+
+
+class MessageBubble extends View
+  @content: (params) ->
+    @div class: "inline-message #{params.klass}", style: params.style, =>
+      for msg in params.messages
+        @div class: "message-content",=>
+          @div class: "message-source", =>
+            @raw msg.src
+          @div class: "message-body", =>
+            @raw msg.content
+
+  constructor: ({editorView, title, line, start, end, content, klass, min}) ->
+    @title = title
+    @line = line - 1
+    @start = start
+    @end = end
+    @content = content
+    @klass = klass
+    @editor = editorView.editor
+    @editorView = editorView
+    @messages = [{content: @content, src: @title}]
+    style = @calculateStyle(@line,@start)
+    super({messages: @messages, klass: @klass, style: style})
+
+    if @min
+      @minimize()
+    editorView = atom.workspaceView.getActiveView()
+    pageData = editorView.find(".overlayer")
+    if pageData
+      pageData.first().prepend(this)
+
+  calculateStyle: (line, start) ->
+    if @editorView and @editor
+      last = @editor.getBuffer().lineLengthForRow(line)
+      fstPos = @editorView.pixelPositionForBufferPosition({row: line + 1, column: 0})
+      lastPos = @editorView.pixelPositionForBufferPosition({row: line, column: start})
+      top = fstPos.top
+      left = lastPos.left
+      return "position:absolute;left:#{left}px;top:#{top}px;"
+
+  update: ->
+    lastSrc = null
+    this.find(".message-content").remove()
+    msgs = ""
+    for msg in @messages
+      src = "<div class='message-source'>#{msg.src}</div>"
+      body = "<div class='message-body'>#{msg.content}</div>"
+      content = "<div class='message-content'>#{src}#{body}</div>"
+      lastSrc = msg.src
+      msgs = msgs + content
+    this.append msgs
+
+  add: (title, content) ->
+    @messages.push({content: content, src: title})
+    @update()
+
 
 module.exports = InlineView

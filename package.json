@@ -1,7 +1,7 @@
 {
   "name": "linter",
   "main": "./lib/init",
-  "version": "0.5.16",
+  "version": "0.5.17",
   "private": true,
   "description": "Validates your code using linters.",
   "repository": "https://github.com/AtomLinter/Linter.git",
@@ -20,8 +20,7 @@
     "temp": "~0.8.0",
     "xregexp": "2.0.0",
     "chai": "^1.9.1",
-    "sinon": "^1.10.0",
-    "atom-inline-messages":"^0.1.5"
+    "sinon": "^1.10.0"
   },
   "devDependencies": {
     "biscotto": "^2.1.1",

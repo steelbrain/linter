@@ -191,11 +191,6 @@ class LinterView
       if @showHighlighting
         @editor.decorateMarker marker, type: 'highlight', class: klass
 
-      if @showErrorInline
-        #adding a line highlight because it visually tracks over to the message
-        #though, that only makes senes if the inline messages are on
-        @editor.decorateMarker marker, type: 'line', class: klass
-
     @updateViews()
 
   # Internal: Update the views for new messages
@@ -206,11 +201,9 @@ class LinterView
       @statusBarView.render [], @editor
 
     if @showErrorInline
-      @inlineView.render @messages, @editor, @editorView
+      @inlineView.render @messages, @editorView
     else
-      @inlineView.render [], @editor, @editorView
-
-
+      @inlineView.render [], @editorView
 
 
   # Public: remove this view and unregister all it's subscriptions
