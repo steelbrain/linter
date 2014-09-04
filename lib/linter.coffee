@@ -130,10 +130,11 @@ class Linter
                                    stdout, stderr, exit})
 
     # Don't block UI more than 5seconds, it's really annoying on big files
+    timeout_s = 5
     setTimeout ->
       process.kill()
-      log 'process timed out'
-    , 5000
+      warn "command `#{command}` timed out after #{timeout_s}s"
+    , timeout_s * 1000
 
   # Private: process the string result of a linter execution using the regex
   #          as the message builder
