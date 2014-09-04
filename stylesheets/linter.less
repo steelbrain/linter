@@ -1,40 +1,26 @@
-// The ui-variables file is provided by base themes provided by Atom.
-//
-// See https://github.com/atom/atom-dark-ui/blob/master/stylesheets/ui-variables.less
-// for a full listing of what's available.
-// @import 'ui-variables';
-
-@import '../node_modules/font-awesome/less/variables';
-@fa-font-path: "https://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts"; // for referencing Bootstrap CDN font files directly
-@import '../node_modules/font-awesome/less/path';
+@import 'ui-variables';
+@import 'octicon-utf-codes.less';
 
 @error-color: #b22222;
 @warning-color: #DAA520;
 
-.gutter.linter-gutter-enabled .line-number {
-  &:before {
-    visibility: hidden;
-    position: relative;
-    bottom: .19em;
-    margin-right: .6em;
-    content: "\f111";
-    font-size:  0.7em;
-    display: inline-block;
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    -webkit-font-smoothing: antialiased;
+.gutter .line-number {
+  &.linter-warning .icon-right {
+    visibility: visible;
+    &:before {
+      color: @text-color-warning;
+      content: @primitive-dot;
+      font-size: 1.1em;
+    }
   }
 
-  &.linter-warning:before {
-    visibility: visible !important;
-    color: @warning-color;
-
-  }
-
-  &.linter-error:before {
-    visibility: visible !important;
-    color: @error-color;
+  &.linter-error .icon-right {
+    visibility: visible;
+    &:before {
+      color: @text-color-error;
+      content: @primitive-dot;
+      font-size: 1.1em;
+    }
   }
 }
 
