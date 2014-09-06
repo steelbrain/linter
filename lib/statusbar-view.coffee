@@ -1,4 +1,5 @@
 {View, Point} = require 'atom'
+_ = require 'lodash'
 
 copyPaste = require('copy-paste')
   .noConflict()
@@ -22,16 +23,12 @@ class StatusBarView extends View
       col = parseInt(@dataset.col, 10)
       atom.workspace.getActiveEditor()?.setCursorBufferPosition(new Point(line, col))
 
-  highlightLines: ->
+  highlightLines: (currentLine) ->
     return unless @showAllErrors
     # Remove previous selection
     @find('.error-message').removeClass('message-highlighted')
 
-    cursorPos = @getCursorPosition()
-    return unless cursorPos
-
-    line = cursorPos.row
-    $line = @find('.linter-line-' + line)
+    $line = @find('.linter-line-' + currentLine)
     # If the selected line contains an error message, highlight the error
     $line?.addClass('message-highlighted')
 
@@ -46,12 +43,15 @@ class StatusBarView extends View
     # Clear `violations` div
     @violations.empty()
 
+    # only sort if we show all errors
+    if @showAllErrors? then messages = _.sortBy(messages, (item) -> item.line)
+
     # Let's go through all the violations reported
     for item, index in messages
       # Condition for cursor into error range
       showInRange = (item.range?.containsPoint(position)) and index <= 10 and limitOnErrorRange
       # Condition for cursor on error line
-      showOnline = (item.range?.start.row + 1) is currentLine and not limitOnErrorRange
+      showOnline = (item.range?.start.row) is currentLine and not limitOnErrorRange
 
       # If one of the conditions is true, let's show the StatusBar
       if showInRange or showOnline or @showAllErrors
@@ -77,7 +77,7 @@ class StatusBarView extends View
     # Show the StatusBar only if there are error(s)
     if @violations
       @show()
-      @highlightLines()
+      @highlightLines(currentLine)
 
   getCursorPosition: ->
     # Easy fix for https://github.com/AtomLinter/Linter/issues/99
@@ -110,7 +110,7 @@ class StatusBarView extends View
     position = @getCursorPosition()
     return unless position
 
-    currentLine = position.row + 1
+    currentLine = position.row
 
     @computeMessages messages, position, currentLine, limitOnErrorRange
 

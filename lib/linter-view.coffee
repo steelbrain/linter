@@ -44,7 +44,6 @@ class LinterView
 
     @subscriptions.push @editorView.on 'cursor:moved', =>
       @displayStatusBar()
-      @statusBarView.highlightLines()
 
   # Public: Initialize new linters (used on grammar chagne)
   #
