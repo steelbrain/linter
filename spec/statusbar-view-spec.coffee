@@ -24,7 +24,7 @@ describe 'StatusBarView', ->
       position = position || {row: 0, column: 1}
 
       # Faking we are on an error line
-      statusBarView.computeMessages messages, position, 1, false
+      statusBarView.computeMessages messages, position, 0, false
 
   afterEach ->
     statusBarView.remove()

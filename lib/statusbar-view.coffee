@@ -75,7 +75,7 @@ class StatusBarView extends View
         @violations.append violation
 
     # Show the StatusBar only if there are error(s)
-    if @violations
+    if violation
       @show()
       @highlightLines(currentLine)
 
