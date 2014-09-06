@@ -39,6 +39,8 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-tidy](https://atom.io/packages/linter-tidy), for HTML, using `tidy`
 - [linter-htmlhint](https://atom.io/packages/linter-htmlhint), for html, using `htmlhint`
 - [linter-squirrel](https://atom.io/packages/linter-squirrel), for squirrel, using `squirrel-compiler`
+- [linter-codscriptizer](https://atom.io/packages/linter-codscriptizer), for CoDScript, using `codscriptizer -l`
+
 
 ## Features
 
