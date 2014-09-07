@@ -25,6 +25,7 @@ describe "LinterView:lint", ->
           on: sinon.stub()
         statusBarView =
           render: sinon.stub()
+          hide: sinon.stub()
         linterView = new LinterView(editorView, statusBarView, linterClasses)
 
     calls = 0
