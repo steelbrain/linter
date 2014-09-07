@@ -56,12 +56,12 @@ class StatusBarView extends View
     # Let's go through all the violations reported
     for item, index in messages
       # Condition for cursor into error range
-      showInRange = (item.range?.containsPoint(position)) and index <= 10 and limitOnErrorRange
+      showInRange = item.range?.containsPoint(position) and index <= 10 and limitOnErrorRange
       # Condition for cursor on error line
-      showOnline = (item.range?.start.row) is currentLine and not limitOnErrorRange
+      showOnLine = item.range?.start.row is currentLine and not limitOnErrorRange
 
       # If one of the conditions is true, let's show the StatusBar
-      if showInRange or showOnline or @showAllErrors
+      if showInRange or showOnLine or @showAllErrors
         pos = "line: #{item.line}"
         if item.col? then pos = "#{pos} / col: #{item.col}"
         violation =
