@@ -43,8 +43,8 @@ class StatusBarView extends View
     # Clear `violations` div
     @violations.empty()
 
-    # only sort if we show all errors
-    if @showAllErrors? then messages = _.sortBy(messages, (item) -> item.line)
+    # messages are sorted when all errors are to be displayed
+    messages = _.sortBy(messages, (item) -> item.line) if @showAllErrors
 
     # Let's go through all the violations reported
     for item, index in messages
