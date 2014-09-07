@@ -1,4 +1,5 @@
-{View} = require 'atom'
+{View, Point} = require 'atom'
+_ = require 'lodash'
 
 copyPaste = require('copy-paste')
   .noConflict()
@@ -13,29 +14,54 @@ class StatusBarView extends View
 
   show: ->
     super
-    # Bind `.error-message` to copy the text on click
-    @find('.error-message').on 'click', ->
-      copyPaste.copy @innerText
+    # Bind `.copy` to copy the text on click
+    @on 'click', '.copy', ->
+      copyPaste.copy @parentElement.getElementsByClassName('error-message')[0].innerText
+    # Bind `.goToError` to go to the lint error
+    @on 'click', '.goToError', ->
+      line = parseInt(@dataset.line, 10)
+      col = parseInt(@dataset.col, 10)
+      atom.workspace.getActiveEditor()?.setCursorBufferPosition(new Point(line, col))
+
+  highlightLines: (currentLine) ->
+    return unless @showAllErrors
+    # Remove previous selection
+    @find('.error-message').removeClass('message-highlighted')
+
+    $line = @find('.linter-line-' + currentLine)
+    # If the selected line contains an error message, highlight the error
+    $line?.addClass('message-highlighted')
 
   hide: ->
     # Remove registred events before hidding the status bar
     # Avoid memory leaks after long usage
-    @find('.error-message').off()
+    @off 'click', '.copy'
+    @off 'click', '.goToError'
     super
 
   computeMessages: (messages, position, currentLine, limitOnErrorRange) ->
     # Clear `violations` div
     @violations.empty()
 
+    # messages are sorted when all errors are to be displayed
+    byLine = (a, b) ->
+      if a.line < b.line
+        -1
+      else if b.line > a.line
+        1
+      else
+        0
+    messages.sort byLine if @showAllErrors
+
     # Let's go through all the violations reported
     for item, index in messages
       # Condition for cursor into error range
-      showInRange = (item.range?.containsPoint(position)) and index <= 10 and limitOnErrorRange
+      showInRange = item.range?.containsPoint(position) and index <= 10 and limitOnErrorRange
       # Condition for cursor on error line
-      showOnline = (item.range?.start.row + 1) is currentLine and not limitOnErrorRange
+      showOnLine = item.range?.start.row is currentLine and not limitOnErrorRange
 
       # If one of the conditions is true, let's show the StatusBar
-      if showInRange or showOnline
+      if showInRange or showOnLine or @showAllErrors
         pos = "line: #{item.line}"
         if item.col? then pos = "#{pos} / col: #{item.col}"
         violation =
@@ -44,15 +70,32 @@ class StatusBarView extends View
               <span class='highlight-#{item.level}'>#{item.linter}</span>
             </dt>
             <dd>
-              <span class='error-message'>#{item.message}</span>
-              <span class='pos'>#{pos}</span>
+              <span class='copy icon-clippy'></span>
+              <span class='goToError' data-line='#{item.line - 1}' data-col='#{item.col - 1 or 0}'>
+                <span class='error-message linter-line-#{item.line - 1}'>#{item.message}</span>
+                <span class='pos'>#{pos}</span>
+              </span>
             </dd>
           """
 
         # Add the violation to the StatusBar
         @violations.append violation
-        # Show the StatusBar
-        @show()
+
+    # Show the StatusBar only if there are error(s)
+    unless _.isEmpty @violations
+      @show()
+      @highlightLines(currentLine)
+
+  getCursorPosition: ->
+    # Easy fix for https://github.com/AtomLinter/Linter/issues/99
+    try
+      if not paneItem
+        paneItem = atom.workspaceView.getActivePaneItem()
+        position = paneItem?.getCursorBufferPosition?()
+    catch e
+      error = e
+
+    return position or undefined
 
   # Render the view
   render: (messages, paneItem) ->
@@ -62,6 +105,8 @@ class StatusBarView extends View
     # Config value if you want to limit the status bar report
     # if your cursor is in the range or error, or on the line
     limitOnErrorRange = atom.config.get 'linter.showStatusBarWhenCursorIsInErrorRange'
+    # Display all errors in the file if it set to true
+    @showAllErrors = atom.config.get 'linter.showAllErrorsInStatusBar'
 
     # Hide the last version of this view
     @hide()
@@ -69,16 +114,11 @@ class StatusBarView extends View
     # No more errors on the file, return
     return unless messages.length > 0
 
-    # Easy fix for https://github.com/AtomLinter/Linter/issues/99
-    try
-      if not paneItem
-        paneItem = atom.workspaceView.getActivePaneItem()
-      currentLine = undefined
-      if position = paneItem?.getCursorBufferPosition?()
-        currentLine = position.row + 1
-    catch e
-      error = e
+    position = @getCursorPosition()
+    return unless position
 
-    @computeMessages messages, position, currentLine, limitOnErrorRange unless error
+    currentLine = position.row
+
+    @computeMessages messages, position, currentLine, limitOnErrorRange
 
 module.exports = StatusBarView

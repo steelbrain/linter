@@ -1,5 +1,8 @@
 @import 'ui-variables';
-@import 'octicon-utf-codes.less';
+@import 'octicon-utf-codes';
+@import 'octicons';
+
+@iconCopySize: 14px;
 
 .gutter .line-number {
   &.linter-warning .icon-right {
@@ -45,17 +48,30 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight: normal !important;
+    padding: 0.5px 0 0.5px 0;
   }
   dd {
     padding-left: 25px;
     margin-left: 50px;
-    .error-message {
+    & > span {
       cursor: pointer;
+
+      &:hover {
+        color: @text-color-highlight;
+      }
     }
     .pos {
       color: rgba(255, 255, 255, 0.2);
       padding: 2px;
       border-radius: 1px 2px;
+    }
+    .copy:before {
+      font-size: @iconCopySize;
+      width: @iconCopySize;
+      height: @iconCopySize;
+    }
+    .message-highlighted {
+      background-color: @background-color-highlight;
     }
   }
 }

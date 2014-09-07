@@ -127,7 +127,7 @@ class Linter
       @processMessage data, callback
 
     process = new BufferedProcess({command, args, options,
-                                   stdout, stderr, exit})
+                                  stdout, stderr, exit})
 
     # Don't block UI more than 5seconds, it's really annoying on big files
     timeout_s = 5
