@@ -1,5 +1,4 @@
 {View, Point} = require 'atom'
-_ = require 'lodash'
 
 copyPaste = require('copy-paste')
   .noConflict()
@@ -44,7 +43,14 @@ class StatusBarView extends View
     @violations.empty()
 
     # messages are sorted when all errors are to be displayed
-    messages = _.sortBy(messages, (item) -> item.line) if @showAllErrors
+    byLine = (a, b) ->
+      if a.line < b.line
+        -1
+      else if b.line > a.line
+        1
+      else
+        0
+    messages.sort byLine if @showAllErrors
 
     # Let's go through all the violations reported
     for item, index in messages
