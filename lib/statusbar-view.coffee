@@ -1,4 +1,5 @@
 {View, Point} = require 'atom'
+_ = require 'lodash'
 
 copyPaste = require('copy-paste')
   .noConflict()
@@ -81,7 +82,7 @@ class StatusBarView extends View
         @violations.append violation
 
     # Show the StatusBar only if there are error(s)
-    if violation
+    unless _.isEmpty @violations
       @show()
       @highlightLines(currentLine)
 
