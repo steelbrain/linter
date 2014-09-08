@@ -1,3 +1,13 @@
+# v0.6.0
+
+### New features
+* Option to always show all messages in status bar (See [#196][196])
+
+### New linters
+* htmlhint, pylama, squirrel, CoDscript
+
+[196]: https://github.com/AtomLinter/Linter/pull/196
+
 # v0.5.18
 
 ### Bug Fixes
