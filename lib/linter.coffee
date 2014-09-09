@@ -189,9 +189,12 @@ class Linter
     return @editor.lineLengthForBufferRow row
 
   getEditorScopesForPosition: (position) ->
-    # Easy fix when line is removed before it can get lighted
     try
-      @editor.displayBuffer.tokenizedBuffer.scopesForPosition position
+      # return a copy in case it gets mutated (hint: it does)
+      _.clone @editor.displayBuffer.tokenizedBuffer.scopesForPosition(position)
+    catch
+      # this can throw if the line has since been deleted
+      []
 
   getGetRangeForScopeAtPosition: (innerMostScope, position) ->
     return @editor
@@ -231,7 +234,7 @@ class Linter
       position = new Point(rowStart, match.col)
       scopes = @getEditorScopesForPosition(position)
 
-      while innerMostScope = scopes?.pop()
+      while innerMostScope = scopes.pop()
         range = @getGetRangeForScopeAtPosition(innerMostScope, position)
         return range if range?
 
