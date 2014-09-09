@@ -1,3 +1,12 @@
+# v0.6.1
+
+### Bug fixes
+* Fix keyboard shortcuts not working on lines containing lint messages
+  (See [#84][84], [#194][194])
+
+[84]: https://github.com/AtomLinter/Linter/issues/84
+[194]: https://github.com/AtomLinter/Linter/issues/194
+
 # v0.6.0
 
 ### New features
