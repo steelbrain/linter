@@ -159,22 +159,23 @@ class LinterView
   display: ->
     @destroyMarkers()
 
-    @markers ?= []
-    for message in @messages
-      klass = if message.level == 'error'
-        'linter-error'
-      else if message.level == 'warning'
-        'linter-warning'
-      continue unless klass?  # skip other messages
+    if @showGutters or @showHighlighting
+      @markers ?= []
+      for message in @messages
+        klass = if message.level == 'error'
+          'linter-error'
+        else if message.level == 'warning'
+          'linter-warning'
+        continue unless klass?  # skip other messages
 
-      marker = @editor.markBufferRange message.range, invalidate: 'never'
-      @markers.push marker
+        marker = @editor.markBufferRange message.range, invalidate: 'never'
+        @markers.push marker
 
-      if @showGutters
-        @editor.decorateMarker marker, type: 'gutter', class: klass
+        if @showGutters
+          @editor.decorateMarker marker, type: 'gutter', class: klass
 
-      if @showHighlighting
-        @editor.decorateMarker marker, type: 'highlight', class: klass
+        if @showHighlighting
+          @editor.decorateMarker marker, type: 'highlight', class: klass
 
     @displayStatusBar()
 
