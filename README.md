@@ -22,6 +22,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-jsxhint](https://atom.io/packages/linter-jsxhint), for JSX (React.js), using `jsxhint`
 - [linter-eslint](https://atom.io/packages/linter-eslint), for JavaScript, using `eslint`
 - [linter-scss-lint](https://atom.io/packages/linter-scss-lint), for SASS/SCSS, using `scss-lint`
+- [linter-less](https://atom.io/packages/linter-less), for LESS, using `less`
 - [linter-coffeelint](https://atom.io/packages/linter-coffeelint), for CoffeeScript, using `coffeelint`
 - [linter-csslint](https://atom.io/packages/linter-csslint), for CSS, using `csslint`
 - [linter-rubocop](https://atom.io/packages/linter-rubocop), for Ruby and Ruby on Rails, using `rubocop`
