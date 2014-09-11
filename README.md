@@ -44,7 +44,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-codscriptizer](https://atom.io/packages/linter-codscriptizer), for CoDScript, using `codscriptizer -l`
 - [linter-harbour](https://atom.io/packages/linter-harbour), for Harbour, using `harbour`
 - [linter-rust](https://atom.io/packages/linter-rust), for Rust, using `rustc`
-- [linter-dart](https://atom.io/packages/linter-dart), for Dart using `dartanalyzer`
+- [linter-dartanalyzer](https://atom.io/packages/linter-dartanalyzer), for Dart using `dartanalyzer`
 
 
 ## Features
