@@ -78,15 +78,11 @@ class StatusBarView extends View
       @show()
       @highlightLines(currentLine)
 
-  getCursorPosition: ->
-    # Easy fix for https://github.com/AtomLinter/Linter/issues/99
+  getCursorPosition: (paneItem) ->
     try
-      if not paneItem
-        paneItem = atom.workspaceView.getActivePaneItem()
-        position = paneItem?.getCursorBufferPosition?()
-    catch e
-      error = e
-
+      paneItem ?= atom.workspace.getActivePaneItem()
+      position = paneItem?.getCursorBufferPosition?()
+    catch
     return position or undefined
 
   # Render the view
@@ -106,7 +102,7 @@ class StatusBarView extends View
     # No more errors on the file, return
     return unless messages.length > 0
 
-    position = @getCursorPosition()
+    position = @getCursorPosition paneItem
     return unless position
 
     currentLine = position.row
