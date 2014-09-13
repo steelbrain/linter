@@ -76,7 +76,6 @@ class MessageBubble extends View
 
     if @min
       @minimize()
-    editorView = atom.workspaceView.getActiveView()
     pageData = editorView.find(".overlayer")
     if pageData
       pageData.first().prepend(this)
@@ -90,17 +89,17 @@ class MessageBubble extends View
       left = lastPos.left
       return "position:absolute;left:#{left}px;top:#{top}px;"
 
+  renderMsg: (msg) ->
+    View.render ->
+      @div class: "message-content", =>
+        @div class: "message-source", =>
+          @raw msg.src
+        @div class: "message-body", =>
+          @raw msg.content
+
   update: ->
-    lastSrc = null
     this.find(".message-content").remove()
-    msgs = ""
-    for msg in @messages
-      src = "<div class='message-source'>#{msg.src}</div>"
-      body = "<div class='message-body'>#{msg.content}</div>"
-      content = "<div class='message-content'>#{src}#{body}</div>"
-      lastSrc = msg.src
-      msgs = msgs + content
-    this.append msgs
+    this.append (@renderMsg(msg) for msg in @messages)
 
   add: (title, content) ->
     @messages.push({content: content, src: title})
