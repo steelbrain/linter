@@ -78,15 +78,8 @@ class StatusBarView extends View
       @show()
       @highlightLines(currentLine)
 
-  getCursorPosition: (paneItem) ->
-    try
-      paneItem ?= atom.workspace.getActivePaneItem()
-      position = paneItem?.getCursorBufferPosition?()
-    catch
-    return position or undefined
-
   # Render the view
-  render: (messages, paneItem) ->
+  render: (messages, editor) ->
     # preppend this view the bottom
     atom.workspaceView.prependToBottom this
 
@@ -102,7 +95,7 @@ class StatusBarView extends View
     # No more errors on the file, return
     return unless messages.length > 0
 
-    position = @getCursorPosition paneItem
+    position = editor.getCursorBufferPosition()
     return unless position
 
     currentLine = position.row
