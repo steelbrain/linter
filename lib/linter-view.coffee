@@ -22,29 +22,32 @@ class LinterView
   #              annotations
   # statusBarView - shared StatusBarView between all linters
   # linters - global linter set to utilize for linting
-  constructor: (editorView, statusBarView, linters) ->
+  constructor: (editorView, statusBarView, inlineView, linters) ->
 
     @editor = editorView.editor
     @editorView = editorView
     @statusBarView = statusBarView
+    @inlineView = inlineView
     @markers = null
 
     @initLinters(linters)
 
     @subscriptions.push atom.workspaceView.on 'pane:item-removed', =>
       @statusBarView.hide()
+      @inlineView.hide()
 
     @subscriptions.push atom.workspaceView.on 'pane:active-item-changed', =>
       if @editor.id is atom.workspace.getActiveEditor()?.id
-        @displayStatusBar()
+        @updateViews()
       else
         @statusBarView.hide()
+        @inlineView.hide()
 
     @handleBufferEvents()
     @handleConfigChanges()
 
     @subscriptions.push @editorView.on 'cursor:moved', =>
-      @displayStatusBar()
+      @updateViews()
 
   # Public: Initialize new linters (used on grammar chagne)
   #
@@ -84,7 +87,12 @@ class LinterView
     @subscriptions.push atom.config.observe 'linter.showErrorInStatusBar',
       (showMessagesAroundCursor) =>
         @showMessagesAroundCursor = showMessagesAroundCursor
-        @displayStatusBar()
+        @updateViews()
+
+    @subscriptions.push atom.config.observe 'linter.showErrorInline',
+      (showErrorInline) =>
+        @showErrorInline = showErrorInline
+        @updateViews()
 
     @subscriptions.push atom.config.observe 'linter.showHighlighting',
       (showHighlighting) =>
@@ -117,7 +125,6 @@ class LinterView
     @totalProcessed = 0
     @messages = []
     @destroyMarkers()
-
     # create temp dir because some linters are sensitive to file names
     temp.mkdir
       prefix: 'AtomLinter'
@@ -178,14 +185,20 @@ class LinterView
         if @showHighlighting
           @editor.decorateMarker marker, type: 'highlight', class: klass
 
-    @displayStatusBar()
+    @updateViews()
 
-  # Internal: Update the status bar for new messages
-  displayStatusBar: ->
+  # Internal: Update the views for new messages
+  updateViews: ->
     if @showMessagesAroundCursor
       @statusBarView.render @messages, @editor
     else
       @statusBarView.render [], @editor
+
+    if @showErrorInline
+      @inlineView.render @messages, @editorView
+    else
+      @inlineView.render [], @editorView
+
 
   # Public: remove this view and unregister all it's subscriptions
   remove: ->
