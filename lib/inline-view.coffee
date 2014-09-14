@@ -1,5 +1,4 @@
 {View} = require 'atom'
-# MessageBubble = require 'atom-inline-messages'
 
 copyPaste = require('copy-paste')
   .noConflict()
@@ -55,7 +54,7 @@ class MessageBubble extends View
   @content: (params) ->
     @div class: "inline-message #{params.klass}", style: params.style, =>
       for msg in params.messages
-        @div class: "message-content",=>
+        @div class: "message-content", =>
           @div class: "message-source", =>
             @raw msg.src
           @div class: "message-body", =>
@@ -71,7 +70,7 @@ class MessageBubble extends View
     @editor = editorView.editor
     @editorView = editorView
     @messages = [{content: @content, src: @title}]
-    style = @calculateStyle(@line,@start)
+    style = @calculateStyle(@line, @start)
     super({messages: @messages, klass: @klass, style: style})
 
     if @min
