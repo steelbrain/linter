@@ -7,28 +7,24 @@ copyPaste = require('copy-paste')
 class InlineView
 
   hide: ->
-    if @message
-      @message.remove()
+    @message.remove() if @message?
+    @message = null
 
   render: (messages, editorView) ->
-    editor = editorView.editor
-    # Config value if you want to limit the status bar report
-    # if your cursor is in the range or error, or on the line
-    limitOnErrorRange = atom.config.get 'linter.showStatusBarWhenCursorIsInErrorRange'
-
     # Hide the last version of this view
     @hide()
 
     # No more errors on the file, return
     return unless messages.length > 0
 
-    if @message
-      @message.remove()
-      @message = null
+    currentLine = if position = editorView.editor.getCursorBufferPosition()
+      position.row + 1
+    else
+      null
 
-    currentLine = undefined
-    if position = editor?.getCursorBufferPosition?()
-      currentLine = position.row + 1
+    # Config value if you want to limit the status bar report
+    # if your cursor is in the range or error, or on the line
+    limitOnErrorRange = atom.config.get 'linter.showStatusBarWhenCursorIsInErrorRange'
 
     for item, index in messages
       show = if limitOnErrorRange
