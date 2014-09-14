@@ -53,8 +53,7 @@ class MessageBubble extends View
         @div class: "message-content", =>
           @div class: "message-source", =>
             @raw msg.src
-          @div class: "message-body", =>
-            @raw msg.content
+          @raw msg.content
 
   constructor: ({editorView, title, line, start, end, content, klass, min}) ->
     @title = title
@@ -89,8 +88,7 @@ class MessageBubble extends View
       @div class: "message-content", =>
         @div class: "message-source", =>
           @raw msg.src
-        @div class: "message-body", =>
-          @raw msg.content
+        @raw msg.content
 
   update: ->
     this.find(".message-content").remove()
