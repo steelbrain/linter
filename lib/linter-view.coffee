@@ -35,9 +35,10 @@ class LinterView
       @statusBarView.hide()
 
     @subscriptions.push atom.workspaceView.on 'pane:active-item-changed', =>
-      @statusBarView.hide()
       if @editor.id is atom.workspace.getActiveEditor()?.id
         @displayStatusBar()
+      else
+        @statusBarView.hide()
 
     @handleBufferEvents()
     @handleConfigChanges()
