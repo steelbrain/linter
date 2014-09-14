@@ -1,9 +1,5 @@
 {View} = require 'atom'
 
-copyPaste = require('copy-paste')
-  .noConflict()
-  .silent()
-
 class InlineView
 
   hide: ->
