@@ -1,0 +1,24 @@
+@import 'ui-variables';
+
+.highlight {
+  &.linter-warning .region {
+    background: linear-gradient(
+      to bottom,
+      @background-color-warning 0%,
+      fadeout(@background-color-warning, 70%) 20%,
+      fadeout(@background-color-warning, 70%) 80%,
+      @background-color-warning 100%);
+    border-left: 2px solid @background-color-warning;
+    border-right: 2px solid @background-color-warning;
+  }
+  &.linter-error .region {
+    background: linear-gradient(
+      to bottom,
+      @background-color-error 0%,
+      fadeout(@background-color-error, 70%) 20%,
+      fadeout(@background-color-error, 70%) 80%,
+      @background-color-error 100%);
+    border-left: 2px solid @background-color-error;
+    border-right: 2px solid @background-color-error;
+  }
+}

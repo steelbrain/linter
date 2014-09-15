@@ -3,7 +3,7 @@
 
 Lint your code with ease in [Atom](http://atom.io).
 
-![linter-jscs](https://github.com/AtomLinter/linter-jscs/raw/master/example.gif)
+![atom-inline-messages](https://raw.githubusercontent.com/mdgriffith/atom-inline-messages/master/img/inline-comments.gif)
 
 The idea is to stop the linter plugins war, by providing a top level API for linters to parse and display errors in the Atom editor.
 
@@ -66,6 +66,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 * **Show gutters**: [On / Off] - Show dot in the gutter on line error
 * **Show messages around cursor** [On / Off] - Show error description in the status bar
 * **Show status bar when cursor is in error range** [On / Off] - Either show status bar when the cursor is on the error line, or show it when the cursor is focus the range of wrong code
+* **Show error inline** [On / Off] - Shows the error or warning message next to the code as opposed to in the status bar.
 * **Lint on change interval** [in ms] - Interval between two lints while you are writing code
 
 ## Common errors

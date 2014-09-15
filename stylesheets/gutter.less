@@ -1,0 +1,22 @@
+@import 'ui-variables';
+@import 'octicon-utf-codes';
+
+.gutter .line-number {
+  &.linter-warning .icon-right {
+    visibility: visible;
+    &:before {
+      color: @text-color-warning;
+      content: @primitive-dot;
+      font-size: 1.1em;
+    }
+  }
+
+  &.linter-error .icon-right {
+    visibility: visible;
+    &:before {
+      color: @text-color-error;
+      content: @primitive-dot;
+      font-size: 1.1em;
+    }
+  }
+}
