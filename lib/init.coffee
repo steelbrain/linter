@@ -52,8 +52,8 @@ class LinterInitializer
   # Public: deactivate the plugin and unregister all subscriptions
   deactivate: ->
     @editorViewSubscription.off()
+    linterView.remove() for linterView in @linterViews
     @inlineView.remove()
     @statusBarView.remove()
-    linterView.remove() for linterView in @linterViews
 
 module.exports = new LinterInitializer()
