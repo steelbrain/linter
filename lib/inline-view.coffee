@@ -1,6 +1,9 @@
 {View} = require 'atom'
 
 class InlineView
+  remove: ->
+    # TODO: Avoid this awkwardness by combining InlineView and MessageBubble
+    @hide()
 
   hide: ->
     @message.remove() if @message?
