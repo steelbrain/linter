@@ -152,7 +152,8 @@ class LinterView
 
     tempFileInfo.completedLinters++
     if tempFileInfo.completedLinters == @linters.length
-      fs.unlink tempFileInfo.path
+      fs.unlink tempFileInfo.path, ->
+        fs.rmdir path.dirname(tempFileInfo.path)
 
     @messages = @messages.concat(messages)
     @display()
