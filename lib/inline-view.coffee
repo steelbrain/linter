@@ -16,10 +16,12 @@ class InlineView
     # No more errors on the file, return
     return unless messages.length > 0
 
-    currentLine = if position = editorView.editor.getCursorBufferPosition()
-      position.row + 1
+    if editorView.editor.getLastCursor()
+      # it's only safe to call getCursorBufferPosition when there are cursors
+      position = editorView.editor.getCursorBufferPosition()
     else
-      null
+      return # there's nothing to render
+    currentLine = position.row + 1
 
     # Config value if you want to limit the status bar report
     # if your cursor is in the range or error, or on the line
