@@ -1,3 +1,14 @@
+# v0.7.0
+
+### New features
+* Option to display linter messages inline with code (See [#195][195])
+
+### Bug fixes
+* Clean up temparary directories (See [#212][212])
+
+[195]: https://github.com/AtomLinter/Linter/pull/195
+[212]: https://github.com/AtomLinter/Linter/issue/212
+
 # v0.6.1
 
 ### Bug fixes
