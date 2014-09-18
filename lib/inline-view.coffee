@@ -78,9 +78,9 @@ class MessageBubble extends View
   calculateStyle: (line, start) ->
     if @editorView and @editor
       last = @editor.getBuffer().lineLengthForRow(line)
-      fstPos = @editorView.pixelPositionForBufferPosition({row: line + 1, column: 0})
+      fstPos = @editorView.pixelPositionForBufferPosition({row: line, column: 0})
       lastPos = @editorView.pixelPositionForBufferPosition({row: line, column: start})
-      top = fstPos.top
+      top = fstPos.top + @editorView.lineHeight
       left = lastPos.left
       return "position:absolute;left:#{left}px;top:#{top}px;"
 
