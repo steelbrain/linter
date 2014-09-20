@@ -7,7 +7,10 @@ describe "Linter::computeRange", ->
   [linter, scopesForPosition, rangeForScopeAtPosition, lineLengthForRow] = []
 
   beforeEach ->
-    linter = new Linter({getUri: -> "path"})
+    linter = new Linter(
+      getUri: -> "path"
+      getLineCount: -> 10
+    )
     scopesForPosition = sinon.stub linter, "getEditorScopesForPosition"
     rangeForScopeAtPosition = sinon.stub linter, "getGetRangeForScopeAtPosition"
     lineLengthForRow = sinon.stub linter, "lineLengthForRow"
