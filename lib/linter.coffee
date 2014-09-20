@@ -139,7 +139,7 @@ class Linter
   # Private: process the string result of a linter execution using the regex
   #          as the message builder
   #
-  # Override this in order to handle message processing in a differen manner
+  # Override this in order to handle message processing in a different manner
   # for instance if the linter returns json or xml data
   processMessage: (message, callback) ->
     messages = []
