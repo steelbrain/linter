@@ -145,7 +145,7 @@ class Linter
     messages = []
     regex = XRegExp @regex, @regexFlags
     XRegExp.forEach message, regex, (match, i) =>
-      messages.push(@createMessage(match))
+      messages.push(m) if m = @createMessage(match)
     , this
     callback messages
 
@@ -228,6 +228,13 @@ class Linter
 
     rowStart = decrementParse match.lineStart ? match.line
     rowEnd = decrementParse match.lineEnd ? match.line
+
+    # if this message purports to be from beyond the maximum line count,
+    # ignore it
+    maxRow = rowEnd ? rowStart
+    if maxRow > @editor.getLineCount()
+      log "ignoring #{match} - it's longer than the buffer"
+      return null
 
     match.col ?=  0
     unless match.colStart
