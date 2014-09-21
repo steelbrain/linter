@@ -1,4 +1,5 @@
 {View} = require 'atom'
+_ = require 'lodash'
 
 class InlineView
   remove: ->
@@ -6,22 +7,29 @@ class InlineView
     @hide()
 
   hide: ->
-    @message.remove() if @message?
-    @message = null
+    @messageBubble.remove() if @messageBubble?
+    @messageBubble = null
 
   render: (messages, editorView) ->
-    # Hide the last version of this view
-    @hide()
-
-    # No more errors on the file, return
-    return unless messages.length > 0
-
     if editorView.editor.getLastCursor()
       # it's only safe to call getCursorBufferPosition when there are cursors
       position = editorView.editor.getCursorBufferPosition()
     else
       return # there's nothing to render
     currentLine = position.row + 1
+
+    # If nothing has changed, return early
+    if currentLine == @lastLine and _.isEqual(messages, @lastMessages)
+      return
+    else
+      @lastLine = currentLine
+      @lastMessages = messages
+
+    # Hide the last version of this view
+    @hide()
+
+    # No more errors on the file, return
+    return unless messages.length > 0
 
     # Config value if you want to limit the status bar report
     # if your cursor is in the range or error, or on the line
@@ -33,10 +41,10 @@ class InlineView
       else
         item.range?.start.row + 1 is currentLine
       if show
-        if @message
-          @message.add(item.linter, item.message)
+        if @messageBubble
+          @messageBubble.add(item.linter, item.message)
         else
-          @message = new MessageBubble(
+          @messageBubble = new MessageBubble(
             editorView: editorView
             title: item.linter
             line: item.line
