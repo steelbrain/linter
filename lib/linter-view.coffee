@@ -3,6 +3,7 @@ fs = require 'fs'
 temp = require 'temp'
 path = require 'path'
 {log} = require './utils'
+rimraf = require 'rimraf'
 
 
 temp.track()
@@ -152,8 +153,8 @@ class LinterView
 
     tempFileInfo.completedLinters++
     if tempFileInfo.completedLinters == @linters.length
-      fs.unlink tempFileInfo.path, ->
-        fs.rmdir path.dirname(tempFileInfo.path)
+      rimraf tempFileInfo.path, (err) ->
+        throw err if err?
 
     @messages = @messages.concat(messages)
     @display()

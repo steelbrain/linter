@@ -11,15 +11,16 @@
     "node": ">= 0.10.0"
   },
   "dependencies": {
+    "chai": "^1.9.1",
     "copy-paste": "^0.2.2",
     "emissary": "^1.0.0",
     "jshint": "^2.4.4",
     "lodash": "^2.4.1",
+    "rimraf": "^2.2.8",
     "shelljs": "^0.2.6",
+    "sinon": "^1.10.0",
     "temp": "~0.8.0",
-    "xregexp": "2.0.0",
-    "chai": "^1.9.1",
-    "sinon": "^1.10.0"
+    "xregexp": "2.0.0"
   },
   "devDependencies": {
     "biscotto": "^2.1.1",
