@@ -5,7 +5,7 @@
 * Minor tweaks to inline view (See [#215][215])
 
 [215]: https://github.com/AtomLinter/Linter/pull/215
-[218]: https://github.com/AtomLinter/Linter/issue/218
+[218]: https://github.com/AtomLinter/Linter/issues/218
 
 # v0.7.0
 
@@ -16,7 +16,7 @@
 * Clean up temporary directories (See [#212][212])
 
 [195]: https://github.com/AtomLinter/Linter/pull/195
-[212]: https://github.com/AtomLinter/Linter/issue/212
+[212]: https://github.com/AtomLinter/Linter/issues/212
 
 # v0.6.1
 
