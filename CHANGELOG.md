@@ -1,3 +1,10 @@
+# v0.7.2
+
+### Bug fixes
+* Fix error when message is on final line of file (See [#165][165])
+
+[165]: https://github.com/AtomLinter/Linter/issues/165
+
 # v0.7.1
 
 ### Bug fixes
