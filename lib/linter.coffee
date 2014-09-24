@@ -48,7 +48,7 @@ class Linter
 
   # Public: Construct a linter passing it's base editor
   constructor: (@editor) ->
-    @cwd = path.dirname(editor.getUri())
+    @cwd = atom.project.path ? path.dirname(editor.getUri())
 
   # Private: Exists mostly so we can use statSync without slowing down linting.
   # TODO: Do this at constructor time?
