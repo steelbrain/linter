@@ -1,3 +1,14 @@
+# v0.7.3
+
+### Bug fixes
+
+* Removed dependency on copy-paste module, hopefully fixing Windows
+  installation problems. See [#223][223], [#210][210], and [#186][186].
+
+[223]: https://github.com/AtomLinter/Linter/issues/223
+[210]: https://github.com/AtomLinter/Linter/issues/210
+[186]: https://github.com/AtomLinter/Linter/issues/186
+
 # v0.7.2
 
 ### Bug fixes
