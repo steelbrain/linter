@@ -2,7 +2,7 @@ _ = require 'lodash'
 fs = require 'fs'
 temp = require 'temp'
 path = require 'path'
-{log} = require './utils'
+{log, warn} = require './utils'
 rimraf = require 'rimraf'
 
 
@@ -26,6 +26,8 @@ class LinterView
   constructor: (@editorView, @statusBarView, @inlineView, @linters = []) ->
 
     @editor = @editorView.getModel()
+    unless @editor?
+      warn "No editor instance on this editorView"
     @markers = null
 
     @initLinters(@linters)
