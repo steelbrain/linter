@@ -1,9 +1,5 @@
 {View, Point} = require 'atom'
 
-copyPaste = require('copy-paste')
-  .noConflict()
-  .silent()
-
 # Status Bar View
 class StatusBarView extends View
 
@@ -15,7 +11,8 @@ class StatusBarView extends View
     super
     # Bind `.copy` to copy the text on click
     @on 'click', '.copy', ->
-      copyPaste.copy @parentElement.getElementsByClassName('error-message')[0].innerText
+      el = @parentElement.getElementsByClassName('error-message')[0]
+      atom.clipboard.write el.innerText
     # Bind `.goToError` to go to the lint error
     @on 'click', '.goToError', ->
       line = parseInt(@dataset.line, 10)

@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "chai": "^1.9.1",
-    "copy-paste": "^0.2.2",
     "emissary": "^1.0.0",
     "jshint": "^2.4.4",
     "lodash": "^2.4.1",
