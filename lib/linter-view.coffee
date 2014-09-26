@@ -25,7 +25,7 @@ class LinterView
   # linters - global linter set to utilize for linting
   constructor: (editorView, statusBarView, inlineView, linters) ->
 
-    @editor = editorView.editor
+    @editor = editorView.getModel()
     @editorView = editorView
     @statusBarView = statusBarView
     @inlineView = inlineView
