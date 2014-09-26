@@ -23,15 +23,12 @@ class LinterView
   #              annotations
   # statusBarView - shared StatusBarView between all linters
   # linters - global linter set to utilize for linting
-  constructor: (editorView, statusBarView, inlineView, linters) ->
+  constructor: (@editorView, @statusBarView, @inlineView, @linters = []) ->
 
-    @editor = editorView.getModel()
-    @editorView = editorView
-    @statusBarView = statusBarView
-    @inlineView = inlineView
+    @editor = @editorView.getModel()
     @markers = null
 
-    @initLinters(linters)
+    @initLinters(@linters)
 
     @subscriptions.push atom.workspaceView.on 'pane:item-removed', =>
       @statusBarView.hide()
