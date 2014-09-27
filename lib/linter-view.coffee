@@ -32,16 +32,7 @@ class LinterView
 
     @initLinters(@linters)
 
-    @subscriptions.push atom.workspaceView.on 'pane:item-removed', =>
-      @statusBarView.hide()
-      @inlineView.hide()
 
-    @subscriptions.push atom.workspaceView.on 'pane:active-item-changed', =>
-      if @editor.id is atom.workspace.getActiveEditor()?.id
-        @updateViews()
-      else
-        @statusBarView.hide()
-        @inlineView.hide()
 
     @handleBufferEvents()
     @handleConfigChanges()
@@ -113,9 +104,17 @@ class LinterView
     @subscriptions.push @editor.on 'contents-modified', =>
       @throttledLint() if @lintOnModified
 
+    @subscriptions.push atom.workspaceView.on 'pane:item-removed', =>
+      @statusBarView.hide()
+      @inlineView.hide()
+
     @subscriptions.push atom.workspaceView.on 'pane:active-item-changed', =>
       if @editor.id is atom.workspace.getActiveEditor()?.id
         @throttledLint() if @lintOnEditorFocus
+        @updateViews()
+      else
+        @statusBarView.hide()
+        @inlineView.hide()
 
     atom.workspaceView.command "linter:lint", => @lint()
 
