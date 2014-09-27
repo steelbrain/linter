@@ -22,6 +22,7 @@ describe "LinterView:lint", ->
       atom.workspace.open('./fixture/messages.txt').then (editor) ->
         editorView =
           editor: editor
+          getModel: -> editor
           on: sinon.stub()
         statusBarView =
           render: sinon.stub()
