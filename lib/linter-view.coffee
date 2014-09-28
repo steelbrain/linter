@@ -32,8 +32,6 @@ class LinterView
 
     @initLinters(@linters)
 
-
-
     @handleBufferEvents()
     @handleConfigChanges()
 
