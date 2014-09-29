@@ -91,21 +91,26 @@ class LinterView
   # Internal: register handlers for editor buffer events
   handleBufferEvents: =>
     buffer = @editor.getBuffer()
+    @bufferSubs = []
 
-    @subscriptions.push buffer.on 'reloaded saved', (buffer) =>
-      @throttledLint() if @lintOnSave
+    maybeLintOnSave = => @throttledLint() if @lintOnSave
 
-    @subscriptions.push buffer.on 'destroyed', ->
-      buffer.off 'reloaded saved'
-      buffer.off 'destroyed'
+    @bufferSubs.push(buffer.onDidReload maybeLintOnSave)
+    @bufferSubs.push buffer.onDidDestroy =>
+      s.dispose() for s in @bufferSubs
 
-    @subscriptions.push @editor.on 'contents-modified', =>
+    # now handle other events
+    @subscriptions.push(@editor.onDidSave maybeLintOnSave)
+
+    @subscriptions.push @editor.onDidStopChanging =>
       @throttledLint() if @lintOnModified
 
+    # TODO: this is deprecated
     @subscriptions.push atom.workspaceView.on 'pane:item-removed', =>
       @statusBarView.hide()
       @inlineView.hide()
 
+    # TODO: this is deprecated
     @subscriptions.push atom.workspaceView.on 'pane:active-item-changed', =>
       if @editor.id is atom.workspace.getActiveEditor()?.id
         @throttledLint() if @lintOnEditorFocus
@@ -200,6 +205,6 @@ class LinterView
 
   # Public: remove this view and unregister all it's subscriptions
   remove: ->
-    subscription.off() for subscription in @subscriptions
+    s.dispose() for s in @subscriptions
 
 module.exports = LinterView
