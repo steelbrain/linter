@@ -1,4 +1,5 @@
 {View, Point} = require 'atom'
+_ = require 'lodash'
 
 # Status Bar View
 class StatusBarView extends View
@@ -53,11 +54,7 @@ class StatusBarView extends View
       if showInRange or showOnLine or @showAllErrors
         pos = "line: #{item.line}"
         if item.col? then pos = "#{pos} / col: #{item.col}"
-        message = item.message.replace(/&/g, '&amp;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#39;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
+        message = _.escape(item.message)
         violation =
           """
             <dt>
