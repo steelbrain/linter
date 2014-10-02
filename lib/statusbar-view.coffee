@@ -1,4 +1,4 @@
-{View, Point, $$} = require 'atom'
+{View, Point} = require 'atom'
 
 # Status Bar View
 class StatusBarView extends View
