@@ -1,4 +1,5 @@
 {View, Point} = require 'atom'
+_ = require 'lodash'
 
 # Status Bar View
 class StatusBarView extends View
@@ -53,6 +54,7 @@ class StatusBarView extends View
       if showInRange or showOnLine or @showAllErrors
         pos = "line: #{item.line}"
         if item.col? then pos = "#{pos} / col: #{item.col}"
+        message = _.escape(item.message)
         violation =
           """
             <dt>
@@ -61,7 +63,7 @@ class StatusBarView extends View
             <dd>
               <span class='copy icon-clippy'></span>
               <span class='goToError' data-line='#{item.line - 1}' data-col='#{item.col - 1 or 0}'>
-                <span class='error-message linter-line-#{item.line - 1}'>#{item.message}</span>
+                <span class='error-message linter-line-#{item.line - 1}'>#{message}</span>
                 <span class='pos'>#{pos}</span>
               </span>
             </dd>

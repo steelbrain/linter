@@ -61,8 +61,8 @@ class MessageBubble extends View
       for msg in params.messages
         @div class: "message-content", =>
           @div class: "message-source", =>
-            @raw msg.src
-          @raw msg.content
+            @text msg.src
+          @text msg.content
 
   constructor: ({editorView, title, line, start, end, content, klass, min}) ->
     @title = title
