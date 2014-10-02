@@ -5,18 +5,35 @@ InlineView = require './inline-view'
 class LinterInitializer
 
   # Internal: Configuration Option defaults
-  configDefaults:
-    lintOnSave: true
-    lintOnChange: true
-    lintOnEditorFocus: true
-    showAllErrorsInStatusBar: false
-    showHighlighting: true
-    showGutters: true
-    showErrorInStatusBar: true
-    showErrorInline: false
-    lintOnChangeInterval: 1000
-    showStatusBarWhenCursorIsInErrorRange: false
-    lintDebug: false
+  config:
+    lintOnSave:
+      type: 'boolean'
+      default: true
+    lintOnChange:
+      type: 'boolean'
+      default: true
+    lintOnEditorFocus:
+      type: 'boolean'
+      default: true
+    showHighlighting:
+      type: 'boolean'
+      default: true
+    showGutters:
+      type: 'boolean'
+      default: true
+    lintOnChangeInterval:
+      type: 'integer'
+      default: 1000
+    lintDebug:
+      type: 'boolean'
+      default: false
+    showErrorInline:
+      type: 'boolean'
+      default: true
+    statusBar:
+      type: 'string'
+      default: 'None'
+      enum: ['None', 'Show all errors', 'Show error of the selected line', 'Show error if the cursor is in range']
 
   # Public: Activate the plugin setting up StatusBarView and dicovering linters
   activate: ->

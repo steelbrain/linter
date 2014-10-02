@@ -82,11 +82,12 @@ class StatusBarView extends View
     # preppend this view the bottom
     atom.workspaceView.prependToBottom this
 
+    statusBarConfig = atom.config.get 'linter.statusBar'
     # Config value if you want to limit the status bar report
     # if your cursor is in the range or error, or on the line
-    limitOnErrorRange = atom.config.get 'linter.showStatusBarWhenCursorIsInErrorRange'
+    limitOnErrorRange = statusBarConfig == 'Show error if the cursor is in range'
     # Display all errors in the file if it set to true
-    @showAllErrors = atom.config.get 'linter.showAllErrorsInStatusBar'
+    @showAllErrors = statusBarConfig == 'Show all errors'
 
     # Hide the last version of this view
     @hide()

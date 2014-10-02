@@ -74,9 +74,9 @@ class LinterView
         @showGutters = showGutters
         @display()
 
-    @subscriptions.push atom.config.observe 'linter.showErrorInStatusBar',
-      (showMessagesAroundCursor) =>
-        @showMessagesAroundCursor = showMessagesAroundCursor
+    @subscriptions.push atom.config.observe 'linter.statusBar',
+      (statusBar) =>
+        @showMessagesAroundCursor = statusBar != 'None'
         @updateViews()
 
     @subscriptions.push atom.config.observe 'linter.showErrorInline',
