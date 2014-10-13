@@ -8,45 +8,91 @@ Lint your code with ease in [Atom](http://atom.io).
 The idea is to stop the linter plugins war, by providing a top level API for linters to parse and display errors in the Atom editor.
 
 ## Available linters
-- [linter-php](https://atom.io/packages/linter-php), for PHP using `php -l`
-- [linter-phpcs](https://atom.io/packages/linter-phpcs), for PHP, using `phpc`
-- [linter-phpmd](https://atom.io/packages/linter-phpmd), for PHP, using `phpmd`
-- [linter-pylint](https://atom.io/packages/linter-pylint), for Python, using `pylint`
-- [linter-pyflakes](https://atom.io/packages/linter-pyflakes), for Python, using `pyflakes`
-- [linter-pep8](https://atom.io/packages/linter-pep8), for Python, using `pep8`.
-- [linter-flake8](https://atom.io/packages/linter-flake8), for Python, using `flake8`
-- [linter-pylama](https://atom.io/packages/linter-pylama), for Python, using `pylama`
-- [linter-javac](https://atom.io/packages/linter-javac), for Java, using `javac`
+#### for JavaScript
 - [linter-jshint](https://atom.io/packages/linter-jshint), for JavaScript and JSON, using `jshint`
 - [linter-jscs](https://atom.io/packages/linter-jscs), for JavaScript, using `jscs`
 - [linter-jsxhint](https://atom.io/packages/linter-jsxhint), for JSX (React.js), using `jsxhint`
 - [linter-eslint](https://atom.io/packages/linter-eslint), for JavaScript, using `eslint`
 - [linter-gjslint](https://atom.io/packages/linter-gjslint), for JavaScript, using `gjslint`
+
+#### for CoffeeScript
+- [linter-coffeelint](https://atom.io/packages/linter-coffeelint), for CoffeeScript, using `coffeelint`
+
+#### for Typescript
+- [linter-tslint](https://atom.io/packages/linter-tslint), for Typescript, using `tslint`
+
+#### for Dart
+- [linter-dartanalyzer](https://atom.io/packages/linter-dartanalyzer), for Dart using `dartanalyzer`
+
+
+#### for Ruby and Ruby on Rails
+- [linter-rubocop](https://atom.io/packages/linter-rubocop), for Ruby and Ruby on Rails, using `rubocop`
+- [linter-ruby](https://atom.io/packages/linter-ruby), for Ruby, using `ruby -wc`
+- [linter-erb](https://atom.io/packages/linter-erb), for .erb files, using `erb -x`
+
+#### for PHP
+- [linter-php](https://atom.io/packages/linter-php), for PHP using `php -l`
+- [linter-phpcs](https://atom.io/packages/linter-phpcs), for PHP, using `phpc`
+- [linter-phpmd](https://atom.io/packages/linter-phpmd), for PHP, using `phpmd`
+
+#### for Python
+- [linter-pylint](https://atom.io/packages/linter-pylint), for Python, using `pylint`
+- [linter-pyflakes](https://atom.io/packages/linter-pyflakes), for Python, using `pyflakes`
+- [linter-pep8](https://atom.io/packages/linter-pep8), for Python, using `pep8`.
+- [linter-flake8](https://atom.io/packages/linter-flake8), for Python, using `flake8`
+- [linter-pylama](https://atom.io/packages/linter-pylama), for Python, using `pylama`
+
+#### for Java
+- [linter-javac](https://atom.io/packages/linter-javac), for Java, using `javac`
+
+#### for CSS / SASS / SCSS / LESS
 - [linter-scss-lint](https://atom.io/packages/linter-scss-lint), for SASS/SCSS, using `scss-lint`
 - [linter-less](https://atom.io/packages/linter-less), for LESS, using `less`
-- [linter-coffeelint](https://atom.io/packages/linter-coffeelint), for CoffeeScript, using `coffeelint`
 - [linter-csslint](https://atom.io/packages/linter-csslint), for CSS, using `csslint`
-- [linter-rubocop](https://atom.io/packages/linter-rubocop), for Ruby and Ruby on Rails, using `rubocop`
-- [linter-tslint](https://atom.io/packages/linter-tslint), for Typescript, using `tslint`
+
+#### for XML
 - [linter-xmllint](https://atom.io/packages/linter-xmllint), for XML, using `xmllint`
+
+#### for Bash
 - [linter-shellcheck](https://atom.io/packages/linter-shellcheck), for Bash, using `shellcheck`
+
+#### for Scala
 - [linter-scalac](https://atom.io/packages/linter-scalac), for Scala, using `scalac`
+
+#### for C / C++
 - [linter-clang](https://atom.io/packages/linter-clang), for C / C++, using `clang`
 - [linter-cpplint](https://atom.io/packages/linter-cpplint), for C++, using `cpplint`
-- [linter-ruby](https://atom.io/packages/linter-ruby), for Ruby, using `ruby -wc`
+
+#### for Lua
 - [linter-lua](https://atom.io/packages/linter-lua), for Lua, using `luac -p`
+
+#### for Clojure
 - [linter-clojure](https://atom.io/packages/linter-clojure), for Clojure, using `clojure`
+
+#### for Puppet
 - [linter-puppet-lint](https://atom.io/packages/linter-puppet-lint), for Puppet, using `puppet-lint`
+
+#### for Yaml
 - [linter-js-yaml](https://atom.io/packages/linter-js-yaml), for Yaml, using `js-yaml`
-- [linter-erb](https://atom.io/packages/linter-erb), for .erb files, using `erb -x`
+
+#### for Haskell
 - [linter-hlint](https://atom.io/packages/linter-hlint), for Haskell files, using `hlint`
+
+#### for HTML
 - [linter-tidy](https://atom.io/packages/linter-tidy), for HTML, using `tidy`
 - [linter-htmlhint](https://atom.io/packages/linter-htmlhint), for html, using `htmlhint`
+
+#### for Squirrel
 - [linter-squirrel](https://atom.io/packages/linter-squirrel), for squirrel, using `squirrel-compiler`
+
+#### for CoDScript
 - [linter-codscriptizer](https://atom.io/packages/linter-codscriptizer), for CoDScript, using `codscriptizer -l`
+
+#### for harbour
 - [linter-harbour](https://atom.io/packages/linter-harbour), for Harbour, using `harbour`
+
+#### for Rust
 - [linter-rust](https://atom.io/packages/linter-rust), for Rust, using `rustc`
-- [linter-dartanalyzer](https://atom.io/packages/linter-dartanalyzer), for Dart using `dartanalyzer`
 
 
 ## Features
