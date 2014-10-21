@@ -155,4 +155,4 @@ You can generate the doc with `$ grunt doc`, it will open in your default browse
 
 [![donate-paypal](https://s3-eu-west-1.amazonaws.com/chewbacco-stuff/donate-paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KXUYS4ARNHCN8)
 
-<a class="coinbase-button" data-code="3b05fa7dca9f813c12a4ddb60802cd19" data-button-style="custom_small" href="https://www.coinbase.com/checkouts/3b05fa7dca9f813c12a4ddb60802cd19">Donate Bitcoins</a><script src="https://www.coinbase.com/assets/button.js" type="text/javascript"></script>
+<a class="coinbase-button" data-code="2945dab392cb1cefbb7097e4cd17a603" data-button-style="custom_small" href="https://www.coinbase.com/checkouts/2945dab392cb1cefbb7097e4cd17a603">Donate Bitcoins</a><script src="https://www.coinbase.com/assets/button.js" type="text/javascript"></script>
