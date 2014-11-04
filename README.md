@@ -94,6 +94,12 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 #### for Rust
 - [linter-rust](https://atom.io/packages/linter-rust), for Rust, using `rustc`
 
+#### for Elixir
+- [linter-elixirc](https://atom.io/packages/linter-elixirc), for Elixir, using `elixirc`
+
+#### for Erlang
+- [linter-erlc](https://atom.io/packages/linter-erlc), for Erlang, using `erlc`
+
 
 ## Features
 
