@@ -16,6 +16,7 @@ class LinterView
   tempFile: ''
   messages: []
   subscriptions: []
+  isDestroyed: false
 
   # Pubic: Instantiate the views
   #
@@ -97,6 +98,7 @@ class LinterView
 
     @bufferSubs.push(buffer.onDidReload maybeLintOnSave)
     @bufferSubs.push buffer.onDidDestroy =>
+      @isDestroyed = true
       s.dispose() for s in @bufferSubs
 
     # now handle other events
@@ -168,6 +170,8 @@ class LinterView
   # Internal: Render all the linter messages
   display: ->
     @destroyMarkers()
+
+    return if @isDestroyed
 
     if @showGutters or @showHighlighting
       @markers ?= []
