@@ -18,7 +18,7 @@ describe "LinterView:lint", ->
     linterView = null
 
     waitsForPromise ->
-      atom.workspaceView = new WorkspaceView(atom.workspace)
+      atom.workspaceView = new WorkspaceView()
       atom.workspace.open('./fixture/messages.txt').then (editor) ->
         editorView =
           editor: editor
