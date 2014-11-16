@@ -187,7 +187,8 @@ class Linter
     match.message
 
   lineLengthForRow: (row) ->
-    return @editor.lineLengthForBufferRow row
+    text = @editor.lineTextForBufferRow row
+    return text?.length or 0
 
   getEditorScopesForPosition: (position) ->
     try

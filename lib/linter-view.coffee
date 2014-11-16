@@ -105,13 +105,12 @@ class LinterView
     @subscriptions.push @editor.onDidStopChanging =>
       @throttledLint() if @lintOnModified
 
-    # TODO: this is deprecated
-    @subscriptions.push atom.workspaceView.on 'pane:item-removed', =>
+    pane = @editorView.getPaneView().getModel()
+    @subscriptions.push pane.onDidRemoveItem =>
       @statusBarView.hide()
       @inlineView.hide()
 
-    # TODO: this is deprecated
-    @subscriptions.push atom.workspaceView.on 'pane:active-item-changed', =>
+    @subscriptions.push pane.onDidChangeActive =>
       if @editor.id is atom.workspace.getActiveEditor()?.id
         @throttledLint() if @lintOnEditorFocus
         @updateViews()
