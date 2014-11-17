@@ -1,3 +1,8 @@
+# v0.7.4
+
+### New features
+* Provide file as errorStream (See [#255][255])
+
 # v0.7.3
 
 ### Bug fixes
