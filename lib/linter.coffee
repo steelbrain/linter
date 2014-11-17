@@ -83,6 +83,8 @@ class Linter
     cmd_list = cmd_list.map (cmd_item) ->
       if /@filename/i.test(cmd_item)
         return cmd_item.replace(/@filename/gi, filePath)
+      if /@tempdir/i.test(cmd_item)
+        return cmd_item.replace(/@tempdir/gi, path.dirname(filePath))
       else
         return cmd_item
 
@@ -92,6 +94,9 @@ class Linter
       command: cmd_list[0],
       args: cmd_list.slice(1)
     }
+
+  getReportFilePath: (filePath) ->
+    path.join(path.dirname(filePath), @reportFilePath)
 
   # Private: Provide the node executable path for use when executing a node
   #          linter
@@ -123,7 +128,13 @@ class Linter
       dataStderr += output
 
     exit = =>
-      data = if @errorStream is 'stdout' then dataStdout else dataStderr
+      switch @errorStream
+        when 'file'
+          reportFilePath = @getReportFilePath(filePath)
+          if fs.existsSync reportFilePath
+            data = fs.readFileSync(reportFilePath)
+        when 'stdout' then data = dataStdout
+        else data = dataStderr
       @processMessage data, callback
 
     process = new BufferedProcess({command, args, options,
