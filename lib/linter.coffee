@@ -118,6 +118,7 @@ class Linter
 
     dataStdout = []
     dataStderr = []
+    exited = false
 
     stdout = (output) ->
       log 'stdout', output
@@ -128,6 +129,7 @@ class Linter
       dataStderr += output
 
     exit = =>
+      exited = true
       switch @errorStream
         when 'file'
           reportFilePath = @getReportFilePath(filePath)
@@ -141,8 +143,13 @@ class Linter
                                   stdout, stderr, exit})
 
     # Don't block UI more than 5seconds, it's really annoying on big files
+    # TODO: This doesn't actually block a UI thread, but it does cause lint
+    # warnings to flash. A better fix would be to diff new lint messages with
+    # existing ones and remove those that are no longer present. Right now we
+    # just remove all existing ones, and add all new ones.
     timeout_s = 5
     setTimeout ->
+      return if exited
       process.kill()
       warn "command `#{command}` timed out after #{timeout_s}s"
     , timeout_s * 1000
