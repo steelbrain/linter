@@ -1,7 +1,18 @@
 # v0.7.4
 
+### Bug fixes
+* Escape linter messages ([#231][231])
+* Fix error when closing tab ([#253][253])
+* Get rid of some uses of deprecated Atom APIs
+
+
 ### New features
 * Provide file as errorStream (See [#255][255])
+
+[231]: https://github.com/AtomLinter/Linter/pull/231
+[253]: https://github.com/AtomLinter/Linter/pull/253
+[255]: https://github.com/AtomLinter/Linter/issues/255
+
 
 # v0.7.3
 
