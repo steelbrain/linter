@@ -14,6 +14,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-jsxhint](https://atom.io/packages/linter-jsxhint), for JSX (React.js), using `jsxhint`
 - [linter-eslint](https://atom.io/packages/linter-eslint), for JavaScript, using `eslint`
 - [linter-gjslint](https://atom.io/packages/linter-gjslint), for JavaScript, using `gjslint`
+- [linter-flow](https://atom.io/packages/linter-flow), for JavaScript, using `flow`
 
 #### for CoffeeScript
 - [linter-coffeelint](https://atom.io/packages/linter-coffeelint), for CoffeeScript, using `coffeelint`
