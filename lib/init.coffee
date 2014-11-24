@@ -35,8 +35,15 @@ class LinterInitializer
       default: 'None'
       enum: ['None', 'Show all errors', 'Show error of the selected line', 'Show error if the cursor is in range']
 
+  # Internal: Prevent old deprecated config to be visible in the package settings
+  setDefaultOldConfig: ->
+    atom.config.restoreDefault('linter.showAllErrorsInStatusBar')
+    atom.config.restoreDefault('linter.showErrorInStatusBar')
+    atom.config.restoreDefault('linter.showStatusBarWhenCursorIsInErrorRange')
+
   # Public: Activate the plugin setting up StatusBarView and dicovering linters
   activate: ->
+    @setDefaultOldConfig()
     @linterViews = []
     @linters = []
 
