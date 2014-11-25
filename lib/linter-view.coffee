@@ -47,7 +47,8 @@ class LinterView
     grammarName = @editor.getGrammar().scopeName
     for linter in linters
       if (_.isArray(linter.syntax) and grammarName in linter.syntax or
-          _.isString(linter.syntax) and grammarName is linter.syntax)
+          _.isString(linter.syntax) and grammarName is linter.syntax or
+          linter.syntax instanceof RegExp and linter.syntax.test(grammarName))
         @linters.push(new linter(@editor))
 
   # Internal: register config modifications handlers
