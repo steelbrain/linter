@@ -79,7 +79,8 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 #### for Haskell
 - [linter-hlint](https://atom.io/packages/linter-hlint), for Haskell files, using `hlint`
 
-#### for HTML
+#### for HTML / Bootstrap
+- [linter-bootlint](https://atom.io/packages/linter-bootlint), for Bootstrap HTML, using `bootlint`
 - [linter-tidy](https://atom.io/packages/linter-tidy), for HTML, using `tidy`
 - [linter-htmlhint](https://atom.io/packages/linter-htmlhint), for html, using `htmlhint`
 
