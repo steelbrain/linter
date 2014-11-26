@@ -3,7 +3,7 @@
 
 Lint your code with ease in [Atom](http://atom.io).
 
-![atom-inline-messages](inline-comments.gif)
+![atom-inline-messages](https://raw.githubusercontent.com/AtomLinter/Linter/master/inline-comments.gif)
 
 The idea is to stop the linter plugins war, by providing a top level API for linters to parse and display errors in the Atom editor.
 
