@@ -29,14 +29,22 @@ class LinterInitializer
       default: false
     showErrorInline:
       type: 'boolean'
-      default: true
+      default: false
     statusBar:
       type: 'string'
-      default: 'None'
+      default: 'Show error of the selected line'
       enum: ['None', 'Show all errors', 'Show error of the selected line', 'Show error if the cursor is in range']
 
   # Internal: Prevent old deprecated config to be visible in the package settings
   setDefaultOldConfig: ->
+    # Keep the old config settings
+    if (atom.config.get('linter.showErrorInStatusBar') == false)
+      atom.config.set('linter.statusBar', 'None')
+    else if (atom.config.get('linter.showAllErrorsInStatusBar'))
+      atom.config.set('linter.statusBar', 'Show all errors')
+    else if (atom.config.get('linter.showStatusBarWhenCursorIsInErrorRange'))
+      atom.config.set('linter.statusBar', 'Show error if the cursor is in range')
+
     atom.config.restoreDefault('linter.showAllErrorsInStatusBar')
     atom.config.restoreDefault('linter.showErrorInStatusBar')
     atom.config.restoreDefault('linter.showStatusBarWhenCursorIsInErrorRange')
