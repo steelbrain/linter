@@ -34,10 +34,10 @@ class LinterInitializer
       default: false
     showErrorInline:
       type: 'boolean'
-      default: false
+      default: true
     statusBar:
       type: 'string'
-      default: 'Show error of the selected line'
+      default: 'None'
       enum: ['None', 'Show all errors', 'Show error of the selected line', 'Show error if the cursor is in range']
     executionTimeout:
       type: 'integer'
