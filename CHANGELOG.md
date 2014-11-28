@@ -1,3 +1,20 @@
+# v0.8
+
+### New features
+* Easier to understand config screen ([#266][266])
+
+### New linters
+* flow, bootlint
+
+[266]: https://github.com/AtomLinter/Linter/pull/266
+
+### Bug fixes
+* Fix line undefined error ([#257][257])
+* Shadow DOM compatibility
+
+[257]: https://github.com/AtomLinter/Linter/issues/257
+
+
 # v0.7.4
 
 ### Bug fixes
