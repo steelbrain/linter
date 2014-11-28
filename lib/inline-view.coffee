@@ -33,7 +33,7 @@ class InlineView
 
     # Config value if you want to limit the status bar report
     # if your cursor is in the range or error, or on the line
-    limitOnErrorRange = atom.config.get 'linter.showStatusBarWhenCursorIsInErrorRange'
+    limitOnErrorRange = atom.config.get('linter.statusBar') == 'Show error if the cursor is in range'
 
     for item, index in messages
       show = if limitOnErrorRange
