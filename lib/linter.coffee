@@ -188,7 +188,15 @@ class Linter
     else
       level = @defaultLevel
 
+    # If no line/col is found, assume a full file error
+    # TODO: This conflicts with the docs above that say line is required :(
+    match.line ?= 0
+    match.col ?= 0
+
     return {
+      # TODO: It's confusing that line & col are here since they duplicate info
+      # that's present in the value for range. Consider deprecating line & col
+      # since they're less general than range.
       line: match.line,
       col: match.col,
       level: level,
@@ -241,7 +249,6 @@ class Linter
   #   colStart: column to on which to start a higlight (optional)
   #   colEnd: column to end highlight (optional)
   computeRange: (match) ->
-    match.line ?= 0 # Assume if no line is found that it denotes a full file error.
 
     decrementParse = (x) ->
       Math.max 0, parseInt(x) - 1
@@ -255,7 +262,6 @@ class Linter
       log "ignoring #{match} - it's longer than the buffer"
       return null
 
-    match.col ?=  0
     unless match.colStart
       position = new Point(rowStart, match.col)
       scopes = @getEditorScopesForPosition(position)

@@ -47,7 +47,7 @@ class InlineView
           @messageBubble = new MessageBubble(
             editorView: editorView
             title: item.linter
-            line: item.line
+            line: item.range.start.row
             start: item.range.start.column
             end: item.range.end.column
             content: item.message
@@ -66,7 +66,7 @@ class MessageBubble extends View
 
   constructor: ({editorView, title, line, start, end, content, klass, min}) ->
     @title = title
-    @line = line - 1
+    @line = line
     @start = start
     @end = end
     @content = content
