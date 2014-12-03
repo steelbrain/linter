@@ -31,7 +31,8 @@ class InlineView
 
     # Config value if you want to limit the status bar report
     # if your cursor is in the range or error, or on the line
-    limitOnErrorRange = atom.config.get('linter.statusBar') == 'Show error if the cursor is in range'
+    limitOnErrorRange = (atom.config.get('linter.statusBar') ==
+                         'Show error if the cursor is in range')
 
     messages = messages.reduce(
       (memo, item, index) ->
@@ -40,16 +41,21 @@ class InlineView
         else
           item.range?.start.row + 1 is currentLine
         if show
-          memo.push(src: item.linter, content: item.message, level: item.level)
+          memo.push
+            src: item.linter
+            content: item.message
+            level: item.level
         memo
       , []
       )
 
     if messages.length > 0
-      @decoration = editorView.editor.decorateMarker marker, type: 'overlay', item: new MessageBubble(
-        editorView: editorView
-        messages: messages
-      )
+      @decoration = editorView.editor.decorateMarker marker,
+        type: 'overlay'
+        item: new MessageBubble(
+          editorView: editorView
+          messages: messages
+        )
 
 
 class MessageBubble extends View
