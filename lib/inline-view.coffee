@@ -7,7 +7,7 @@ class InlineView
     @decoration = null
 
   render: (messages, editorView) ->
-    cursor = editorView.editor.getLastCursor();
+    cursor = editorView.editor.getLastCursor()
     if cursor
       # it's only safe to call getCursorBufferPosition when there are cursors
       marker = cursor.getMarker()
@@ -34,7 +34,7 @@ class InlineView
     limitOnErrorRange = atom.config.get('linter.statusBar') == 'Show error if the cursor is in range'
 
     messages = messages.reduce(
-      (memo, item, index) =>
+      (memo, item, index) ->
         show = if limitOnErrorRange
           item.range?.containsPoint(position) and index <= 10
         else
