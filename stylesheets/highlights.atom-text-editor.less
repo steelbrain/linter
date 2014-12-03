@@ -2,23 +2,17 @@
 
 .highlight {
   &.linter-warning .region {
-    background: linear-gradient(
-      to bottom,
-      @background-color-warning 0%,
-      fadeout(@background-color-warning, 70%) 20%,
-      fadeout(@background-color-warning, 70%) 80%,
-      @background-color-warning 100%);
-    border-left: 2px solid @background-color-warning;
-    border-right: 2px solid @background-color-warning;
+    background-color: darken(@background-color-warning, 10%);
+    -webkit-mask-image: url(atom://linter/images/wave.svg);
+    -webkit-mask-repeat: repeat;
+    -webkit-mask-size: .9em 1.3em;
+    -webkit-mask-position: bottom left;
   }
   &.linter-error .region {
-    background: linear-gradient(
-      to bottom,
-      @background-color-error 0%,
-      fadeout(@background-color-error, 70%) 20%,
-      fadeout(@background-color-error, 70%) 80%,
-      @background-color-error 100%);
-    border-left: 2px solid @background-color-error;
-    border-right: 2px solid @background-color-error;
+    background-color: darken(@background-color-error, 10%);
+    -webkit-mask-image: url(atom://linter/images/wave.svg);
+    -webkit-mask-repeat: repeat;
+    -webkit-mask-size: .9em 1.3em;
+    -webkit-mask-position: bottom left;
   }
 }
