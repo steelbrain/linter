@@ -111,7 +111,7 @@ class LinterView
     pane = @editorView.getPaneView().getModel()
     @subscriptions.push pane.onDidRemoveItem =>
       @statusBarView.hide()
-      @inlineView.hide()
+      @inlineView.remove()
 
     @subscriptions.push pane.onDidChangeActive =>
       if @editor.id is atom.workspace.getActiveEditor()?.id
@@ -119,7 +119,7 @@ class LinterView
         @updateViews()
       else
         @statusBarView.hide()
-        @inlineView.hide()
+        @inlineView.remove()
 
     atom.workspaceView.command "linter:lint", => @lint()
 
