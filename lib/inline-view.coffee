@@ -3,17 +3,15 @@ _ = require 'lodash'
 
 class InlineView
   remove: ->
-    # TODO: Avoid this awkwardness by combining InlineView and MessageBubble
-    @hide()
-
-  hide: ->
-    @messageBubble.remove() if @messageBubble?
-    @messageBubble = null
+    @decoration.destroy() if @decoration?
+    @decoration = null
 
   render: (messages, editorView) ->
-    if editorView.editor.getLastCursor()
+    cursor = editorView.editor.getLastCursor();
+    if cursor
       # it's only safe to call getCursorBufferPosition when there are cursors
-      position = editorView.editor.getCursorBufferPosition()
+      marker = cursor.getMarker()
+      position = cursor.getBufferPosition()
     else
       return # there's nothing to render
     currentLine = position.row + 1
@@ -26,7 +24,7 @@ class InlineView
       @lastMessages = messages
 
     # Hide the last version of this view
-    @hide()
+    @remove()
 
     # No more errors on the file, return
     return unless messages.length > 0
@@ -35,77 +33,32 @@ class InlineView
     # if your cursor is in the range or error, or on the line
     limitOnErrorRange = atom.config.get('linter.statusBar') == 'Show error if the cursor is in range'
 
-    for item, index in messages
-      show = if limitOnErrorRange
-        item.range?.containsPoint(position) and index <= 10
-      else
-        item.range?.start.row + 1 is currentLine
-      if show
-        if @messageBubble
-          @messageBubble.add(item.linter, item.message)
+    messages = messages.reduce(
+      (memo, item, index) =>
+        show = if limitOnErrorRange
+          item.range?.containsPoint(position) and index <= 10
         else
-          @messageBubble = new MessageBubble(
-            editorView: editorView
-            title: item.linter
-            line: item.range.start.row
-            start: item.range.start.column
-            end: item.range.end.column
-            content: item.message
-            klass: "comment-#{item.level}"
-          )
+          item.range?.start.row + 1 is currentLine
+        if show
+          memo.push(src: item.linter, content: item.message, level: item.level)
+        memo
+      , []
+      )
+
+    if messages.length > 0
+      @decoration = editorView.editor.decorateMarker marker, type: 'overlay', item: new MessageBubble(
+        editorView: editorView
+        messages: messages
+      )
 
 
 class MessageBubble extends View
   @content: (params) ->
-    @div class: "inline-message #{params.klass}", style: params.style, =>
-      for msg in params.messages
-        @div class: "message-content", =>
-          @div class: "message-source", =>
-            @text msg.src
-          @text msg.content
-
-  constructor: ({editorView, title, line, start, end, content, klass, min}) ->
-    @title = title
-    @line = line
-    @start = start
-    @end = end
-    @content = content
-    @klass = klass
-    @editor = editorView.editor
-    @editorView = editorView
-    @messages = [{content: @content, src: @title}]
-    style = @calculateStyle(@line, @start)
-    super({messages: @messages, klass: @klass, style: style})
-
-    if @min
-      @minimize()
-    pageData = editorView.find(".overlayer")
-    if pageData
-      pageData.first().prepend(this)
-
-  calculateStyle: (line, start) ->
-    if @editorView and @editor
-      last = @editor.getBuffer().lineLengthForRow(line)
-      fstPos = @editorView.pixelPositionForBufferPosition({row: line, column: 0})
-      lastPos = @editorView.pixelPositionForBufferPosition({row: line, column: start})
-      top = fstPos.top + @editorView.lineHeight
-      left = lastPos.left
-      return "position:absolute;left:#{left}px;top:#{top}px;"
-
-  renderMsg: (msg) ->
-    View.render ->
-      @div class: "message-content", =>
-        @div class: "message-source", =>
-          @raw msg.src
-        @raw msg.content
-
-  update: ->
-    this.find(".message-content").remove()
-    this.append (@renderMsg(msg) for msg in @messages)
-
-  add: (title, content) ->
-    @messages.push({content: content, src: title})
-    @update()
-
+    @div class: "select-list popover-list", style: "width: 400px", =>
+      @ul class: "list-group", =>
+        for msg in params.messages
+          @li =>
+            @span class: "text-smaller inline-block highlight-#{msg.level}", msg.src
+            @span msg.content
 
 module.exports = InlineView
