@@ -49,20 +49,18 @@ class InlineView
       , []
       )
 
-    if messages.length > 0
-      @decoration = editorView.editor.decorateMarker marker,
-        type: 'overlay'
-        item: new MessageBubble(
-          editorView: editorView
-          messages: messages
-        )
+    return unless messages.length > 0
+
+    @decoration = editorView.editor.decorateMarker marker,
+      type: 'overlay'
+      item: new MessageBubble(messages)
 
 
 class MessageBubble extends View
-  @content: (params) ->
+  @content: (messages) ->
     @div class: "select-list popover-list linter-list", =>
       @ul class: "list-group", =>
-        for msg in params.messages
+        for msg in messages
           @li =>
             @span class: "linter-name highlight-#{msg.level}", msg.src
             @span class: "linter-content", msg.content
