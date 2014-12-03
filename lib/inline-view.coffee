@@ -54,11 +54,11 @@ class InlineView
 
 class MessageBubble extends View
   @content: (params) ->
-    @div class: "select-list popover-list", style: "width: 400px", =>
+    @div class: "select-list popover-list", style: "width: auto", =>
       @ul class: "list-group", =>
         for msg in params.messages
           @li =>
-            @span class: "text-smaller inline-block highlight-#{msg.level}", msg.src
-            @span msg.content
+            @span class: "text-smaller inline-block text-#{msg.level}", msg.src
+            @span class: "text-smaller", msg.content
 
 module.exports = InlineView
