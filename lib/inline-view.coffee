@@ -1,4 +1,4 @@
-{View} = require 'atom'
+{View} = require 'space-pen'
 _ = require 'lodash'
 
 class InlineView
@@ -6,8 +6,8 @@ class InlineView
     @decoration.destroy() if @decoration?
     @decoration = null
 
-  render: (messages, editorView) ->
-    cursor = editorView.editor.getLastCursor()
+  render: (messages, editor) ->
+    cursor = editor.getLastCursor()
     if cursor
       # it's only safe to call getCursorBufferPosition when there are cursors
       marker = cursor.getMarker()
@@ -51,7 +51,7 @@ class InlineView
 
     return unless messages.length > 0
 
-    @decoration = editorView.editor.decorateMarker marker,
+    @decoration = editor.decorateMarker marker,
       type: 'overlay'
       item: new MessageBubble(messages)
 

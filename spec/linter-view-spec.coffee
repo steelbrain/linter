@@ -1,6 +1,6 @@
 sinon = require "sinon"
 
-{WorkspaceView} = require 'atom'
+{Workspace} = require 'atom'
 
 LinterView = require "../lib/linter-view.coffee"
 Linter = require "../lib/linter.coffee"
@@ -18,27 +18,17 @@ describe "LinterView:lint", ->
     linterView = null
 
     waitsForPromise ->
-      atom.workspaceView = new WorkspaceView()
+      atom.workspace = new Workspace()
       atom.workspace.open('./fixture/messages.txt').then (editor) ->
-        # TODO: surely there's a better way to mock this. Maybe I can use
-        # a real TextEditorView.
-        editorView =
-          editor: editor
-          getModel: -> editor
-          on: sinon.stub()
-          getPaneView: ->
-            getModel: ->
-              onDidRemoveItem: sinon.stub()
-              onDidChangeActive: sinon.stub()
-        editorView = editorView
         statusBarView =
           render: sinon.stub()
           hide: sinon.stub()
         inlineView =
           render: sinon.stub()
+          remove: sinon.stub()
           hide: sinon.stub()
         linterView = new LinterView(
-          editorView
+          editor
           statusBarView
           inlineView
           linterClasses

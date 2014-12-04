@@ -13,11 +13,13 @@
   "dependencies": {
     "chai": "^1.9.1",
     "emissary": "^1.0.0",
+    "event-kit": "^0.8.1",
     "jshint": "^2.4.4",
     "lodash": "^2.4.1",
     "rimraf": "^2.2.8",
     "shelljs": "^0.2.6",
     "sinon": "^1.10.0",
+    "space-pen": "^4.2.2",
     "temp": "~0.8.0",
     "xregexp": "2.0.0"
   },

@@ -4,6 +4,7 @@ temp = require 'temp'
 path = require 'path'
 {log, warn} = require './utils'
 rimraf = require 'rimraf'
+{CompositeDisposable} = require 'event-kit'
 
 
 temp.track()
@@ -15,20 +16,18 @@ class LinterView
   totalProcessed: 0
   tempFile: ''
   messages: []
-  subscriptions: []
   isDestroyed: false
 
   # Pubic: Instantiate the views
   #
-  # editorView - the atom editor view on which to place highlighting and gutter
+  # editor - the atom editor view on which to place highlighting and gutter
   #              annotations
   # statusBarView - shared StatusBarView between all linters
   # linters - global linter set to utilize for linting
-  constructor: (@editorView, @statusBarView, @inlineView, @linters = []) ->
-
-    @editor = @editorView.getModel()
+  constructor: (@editor, @statusBarView, @inlineView, @linters = []) ->
+    @subscriptions = new CompositeDisposable
     unless @editor?
-      warn "No editor instance on this editorView"
+      warn "No editor instance on this editor"
     @markers = null
 
     @initLinters(@linters)
@@ -36,7 +35,7 @@ class LinterView
     @handleBufferEvents()
     @handleConfigChanges()
 
-    @subscriptions.push @editorView.on 'cursor:moved', =>
+    @subscriptions.add @editor.onDidChangeCursorPosition  =>
       @updateViews()
 
   # Public: Initialize new linters (used on grammar chagne)
@@ -53,10 +52,10 @@ class LinterView
 
   # Internal: register config modifications handlers
   handleConfigChanges: ->
-    @subscriptions.push atom.config.observe 'linter.lintOnSave',
+    @subscriptions.add atom.config.observe 'linter.lintOnSave',
       (lintOnSave) => @lintOnSave = lintOnSave
 
-    @subscriptions.push atom.config.observe 'linter.lintOnChangeInterval',
+    @subscriptions.add atom.config.observe 'linter.lintOnChangeInterval',
       (lintOnModifiedDelayMS) =>
         # If text instead of number into user config
         throttleInterval = parseInt(lintOnModifiedDelayMS)
@@ -64,28 +63,28 @@ class LinterView
         # create throttled lint command
         @throttledLint = (_.throttle @lint, throttleInterval).bind this
 
-    @subscriptions.push atom.config.observe 'linter.lintOnChange',
+    @subscriptions.add atom.config.observe 'linter.lintOnChange',
       (lintOnModified) => @lintOnModified = lintOnModified
 
-    @subscriptions.push atom.config.observe 'linter.lintOnEditorFocus',
+    @subscriptions.add atom.config.observe 'linter.lintOnEditorFocus',
       (lintOnEditorFocus) => @lintOnEditorFocus = lintOnEditorFocus
 
-    @subscriptions.push atom.config.observe 'linter.showGutters',
+    @subscriptions.add atom.config.observe 'linter.showGutters',
       (showGutters) =>
         @showGutters = showGutters
         @display()
 
-    @subscriptions.push atom.config.observe 'linter.statusBar',
+    @subscriptions.add atom.config.observe 'linter.statusBar',
       (statusBar) =>
         @showMessagesAroundCursor = statusBar != 'None'
         @updateViews()
 
-    @subscriptions.push atom.config.observe 'linter.showErrorInline',
+    @subscriptions.add atom.config.observe 'linter.showErrorInline',
       (showErrorInline) =>
         @showErrorInline = showErrorInline
         @updateViews()
 
-    @subscriptions.push atom.config.observe 'linter.showHighlighting',
+    @subscriptions.add atom.config.observe 'linter.showHighlighting',
       (showHighlighting) =>
         @showHighlighting = showHighlighting
         @display()
@@ -103,17 +102,16 @@ class LinterView
       s.dispose() for s in @bufferSubs
 
     # now handle other events
-    @subscriptions.push(@editor.onDidSave maybeLintOnSave)
+    @subscriptions.add(@editor.onDidSave maybeLintOnSave)
 
-    @subscriptions.push @editor.onDidStopChanging =>
+    @subscriptions.add @editor.onDidStopChanging =>
       @throttledLint() if @lintOnModified
 
-    pane = @editorView.getPaneView().getModel()
-    @subscriptions.push pane.onDidRemoveItem =>
+    @subscriptions.add @editor.onDidDestroy =>
       @statusBarView.hide()
       @inlineView.remove()
 
-    @subscriptions.push pane.onDidChangeActive =>
+    @subscriptions.add atom.workspace.observeActivePaneItem =>
       if @editor.id is atom.workspace.getActiveEditor()?.id
         @throttledLint() if @lintOnEditorFocus
         @updateViews()
@@ -121,7 +119,8 @@ class LinterView
         @statusBarView.hide()
         @inlineView.remove()
 
-    atom.workspaceView.command "linter:lint", => @lint()
+    atom.commands.add "atom-text-editor",
+      "linter:lint", => @lint()
 
   # Public: lint the current file in the editor using the live buffer
   lint: ->
@@ -202,13 +201,13 @@ class LinterView
       @statusBarView.render [], @editor
 
     if @showErrorInline
-      @inlineView.render @messages, @editorView
+      @inlineView.render @messages, @editor
     else
-      @inlineView.render [], @editorView
+      @inlineView.render [], @editor
 
 
   # Public: remove this view and unregister all it's subscriptions
   remove: ->
-    s.dispose() for s in @subscriptions
+    @subscriptions.dispose()
 
 module.exports = LinterView
