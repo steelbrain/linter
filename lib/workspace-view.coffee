@@ -4,7 +4,7 @@ temp = require 'temp'
 path = require 'path'
 {log, warn} = require './utils'
 rimraf = require 'rimraf'
-{CompositeDisposable, Emitter} = require 'event-kit'
+{CompositeDisposable} = require 'event-kit'
 
 
 temp.track()
@@ -15,12 +15,7 @@ class LinterView
   fileMessages: {}
   views: []
 
-  # Pubic: Instantiate the views
-  #
-  # editor - the atom editor view on which to place highlighting and gutter
-  #              annotations
-  # statusBarView - shared StatusBarView between all linters
-  # linters - global linter set to utilize for linting
+  # Pubic: Instantiate the view
   constructor: ->
     @subscriptions = new CompositeDisposable
 
@@ -33,11 +28,8 @@ class LinterView
         @showOnTabAndTreeView = showOnTabAndTreeView
         @display()
 
-
-    atom.commands.add "atom-text-editor",
-      "linter:lint", => @lint()
-
-  getViews: =>
+  updateViews: =>
+    @views = []
     tabsPackage = atom.packages.getActivePackage('tabs')
     if tabsPackage?
       @views = @views.concat tabsPackage.requireMainModule()?.tabBarViews
@@ -60,15 +52,17 @@ class LinterView
         'error'
       else if message.level == 'warning' && memo != 'error'
         'warning'
+      else
+        memo
     ,''
 
   # Internal: Render all the linter messages
   display: ->
-    @getViews()
     if @showOnTabAndTreeView
-      _.each @fileMessages, (messages, file) =>
+      @updateViews()
+      for file, messages of @fileMessages
         if messages
-          messageLevel = @addFileLevelIndicator file, @getMessagesLevel messages
+          @addFileLevelIndicator file, @getMessagesLevel messages
         else
           @removeFileLevelIndicator(file)
 
@@ -88,7 +82,7 @@ class LinterView
 
   # Public: remove this view and unregister all it's subscriptions
   remove: ->
-    _.each @messages, (messages, file) =>
+    for file of @messages
       @removeFileLevelIndicator(file)
     @subscriptions.dispose()
 
