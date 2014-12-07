@@ -10,8 +10,7 @@ class StatusBarView extends View
     @div class: 'tool-panel panel-bottom padded text-smaller', =>
       @dl class: 'linter-statusbar', outlet: 'violations',
 
-  show: ->
-    super
+  initialize: ->
     # Bind `.copy` to copy the text on click
     @on 'click', '.copy', ->
       el = @parentElement.getElementsByClassName('error-message')[0]
@@ -31,12 +30,9 @@ class StatusBarView extends View
     # If the selected line contains an error message, highlight the error
     $line?.addClass('message-highlighted')
 
-  hide: ->
-    # Remove registred events before hidding the status bar
-    # Avoid memory leaks after long usage
+  beforeRemove: ->
     @off 'click', '.copy'
     @off 'click', '.goToError'
-    super
 
   computeMessages: (messages, position, currentLine, limitOnErrorRange) ->
     # Clear `violations` div
@@ -81,9 +77,6 @@ class StatusBarView extends View
 
   # Render the view
   render: (messages, editor) ->
-    # preppend this view the bottom
-    atom.workspace.addBottomPanel item: this
-
     statusBarConfig = atom.config.get 'linter.statusBar'
     # Config value if you want to limit the status bar report
     # if your cursor is in the range or error, or on the line
@@ -106,5 +99,9 @@ class StatusBarView extends View
     # TODO: why not have computeMessages get currentLine from position?
     currentLine = position.row
     @computeMessages messages, position, currentLine, limitOnErrorRange
+
+    unless @added
+      atom.workspace.addBottomPanel item: this
+      @added = true
 
 module.exports = StatusBarView

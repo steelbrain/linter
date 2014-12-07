@@ -20,8 +20,7 @@ class LinterView
 
   # Pubic: Instantiate the views
   #
-  # editor - the atom editor view on which to place highlighting and gutter
-  #              annotations
+  # editor - the editor on which to place highlighting and gutter annotations
   # statusBarView - shared StatusBarView between all linters
   # linters - global linter set to utilize for linting
   constructor: (@editor, @statusBarView, @inlineView, @linters = []) ->
