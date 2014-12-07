@@ -1,16 +1,7 @@
-_ = require 'lodash'
-fs = require 'fs'
-temp = require 'temp'
-path = require 'path'
-{log, warn} = require './utils'
-rimraf = require 'rimraf'
 {CompositeDisposable} = require 'event-kit'
 
-
-temp.track()
-
 # Public: The base linter view
-class LinterView
+class WorkspaceView
 
   fileMessages: {}
   views: []
@@ -86,4 +77,4 @@ class LinterView
       @removeFileLevelIndicator(file)
     @subscriptions.dispose()
 
-module.exports = LinterView
+module.exports = WorkspaceView
