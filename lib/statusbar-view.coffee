@@ -1,4 +1,6 @@
-{View, Point} = require 'atom'
+{Point} = require 'atom'
+{View} = require 'space-pen'
+
 _ = require 'lodash'
 
 # Status Bar View
@@ -80,7 +82,7 @@ class StatusBarView extends View
   # Render the view
   render: (messages, editor) ->
     # preppend this view the bottom
-    atom.workspaceView.prependToBottom this
+    atom.workspace.addBottomPanel item: this
 
     statusBarConfig = atom.config.get 'linter.statusBar'
     # Config value if you want to limit the status bar report
