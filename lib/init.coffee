@@ -1,6 +1,7 @@
 LinterView = require './linter-view'
 StatusBarView = require './statusbar-view'
 InlineView = require './inline-view'
+WorkspaceView = require './workspace-view'
 # Public: linter package initialization, sets up the linter for usages by atom
 class LinterInitializer
 
@@ -30,6 +31,9 @@ class LinterInitializer
     showErrorInline:
       type: 'boolean'
       default: false
+    showOnTabAndTreeView:
+      type: 'boolean'
+      default: true
     statusBar:
       type: 'string'
       default: 'Show error of the selected line'
@@ -63,6 +67,7 @@ class LinterInitializer
     @enabled = true
     @statusBarView = new StatusBarView()
     @inlineView = new InlineView()
+    @workspaceView = new WorkspaceView()
 
     # Subscribing to every current and future editor
     @editorSubscription = atom.workspace.observeTextEditors (editor) =>
@@ -77,6 +82,7 @@ class LinterInitializer
     return if editor.linterView?
 
     linterView = new LinterView(editor, statusBarView, inlineView, @linters)
+    linterView.onFileMessages @workspaceView.updateFile.bind(@workspaceView)
     linterView
 
   # Public: deactivate the plugin and unregister all subscriptions

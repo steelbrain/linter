@@ -4,7 +4,7 @@ temp = require 'temp'
 path = require 'path'
 {log, warn} = require './utils'
 rimraf = require 'rimraf'
-{CompositeDisposable} = require 'event-kit'
+{CompositeDisposable, Emitter} = require 'event-kit'
 
 
 temp.track()
@@ -24,6 +24,7 @@ class LinterView
   # statusBarView - shared StatusBarView between all linters
   # linters - global linter set to utilize for linting
   constructor: (@editor, @statusBarView, @inlineView, @linters = []) ->
+    @emitter = new Emitter
     @subscriptions = new CompositeDisposable
     unless @editor?
       warn "No editor instance on this editor"
@@ -158,7 +159,12 @@ class LinterView
         throw err if err?
 
     @messages = @messages.concat(messages)
+    @emitter.emit 'messages', file: @editor.getPath() , messages: messages
     @display()
+
+  # Public: on messages from linter
+  onFileMessages: (callback) ->
+    @emitter.on('messages', callback)
 
   # Internal: Destroy all markers (and associated decorations)
   destroyMarkers: ->
@@ -203,7 +209,6 @@ class LinterView
       @inlineView.render @messages, @editor
     else
       @inlineView.render [], @editor
-
 
   # Public: remove this view and unregister all it's subscriptions
   remove: ->
