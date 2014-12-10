@@ -139,7 +139,7 @@ class LinterView
         path: path.join tmpDir, fileName
       fs.writeFile tempFileInfo.path, @editor.getText(), (err) =>
         throw err if err?
-        for linter in @linters
+        @linters.forEach (linter) =>  # forEach to avoid loop var capture
           linter.lintFile tempFileInfo.path, (messages) =>
             @processMessage messages, tempFileInfo, linter
         return
@@ -150,7 +150,7 @@ class LinterView
   #           :level  - the annotation error level ('error', 'warning')
   #           :range - The buffer range that the annotation should be placed
   processMessage: (messages, tempFileInfo, linter) =>
-    log "linter returned", linter, messages
+    log "#{linter.linterName} returned", linter, messages
 
     tempFileInfo.completedLinters++
     if tempFileInfo.completedLinters == @linters.length
