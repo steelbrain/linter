@@ -81,7 +81,7 @@ class LinterInitializer
         @linterViews = _.without @linterViews, linterView
 
       # TODO: move this to the LinterView class
-      editor.on 'grammar-changed', =>
+      editor.onDidChangeGrammar =>
         linterView.initLinters(@linters)
         linterView.lint()
 
