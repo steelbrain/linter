@@ -1,3 +1,19 @@
+# v0.9.0
+
+### New features
+* Upgraded inline view ([#274][274])
+* More subtle error highlighting ([#275][275])
+
+[274]: https://github.com/AtomLinter/Linter/pull/274
+[275]: https://github.com/AtomLinter/Linter/pull/275
+
+### Bug fixes
+* Fix TextEditor destroyed error ([#279][279])
+* More deprecation fixes
+
+[279]: https://github.com/AtomLinter/Linter/issues/279
+
+
 # v0.8
 
 ### New features
