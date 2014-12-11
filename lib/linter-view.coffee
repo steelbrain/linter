@@ -23,14 +23,14 @@ class LinterView
   # editor - the editor on which to place highlighting and gutter annotations
   # statusBarView - shared StatusBarView between all linters
   # linters - global linter set to utilize for linting
-  constructor: (@editor, @statusBarView, @inlineView, @linters = []) ->
+  constructor: (@editor, @statusBarView, @inlineView, @allLinters = []) ->
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
     unless @editor?
       warn "No editor instance on this editor"
     @markers = null
 
-    @initLinters(@linters)
+    @initLinters()
 
     @handleEditorEvents()
     @handleConfigChanges()
@@ -41,10 +41,10 @@ class LinterView
   # Public: Initialize new linters (used on grammar chagne)
   #
   # linters - global linter set to utilize for linting
-  initLinters: (linters) ->
+  initLinters: ->
     @linters = []
     grammarName = @editor.getGrammar().scopeName
-    for linter in linters
+    for linter in @allLinters
       if (_.isArray(linter.syntax) and grammarName in linter.syntax or
           _.isString(linter.syntax) and grammarName is linter.syntax or
           linter.syntax instanceof RegExp and linter.syntax.test(grammarName))
@@ -91,6 +91,9 @@ class LinterView
 
   # Internal: register handlers for editor buffer events
   handleEditorEvents: =>
+    @editor.onDidChangeGrammar =>
+      @initLinters()
+      @lint()
 
     maybeLintOnSave = => @throttledLint() if @lintOnSave
     @subscriptions.add(@editor.getBuffer().onDidReload maybeLintOnSave)

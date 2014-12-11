@@ -80,11 +80,6 @@ class LinterInitializer
       @subscriptions.add linterView.onDidDestroy =>
         @linterViews = _.without @linterViews, linterView
 
-      # TODO: move this to the LinterView class
-      editor.onDidChangeGrammar =>
-        linterView.initLinters(@linters)
-        linterView.lint()
-
   # Public: deactivate the plugin and unregister all subscriptions
   deactivate: ->
     @subscriptions.dispose()
