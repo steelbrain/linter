@@ -2,9 +2,10 @@ _ = require 'lodash'
 fs = require 'fs'
 temp = require 'temp'
 path = require 'path'
-{log, warn} = require './utils'
 rimraf = require 'rimraf'
-{CompositeDisposable} = require 'event-kit'
+{CompositeDisposable, Emitter} = require 'event-kit'
+
+{log, warn} = require './utils'
 
 
 temp.track()
@@ -16,7 +17,6 @@ class LinterView
   totalProcessed: 0
   tempFile: ''
   messages: []
-  isDestroyed: false
 
   # Pubic: Instantiate the views
   #
@@ -24,6 +24,7 @@ class LinterView
   # statusBarView - shared StatusBarView between all linters
   # linters - global linter set to utilize for linting
   constructor: (@editor, @statusBarView, @inlineView, @linters = []) ->
+    @emitter = new Emitter
     @subscriptions = new CompositeDisposable
     unless @editor?
       warn "No editor instance on this editor"
@@ -31,7 +32,7 @@ class LinterView
 
     @initLinters(@linters)
 
-    @handleBufferEvents()
+    @handleEditorEvents()
     @handleConfigChanges()
 
     @subscriptions.add @editor.onDidChangeCursorPosition  =>
@@ -89,26 +90,17 @@ class LinterView
         @display()
 
   # Internal: register handlers for editor buffer events
-  handleBufferEvents: =>
-    buffer = @editor.getBuffer()
-    @bufferSubs = []
+  handleEditorEvents: =>
 
     maybeLintOnSave = => @throttledLint() if @lintOnSave
-
-    @bufferSubs.push(buffer.onDidReload maybeLintOnSave)
-    @bufferSubs.push buffer.onDidDestroy =>
-      @isDestroyed = true
-      s.dispose() for s in @bufferSubs
-
-    # now handle other events
+    @subscriptions.add(@editor.getBuffer().onDidReload maybeLintOnSave)
     @subscriptions.add(@editor.onDidSave maybeLintOnSave)
 
     @subscriptions.add @editor.onDidStopChanging =>
       @throttledLint() if @lintOnModified
 
     @subscriptions.add @editor.onDidDestroy =>
-      @statusBarView.hide()
-      @inlineView.remove()
+      @remove()
 
     @subscriptions.add atom.workspace.observeActivePaneItem =>
       if @editor.id is atom.workspace.getActiveEditor()?.id
@@ -170,7 +162,7 @@ class LinterView
   display: ->
     @destroyMarkers()
 
-    return if @isDestroyed
+    return unless @editor.isAlive()
 
     if @showGutters or @showHighlighting
       @markers ?= []
@@ -206,7 +198,20 @@ class LinterView
 
 
   # Public: remove this view and unregister all it's subscriptions
-  remove: ->
+  remove: () ->
+    # TODO: when do these get destroyed as opposed to just hidden?
+    @statusBarView.hide()
+    @inlineView.remove()
     @subscriptions.dispose()
+    @emitter.emit 'did-destroy'
+
+  # Public: Invoke the given callback when the editor is destroyed.
+  #
+  # * `callback` {Function} to be called when the editor is destroyed.
+  #
+  # Returns a {Disposable} on which `.dispose()` can be called to unsubscribe.
+  onDidDestroy: (callback) ->
+    @emitter.on 'did-destroy', callback
+
 
 module.exports = LinterView
