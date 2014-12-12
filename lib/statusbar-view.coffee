@@ -7,7 +7,7 @@ _ = require 'lodash'
 class StatusBarView extends View
 
   @content: ->
-    @div class: 'tool-panel panel-bottom padded text-smaller', =>
+    @div class: 'padded text-smaller', =>
       @dl class: 'linter-statusbar', outlet: 'violations',
 
   initialize: ->
