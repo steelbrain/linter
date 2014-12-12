@@ -3,7 +3,10 @@ path = require 'path'
 {Range, Point, BufferedProcess} = require 'atom'
 _ = require 'lodash'
 {XRegExp} = require 'xregexp'
+{CompositeDisposable} = require 'event-kit'
+
 {log, warn} = require './utils'
+
 
 # Public: The base class for linters.
 # Subclasses must at a minimum define the attributes syntax, cmd, and regex.
@@ -49,6 +52,13 @@ class Linter
   # Public: Construct a linter passing it's base editor
   constructor: (@editor) ->
     @cwd = path.dirname(@editor.getUri())
+
+    @subscriptions = new CompositeDisposable
+    @subscriptions.add atom.config.observe 'linter.executionTimeout', (x) =>
+      @executionTimeout = x
+
+  destroy: ->
+    @subscriptions.dispose()
 
   # Private: Exists mostly so we can use statSync without slowing down linting.
   # TODO: Do this at constructor time?
@@ -142,17 +152,13 @@ class Linter
     process = new BufferedProcess({command, args, options,
                                   stdout, stderr, exit})
 
-    # Don't block UI more than 5seconds, it's really annoying on big files
-    # TODO: This doesn't actually block a UI thread, but it does cause lint
-    # warnings to flash. A better fix would be to diff new lint messages with
-    # existing ones and remove those that are no longer present. Right now we
-    # just remove all existing ones, and add all new ones.
-    timeout_s = 5
-    setTimeout ->
-      return if exited
-      process.kill()
-      warn "command `#{command}` timed out after #{timeout_s}s"
-    , timeout_s * 1000
+    # Kill the linter process if it takes too long
+    if @executionTimeout > 0
+      setTimeout =>
+        return if exited
+        process.kill()
+        warn "command `#{command}` timed out after #{@executionTimeout} ms"
+      , @executionTimeout
 
   # Private: process the string result of a linter execution using the regex
   #          as the message builder

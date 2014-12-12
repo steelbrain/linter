@@ -39,6 +39,10 @@ class LinterInitializer
       type: 'string'
       default: 'Show error of the selected line'
       enum: ['None', 'Show all errors', 'Show error of the selected line', 'Show error if the cursor is in range']
+    executionTimeout:
+      type: 'integer'
+      default: 5000
+      description: 'Linter executables are killed after this timeout. Set to 0 to disable.'
 
   # Internal: Prevent old deprecated config to be visible in the package settings
   setDefaultOldConfig: ->
@@ -86,5 +90,6 @@ class LinterInitializer
     linterView.remove() for linterView in @linterViews
     @inlineView.remove()
     @statusBarView.remove()
+    l.destroy() for l in @linters
 
 module.exports = new LinterInitializer()
