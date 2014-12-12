@@ -111,7 +111,7 @@ class LinterView
         @updateViews()
       else
         @statusBarView.hide()
-        @statusBarSummaryView.hide()
+        @statusBarSummaryView.remove()
         @inlineView.remove()
 
     atom.commands.add "atom-text-editor",
@@ -206,7 +206,7 @@ class LinterView
   remove: () ->
     # TODO: when do these get destroyed as opposed to just hidden?
     @statusBarView.hide()
-    @statusBarSummaryView.hide()
+    @statusBarSummaryView.remove()
     @inlineView.remove()
     @subscriptions.dispose()
     @emitter.emit 'did-destroy'

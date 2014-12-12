@@ -1,22 +1,15 @@
 {View} = require 'atom'
 
 # Status Bar View
-class StatusBarSummaryView extends View
-
-  @content: ->
-    @div class: 'linter-summary inline-block'
-
-  showError: (messages) ->
-    console.log errorsNb
-    html = if errorsNb > 0 then errorsNb else ''
-    @find('.linter-summary').html(html)
+class StatusBarSummaryView
+  remove: ->
+    @decoration.remove() if @decoration?
+    @decoration = null
 
   # Render the view
   render: (messages) ->
     statusBar = atom.workspaceView.statusBar
     return unless statusBar
-
-    statusBar.prependRight this
 
     warning = error = 0
 
@@ -24,23 +17,19 @@ class StatusBarSummaryView extends View
       warning += 1 if item.level == 'warning'
       error += 1 if item.level == 'error'
 
-    html = ''
-    if warning > 0
-      html = """
-        <div class='linter-warning inline-block'>
-          #{warning}
-          <span class='icon-right'></span>
-        </div>
-      """
+    # Hide the last version of this view
+    @remove()
 
-    if error > 0
-      html += """
-        <div class='linter-error inline-block'>
-          #{error}
-          <span class='icon-right'></span>
-        </div>
-      """
+    @decoration = new StatusBarSummary(warning or 0, error or 0)
 
-    this.html(html)
+    statusBar.prependRight @decoration
+
+class StatusBarSummary extends View
+  @content: (warning, error) ->
+    @div class: 'linter-summary inline-block', =>
+      @div class: 'linter-warning inline-block', warning, =>
+        @span class: 'icon-right'
+      @div class: 'linter-error inline-block', error, =>
+        @span class: 'icon-right'
 
 module.exports = StatusBarSummaryView
