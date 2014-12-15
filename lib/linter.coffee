@@ -149,6 +149,9 @@ class Linter
         else data = dataStderr
       @processMessage data, callback
 
+    {command, args, options} = @beforeSpawnProcess(command, args, options)
+    log("beforeSpawnProcess:", command, args, options)
+
     process = new BufferedProcess({command, args, options,
                                   stdout, stderr, exit})
 
@@ -159,6 +162,16 @@ class Linter
         process.kill()
         warn "command `#{command}` timed out after #{@executionTimeout} ms"
       , @executionTimeout
+
+  # Public: Gives subclasses a chance to read or change the command, args and
+  #         options, before creating new BufferedProcess while lintFile.
+  #   command: a string of executablePath
+  #   args: an array of string arguments
+  #   options: an object of options (has cwd field)
+  # Returns an object of {command, args, options}
+  # Override this if you want to read or change these arguments
+  beforeSpawnProcess: (command, args, options) =>
+    {command: command, args: args, options: options}
 
   # Private: process the string result of a linter execution using the regex
   #          as the message builder
