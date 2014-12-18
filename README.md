@@ -22,6 +22,9 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 #### for Typescript
 - [linter-tslint](https://atom.io/packages/linter-tslint), for Typescript, using `tslint`
 
+#### for LiveScript
+- [linter-lsc](https://github.com/johngeorgewright/atom-linter-lsc), for LiveScript, using `lsc -a`
+
 #### for Dart
 - [linter-dartanalyzer](https://atom.io/packages/linter-dartanalyzer), for Dart using `dartanalyzer`
 
