@@ -31,6 +31,7 @@ class Linter
   #      closest matching syntax element based on your code syntax (optional)
   # colStart: column to on which to start a higlight (optional)
   # colEnd: column to end highlight (optional)
+  # file: the file that a message was caused by (optional)
   regex: ''
 
   regexFlags: ''
@@ -48,6 +49,8 @@ class Linter
 
   # TODO: what does this mean?
   errorStream: 'stdout'
+
+  lintingFile: ''
 
   # Public: Construct a linter passing it's base editor
   constructor: (@editor) ->
@@ -121,6 +124,8 @@ class Linter
     # build the command with arguments to lint the file
     {command, args} = @getCmdAndArgs(filePath)
 
+    @lintingFile = filePath
+
     log 'is node executable: ' + @isNodeExecutable
 
     # options for BufferedProcess, same syntax with child_process.spawn
@@ -186,6 +191,7 @@ class Linter
   #        (optional)
   #   colStart: column to on which to start a higlight (optional)
   #   colEnd: column to end highlight (optional)
+  #   file: the file that a message was caused by (optional)
   createMessage: (match) ->
     if match.error
       level = 'error'
@@ -254,7 +260,12 @@ class Linter
   #        (optional)
   #   colStart: column to on which to start a higlight (optional)
   #   colEnd: column to end highlight (optional)
+  #   file: the file that a message was caused by (optional)
   computeRange: (match) ->
+    if match.file?
+      if match.file isnt @lintingFile
+        # TODO: show a message to indicate there are errors in other files
+        return
 
     decrementParse = (x) ->
       Math.max 0, parseInt(x) - 1
