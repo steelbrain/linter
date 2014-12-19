@@ -1,4 +1,6 @@
 # Linter
+
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/AtomLinter/Linter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/AtomLinter/Linter.svg)](https://travis-ci.org/AtomLinter/Linter)
 
 Lint your code with ease in [Atom](http://atom.io).
