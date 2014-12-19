@@ -66,6 +66,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 
 #### for Lua
 - [linter-lua](https://atom.io/packages/linter-lua), for Lua, using `luac -p`
+- [linter-luacheck](https://atom.io/packages/linter-luacheck) for Lua, using `luacheck`
 
 #### for Clojure
 - [linter-clojure](https://atom.io/packages/linter-clojure), for Clojure, using `clojure`
