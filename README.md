@@ -27,6 +27,8 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 #### for Dart
 - [linter-dartanalyzer](https://atom.io/packages/linter-dartanalyzer), for Dart using `dartanalyzer`
 
+#### for LiveScript
+- [linter-lsc](https://atom.io/packages/linter-lsc), for LiveScript, using `lsc -a`
 
 #### for Ruby and Ruby on Rails
 - [linter-rubocop](https://atom.io/packages/linter-rubocop), for Ruby and Ruby on Rails, using `rubocop`
