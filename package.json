@@ -19,7 +19,7 @@
     "rimraf": "^2.2.8",
     "shelljs": "^0.2.6",
     "sinon": "^1.10.0",
-    "space-pen": "^4.2.2",
+    "space-pen": "^4.3.3",
     "temp": "~0.8.0",
     "xregexp": "2.0.0"
   },

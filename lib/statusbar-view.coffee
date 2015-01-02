@@ -30,7 +30,7 @@ class StatusBarView extends View
     # If the selected line contains an error message, highlight the error
     $line?.addClass('message-highlighted')
 
-  beforeRemove: ->
+  detached: ->
     @off 'click', '.copy'
     @off 'click', '.goToError'
 

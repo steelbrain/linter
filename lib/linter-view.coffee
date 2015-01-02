@@ -106,7 +106,7 @@ class LinterView
       @remove()
 
     @subscriptions.add atom.workspace.observeActivePaneItem =>
-      if @editor.id is atom.workspace.getActiveEditor()?.id
+      if @editor.id is atom.workspace.getActiveTextEditor()?.id
         @throttledLint() if @lintOnEditorFocus
         @updateViews()
       else
