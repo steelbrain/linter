@@ -1,7 +1,5 @@
 sinon = require "sinon"
 
-{Workspace} = require 'atom'
-
 LinterView = require "../lib/linter-view.coffee"
 Linter = require "../lib/linter.coffee"
 
@@ -18,7 +16,6 @@ describe "LinterView:lint", ->
     linterView = null
 
     waitsForPromise ->
-      atom.workspace = new Workspace()
       atom.workspace.open('./fixture/messages.txt').then (editor) ->
         statusBarView =
           render: sinon.stub()
