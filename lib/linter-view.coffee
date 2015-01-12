@@ -23,7 +23,7 @@ class LinterView
   # editor - the editor on which to place highlighting and gutter annotations
   # statusBarView - shared StatusBarView between all linters
   # linters - global linter set to utilize for linting
-  constructor: (@editor, @statusBarView, @inlineView, @allLinters = []) ->
+  constructor: (@editor, @statusBarView, @statusBarSummaryView, @inlineView, @allLinters = []) ->
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
     unless @editor?
@@ -111,6 +111,7 @@ class LinterView
         @updateViews()
       else
         @statusBarView.hide()
+        @statusBarSummaryView.remove()
         @inlineView.remove()
 
     atom.commands.add "atom-text-editor",
@@ -189,6 +190,7 @@ class LinterView
 
   # Internal: Update the views for new messages
   updateViews: ->
+    @statusBarSummaryView.render @messages
     if @showMessagesAroundCursor
       @statusBarView.render @messages, @editor
     else
@@ -204,6 +206,7 @@ class LinterView
   remove: () ->
     # TODO: when do these get destroyed as opposed to just hidden?
     @statusBarView.hide()
+    @statusBarSummaryView.remove()
     @inlineView.remove()
     @subscriptions.dispose()
     @emitter.emit 'did-destroy'

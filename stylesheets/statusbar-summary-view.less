@@ -1,0 +1,24 @@
+@import 'ui-variables';
+@import 'octicon-utf-codes';
+
+.linter-summary {
+  .icon-right {
+    visibility: visible;
+    &:before {
+      font-family: 'Octicons Regular';
+      opacity: 0.6;
+      content: @primitive-dot;
+      font-size: 1.1em;
+      padding: 0 .1em;
+      margin-right: .3em;
+    }
+  }
+
+  .linter-warning .icon-right:before {
+    color: @text-color-warning;
+  }
+
+  .linter-error .icon-right:before {
+    color: @text-color-error;
+  }
+}

@@ -3,6 +3,7 @@ _ = require 'lodash'
 
 LinterView = require './linter-view'
 StatusBarView = require './statusbar-view'
+StatusBarSummaryView = require './statusbar-summary-view'
 InlineView = require './inline-view'
 
 
@@ -72,14 +73,15 @@ class LinterInitializer
 
     @enabled = true
     @statusBarView = new StatusBarView()
+    @statusBarSummaryView = new StatusBarSummaryView()
     @inlineView = new InlineView()
 
     # Subscribing to every current and future editor
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       return if editor.linterView?
 
-      linterView = new LinterView(editor, @statusBarView, @inlineView,
-                                  @linters)
+      linterView = new LinterView(editor, @statusBarView, @statusBarSummaryView,
+                                  @inlineView, @linters)
       @linterViews.push linterView
       @subscriptions.add linterView.onDidDestroy =>
         @linterViews = _.without @linterViews, linterView
@@ -90,6 +92,7 @@ class LinterInitializer
     linterView.remove() for linterView in @linterViews
     @inlineView.remove()
     @statusBarView.remove()
+    @statusBarSummaryView.remove()
     l.destroy() for l in @linters
 
 module.exports = new LinterInitializer()

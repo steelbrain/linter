@@ -20,13 +20,16 @@ describe "LinterView:lint", ->
         statusBarView =
           render: sinon.stub()
           hide: sinon.stub()
+        statusBarSummaryView =
+          render: sinon.stub()
+          remove: sinon.stub()
         inlineView =
           render: sinon.stub()
           remove: sinon.stub()
-          hide: sinon.stub()
         linterView = new LinterView(
           editor
           statusBarView
+          statusBarSummaryView
           inlineView
           linterClasses
         )
