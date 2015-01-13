@@ -34,6 +34,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-rubocop](https://atom.io/packages/linter-rubocop), for Ruby and Ruby on Rails, using `rubocop`
 - [linter-ruby](https://atom.io/packages/linter-ruby), for Ruby, using `ruby -wc`
 - [linter-erb](https://atom.io/packages/linter-erb), for .erb files, using `erb -x`
+- [linter-haml](https://atom.io/packages/linter-haml), for .haml files, using `haml-lint`
 
 #### for PHP
 - [linter-php](https://atom.io/packages/linter-php), for PHP using `php -l`
