@@ -84,7 +84,7 @@ describe "LinterView", ->
 
     it "ignores messages of unrecognized levels", ->
       lines = lv.sortMessagesByLine(messages)
-      expect(lines).to.not.property('20')
+      expect(lines).to.not.have.property('20')
 
 
   describe "message display", ->
