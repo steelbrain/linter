@@ -147,13 +147,12 @@ class LinterView
   processMessage: (messages, tempFileInfo, linter) =>
     log "#{linter.linterName} returned", linter, messages
 
+    @messages = @messages.concat(messages)
     tempFileInfo.completedLinters++
     if tempFileInfo.completedLinters == @linters.length
+      @display @messages
       rimraf tempFileInfo.path, (err) ->
         throw err if err?
-
-    @messages = @messages.concat(messages)
-    @display()
 
   # Internal: Destroy all markers (and associated decorations)
   destroyMarkers: ->
