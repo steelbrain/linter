@@ -74,7 +74,7 @@ describe "LinterView", ->
     LinterView.prototype.updateViews.restore()
 
 
-  describe "message sorrting", ->
+  describe "message sorting", ->
 
     it "selects the most severe message for each line", ->
       lines = lv.sortMessagesByLine(messages)
@@ -92,7 +92,7 @@ describe "LinterView", ->
     it "bails if gutters and highlighting is turned off", ->
       lv.showGutters = lv.showHighlighting = false
       lv.display(messages)
-      expect(lv.makres).to.not.exist
+      expect(lv.markers).to.not.exist
 
     it "creates markers for each line with a message", ->
       lv.showGutters = lv.showHighlighting = true
