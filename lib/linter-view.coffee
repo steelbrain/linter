@@ -179,8 +179,7 @@ class LinterView
       lNum = message.line
       line = lines[lNum] || { 'level': -1 }
       msg_level = levels.indexOf(message.level)
-      if msg_level <= line.level
-        continue
+      continue unless msg_level > line.level
       line.level = msg_level
       line.msg = message
       lines[lNum] = line
@@ -192,12 +191,12 @@ class LinterView
 
     return unless @editor.isAlive()
 
-    if not (@showGutters or @showHighlighting)
+    unless @showGutters or @showHighlighting
       @updateViews()
       return
 
     @markers ?= []
-    for lNum, line of @sortMessagesByLine(messages)
+    for _, line of @sortMessagesByLine(messages)
       marker = @createMarker(line.msg)
       @markers.push marker
 
