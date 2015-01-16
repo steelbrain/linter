@@ -89,9 +89,9 @@ class LinterView
         @showHighlighting = showHighlighting
         @display()
 
-    @subscriptions.add atom.config.observe 'linter.hushInfoMessages',
-      (hushInfoMessages) =>
-        @hushInfoMessages = hushInfoMessages
+    @subscriptions.add atom.config.observe 'linter.showInfoMessages',
+      (showInfoMessages) =>
+        @showInfoMessages = showInfoMessages
         @display()
 
   # Internal: register handlers for editor buffer events
@@ -177,11 +177,11 @@ class LinterView
 
   # Internal: Pidgeonhole messages onto lines. Each line gets only one message,
   # the message with the highest level presides. Messages of unrecognizable
-  # level (or hushed by config) will be skipped.
+  # level (or silenced by config) will be skipped.
   sortMessagesByLine: (messages) ->
     lines = {}
-    levels = ['info', 'warning', 'error']
-    levels.shift() if @hushInfoMessages
+    levels = ['warning', 'error']
+    levels.unshift('info') if @showInfoMessages
     for message in messages
       lNum = message.line
       line = lines[lNum] || { 'level': -1 }
