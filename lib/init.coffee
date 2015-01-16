@@ -35,6 +35,10 @@ class LinterInitializer
     showErrorInline:
       type: 'boolean'
       default: false
+    hushInfoMessages:
+      type: 'boolean'
+      default: true
+      description: "Hide “Info” message’s gutter markers and highlighting, showing “Info” only in the status bar."
     statusBar:
       type: 'string'
       default: 'Show error of the selected line'

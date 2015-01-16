@@ -64,12 +64,15 @@ describe "LinterView", ->
 
   beforeEach ->
     sinon.stub(LinterView.prototype, 'initLinters')
+    sinon.stub(LinterView.prototype, 'handleConfigChanges')
     sinon.stub(LinterView.prototype, 'handleEditorEvents')
     sinon.stub(LinterView.prototype, 'updateViews')
     lv = new LinterView(stub_editor)
+    lv.showGutters = lv.showHighlighting = lv.hushInfoMessages = true
 
   afterEach ->
     LinterView.prototype.initLinters.restore()
+    LinterView.prototype.handleConfigChanges.restore()
     LinterView.prototype.handleEditorEvents.restore()
     LinterView.prototype.updateViews.restore()
 
@@ -77,6 +80,7 @@ describe "LinterView", ->
   describe "message sorting", ->
 
     it "selects the most severe message for each line", ->
+      lv.hushInfoMessages = false
       lines = lv.sortMessagesByLine(messages)
       expect(lines['1'].level).to.equal(2)
       expect(lines['3'].level).to.equal(0)
@@ -94,7 +98,11 @@ describe "LinterView", ->
       lv.display(messages)
       expect(lv.markers).to.not.exist
 
-    it "creates markers for each line with a message", ->
-      lv.showGutters = lv.showHighlighting = true
+    it "creates markers for each line with an error or warning", ->
+      lv.display(messages)
+      expect(lv.markers).to.have.length(2)
+
+    it "when info shush is toggled off, info markers are created", ->
+      lv.hushInfoMessages = false
       lv.display(messages)
       expect(lv.markers).to.have.length(3)
