@@ -1,4 +1,4 @@
-{View} = require 'atom'
+{View} = require 'space-pen'
 
 # Status Bar View
 class StatusBarSummaryView
