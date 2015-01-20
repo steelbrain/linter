@@ -8,7 +8,7 @@ class StatusBarSummaryView
 
   # Render the view
   render: (messages) ->
-    statusBar = atom.workspaceView.statusBar
+    statusBar = atom.views.getView(atom.workspace).statusBar
     return unless statusBar
 
     warning = error = 0
