@@ -75,6 +75,11 @@ class StatusBarView extends View
       @show()
       @highlightLines(currentLine)
 
+  filterInfoMessages: (messages, config)->
+    showInfoMessages = config.get 'linter.showInfoMessages'
+    return messages if showInfoMessages
+    return (msg for msg in messages when msg.level != 'info')
+
   # Render the view
   render: (messages, editor) ->
     statusBarConfig = atom.config.get 'linter.statusBar'
@@ -86,6 +91,8 @@ class StatusBarView extends View
 
     # Hide the last version of this view
     @hide()
+
+    messages = @filterInfoMessages messages, atom.config
 
     # No more errors on the file, return
     return unless messages.length > 0
