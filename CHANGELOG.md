@@ -1,3 +1,24 @@
+# v0.10.0
+
+### New features
+* New status bar summary view ([#277][277])
+
+[277]: https://github.com/AtomLinter/Linter/pull/277
+
+### Bug fixes
+* Fix error during Atom startup ([#329][329])
+
+[329]: https://github.com/AtomLinter/Linter/issues/329
+
+
+# v0.9.1
+
+### Bug fixes
+* Fix usage of deprecated Space Pen API ([#318][318])
+
+[318]: https://github.com/AtomLinter/Linter/pull/318
+
+
 # v0.9.0
 
 ### New features
