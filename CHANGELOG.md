@@ -1,3 +1,9 @@
+# v0.10.1
+
+### Bug fixes
+* Fix more deprecations
+
+
 # v0.10.0
 
 ### New features
