@@ -51,7 +51,7 @@ class Linter
 
   # Public: Construct a linter passing it's base editor
   constructor: (@editor) ->
-    @cwd = path.dirname(@editor.getUri())
+    @cwd = path.dirname(@editor.getURI())
 
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.config.observe 'linter.executionTimeout', (x) =>

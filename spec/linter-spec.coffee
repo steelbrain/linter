@@ -8,7 +8,7 @@ describe "Linter::computeRange", ->
 
   beforeEach ->
     linter = new Linter(
-      getUri: -> "path"
+      getURI: -> "path"
       getLineCount: -> 10
     )
     scopesForPosition = sinon.stub linter, "getEditorScopesForPosition"
