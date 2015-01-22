@@ -202,13 +202,14 @@ class LinterView
       @inlineView.render [], @editor
 
 
-  # Public: remove this view and unregister all it's subscriptions
-  remove: () ->
+  # Public: remove this view and unregister all its subscriptions
+  remove: ->
     # TODO: when do these get destroyed as opposed to just hidden?
     @statusBarView.hide()
     @statusBarSummaryView.remove()
     @inlineView.remove()
     @subscriptions.dispose()
+    l.destroy() for l in @linters
     @emitter.emit 'did-destroy'
 
   # Public: Invoke the given callback when the editor is destroyed.
