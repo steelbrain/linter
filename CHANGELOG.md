@@ -1,3 +1,12 @@
+# v0.10.1
+
+### Bug fixes
+* Fix more deprecations
+* Stop throwing error when deactivated ([#327][327])
+
+[327]: https://github.com/AtomLinter/Linter/issues/327
+
+
 # v0.10.0
 
 ### New features

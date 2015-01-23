@@ -3,27 +3,27 @@
 # Status Bar View
 class StatusBarSummaryView
   remove: ->
-    @decoration.remove() if @decoration?
-    @decoration = null
+    # TODO: call this when the linter is disabled
+    @tile.destroy() if @tile?
+    @tile = null
 
   # Render the view
   render: (messages) ->
-    statusBar = atom.workspaceView.statusBar
-    return unless statusBar
+    statusBar = document.querySelector("status-bar")
+    return unless statusBar?
 
     info = warning = error = 0
 
     for item in messages
+      info += 1 if item.level == 'info'
       warning += 1 if item.level == 'warning'
       error += 1 if item.level == 'error'
-      info += 1 if item.level == 'info'
 
     # Hide the last version of this view
     @remove()
 
-    @decoration = new StatusBarSummary(info or 0, warning or 0, error or 0)
-
-    statusBar.prependRight @decoration
+    el = new StatusBarSummary(info, warning, error)
+    @tile = statusBar.addRightTile({item: el, priority: 100})
 
 class StatusBarSummary extends View
   @content: (info, warning, error) ->
