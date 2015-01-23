@@ -186,9 +186,9 @@ class LinterView
     for message in messages
       lNum = message.line
       line = lines[lNum] || { 'level': -1 }
-      msg_level = levels.indexOf(message.level)
-      continue unless msg_level > line.level
-      line.level = msg_level
+      msgLevel = levels.indexOf(message.level)
+      continue unless msgLevel > line.level
+      line.level = msgLevel
       line.msg = message
       lines[lNum] = line
     return lines
