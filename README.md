@@ -65,9 +65,18 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 #### for Scala
 - [linter-scalac](https://atom.io/packages/linter-scalac), for Scala, using `scalac`
 
-#### for C / C++
-- [linter-clang](https://atom.io/packages/linter-clang), for C / C++, using `clang`
+#### for C
+- [linter-clang](https://atom.io/packages/linter-clang), for C / C++ / Objective-C / Objective-C++, using `clang`
+
+#### for C++
+- [linter-clang](https://atom.io/packages/linter-clang), for C / C++ / Objective-C / Objective-C++, using `clang`
 - [linter-cpplint](https://atom.io/packages/linter-cpplint), for C++, using `cpplint`
+ 
+#### for Objective-C
+- [linter-clang](https://atom.io/packages/linter-clang), for C / C++ / Objective-C / Objective-C++, using `clang`
+ 
+#### for Objective-C++
+- [linter-clang](https://atom.io/packages/linter-clang), for C / C++ / Objective-C / Objective-C++, using `clang`
 
 #### for Lua
 - [linter-lua](https://atom.io/packages/linter-lua), for Lua, using `luac -p`
