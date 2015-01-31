@@ -1,4 +1,4 @@
-lodash = require 'lodash'
+_ = require 'lodash'
 fs = require 'fs'
 temp = require 'temp'
 path = require 'path'
@@ -45,8 +45,8 @@ class LinterView
     @linters = []
     grammarName = @editor.getGrammar().scopeName
     for linter in @allLinters
-      if (lodash.isArray(linter.syntax) and grammarName in linter.syntax or
-          lodash.isString(linter.syntax) and grammarName is linter.syntax or
+      if (_.isArray(linter.syntax) and grammarName in linter.syntax or
+          _.isString(linter.syntax) and grammarName is linter.syntax or
           linter.syntax instanceof RegExp and linter.syntax.test(grammarName))
         @linters.push(new linter(@editor))
 
@@ -61,7 +61,7 @@ class LinterView
         throttleInterval = parseInt(lintOnModifiedDelayMS)
         throttleInterval = 1000 if isNaN throttleInterval
         # create throttled lint command
-        @throttledLint = (lodash.throttle @lint, throttleInterval).bind this
+        @throttledLint = (_.throttle @lint, throttleInterval).bind this
 
     @subscriptions.add atom.config.observe 'linter.lintOnChange',
       (lintOnModified) => @lintOnModified = lintOnModified
