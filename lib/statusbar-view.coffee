@@ -75,7 +75,7 @@ class StatusBarView extends View
       @show()
       @highlightLines(currentLine)
 
-  filterInfoMessages: (messages, config)->
+  filterInfoMessages: (messages, config) ->
     showInfoMessages = config.get 'linter.showInfoMessages'
     return messages if showInfoMessages
     return (msg for msg in messages when msg.level != 'info')
