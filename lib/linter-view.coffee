@@ -204,7 +204,7 @@ class LinterView
       return
 
     @markers ?= []
-    for _, line of @sortMessagesByLine(messages)
+    for lNum, line of @sortMessagesByLine(messages)
       marker = @createMarker(line.msg)
       @markers.push marker
 
