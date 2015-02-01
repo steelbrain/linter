@@ -9,20 +9,19 @@ class StatusBarSummaryView
 
   # Render the view
   render: (messages) ->
-    statusBar = document.querySelector("status-bar")
-    return unless statusBar?
-
     info = warning = error = 0
-
     for item in messages
       info += 1 if item.level == 'info'
       warning += 1 if item.level == 'warning'
       error += 1 if item.level == 'error'
 
+    return if info + warning + error == 0
+
+    statusBar = document.querySelector("status-bar")
+    return unless statusBar?
+
     # Hide the last version of this view
     @remove()
-
-    return if info + warning + error == 0
 
     el = new StatusBarSummary(info, warning, error)
     @tile = statusBar.addRightTile({item: el, priority: 100})
