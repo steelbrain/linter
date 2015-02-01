@@ -45,6 +45,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-pylint](https://atom.io/packages/linter-pylint), for Python, using `pylint`
 - [linter-pyflakes](https://atom.io/packages/linter-pyflakes), for Python, using `pyflakes`
 - [linter-pep8](https://atom.io/packages/linter-pep8), for Python, using `pep8`.
+- [linter-pep257](https://atom.io/packages/linter-pep257), for Python, using `pep257`
 - [linter-flake8](https://atom.io/packages/linter-flake8), for Python, using `flake8`
 - [linter-pylama](https://atom.io/packages/linter-pylama), for Python, using `pylama`
 
