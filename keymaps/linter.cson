@@ -1,8 +1,18 @@
 '.platform-darwin atom-text-editor:not(.mini)':
   'ctrl-cmd-l': 'linter:lint'
+  'ctrl-cmd-e': 'linter:next-message'
+  'ctrl-cmd-shift-e': 'linter:previous-message'
 
 '.platform-linux atom-text-editor:not(.mini)':
   'ctrl-k ctrl-l': 'linter:lint'
+  'ctrl-k n': 'linter:next-message'
+  'ctrl-k p': 'linter:previous-message'
+  'ctrl-k down': 'linter:next-message'
+  'ctrl-k up': 'linter:previous-message'
 
 '.platform-windows atom-text-editor:not(.mini)':
   'ctrl-k ctrl-l': 'linter:lint'
+  'ctrl-k n': 'linter:next-message'
+  'ctrl-k p': 'linter:previous-message'
+  'ctrl-k down': 'linter:next-message'
+  'ctrl-k up': 'linter:previous-message'

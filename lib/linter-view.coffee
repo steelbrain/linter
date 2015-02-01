@@ -122,6 +122,12 @@ class LinterView
     atom.commands.add "atom-text-editor",
       "linter:lint", => @lint()
 
+    atom.commands.add "atom-text-editor",
+      "linter:next-message", => @moveToNextMessage()
+
+    atom.commands.add "atom-text-editor",
+      "linter:previous-message", => @moveToPreviousMessage()
+
   # Public: lint the current file in the editor using the live buffer
   lint: ->
     return if @linters.length is 0
@@ -223,6 +229,47 @@ class LinterView
     else
       @inlineView.render [], @editor
 
+  # Internal: Move cursor to the next lint message
+  moveToNextMessage: ->
+    cursorLine = @editor.getCursorBufferPosition().row + 1
+    nextLine = null
+    firstLine = null
+    for {line} in @messages ? []
+      if line > cursorLine
+        nextLine ?= line - 1
+        nextLine = Math.min(line - 1, nextLine)
+
+      firstLine ?= line - 1
+      firstLine = Math.min(line - 1, firstLine)
+
+    # Wrap around to the first diff in the file
+    nextLine = firstLine unless nextLine?
+
+    # TODO: when possible, move to the correct column
+    @moveToLine(nextLine)
+
+  # Internal: Move cursor to the previous lint message
+  moveToPreviousMessage: ->
+    cursorLine = @editor.getCursorBufferPosition().row + 1
+    previousLine = -1
+    lastLine = -1
+    for {line} in @messages ? []
+      if line < cursorLine
+        previousLine = Math.max(line - 1, previousLine)
+
+      lastLine = Math.max(line - 1, lastLine)
+
+    # Wrap around to the last diff in the file
+    previousLine = lastLine if previousLine is -1
+
+    # TODO: when possible, move to the correct column
+    @moveToLine(previousLine)
+
+  # Internal: Move cursor to the specified line number
+  moveToLine: (n = -1) ->
+    if n >= 0
+      @editor.setCursorBufferPosition([n, 0])
+      @editor.moveToFirstCharacterOfLine()
 
   # Public: remove this view and unregister all its subscriptions
   remove: ->
