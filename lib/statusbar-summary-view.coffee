@@ -22,17 +22,22 @@ class StatusBarSummaryView
     # Hide the last version of this view
     @remove()
 
+    return if info + warning + error == 0
+
     el = new StatusBarSummary(info, warning, error)
     @tile = statusBar.addRightTile({item: el, priority: 100})
 
 class StatusBarSummary extends View
   @content: (info, warning, error) ->
     @div class: 'linter-summary inline-block', =>
-      @div class: 'linter-error inline-block', error, =>
-        @span class: 'icon-right'
-      @div class: 'linter-warning inline-block', warning, =>
-        @span class: 'icon-right'
-      @div class: 'linter-info inline-block', info, =>
-        @span class: 'icon-right'
+      if error > 0
+        @div class: 'linter-error inline-block', error, =>
+          @span class: 'icon-right'
+      if warning > 0
+        @div class: 'linter-warning inline-block', warning, =>
+          @span class: 'icon-right'
+      if info > 0
+        @div class: 'linter-info inline-block', info, =>
+          @span class: 'icon-right'
 
 module.exports = StatusBarSummaryView
