@@ -35,14 +35,14 @@ class LinterInitializer
       default: false
     showErrorInline:
       type: 'boolean'
-      default: false
+      default: true
     showInfoMessages:
       type: 'boolean'
       default: false
       description: "Display linter messages with error level “Info”."
     statusBar:
       type: 'string'
-      default: 'Show error of the selected line'
+      default: 'None'
       enum: ['None', 'Show all errors', 'Show error of the selected line', 'Show error if the cursor is in range']
     executionTimeout:
       type: 'integer'
