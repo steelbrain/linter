@@ -1,2 +1,8 @@
-'atom-text-editor:not(.mini)':
+'.platform-darwin atom-text-editor:not(.mini)':
   'ctrl-cmd-l': 'linter:lint'
+
+'.platform-linux atom-text-editor:not(.mini)':
+  'ctrl-k ctrl-l': 'linter:lint'
+
+'.platform-windows atom-text-editor:not(.mini)':
+  'ctrl-k ctrl-l': 'linter:lint'
