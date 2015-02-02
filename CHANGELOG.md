@@ -1,3 +1,22 @@
+# v0.11.0
+
+### New features
+* Add next-message and previous-message keybinds ([#123][123])
+* New 'info' message level ([#309][309])
+* Add Linux/Windows keybind `ctrl-k ctrl-l` to run lint ([#175][175])
+* Status bar summary only appears when there are messages
+
+[123]: https://github.com/AtomLinter/Linter/issues/123
+[175]: https://github.com/AtomLinter/Linter/issues/175
+[309]: https://github.com/AtomLinter/Linter/pull/309
+
+### New linters
+* Python PEP 257 (docstring linter)
+
+### Bug fixes
+* Fix undefined method error caused by deprecation fix (sorry)
+
+
 # v0.10.1
 
 ### Bug fixes
