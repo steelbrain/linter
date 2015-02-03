@@ -119,13 +119,13 @@ class LinterView
         @statusBarSummaryView.remove()
         @inlineView.remove()
 
-    atom.commands.add "atom-text-editor",
+    @subscriptions.add atom.commands.add "atom-text-editor",
       "linter:lint", => @lint()
 
-    atom.commands.add "atom-text-editor",
+    @subscriptions.add atom.commands.add "atom-text-editor",
       "linter:next-message", => @moveToNextMessage()
 
-    atom.commands.add "atom-text-editor",
+    @subscriptions.add atom.commands.add "atom-text-editor",
       "linter:previous-message", => @moveToPreviousMessage()
 
   # Public: lint the current file in the editor using the live buffer

@@ -1,3 +1,11 @@
+# v0.11.1
+
+### Bug fixes
+* Fix bug with new keybinding ([#407][407])
+
+[407]: https://github.com/AtomLinter/Linter/issues/407
+
+
 # v0.11.0
 
 ### New features
