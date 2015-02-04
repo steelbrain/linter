@@ -1,25 +1,99 @@
 @import 'ui-variables';
 
 .highlight {
-  &.linter-info .region {
+  // -----------------
+  // SVG squiggly line
+  // -----------------
+
+  &.linter-info-svg-squiggly .region {
     background-color: darken(@background-color-info, 10%);
     -webkit-mask-image: url(atom://linter/images/wave.svg);
     -webkit-mask-repeat: repeat;
     -webkit-mask-size: .9em 1.3em;
     -webkit-mask-position: bottom left;
   }
-  &.linter-warning .region {
+  &.linter-warning-svg-squiggly .region {
     background-color: darken(@background-color-warning, 10%);
     -webkit-mask-image: url(atom://linter/images/wave.svg);
     -webkit-mask-repeat: repeat;
     -webkit-mask-size: .9em 1.3em;
     -webkit-mask-position: bottom left;
   }
-  &.linter-error .region {
+  &.linter-error-svg-squiggly .region {
     background-color: darken(@background-color-error, 10%);
     -webkit-mask-image: url(atom://linter/images/wave.svg);
     -webkit-mask-repeat: repeat;
     -webkit-mask-size: .9em 1.3em;
     -webkit-mask-position: bottom left;
+  }
+
+  // -----------------
+  // PNG squiggly line
+  // -----------------
+
+  &.linter-info-png-squiggly .region {
+    background: url(atom://linter/images/underline_info.png) bottom repeat-x;
+    opacity: 0.75;
+  }
+
+  &.linter-warning-png-squiggly .region {
+    background: url(atom://linter/images/underline_warning.png) bottom repeat-x;
+    opacity: 0.6;
+  }
+
+  &.linter-error-png-squiggly .region {
+    background: url(atom://linter/images/underline_error.png) bottom repeat-x;
+    opacity: 0.6;
+  }
+
+  // -----------------
+  // Straight line
+  // -----------------
+
+  &.linter-info-line .region {
+    border-bottom: 1px solid fadeout(@background-color-info, 20%);
+  }
+
+  &.linter-warning-line .region {
+    border-bottom: 1px solid fadeout(@background-color-warning, 20%);
+  }
+
+  &.linter-error-line .region {
+    border-bottom: 1px solid fadeout(@background-color-error, 20%);
+  }
+
+  // -----------------
+  // Box
+  // -----------------
+
+  &.linter-info-box .region {
+    background: linear-gradient(
+      to bottom,
+      @background-color-info 0%,
+      fadeout(@background-color-info, 90%) 20%,
+      fadeout(@background-color-info, 90%) 80%,
+      @background-color-info 100%);
+    border-left: 1px solid @background-color-info;
+    border-right: 1px solid @background-color-info;
+  }
+  &.linter-warning-box .region {
+    background: linear-gradient(
+      to bottom,
+      @background-color-warning 0%,
+      fadeout(@background-color-warning, 90%) 20%,
+      fadeout(@background-color-warning, 90%) 80%,
+      @background-color-warning 100%);
+    border-left: 1px solid @background-color-warning;
+    border-right: 1px solid @background-color-warning;
+  }
+  &.linter-error-box .region {
+    background: linear-gradient(
+      to bottom,
+      @background-color-error 0%,
+      fadeout(@background-color-error, 90%) 20%,
+      fadeout(@background-color-error, 90%) 80%,
+      @background-color-error 100%);
+    border-left: 1px solid @background-color-error;
+    border-right: 1px solid @background-color-error;
   }
 }

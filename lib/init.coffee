@@ -48,6 +48,11 @@ class LinterInitializer
       type: 'integer'
       default: 5000
       description: 'Linter executables are killed after this timeout. Set to 0 to disable.'
+    highlightStyle:
+      type: 'string'
+      enum: ['svg-squiggly', 'png-squiggly', 'line', 'box']
+      default: 'svg-squiggly'
+      description: 'Highlight style.'
 
   # Internal: Prevent old deprecated config to be visible in the package settings
   setDefaultOldConfig: ->
