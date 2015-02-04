@@ -94,6 +94,11 @@ class LinterView
         @showInfoMessages = showInfoMessages
         @display()
 
+    @subscriptions.add atom.config.observe 'linter.highlightStyle',
+      (highlightStyle) =>
+        @highlightStyle = highlightStyle
+        @display()
+
   # Internal: register handlers for editor buffer events
   handleEditorEvents: =>
     @editor.onDidChangeGrammar =>
@@ -175,7 +180,7 @@ class LinterView
   # Internal: Create marker from message
   createMarker: (message) ->
     marker = @editor.markBufferRange message.range, invalidate: 'never'
-    klass = 'linter-' + message.level
+    klass = 'linter-' + message.level + '-' + @highlightStyle
     if @showGutters
       @editor.decorateMarker marker, type: 'gutter', class: klass
     if @showHighlighting

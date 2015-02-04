@@ -191,6 +191,8 @@ class Linter
       level = 'error'
     else if match.warning
       level = 'warning'
+    else if match.info
+      level = 'info'
     else
       level = @defaultLevel
 
