@@ -2,21 +2,21 @@
 
 .highlight {
   &.linter-info .region {
-    background-color: darken(@background-color-info, 10%);
+    background-color: @background-color-info;
     -webkit-mask-image: url(atom://linter/images/wave.svg);
     -webkit-mask-repeat: repeat;
     -webkit-mask-size: .9em 1.3em;
     -webkit-mask-position: bottom left;
   }
   &.linter-warning .region {
-    background-color: darken(@background-color-warning, 10%);
+    background-color: darken(@background-color-warning, 15%);
     -webkit-mask-image: url(atom://linter/images/wave.svg);
     -webkit-mask-repeat: repeat;
     -webkit-mask-size: .9em 1.3em;
     -webkit-mask-position: bottom left;
   }
   &.linter-error .region {
-    background-color: darken(@background-color-error, 10%);
+    background-color: @background-color-error;
     -webkit-mask-image: url(atom://linter/images/wave.svg);
     -webkit-mask-repeat: repeat;
     -webkit-mask-size: .9em 1.3em;
