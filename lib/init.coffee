@@ -1,10 +1,4 @@
-_ = require 'lodash'
-{CompositeDisposable} = require 'event-kit'
-
-LinterView = require './linter-view'
-StatusBarView = require './statusbar-view'
-StatusBarSummaryView = require './statusbar-summary-view'
-InlineView = require './inline-view'
+{CompositeDisposable} = require 'atom'
 
 
 # Public: linter package initialization, sets up the linter for usages by atom
@@ -76,11 +70,16 @@ class LinterInitializer
         linterClasses.push(require "#{atomPackage.path}/lib/#{implemention}")
 
     @enabled = true
+    StatusBarView = require './statusbar-view'
     @statusBarView = new StatusBarView()
+    StatusBarSummaryView = require './statusbar-summary-view'
     @statusBarSummaryView = new StatusBarSummaryView()
+    InlineView = require './inline-view'
     @inlineView = new InlineView()
 
     # Subscribing to every current and future editor
+    LinterView = require './linter-view'
+    _ = require 'lodash'
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       return if editor.linterView?
 
