@@ -6,6 +6,20 @@
   "description": "Validates your code using linters.",
   "repository": "https://github.com/AtomLinter/Linter.git",
   "license": "MIT",
+  "consumedServices": {
+    "linter.addLinterClass": {
+      "versions": {
+        "0.1.0": "addLinterClass"
+      }
+    }
+  },
+  "providedServices": {
+    "linter.provideLinterClass": {
+      "versions": {
+        "0.1.0": "provideLinterClass"
+      }
+    }
+  },
   "engines": {
     "atom": ">=0.175.0",
     "node": ">= 0.10.0"
