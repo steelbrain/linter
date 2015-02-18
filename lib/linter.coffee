@@ -1,9 +1,8 @@
 fs = require 'fs'
 path = require 'path'
-{Range, Point, BufferedProcess} = require 'atom'
+{CompositeDisposable, Range, Point, BufferedProcess} = require 'atom'
 _ = require 'lodash'
 {XRegExp} = require 'xregexp'
-{CompositeDisposable} = require 'event-kit'
 
 {log, warn} = require './utils'
 

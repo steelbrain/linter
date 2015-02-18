@@ -3,7 +3,7 @@ fs = require 'fs'
 temp = require 'temp'
 path = require 'path'
 rimraf = require 'rimraf'
-{CompositeDisposable, Emitter} = require 'event-kit'
+{CompositeDisposable, Emitter} = require 'atom'
 
 {log, warn} = require './utils'
 

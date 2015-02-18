@@ -13,7 +13,6 @@
   "dependencies": {
     "chai": "^1.9.1",
     "emissary": "^1.0.0",
-    "event-kit": "^0.8.1",
     "jshint": "^2.4.4",
     "lodash": "^2.4.1",
     "rimraf": "^2.2.8",
