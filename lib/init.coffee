@@ -60,7 +60,7 @@ class LinterInitializer
   # Public: Activate the plugin setting up StatusBarView and dicovering linters
   activate: ->
     @setDefaultOldConfig()
-    @linterViews = []
+    @linterViews = new Set()
     @subscriptions = new CompositeDisposable
     linterClasses = []
 
@@ -79,22 +79,29 @@ class LinterInitializer
 
     # Subscribing to every current and future editor
     LinterView = require './linter-view'
-    _ = require 'lodash'
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       return if editor.linterView?
 
       linterView = new LinterView(editor, @statusBarView, @statusBarSummaryView,
                                   @inlineView, linterClasses)
-      @linterViews.push linterView
+      @linterViews.add linterView
       @subscriptions.add linterView.onDidDestroy =>
-        @linterViews = _.without @linterViews, linterView
+        @linterViews.delete linterView
 
   # Public: deactivate the plugin and unregister all subscriptions
   deactivate: ->
     @subscriptions.dispose()
-    linterView.remove() for linterView in @linterViews
+    `
+    for (var linterView of this.linterViews) {
+      linterView.remove();
+    }
+    `
+    @linterViews = null
     @inlineView.remove()
+    @inlineView = null
     @statusBarView.remove()
+    @statusBarView = null
     @statusBarSummaryView.remove()
+    @statusBarSummaryView = null
 
 module.exports = new LinterInitializer()
