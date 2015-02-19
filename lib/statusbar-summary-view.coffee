@@ -29,21 +29,22 @@ class StatusBarSummaryView
 
 class StatusBarSummary extends View
   initialize: (messages, editor) ->
-    @on 'click', '.linter-summary-click-container', ->
+    return unless messages.length > 0
+
+    @on 'click', ->
       moveToNextMessage messages, editor
 
   @content: (messages, editor, info, warning, error) ->
     @div class: 'linter-summary inline-block', =>
-      @div class: 'linter-summary-click-container', =>
-        if error > 0
-          @div class: 'linter-error inline-block', error, =>
-            @span class: 'icon-right'
-        if warning > 0
-          @div class: 'linter-warning inline-block', warning, =>
-            @span class: 'icon-right'
-        if info > 0
-          @div class: 'linter-info inline-block', info, =>
-            @span class: 'icon-right'
+      if error > 0
+        @div class: 'linter-error inline-block', error, =>
+          @span class: 'icon-right'
+      if warning > 0
+        @div class: 'linter-warning inline-block', warning, =>
+          @span class: 'icon-right'
+      if info > 0
+        @div class: 'linter-info inline-block', info, =>
+          @span class: 'icon-right'
 
   detached: ->
     @off 'click', '.linter-summary-click-container'
