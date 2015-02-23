@@ -177,7 +177,7 @@ class LinterView
     marker = @editor.markBufferRange message.range, invalidate: 'never'
     klass = 'linter-' + message.level
     if @showGutters
-      @editor.decorateMarker marker, type: 'gutter', class: klass
+      @editor.decorateMarker marker, type: 'line-number', class: klass
     if @showHighlighting
       @editor.decorateMarker marker, type: 'highlight', class: klass
     return marker
