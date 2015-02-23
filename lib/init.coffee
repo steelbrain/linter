@@ -53,9 +53,9 @@ class LinterInitializer
     else if (atom.config.get('linter.showStatusBarWhenCursorIsInErrorRange'))
       atom.config.set('linter.statusBar', 'Show error if the cursor is in range')
 
-    atom.config.restoreDefault('linter.showAllErrorsInStatusBar')
-    atom.config.restoreDefault('linter.showErrorInStatusBar')
-    atom.config.restoreDefault('linter.showStatusBarWhenCursorIsInErrorRange')
+    atom.config.unset('linter.showAllErrorsInStatusBar')
+    atom.config.unset('linter.showErrorInStatusBar')
+    atom.config.unset('linter.showStatusBarWhenCursorIsInErrorRange')
 
   # Public: Activate the plugin setting up StatusBarView and dicovering linters
   activate: ->
