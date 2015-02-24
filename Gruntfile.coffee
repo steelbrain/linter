@@ -1,7 +1,7 @@
 files =
   grunt: ['Gruntfile.coffee']
   lib: ['lib/**/*.coffee']
-  less: ['stylesheets/**/*.less']
+  less: ['styles/**/*.less']
   tmp: ['.tmp/']
   doc: ['doc/']
 
