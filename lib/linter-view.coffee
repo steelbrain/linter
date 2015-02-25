@@ -38,7 +38,7 @@ class LinterView
     @subscriptions.add @editor.onDidChangeCursorPosition  =>
       @updateViews()
 
-  # Public: Initialize new linters (used on grammar chagne)
+  # Public: Initialize new linters (used on grammar change)
   #
   # linters - global linter set to utilize for linting
   initLinters: ->
