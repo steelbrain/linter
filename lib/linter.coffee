@@ -161,19 +161,20 @@ class Linter
       if err.error.code is 'ENOENT'
         ignored = atom.config.get('linter.ignoredLinterErrors')
         subtle = atom.config.get('linter.subtleLinterErrors')
+        warningMessageTitle = "The linter binary '#{@linterName}' cannot be found."
         if @linterName in subtle
           # Show a small notification at the bottom of the screen
-          new MessagePanelView(
-            title: "#{@linterName} linter not installed"
-          ).attach()
+          message = new MessagePanelView(title: warningMessageTitle)
+          message.attach()
+          message.toggle() # Fold the panel
         else if @linterName not in ignored
           # Prompt user, ask if they want to fully or partially ignore warnings
           atom.confirm
-            message: "Oops, you don't have the linter #{@linterName} installed"
-            detailedMessage: 'Please follow the installation guide for your
-            linter. Would you like further notifications to be fully or
-            partially suppressed? You can change this later in the linter
-            package settings.'
+            message: warningMessageTitle
+            detailedMessage: 'Is it on your path? Please follow the installation
+            guide for your linter. Would you like further notifications to be
+            fully or partially suppressed? You can change this later in the
+            linter package settings.'
             buttons:
               Fully: =>
                 ignored.push @linterName
@@ -182,7 +183,7 @@ class Linter
                 subtle.push @linterName
                 atom.config.set('linter.subtleLinterErrors', subtle)
         else
-          console.log "linter #{@linterName} not installed"
+          console.log warningMessageTitle
         err.handle()
 
     # Kill the linter process if it takes too long
