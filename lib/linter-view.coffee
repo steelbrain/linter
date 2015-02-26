@@ -94,6 +94,9 @@ class LinterView
         @showInfoMessages = showInfoMessages
         @display()
 
+    @subscriptions.add atom.config.observe 'linter.clearOnChange',
+      (clearOnChange) => @clearOnChange = clearOnChange
+
   # Internal: register handlers for editor buffer events
   handleEditorEvents: =>
     @editor.onDidChangeGrammar =>
@@ -105,7 +108,12 @@ class LinterView
     @subscriptions.add(@editor.onDidSave maybeLintOnSave)
 
     @subscriptions.add @editor.onDidStopChanging =>
-      @throttledLint() if @lintOnModified
+      if @lintOnModified
+        @throttledLint()
+      else if @clearOnChange
+        @messages = []
+        @updateViews()
+        @destroyMarkers()
 
     @subscriptions.add @editor.onDidDestroy =>
       @remove()

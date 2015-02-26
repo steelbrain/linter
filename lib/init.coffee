@@ -12,6 +12,9 @@ class LinterInitializer
     lintOnChange:
       type: 'boolean'
       default: true
+    clearOnChange:
+      type: 'boolean'
+      default: false
     lintOnEditorFocus:
       type: 'boolean'
       default: true
