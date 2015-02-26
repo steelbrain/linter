@@ -2,6 +2,14 @@
 @import 'octicon-utf-codes';
 
 .linter-summary {
+  &:hover {
+    > div {
+      color: @text-color-highlight;
+    }
+
+    cursor: pointer;
+  }
+
   .icon-right {
     visibility: visible;
     &:before {

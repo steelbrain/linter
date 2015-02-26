@@ -1,4 +1,5 @@
 {View} = require 'space-pen'
+{moveToNextMessage} = require './utils'
 
 # Status Bar View
 class StatusBarSummaryView
@@ -8,7 +9,7 @@ class StatusBarSummaryView
     @tile = null
 
   # Render the view
-  render: (messages) ->
+  render: (messages, editor) ->
     statusBar = document.querySelector("status-bar")
     return unless statusBar?
 
@@ -23,11 +24,17 @@ class StatusBarSummaryView
 
     return if info + warning + error == 0
 
-    el = new StatusBarSummary(info, warning, error)
+    el = new StatusBarSummary(messages, editor, info, warning, error)
     @tile = statusBar.addRightTile({item: el, priority: 100})
 
 class StatusBarSummary extends View
-  @content: (info, warning, error) ->
+  initialize: (messages, editor) ->
+    return unless messages.length > 0
+
+    @on 'click', ->
+      moveToNextMessage messages, editor
+
+  @content: (messages, editor, info, warning, error) ->
     @div class: 'linter-summary inline-block', =>
       if error > 0
         @div class: 'linter-error inline-block', error, =>
@@ -38,5 +45,8 @@ class StatusBarSummary extends View
       if info > 0
         @div class: 'linter-info inline-block', info, =>
           @span class: 'icon-right'
+
+  detached: ->
+    @off 'click', '.linter-summary-click-container'
 
 module.exports = StatusBarSummaryView
