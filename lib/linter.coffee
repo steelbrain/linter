@@ -3,7 +3,7 @@ path = require 'path'
 {CompositeDisposable, Range, Point, BufferedProcess} = require 'atom'
 _ = null
 XRegExp = null
-
+{MessagePanelView} = require 'atom-message-panel'
 {log, warn} = require './utils'
 
 
@@ -156,6 +156,34 @@ class Linter
 
     process = new BufferedProcess({command, args, options,
                                   stdout, stderr, exit})
+    process.onWillThrowError (err) =>
+      return unless err?
+      if err.error.code is 'ENOENT'
+        ignored = atom.config.get('linter.ignoredLinterErrors')
+        subtle = atom.config.get('linter.subtleLinterErrors')
+        if @linterName in subtle
+          # Show a small notification at the bottom of the screen
+          new MessagePanelView(
+            title: "#{@linterName} linter not installed"
+          ).attach()
+        else if @linterName not in ignored
+          # Prompt user, ask if they want to fully or partially ignore warnings
+          atom.confirm
+            message: "Oops, you don't have the linter #{@linterName} installed"
+            detailedMessage: 'Please follow the installation guide for your
+            linter. Would you like further notifications to be fully or
+            partially suppressed? You can change this later in the linter
+            package settings.'
+            buttons:
+              Fully: =>
+                ignored.push @linterName
+                atom.config.set('linter.ignoredLinterErrors', ignored)
+              Partially: =>
+                subtle.push @linterName
+                atom.config.set('linter.subtleLinterErrors', subtle)
+        else
+          console.log "linter #{@linterName} not installed"
+        err.handle()
 
     # Kill the linter process if it takes too long
     if @executionTimeout > 0
