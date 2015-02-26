@@ -110,7 +110,7 @@ class LinterView
     @subscriptions.add @editor.onDidStopChanging =>
       if @lintOnModified
         @throttledLint()
-      else if @clearOnChange
+      else if @clearOnChange and @messages.length > 0
         @messages = []
         @updateViews()
         @destroyMarkers()
