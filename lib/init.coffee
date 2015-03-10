@@ -12,6 +12,11 @@ class LinterInitializer
     lintOnChange:
       type: 'boolean'
       default: true
+    lintOnChangeMethod:
+      type: 'string'
+      default: 'debounce'
+      enum: ['throttle', 'debounce']
+      description: 'Change method between two lint on change'
     clearOnChange:
       type: 'boolean'
       default: false
