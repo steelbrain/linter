@@ -1,7 +1,10 @@
-Linter = require "../lib/linter.coffee"
-sinon = require "sinon"
-
+sinon = require 'sinon'
+{allowUnsafeEval} = require 'loophole'
 {Range, Point} = require 'atom'
+
+Linter = require '../lib/linter.coffee'
+
+stub = allowUnsafeEval -> sinon.stub
 
 describe "Linter::computeRange", ->
   [linter, scopesForPosition, rangeForScopeAtPosition, lineLengthForRow] = []
@@ -11,9 +14,9 @@ describe "Linter::computeRange", ->
       getPath: -> "path"
       getLineCount: -> 10
     )
-    scopesForPosition = sinon.stub linter, "getEditorScopesForPosition"
-    rangeForScopeAtPosition = sinon.stub linter, "getGetRangeForScopeAtPosition"
-    lineLengthForRow = sinon.stub linter, "lineLengthForRow"
+    scopesForPosition = stub linter, "getEditorScopesForPosition"
+    rangeForScopeAtPosition = stub linter, "getGetRangeForScopeAtPosition"
+    lineLengthForRow = stub linter, "lineLengthForRow"
 
   it "should return a complete range if all parameters provided, switched to zero index", ->
     range = linter.computeRange(

@@ -1,12 +1,13 @@
-sinon = require "sinon"
+sinon = require 'sinon'
 chai = require 'chai'
-Editor = require atom.config.resourcePath + "/src/text-editor"
+{allowUnsafeEval} = require 'loophole'
 
+Editor = require "#{atom.config.resourcePath}/src/text-editor"
 LinterView = require "../lib/linter-view.coffee"
 Linter = require "../lib/linter.coffee"
 
 expect = chai.expect
-
+stub = allowUnsafeEval -> sinon.stub
 
 describe "LinterView:lint", ->
   class CatFileLinter extends Linter
@@ -23,14 +24,14 @@ describe "LinterView:lint", ->
     waitsForPromise ->
       atom.workspace.open('./fixture/messages.txt').then (editor) ->
         statusBarView =
-          render: sinon.stub()
-          hide: sinon.stub()
+          render: stub()
+          hide: stub()
         statusBarSummaryView =
-          render: sinon.stub()
-          remove: sinon.stub()
+          render: stub()
+          remove: stub()
         inlineView =
-          render: sinon.stub()
-          remove: sinon.stub()
+          render: stub()
+          remove: stub()
         linterView = new LinterView(
           editor
           statusBarView
@@ -67,10 +68,10 @@ describe "LinterView", ->
   ]
 
   beforeEach ->
-    sinon.stub(LinterView.prototype, 'initLinters')
-    sinon.stub(LinterView.prototype, 'handleConfigChanges')
-    sinon.stub(LinterView.prototype, 'handleEditorEvents')
-    sinon.stub(LinterView.prototype, 'updateViews')
+    stub(LinterView.prototype, 'initLinters')
+    stub(LinterView.prototype, 'handleConfigChanges')
+    stub(LinterView.prototype, 'handleEditorEvents')
+    stub(LinterView.prototype, 'updateViews')
     lv = new LinterView(stub_editor)
     lv.showGutters = lv.showHighlighting = true
     lv.showInfoMessages = false
