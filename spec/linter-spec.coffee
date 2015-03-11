@@ -1,10 +1,11 @@
 sinon = require 'sinon'
-{allowUnsafeEval} = require 'loophole'
 {Range, Point} = require 'atom'
+{allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
 
 Linter = require '../lib/linter.coffee'
 
 sinon = allowUnsafeEval -> sinon
+sinon = allowUnsafeNewFunction -> sinon
 
 describe "Linter::computeRange", ->
   [linter, scopesForPosition, rangeForScopeAtPosition, lineLengthForRow] = []
