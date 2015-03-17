@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/atomlinter/linter.png?label=ready&title=Ready)](https://waffle.io/atomlinter/linter)
 # Linter
 
 [![Gitter](https://img.shields.io/badge/gitter-join%20chat-1dce73.svg?style=flat)](https://gitter.im/AtomLinter/Linter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
