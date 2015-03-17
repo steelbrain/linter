@@ -53,10 +53,11 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 #### for Java
 - [linter-javac](https://atom.io/packages/linter-javac), for Java, using `javac`
 
-#### for CSS / SASS / SCSS / LESS
+#### for CSS / SASS / SCSS / LESS / Stylus
 - [linter-scss-lint](https://atom.io/packages/linter-scss-lint), for SASS/SCSS, using `scss-lint`
 - [linter-less](https://atom.io/packages/linter-less), for LESS, using `less`
 - [linter-csslint](https://atom.io/packages/linter-csslint), for CSS, using `csslint`
+- [linter-stylus](https://atom.io/packages/linter-stylus), for Stylus, using `stylus`
 
 #### for XML
 - [linter-xmllint](https://atom.io/packages/linter-xmllint), for XML, using `xmllint`
