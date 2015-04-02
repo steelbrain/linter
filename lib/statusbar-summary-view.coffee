@@ -22,8 +22,6 @@ class StatusBarSummaryView
       warning += 1 if item.level == 'warning'
       error += 1 if item.level == 'error'
 
-    return if info + warning + error == 0
-
     el = new StatusBarSummary(messages, editor, info, warning, error)
     @tile = statusBar.addRightTile({item: el, priority: 100})
 
@@ -36,17 +34,18 @@ class StatusBarSummary extends View
 
   @content: (messages, editor, info, warning, error) ->
     @div class: 'linter-summary inline-block', =>
-      if error > 0
-        @div class: 'linter-error inline-block', error, =>
+      if messages.length == 0
+        @div class: 'linter-success inline-block', =>
           @span class: 'icon-right'
-      if warning > 0
-        @div class: 'linter-warning inline-block', warning, =>
-          @span class: 'icon-right'
-      if info > 0
-        @div class: 'linter-info inline-block', info, =>
-          @span class: 'icon-right'
-
-  detached: ->
-    @off 'click', '.linter-summary-click-container'
+      else
+        if error > 0
+          @div class: 'linter-error inline-block', error, =>
+            @span class: 'icon-right'
+        if warning > 0
+          @div class: 'linter-warning inline-block', warning, =>
+            @span class: 'icon-right'
+        if info > 0
+          @div class: 'linter-info inline-block', info, =>
+            @span class: 'icon-right'
 
 module.exports = StatusBarSummaryView
