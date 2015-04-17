@@ -1,0 +1,19 @@
+{
+  "name": "linter-plus",
+  "main": "./lib/linter-plus",
+  "author": "steelbrain",
+  "version": "0.0.1",
+  "description": "A Linter Provider with Cow Powers",
+  "repository": "https://github.com/atom/linter-plus",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=0.174.0 <2.0.0"
+  },
+  "consumedServices": {
+    "linter.plus": {
+      "versions": {
+        "0.1.0": "consumeLinter"
+      }
+    }
+  }
+}
