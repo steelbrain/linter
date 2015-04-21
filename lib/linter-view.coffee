@@ -58,10 +58,15 @@ class LinterView
     @subscriptions.add atom.config.observe 'linter.lintOnChangeInterval',
       (lintOnModifiedDelayMS) =>
         # If text instead of number into user config
-        throttleInterval = parseInt(lintOnModifiedDelayMS)
-        throttleInterval = 1000 if isNaN throttleInterval
+        delay = parseInt(lintOnModifiedDelayMS)
+        delay = 1000 if isNaN delay
         # create throttled lint command
-        @throttledLint = (_.throttle @lint, throttleInterval).bind this
+        intervalMethod = atom.config.get 'linter.lintOnChangeMethod'
+        log "IntervalMethod: #{intervalMethod}"
+        if intervalMethod is 'debounce'
+          @boundedLint = (_.debounce @lint, delay).bind this
+        else
+          @boundedLint = (_.throttle @lint, delay).bind this
 
     @subscriptions.add atom.config.observe 'linter.lintOnChange',
       (lintOnModified) => @lintOnModified = lintOnModified
@@ -103,13 +108,13 @@ class LinterView
       @initLinters()
       @lint()
 
-    maybeLintOnSave = => @throttledLint() if @lintOnSave
+    maybeLintOnSave = => @boundedLint() if @lintOnSave
     @subscriptions.add(@editor.getBuffer().onDidReload maybeLintOnSave)
     @subscriptions.add(@editor.onDidSave maybeLintOnSave)
 
     @subscriptions.add @editor.onDidStopChanging =>
       if @lintOnModified
-        @throttledLint()
+        @boundedLint()
       else if @clearOnChange and @messages.length > 0
         @messages = []
         @updateViews()
@@ -120,7 +125,7 @@ class LinterView
 
     @subscriptions.add atom.workspace.observeActivePaneItem =>
       if @editor.id is atom.workspace.getActiveTextEditor()?.id
-        @throttledLint() if @lintOnEditorFocus
+        @boundedLint() if @lintOnEditorFocus
         @updateViews()
       else
         @statusBarView.hide()
