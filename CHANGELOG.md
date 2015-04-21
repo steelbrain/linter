@@ -1,3 +1,14 @@
+# v0.12.1
+
+### New features
+
+* Support rust linter (#290)
+* Handle missing linter executable (#449)
+
+### Bug fixes
+
+* Fix underline when line height isn't default (#500)
+
 # v0.12.0
 
 ### New features
