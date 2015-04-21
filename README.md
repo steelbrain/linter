@@ -112,6 +112,9 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 #### for Erlang
 - [linter-erlc](https://atom.io/packages/linter-erlc), for Erlang, using `erlc`
 
+#### for JSONiq & XQuery
+- [language-jsoniq](https://github.com/wcandillon/language-jsoniq), for JSONiq & XQuery using `xqlint`
+
 #### for ActionScript/Flash/Flex/AIR
 - [linter-flexpmd](https://atom.io/packages/linter-flexpmd),for ActionScript/Flash/Flex/AIR, using flexpmd
 
