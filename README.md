@@ -59,6 +59,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-less](https://atom.io/packages/linter-less), for LESS, using `less`
 - [linter-csslint](https://atom.io/packages/linter-csslint), for CSS, using `csslint`
 - [linter-stylint](https://atom.io/packages/linter-stylint), for Stylus, using `stylint`
+- [linter-stylus](https://atom.io/packages/linter-stylus), for Stylus, using `stylus`
 
 #### for XML
 - [linter-xmllint](https://atom.io/packages/linter-xmllint), for XML, using `xmllint`
