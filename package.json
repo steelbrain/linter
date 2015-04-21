@@ -11,6 +11,7 @@
     "node": ">= 0.10.0"
   },
   "dependencies": {
+    "atom-message-panel": "^1.2.2",
     "chai": "^1.9.1",
     "emissary": "^1.0.0",
     "jshint": "^2.4.4",
