@@ -1,3 +1,18 @@
+# v0.12.1
+
+### New features
+
+* Support rust linter ([#290][290])
+* Handle missing linter executable ([#449][449])
+
+### Bug fixes
+
+* Fix underline when line height isn't default ([#500][500])
+
+[500]: https://github.com/AtomLinter/Linter/pull/500
+[449]: https://github.com/AtomLinter/Linter/pull/449
+[290]: https://github.com/AtomLinter/Linter/pull/290
+
 # v0.12.0
 
 ### New features
