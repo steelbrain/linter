@@ -125,6 +125,9 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 #### for LaTeX
 - [linter-chktex](https://atom.io/packages/linter-chktex), for LaTeX, using `chktex`
 
+#### for Crystal
+- [linter-crystal](https://atom.io/packages/linter-crystal), for Crystal using `crystal`
+
 ## Features
 
 * **Lint on edit** – Instant error reporting for you! (And it's fast!)
