@@ -122,6 +122,9 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 #### for Swift
 - [linter-swiftc](https://atom.io/packages/linter-swiftc), for Swift, using `swiftc`
 
+#### for LaTeX
+- [linter-chktex](https://atom.io/packages/linter-chktex), for LaTeX, using `chktex`
+
 ## Features
 
 * **Lint on edit** – Instant error reporting for you! (And it's fast!)
