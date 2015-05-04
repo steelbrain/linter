@@ -19,7 +19,7 @@ class StatusBarView extends View
     @on 'click', '.goToError', ->
       line = parseInt(@dataset.line, 10)
       col = parseInt(@dataset.col, 10)
-      atom.workspace.getActiveEditor()?.setCursorBufferPosition(new Point(line, col))
+      atom.workspace.getActiveTextEditor()?.setCursorBufferPosition(new Point(line, col))
 
   highlightLines: (currentLine) ->
     return unless @showAllErrors
