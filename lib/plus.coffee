@@ -22,10 +22,14 @@ class LinterPlus
     @ViewPanel = atom.workspace.addBottomPanel item: @View.root, visible: false
 
     @Subscriptions = new CompositeDisposable
+    @Subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
+      @lint()
     @Subscriptions.add atom.workspace.observeTextEditors (editor)=>
       return if @InProgress
       return unless editor.getPath()
       editor.onDidSave(@lint.bind(@))
+      @Subscriptions.add editor.onDidChangeCursorPosition ({newBufferPosition})=>
+        @View.updateBubble(newBufferPosition)
   lint:->
     @InProgress = true
 
@@ -46,7 +50,7 @@ class LinterPlus
       @InProgress = false
       Messages = []
       for Result in Results
-        return if (not Result) or (typeof Result) isnt 'object'
+        continue if (not Result) or (typeof Result) isnt 'object'
         if Result instanceof Array
           Messages = Messages.concat(Result)
         else
@@ -58,7 +62,7 @@ class LinterPlus
   render:->
     if not @Messages.length
       @ViewPanel.hide() if @ViewPanel.isVisible()
-      @View.removeDecorations()
+      @View.remove()
       return ;
     @View.update()
     @ViewPanel.show() if not @ViewPanel.isVisible()

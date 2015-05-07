@@ -15,5 +15,8 @@
         "0.1.0": "consumeLinter"
       }
     }
+  },
+  "dependencies": {
+    "space-pen": "^5.1.1"
   }
 }
