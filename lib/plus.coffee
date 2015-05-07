@@ -23,6 +23,7 @@ class LinterPlus
 
     @Subscriptions = new CompositeDisposable
     @Subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
+      return unless atom.workspace.getActiveTextEditor()
       @lint()
     @Subscriptions.add atom.workspace.observeTextEditors (editor)=>
       return if @InProgress
