@@ -1,14 +1,26 @@
 
 
+Path = require 'path'
 {CompositeDisposable} = require('atom')
-Messages = require './Messages'
+
+class PlusTrace
+  constructor:(@Message, @File, @Position)->
+class PlusError
+  constructor:(@Message, @File, @Position, @Trace)->
+class PlusWarning
+  constructor:(@Message, @File, @Position, @Trace)->
 
 class LinterPlus
   Subscriptions: null
   InProgress: false
+  View: null
+  ViewPanel: null
   Messages:[]
   Linters: []
   constructor:->
+    @View = new (require './view')(this)
+    @ViewPanel = atom.workspace.addBottomPanel item: @View.root, visible: false
+
     @Subscriptions = new CompositeDisposable
     @Subscriptions.add atom.workspace.observeTextEditors (editor)=>
       return if @InProgress
@@ -17,7 +29,7 @@ class LinterPlus
   lint:->
     @InProgress = true
 
-    ActiveEditor = atom.workspace.getActiveEditor()
+    ActiveEditor = atom.workspace.getActiveTextEditor()
     Buffer = ActiveEditor.getBuffer()
     return unless ActiveEditor
     Scopes = ActiveEditor.scopeDescriptorForBufferPosition(ActiveEditor.getCursorBufferPosition()).scopes
@@ -25,7 +37,7 @@ class LinterPlus
     @Linters.forEach (Linter)->
       Matching = Scopes.filter (Entry)-> Linter.scopes.indexOf(Entry) isnt -1
       return unless Matching.length
-      RetVal = Linter.lint(ActiveEditor, Buffer, {Error: Messages.Error, Warning: Messages.Warning})
+      RetVal = Linter.lint(ActiveEditor, Buffer, {Error: PlusError, Warning: PlusWarning, Trace: PlusTrace})
       if RetVal instanceof Promise
         Promises.push RetVal
       else if RetVal
@@ -44,8 +56,15 @@ class LinterPlus
     , =>
       @InProgress = false
   render:->
-
+    if not @Messages.length
+      @ViewPanel.hide() if @ViewPanel.isVisible()
+      @View.removeDecorations()
+      return ;
+    @View.update()
+    @ViewPanel.show() if not @ViewPanel.isVisible()
   deactivate:->
+    @ViewPanel.destroy()
+    @View.remove()
     @Subscriptions.dispose()
 
 module.exports = LinterPlus
