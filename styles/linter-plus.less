@@ -1,0 +1,26 @@
+#linter-plus{
+  &> div{
+    padding: 0 0 0 10px;
+    span {
+      padding: 3px 5px;
+    }
+  }
+}
+atom-text-editor::shadow .line-number-error{
+  background-color: #c00;
+  color: white;
+}
+atom-text-editor::shadow .line-number-warning{
+  background-color: #ffaa2c;
+  color: white;
+}
+atom-text-editor::shadow .highlight-error{
+  .region{
+    border-bottom: 1px dashed #c00;
+  }
+}
+atom-text-editor::shadow .highlight-warning{
+  .region{
+    border-bottom: 1px dashed #ffaa2c;
+  }
+}
