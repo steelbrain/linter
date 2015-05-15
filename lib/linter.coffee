@@ -48,15 +48,33 @@ class Linter
   # TODO: what does this mean?
   errorStream: 'stdout'
 
+  # Base options
+  baseOptions: ['executionTimeout']
+
+  # Child options
+  options: []
+
   # Public: Construct a linter passing it's base editor
   constructor: (@editor) ->
     @cwd = path.dirname(@editor.getPath())
 
     @subscriptions = new CompositeDisposable
-    @subscriptions.add atom.config.observe 'linter.executionTimeout', (x) =>
-      @executionTimeout = x
+
+    # Load options from `linter`
+    for option in @baseOptions
+      @subscriptions.add atom.config.observe 'linter.executionTimeout', (option) =>
+        @[option] = option
+        log "Updating `linter` #{option} to #{@[option]}"
+
+    # Load options from `linter-child`
+    for option in @options
+      @subscriptions.add atom.config.observe "linter-#{@linterName}.#{option}", @updateOption.bind(this, option)
 
     @_statCache = new Map()
+
+  updateOption: (option) =>
+    @[option] = atom.config.get "linter-#{@linterName}.#{option}"
+    log "Updating `linter-#{@linterName}` #{option} to #{@[option]}"
 
   destroy: ->
     @subscriptions.dispose()
