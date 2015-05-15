@@ -2,7 +2,7 @@
   "name": "linter-plus",
   "main": "./lib/linter-plus",
   "author": "steelbrain",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A Linter Provider with Cow Powers",
   "repository": "https://github.com/steelbrain/linter-plus",
   "license": "MIT",
