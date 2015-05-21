@@ -69,7 +69,8 @@ class Linter
     @_statCache = new Map()
 
   observeOption: (prefix, option) ->
-    @subscriptions.add atom.config.observe "#{prefix}.#{option}", @updateOption.bind(this, prefix, option)
+    callback = @updateOption.bind(this, prefix, option)
+    @subscriptions.add atom.config.observe "#{prefix}.#{option}", callback
 
   updateOption: (prefix, option) =>
     @[option] = atom.config.get "#{prefix}.#{option}"
