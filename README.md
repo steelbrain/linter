@@ -5,11 +5,13 @@ Linter-Plus is a base Linter Provider for Atom. It allows packages to consume an
 This package was inspired from AtomLinter.
 
 #### Installation
+
 ```sh
 apm install linter-plus
 ```
 
 #### Registering a Linter
+
 Registering a linter is a piece of cake. It provides three base classes `Error`, `Warning` and `Trace` to be used. Linters can both be synchronous or Asynchronous (Promise based).
 
 Add this to your package.json file
@@ -22,8 +24,10 @@ Add this to your package.json file
   }
 }
 ```
+
 and then have a function named `provideLinter` in your main file.
 Linter-Plus expects an object like this from that function
+
 ```js
 {
   scopes: ['.source.php'] # Replace it with a source of choice
@@ -34,6 +38,7 @@ Linter-Plus expects an object like this from that function
 }
 ```
 An error in the above example can be a `Warning` or `Error` provided to the lint function.
+
 #### API
 ```js
 class PlusTrace
@@ -45,7 +50,12 @@ class PlusWarning
 ```
 
 #### Why not use AtomLinter
+
 My initial idea was to submit a PR to AtomLinter and make the appropriate changes. But It would've made so many API breaking changes that I thought to create a separate package for it.
+
+#### Example Linter
+
+Have a look at [Linter-Hack](https://github.com/steelbrain/Atom-Hack/blob/rewrite/lib/atom-hack.coffee).
 
 #### License
 This project is licensed under the terms of MIT License. See the License file for more info.
