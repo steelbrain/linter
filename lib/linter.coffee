@@ -61,20 +61,20 @@ class Linter
     @subscriptions = new CompositeDisposable
 
     # Load options from `linter`
-    for option in @baseOptions
-      @subscriptions.add atom.config.observe 'linter.executionTimeout', (option) =>
-        @[option] = option
-        log "Updating `linter` #{option} to #{@[option]}"
+    @observeOption('linter', option) for option in @baseOptions
 
     # Load options from `linter-child`
-    for option in @options
-      @subscriptions.add atom.config.observe "linter-#{@linterName}.#{option}", @updateOption.bind(this, option)
+    @observeOption("linter-#{@linterName}", option) for option in @options
 
     @_statCache = new Map()
 
-  updateOption: (option) =>
-    @[option] = atom.config.get "linter-#{@linterName}.#{option}"
-    log "Updating `linter-#{@linterName}` #{option} to #{@[option]}"
+  observeOption: (prefix, option) ->
+    callback = @updateOption.bind(this, prefix, option)
+    @subscriptions.add atom.config.observe "#{prefix}.#{option}", callback
+
+  updateOption: (prefix, option) =>
+    @[option] = atom.config.get "#{prefix}.#{option}"
+    log "Updating `#{prefix}` #{option} to #{@[option]}"
 
   destroy: ->
     @subscriptions.dispose()
