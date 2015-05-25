@@ -3,13 +3,13 @@
 Path = require 'path'
 {CompositeDisposable} = require('atom')
 
-class PlusTrace
+class LinterTrace
   constructor:(@Message, @File, @Position)->
-class PlusMessage then constructor:(@Message, @File, @Position, @Trace)->
-class PlusError extends PlusMessage
-class PlusWarning extends PlusMessage
+class LinterMessage then constructor:(@Message, @File, @Position, @Trace)->
+class LinterError extends LinterMessage
+class LinterWarning extends LinterMessage
 
-class LinterPlus
+class Linter
   Subscriptions: null
   SubLintOnFly: null
   InProgress: false
@@ -52,7 +52,7 @@ class LinterPlus
       return if (onChange and not Linter.lintOnFly) or onChange
       Matching = Scopes.filter (Entry)-> Linter.scopes.indexOf(Entry) isnt -1
       return unless Matching.length
-      RetVal = Linter.lint(ActiveEditor, Buffer, {Error: PlusError, Warning: PlusWarning, Trace: PlusTrace}, onChange)
+      RetVal = Linter.lint(ActiveEditor, Buffer, {Error: LinterError, Warning: LinterWarning, Trace: LinterTrace}, onChange)
       if RetVal instanceof Promise
         Promises.push RetVal
       else if RetVal
@@ -99,4 +99,4 @@ class LinterPlus
       else
         @InProgress = newValue
 
-module.exports = LinterPlus
+module.exports = Linter

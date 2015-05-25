@@ -9,7 +9,7 @@ module.exports =
       type: 'boolean',
       default: true
   activate:->
-    @Instance = new (require './plus.coffee')
+    @Instance = new (require './linter.coffee')
     atom.config.observe 'linter-plus.lintOnFly', (lintOnyFly) =>
       @Instance.LintOnFly = lintOnyFly
   consumeLinter:(Linter)->
