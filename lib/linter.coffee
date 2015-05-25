@@ -1,15 +1,17 @@
-
-
 Path = require 'path'
-{CompositeDisposable} = require('atom')
+{CompositeDisposable} = require 'atom'
 
 class LinterTrace
-  constructor:(@Message, @File, @Position)->
-class LinterMessage then constructor:(@Message, @File, @Position, @Trace)->
+  constructor: (@Message, @File, @Position) ->
+
+class LinterMessage then constructor: (@Message, @File, @Position, @Trace) ->
+
 class LinterError extends LinterMessage
+
 class LinterWarning extends LinterMessage
 
 class Linter
+
   Subscriptions: null
   SubLintOnFly: null
   InProgress: false
@@ -21,43 +23,58 @@ class Linter
   MessagesRegular:[]
   MessagesFly:[]
   Linters: []
-  constructor:->
+
+  constructor: ->
     @View = new (require './view')(this)
     @ViewPanel = atom.workspace.addBottomPanel item: @View.root, visible: false
 
     @Subscriptions = new CompositeDisposable
     @SubLintOnFly = new CompositeDisposable
+
     @Subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
       return unless atom.workspace.getActiveTextEditor()
       @lint()
-    @Subscriptions.add atom.workspace.observeTextEditors (editor)=>
+
+    @Subscriptions.add atom.workspace.observeTextEditors (editor) =>
       return unless editor.getPath()
       editor.onDidSave(@lint.bind(@, false))
-      @Subscriptions.add editor.onDidChangeCursorPosition ({newBufferPosition})=>
+      @Subscriptions.add editor.onDidChangeCursorPosition ({newBufferPosition}) =>
         @View.updateBubble(newBufferPosition)
       return unless @LintOnFly
       @SubLintOnFly.add editor.onDidStopChanging @lint.bind(@, true)
-  lint:(onChange)->
+
+  lint: (onChange) ->
     onChange = Boolean onChange
     return if @progress onChange
     # We need to consume both onFly and Regular linters on save
-    @lint(true) unless onChange
+    @lint true unless onChange
 
     ActiveEditor = atom.workspace.getActiveTextEditor()
     Buffer = ActiveEditor.getBuffer()
     return unless ActiveEditor
+
     Scopes = ActiveEditor.scopeDescriptorForBufferPosition(ActiveEditor.getCursorBufferPosition()).scopes
     Promises = []
-    @Linters.forEach (Linter)->
+
+    @Linters.forEach (Linter) ->
       return if (onChange and not Linter.lintOnFly) or onChange
-      Matching = Scopes.filter (Entry)-> Linter.scopes.indexOf(Entry) isnt -1
+      Matching = Scopes.filter (Entry) -> Linter.scopes.indexOf(Entry) isnt -1
       return unless Matching.length
-      RetVal = Linter.lint(ActiveEditor, Buffer, {Error: LinterError, Warning: LinterWarning, Trace: LinterTrace}, onChange)
+      RetVal = Linter.lint(
+        ActiveEditor, Buffer,
+        {
+          Error: LinterError,
+          Warning: LinterWarning,
+          Trace: LinterTrace
+        },
+        onChange
+      )
       if RetVal instanceof Promise
         Promises.push RetVal
       else if RetVal
         Promises.push RetVal
-    Promise.all(Promises).then (Results)=>
+
+    Promise.all(Promises).then (Results) =>
       @progress onChange, false
       Messages = []
       for Result in Results
@@ -75,19 +92,22 @@ class Linter
     , =>
       console.error arguments
       @progress onChange, false
-  render:->
+
+  render: ->
     if not @Messages.length
       @ViewPanel.hide() if @ViewPanel.isVisible()
       @View.remove()
-      return ;
+      return
     @View.update()
     @ViewPanel.show() if not @ViewPanel.isVisible()
-  deactivate:->
+
+  deactivate: ->
     @ViewPanel.destroy()
     @View.remove()
     @SubLintOnFly.dispose()
     @Subscriptions.dispose()
-  progress:(onChange, newValue)->
+
+  progress: (onChange, newValue) ->
     if typeof newValue is 'undefined'
       if onChange
         return @InProgressFly
