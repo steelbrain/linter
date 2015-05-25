@@ -26,12 +26,12 @@ class LinterPlus
       return unless atom.workspace.getActiveTextEditor()
       @lint()
     @Subscriptions.add atom.workspace.observeTextEditors (editor)=>
-      return if @InProgress
       return unless editor.getPath()
       editor.onDidSave(@lint.bind(@))
       @Subscriptions.add editor.onDidChangeCursorPosition ({newBufferPosition})=>
         @View.updateBubble(newBufferPosition)
   lint:->
+    return if @InProgress
     @InProgress = true
 
     ActiveEditor = atom.workspace.getActiveTextEditor()
