@@ -5,19 +5,21 @@ Path = require 'path'
 
 class PlusTrace
   constructor:(@Message, @File, @Position)->
-class PlusError
-  constructor:(@Message, @File, @Position, @Trace)->
-class PlusWarning
-  constructor:(@Message, @File, @Position, @Trace)->
+class PlusMessage then constructor:(@Message, @File, @Position, @Trace)->
+class PlusError extends PlusMessage
+class PlusWarning extends PlusMessage
 
 class LinterPlus
   Subscriptions: null
   SubLintOnFly: null
   InProgress: false
+  InProgressFly: false
   LintOnFly: true
   View: null
   ViewPanel: null
   Messages:[]
+  MessagesRegular:[]
+  MessagesFly:[]
   Linters: []
   constructor:->
     @View = new (require './view')(this)
@@ -36,9 +38,14 @@ class LinterPlus
       return unless @LintOnFly
       @SubLintOnFly.add editor.onDidStopChanging @lint.bind(@, true)
   lint:(onChange)->
-    return if @InProgress
-    @InProgress = true
+    if onChange
+      return if @InProgressFly
+      @InProgressFly = true
+    else
+      return if @InProgress
+      @InProgress = true
     onChange = Boolean onChange
+    @lint(true) unless onChange
 
     ActiveEditor = atom.workspace.getActiveTextEditor()
     Buffer = ActiveEditor.getBuffer()
@@ -46,7 +53,7 @@ class LinterPlus
     Scopes = ActiveEditor.scopeDescriptorForBufferPosition(ActiveEditor.getCursorBufferPosition()).scopes
     Promises = []
     @Linters.forEach (Linter)->
-      return if onChange and not Linter.lintOnFly
+      return if (onChange and not Linter.lintOnFly) or onChange
       Matching = Scopes.filter (Entry)-> Linter.scopes.indexOf(Entry) isnt -1
       return unless Matching.length
       RetVal = Linter.lint(ActiveEditor, Buffer, {Error: PlusError, Warning: PlusWarning, Trace: PlusTrace}, onChange)
@@ -55,7 +62,10 @@ class LinterPlus
       else if RetVal
         Promises.push RetVal
     Promise.all(Promises).then (Results)=>
-      @InProgress = false
+      if onChange
+        @InProgressFly = false
+      else
+        @InProgress = false
       Messages = []
       for Result in Results
         continue if (not Result) or (typeof Result) isnt 'object'
@@ -63,11 +73,18 @@ class LinterPlus
           Messages = Messages.concat(Result)
         else
           Messages.push Result
-      @Messages = Messages
+      if onChange
+        @MessagesFly = Messages
+      else
+        @MessagesRegular = Messages
+      @Messages = @MessagesFly.concat(@MessagesRegular)
       @render()
     , =>
       console.error arguments
-      @InProgress = false
+      if onChange
+        @InProgressFly = false
+      else
+        @InProgress = false
   render:->
     if not @Messages.length
       @ViewPanel.hide() if @ViewPanel.isVisible()
