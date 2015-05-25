@@ -38,13 +38,9 @@ class LinterPlus
       return unless @LintOnFly
       @SubLintOnFly.add editor.onDidStopChanging @lint.bind(@, true)
   lint:(onChange)->
-    if onChange
-      return if @InProgressFly
-      @InProgressFly = true
-    else
-      return if @InProgress
-      @InProgress = true
     onChange = Boolean onChange
+    return if @progress onChange
+    # We need to consume both onFly and Regular linters on save
     @lint(true) unless onChange
 
     ActiveEditor = atom.workspace.getActiveTextEditor()
@@ -62,10 +58,7 @@ class LinterPlus
       else if RetVal
         Promises.push RetVal
     Promise.all(Promises).then (Results)=>
-      if onChange
-        @InProgressFly = false
-      else
-        @InProgress = false
+      @progress onChange, false
       Messages = []
       for Result in Results
         continue if (not Result) or (typeof Result) isnt 'object'
@@ -81,10 +74,7 @@ class LinterPlus
       @render()
     , =>
       console.error arguments
-      if onChange
-        @InProgressFly = false
-      else
-        @InProgress = false
+      @progress onChange, false
   render:->
     if not @Messages.length
       @ViewPanel.hide() if @ViewPanel.isVisible()
@@ -97,5 +87,16 @@ class LinterPlus
     @View.remove()
     @SubLintOnFly.dispose()
     @Subscriptions.dispose()
+  progress:(onChange, newValue)->
+    if typeof newValue is 'undefined'
+      if onChange
+        return @InProgressFly
+      else
+        return @InProgress
+    else
+      if onChange
+        @InProgressFly = newValue
+      else
+        @InProgress = newValue
 
 module.exports = LinterPlus
