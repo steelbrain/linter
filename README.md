@@ -31,10 +31,8 @@ Linter-Plus expects an object like this from that function
 ```js
 {
   scopes: ['.source.php'] # Replace it with a source of choice
-
-  lint: function(TextEditor, TextBuffer, {Error, Warning, Trace}):array<Error>
-  --- or if you prefer async ---
-  lint: function(TextEditor, TextBuffer, {Error, Warning, Trace}):Promise<array<Error>>
+  lintOnFly: false # Replace to true for lint on fly
+  lint: function(TextEditor, TextBuffer, {Error, Warning, Trace}, wasTriggeredOnChange):array<Error> | Promise<array<Error>>
 }
 ```
 An error in the above example can be a `Warning` or `Error` provided to the lint function.

@@ -12,7 +12,9 @@ class PlusWarning
 
 class LinterPlus
   Subscriptions: null
+  SubLintOnFly: null
   InProgress: false
+  LintOnFly: true
   View: null
   ViewPanel: null
   Messages:[]
@@ -22,17 +24,21 @@ class LinterPlus
     @ViewPanel = atom.workspace.addBottomPanel item: @View.root, visible: false
 
     @Subscriptions = new CompositeDisposable
+    @SubLintOnFly = new CompositeDisposable
     @Subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
       return unless atom.workspace.getActiveTextEditor()
       @lint()
     @Subscriptions.add atom.workspace.observeTextEditors (editor)=>
       return unless editor.getPath()
-      editor.onDidSave(@lint.bind(@))
+      editor.onDidSave(@lint.bind(@, false))
       @Subscriptions.add editor.onDidChangeCursorPosition ({newBufferPosition})=>
         @View.updateBubble(newBufferPosition)
-  lint:->
+      return unless @LintOnFly
+      @SubLintOnFly.add editor.onDidStopChanging @lint.bind(@, true)
+  lint:(onChange)->
     return if @InProgress
     @InProgress = true
+    onChange = Boolean onChange
 
     ActiveEditor = atom.workspace.getActiveTextEditor()
     Buffer = ActiveEditor.getBuffer()
@@ -40,9 +46,10 @@ class LinterPlus
     Scopes = ActiveEditor.scopeDescriptorForBufferPosition(ActiveEditor.getCursorBufferPosition()).scopes
     Promises = []
     @Linters.forEach (Linter)->
+      return if onChange and not Linter.lintOnFly
       Matching = Scopes.filter (Entry)-> Linter.scopes.indexOf(Entry) isnt -1
       return unless Matching.length
-      RetVal = Linter.lint(ActiveEditor, Buffer, {Error: PlusError, Warning: PlusWarning, Trace: PlusTrace})
+      RetVal = Linter.lint(ActiveEditor, Buffer, {Error: PlusError, Warning: PlusWarning, Trace: PlusTrace}, onChange)
       if RetVal instanceof Promise
         Promises.push RetVal
       else if RetVal
@@ -59,6 +66,7 @@ class LinterPlus
       @Messages = Messages
       @render()
     , =>
+      console.error arguments
       @InProgress = false
   render:->
     if not @Messages.length
@@ -70,6 +78,7 @@ class LinterPlus
   deactivate:->
     @ViewPanel.destroy()
     @View.remove()
+    @SubLintOnFly.dispose()
     @Subscriptions.dispose()
 
 module.exports = LinterPlus
