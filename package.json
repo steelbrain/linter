@@ -1,6 +1,6 @@
 {
   "name": "linter-plus",
-  "main": "./lib/linter-plus",
+  "main": "./lib/main",
   "author": "AtomLinter",
   "version": "0.2.0",
   "description": "A Linter Provider with Cow Powers",

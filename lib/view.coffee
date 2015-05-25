@@ -6,11 +6,11 @@
 Bubble = require './view-bubble'
 
 class LinterView extends EventEmitter
-  constructor:(@Plus)->
+  constructor:(@Linter)->
     super()
     @decorations = []
     @root = document.createElement 'div'
-    @root.id = 'linter-plus-panel'
+    @root.id = 'linter-panel'
     @bubble = null
   remove:->
     @bubble?.destroy()
@@ -24,11 +24,11 @@ class LinterView extends EventEmitter
       this.root.removeChild this.root.firstChild
   updateBubble:(Point)->
     @bubble?.destroy()
-    return unless @Plus.Messages.length
+    return unless @Linter.Messages.length
     TextEditor = atom.workspace.getActiveTextEditor()
     ActiveFile = TextEditor.getPath()
     Found = false
-    @Plus.Messages.forEach (Message)=>
+    @Linter.Messages.forEach (Message)=>
       return if Found
       return unless Message.File is ActiveFile
       return unless Message.Position
@@ -44,15 +44,15 @@ class LinterView extends EventEmitter
     @removeErrors()
     TextEditor = atom.workspace.getActiveTextEditor()
     ActiveFile = TextEditor.getPath()
-    @Plus.Messages.forEach (Message)=>
+    @Linter.Messages.forEach (Message)=>
       Entry = @messageLine Message
       @root.appendChild Entry
 
       return if Message.File isnt ActiveFile or not Message.Position
       P = Message.Position
       Marker = TextEditor.markBufferRange [[P[0][0]-1, P[0][1]-1], [P[1][0]-1, P[1][1]]], {invalidate: 'never'}
-      @decorations.push TextEditor.decorateMarker Marker, type: 'line-number', class: 'line-number-' + Message.constructor.name.substr(4).toLowerCase()
-      @decorations.push TextEditor.decorateMarker Marker, type: 'highlight', class: 'highlight-' + Message.constructor.name.substr(4).toLowerCase()
+      @decorations.push TextEditor.decorateMarker Marker, type: 'line-number', class: 'line-number-' + Message.constructor.name.substr(6).toLowerCase()
+      @decorations.push TextEditor.decorateMarker Marker, type: 'highlight', class: 'highlight-' + Message.constructor.name.substr(6).toLowerCase()
     @updateBubble(TextEditor.getCursors()[0].getBufferPosition())
   messageLine:(Message)->
     Entry = document.createElement 'div'
@@ -60,8 +60,8 @@ class LinterView extends EventEmitter
     Ribbon = document.createElement 'span'
     Ribbon.classList.add 'badge'
     Ribbon.classList.add 'badge-flexible'
-    Ribbon.classList.add 'badge-' + Message.constructor.name.substr(4).toLowerCase()
-    Ribbon.textContent = Message.constructor.name.substr(4)
+    Ribbon.classList.add 'badge-' + Message.constructor.name.substr(6).toLowerCase()
+    Ribbon.textContent = Message.constructor.name.substr(6)
 
     TheMessage = document.createElement('span')
     TheMessage.innerHTML = Message.Message

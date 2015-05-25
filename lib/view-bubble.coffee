@@ -9,5 +9,5 @@ class Bubble extends View
     Message.Trace.forEach (Entry)=>
       @append LinterView.messageLine Entry
   @content:->
-    @div id: 'linter-plus-inline'
+    @div id: 'linter-inline'
 module.exports = Bubble
