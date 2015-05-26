@@ -13,7 +13,7 @@ module.exports =
       @Instance.LintOnFly = lintOnyFly
 
   consumeLinter: (Linter) ->
-    @Instance.Linters.add Linter
+    @Instance.Linters.push Linter
 
   consumeStatusBar: (statusBar) ->
     # @Instance.StatusBar = statusBar
