@@ -10,7 +10,7 @@ class EditorLinter
     @Subscriptions.add @Editor.onDidStopChanging @lint.bind(@, true)
 
   lint: (OnChange)->
-
+    console.log "Lint"
   destroy:->
     @Emitter.emit 'did-destroy'
     @Subscriptions.dispose()
@@ -20,3 +20,6 @@ class EditorLinter
 
   onDidDestroy:(Callback)->
     @Emitter.on 'did-destroy', Callback
+
+
+module.exports = EditorLinter

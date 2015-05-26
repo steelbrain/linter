@@ -29,3 +29,5 @@ class Linter
   observeLinters:(Callback)->
     Callback(Linter[1]) for Linter of @EditorLinters
     @Emitter.on 'linters-observe', Callback
+
+module.exports = Linter
