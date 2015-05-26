@@ -15,8 +15,13 @@ class Linter
     @Subscriptions = new CompositeDisposable
     @EditorLinters = {} # A map of Editor <--> Linter
     @Linters = [] # I <3 ES6
+    @Subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
+      ActiveLinter = @getActiveEditorLinter()
+      return unless ActiveLinter
+      ActiveLinter.lint(false)
     @Subscriptions.add atom.workspace.observeTextEditors (Editor) =>
       CurrentEditorLinter = new EditorLinter @, Editor
+      @EditorLinters[ Editor ] = CurrentEditorLinter
       @Emitter.emit 'linters-observe', CurrentEditorLinter
       Editor.onDidDestroy =>
         CurrentEditorLinter.destroy()
@@ -35,7 +40,7 @@ class Linter
       @ViewPanel.show() unless @ViewPanel.isVisible()
 
   getActiveEditorLinter:->
-    ActiveEditor = atom.workspace.getActiveEditor()
+    ActiveEditor = atom.workspace.getActiveTextEditor()
     return ActiveEditor unless ActiveEditor
     return @EditorLinters[ ActiveEditor ]
 

@@ -49,7 +49,7 @@ class EditorLinter
         @MessagesRegular = Messages
       @Messages = @MessagesFly.concat(@MessagesRegular)
       @Emitter.emit 'did-update', @Messages
-      @Linter.render(@Messages) if @Editor is atom.workspace.getActiveEditor()
+      @Linter.render(@Messages) if @Editor is atom.workspace.getActiveTextEditor()
     .catch ->
       console.error arguments[0].stack
       @progress OnChange, false
