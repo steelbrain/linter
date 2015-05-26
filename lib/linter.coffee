@@ -5,6 +5,11 @@ EditorLinter = require './editor-linter'
 class Linter
 
   constructor: ->
+    @View = new (require './view')(this)
+    @ViewPanel = atom.workspace.addBottomPanel item: @View.root, visible: false
+    @StatusBar = null
+    @Messages = [] # A temp array to be used by views
+
     @LintOnFly = true
     @Emitter = new Emitter
     @Subscriptions = new CompositeDisposable
@@ -16,6 +21,18 @@ class Linter
       Editor.onDidDestroy =>
         CurrentEditorLinter.destroy()
         delete @EditorLinters[ CurrentEditorLinter ]
+
+  render: (Messages) ->
+    @Messages = Messages
+    # Update `LeftTile` of `StatusBar`
+    @View.updateLeftTile @Messages.length
+
+    if not @Messages.length
+      @ViewPanel.hide() if @ViewPanel.isVisible()
+      @View.remove()
+    else
+      @View.update()
+      @ViewPanel.show() unless @ViewPanel.isVisible()
 
   getActiveEditorLinter:->
     ActiveEditor = atom.workspace.getActiveEditor()
