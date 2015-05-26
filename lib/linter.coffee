@@ -12,11 +12,11 @@ class Linter
     @EditorLinters = new Map # A map of Editor <--> Linter
     @Linters = new Set # I <3 ES6
     @Subscriptions.add atom.workspace.observeTextEditors (Editor) =>
-      EditorLinter = new EditorLinter @, Editor
-      @Emitter.emit 'linters-observe', EditorLinter
+      CurrentEditorLinter = new EditorLinter @, Editor
+      @Emitter.emit 'linters-observe', CurrentEditorLinter
       Editor.onDidDestroy =>
-        EditorLinter.destroy()
-        @EditorLinters.delete EditorLinter
+        CurrentEditorLinter.destroy()
+        @EditorLinters.delete CurrentEditorLinter
 
   getActiveEditorLinter:->
     ActiveEditor = atom.workspace.getActiveEditor()
