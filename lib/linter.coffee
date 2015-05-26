@@ -19,6 +19,7 @@ class Linter
   LintOnFly: true
   View: null
   ViewPanel: null
+  StatusBar: null
   Messages:[]
   MessagesRegular:[]
   MessagesFly:[]
@@ -96,6 +97,9 @@ class Linter
       @progress onChange, false
 
   render: ->
+    # Update `LeftTile` of `StatusBar`
+    @View.updateLeftTile(@Messages.length)
+
     if not @Messages.length
       @ViewPanel.hide() if @ViewPanel.isVisible()
       @View.remove()

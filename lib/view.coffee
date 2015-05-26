@@ -2,6 +2,7 @@
 {Range} = require 'atom'
 
 Bubble = require './view-bubble'
+LeftTile = require './view-left-tile'
 
 class LinterView extends EventEmitter
   constructor: (@Linter) ->
@@ -64,6 +65,17 @@ class LinterView extends EventEmitter
       )
 
     @updateBubble(TextEditor.getCursors()[0].getBufferPosition())
+
+  updateLeftTile: (nbMessages) ->
+    # Remove old tile
+    @leftTile?.destroy?()
+    @leftTile = null
+
+    # Create new tile with `@Linter.Messages` length
+    el = new LeftTile(nbMessages)
+    @leftTile = @Linter.StatusBar.addLeftTile
+      item: el
+      priority: -100
 
   messageLine: (Message) ->
     Entry = document.createElement 'div'
