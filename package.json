@@ -14,6 +14,11 @@
       "versions": {
         "0.1.0": "consumeLinter"
       }
+    },
+    "status-bar": {
+      "versions": {
+        "^1.0.0": "consumeStatusBar"
+      }
     }
   },
   "dependencies": {
