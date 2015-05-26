@@ -15,5 +15,8 @@ module.exports =
   consumeLinter: (Linter) ->
     @Instance.Linters.push Linter
 
+  consumeStatusBar: (statusBar) ->
+    @Instance.StatusBar = statusBar
+
   deactivate: ->
     @Instance?.deactivate()
