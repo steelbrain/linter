@@ -47,7 +47,7 @@ class Linter
   # messages in one array, we'll lose the messages of regular ones, once we do
   # lintOnChange, so therefore I've modified the lint function to execute only the
   # ones that are required and then concat with the other.
-  # When the save event is triggered, the onChange is false so it triggers the onlFly
+  # When the save event is triggered, the onChange is false so it triggers the onFly
   # ones too.
   #
   lint: (onChange) ->
