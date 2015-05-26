@@ -9,8 +9,8 @@ module.exports =
 
   activate: ->
     @Instance = new (require './linter.coffee')
-    #atom.config.observe 'linter-plus.lintOnFly', (lintOnyFly) =>
-    #  @Instance.LintOnFly = lintOnyFly
+    atom.config.observe 'linter-plus.lintOnFly', (lintOnyFly) =>
+      @Instance.LintOnFly = lintOnyFly
 
   consumeLinter: (Linter) ->
     @Instance.Linters.add Linter

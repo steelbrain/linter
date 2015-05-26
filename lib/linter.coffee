@@ -7,6 +7,7 @@ EditorLinter = require './editor-linter'
 class Linter
 
   constructor: ->
+    @LintOnFly = true
     @Emitter = new Emitter
     @Subscriptions = new CompositeDisposable
     @EditorLinters = new Map # A map of Editor <--> Linter
