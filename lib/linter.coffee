@@ -15,7 +15,7 @@ class Linter
       @Emitter.emit 'linters-observe', CurrentEditorLinter
       Editor.onDidDestroy =>
         CurrentEditorLinter.destroy()
-        @EditorLinters.delete CurrentEditorLinter
+        delete @EditorLinters[ CurrentEditorLinter ]
 
   getActiveEditorLinter:->
     ActiveEditor = atom.workspace.getActiveEditor()
