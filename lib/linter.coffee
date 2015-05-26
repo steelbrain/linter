@@ -77,8 +77,6 @@ class Linter
         continue if (not Result) or (typeof Result) isnt 'object'
         if Result instanceof Array
           Messages = Messages.concat(Result)
-        else
-          Messages.push Result
       if onChange
         @MessagesFly = Messages
       else
