@@ -9,14 +9,14 @@ module.exports =
 
   activate: ->
     @Instance = new (require './linter.coffee')
-    atom.config.observe 'linter-plus.lintOnFly', (lintOnyFly) =>
-      @Instance.LintOnFly = lintOnyFly
+    #atom.config.observe 'linter-plus.lintOnFly', (lintOnyFly) =>
+    #  @Instance.LintOnFly = lintOnyFly
 
   consumeLinter: (Linter) ->
-    @Instance.Linters.push Linter
+    @Instance.Linters.add Linter
 
   consumeStatusBar: (statusBar) ->
-    @Instance.StatusBar = statusBar
+    # @Instance.StatusBar = statusBar
 
   deactivate: ->
     @Instance?.deactivate()
