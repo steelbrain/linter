@@ -99,9 +99,9 @@ class Linter
     if not @Messages.length
       @ViewPanel.hide() if @ViewPanel.isVisible()
       @View.remove()
-      return
-    @View.update()
-    @ViewPanel.show() if not @ViewPanel.isVisible()
+    else
+      @View.update()
+      @ViewPanel.show() unless @ViewPanel.isVisible()
 
   deactivate: ->
     @ViewPanel.destroy()
