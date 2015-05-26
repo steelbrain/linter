@@ -3,6 +3,10 @@
 
 Bubble = require './view-bubble'
 
+#
+# When applying classes to views, we perform a substr on constructor name of the error,
+# so that LinterError becomes Error then we perform toLowerCase on it.
+#
 class LinterView extends EventEmitter
   constructor: (@Linter) ->
     super()
