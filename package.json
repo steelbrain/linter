@@ -21,6 +21,14 @@
       }
     }
   },
+  "providedServices":{
+    "linter-plus-self": {
+      "versions":{
+        "0.1.0": "provideLinter"
+      }
+    }
+  },
+
   "dependencies": {
     "space-pen": "^5.1.1"
   }
