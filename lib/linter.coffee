@@ -57,7 +57,10 @@ class Linter
     Promises = []
 
     @Linters.forEach (Linter) ->
-      return if (onChange and not Linter.lintOnFly) or onChange
+      if onChange
+        return unless Linter.lintOnFly
+      else
+        return if Linter.lintOnFly
       Matching = Scopes.filter (Entry) -> Linter.scopes.indexOf(Entry) isnt -1
       return unless Matching.length
       Promises.push Linter.lint(
