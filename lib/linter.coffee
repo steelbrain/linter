@@ -42,7 +42,14 @@ class Linter
         @View.updateBubble(newBufferPosition)
       return unless @LintOnFly
       @SubLintOnFly.add editor.onDidStopChanging @lint.bind(@, true)
-
+  #
+  # We have two types of linters, Regular and OnFly, if we store both of their
+  # messages in one array, we'll lose the messages of regular ones, once we do
+  # lintOnChange, so therefore I've modified the lint function to execute only the
+  # ones that are required and then concat with the other.
+  # When the save event is triggered, the onChange is false so it triggers the onlFly
+  # ones too.
+  #
   lint: (onChange) ->
     onChange = Boolean onChange
     return if @progress onChange
@@ -57,10 +64,8 @@ class Linter
     Promises = []
 
     @Linters.forEach (Linter) ->
-      if onChange
-        return unless Linter.lintOnFly
-      else
-        return if Linter.lintOnFly
+      return if onChange and not Linter.lintOnFly
+      return unless onChange and Linter.lintOnFly
       Matching = Scopes.filter (Entry) -> Linter.scopes.indexOf(Entry) isnt -1
       return unless Matching.length
       Promises.push Linter.lint(
