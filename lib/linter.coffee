@@ -60,7 +60,7 @@ class Linter
       return if (onChange and not Linter.lintOnFly) or onChange
       Matching = Scopes.filter (Entry) -> Linter.scopes.indexOf(Entry) isnt -1
       return unless Matching.length
-      RetVal = Linter.lint(
+      Promises.push Linter.lint(
         ActiveEditor, Buffer,
         {
           Error: LinterError,
@@ -69,10 +69,6 @@ class Linter
         },
         onChange
       )
-      if RetVal instanceof Promise
-        Promises.push RetVal
-      else if RetVal
-        Promises.push RetVal
 
     Promise.all(Promises).then (Results) =>
       @progress onChange, false
