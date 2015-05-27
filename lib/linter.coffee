@@ -13,8 +13,8 @@ class Linter
     @LintOnFly = true
     @Emitter = new Emitter
     @Subscriptions = new CompositeDisposable
-    @EditorLinters = {} # A map of Editor <--> Linter
-    @Linters = [] # I <3 ES6
+    @EditorLinters = {} # An object of Editor <--> Linter
+    @Linters = [] # I </3 coffee-script
     @Subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
       ActiveLinter = @getActiveEditorLinter()
       return unless ActiveLinter
