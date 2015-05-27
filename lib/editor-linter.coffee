@@ -14,11 +14,12 @@ class EditorLinter
     @Subscriptions = new CompositeDisposable
     @Buffer = Editor.getBuffer()
 
-    @Subscriptions.add @Editor.onDidSave @lint.bind(@, false)
-    @Subscriptions.add @Editor.onDidStopChanging @lint.bind(@, true)
-    @Subscriptions.add @Editor.onDidChangeCursorPosition ({newBufferPosition}) =>
+    @Subscriptions.add(@Editor.onDidSave @lint.bind(@, false))
+    @Subscriptions.add(@Editor.onDidStopChanging @lint.bind(@, true))
+    @Subscriptions.add(@Editor.onDidChangeCursorPosition ({newBufferPosition}) =>
       @Linter.Messages = @Messages
       @Linter.View.updateBubble newBufferPosition
+    )
 
   lint: (OnChange) ->
     return if @progress OnChange
