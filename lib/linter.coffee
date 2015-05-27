@@ -38,15 +38,15 @@ class Linter
       @View.update()
       @ViewPanel.show() unless @ViewPanel.isVisible()
 
-  getActiveEditorLinter:->
+  getActiveEditorLinter: ->
     ActiveEditor = atom.workspace.getActiveTextEditor()
     return ActiveEditor unless ActiveEditor
     return @EditorLinters[ ActiveEditor ]
 
-  getLinter:(Editor)->
+  getLinter: (Editor) ->
     return @EditorLinters[ Editor ]
 
-  observeLinters:(Callback)->
+  observeLinters: (Callback) ->
     Callback(Linter) for Linter of @EditorLinters
     @Emitter.on 'linters-observe', Callback
 
