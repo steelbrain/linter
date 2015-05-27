@@ -16,6 +16,9 @@ class EditorLinter
 
     @Subscriptions.add @Editor.onDidSave @lint.bind(@, false)
     @Subscriptions.add @Editor.onDidStopChanging @lint.bind(@, true)
+    @Subscriptions.add @Editor.onDidChangeCursorPosition ({newBufferPosition})=>
+      @Linter.Messages = @Messages
+      @Linter.View.updateBubble newBufferPosition
 
   lint: (OnChange)->
     return if @progress OnChange
@@ -49,7 +52,8 @@ class EditorLinter
         @MessagesRegular = Messages
       @Messages = @MessagesFly.concat(@MessagesRegular)
       @Emitter.emit 'did-update', @Messages
-      @Linter.render(@Messages) if @Editor is atom.workspace.getActiveTextEditor()
+      @Linter.Messages = @Messages
+      @Linter.render() if @Editor is atom.workspace.getActiveTextEditor()
     .catch ->
       console.error arguments[0].stack
       @progress OnChange, false

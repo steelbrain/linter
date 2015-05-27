@@ -27,8 +27,7 @@ class Linter
         CurrentEditorLinter.destroy()
         delete @EditorLinters[ CurrentEditorLinter ]
 
-  render: (Messages) ->
-    @Messages = Messages
+  render: ->
     # Update `LeftTile` of `StatusBar`
     @View.updateLeftTile @Messages.length
 
