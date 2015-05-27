@@ -13,7 +13,7 @@ class EditorLinter
     @Buffer = Editor.getBuffer()
 
     @Subscriptions.add(@Editor.onDidSave @lint.bind(@, false))
-    @Subscriptions.add(@Editor.onDidStopChanging @lint.bind(@, true))
+    @Subscriptions.add(@Editor.onDidStopChanging @lint.bind(@, true)) if @Linter.LintOnFly
     @Subscriptions.add(@Editor.onDidChangeCursorPosition ({newBufferPosition}) =>
       @Linter.Messages = @getMessages()
       @Linter.View.updateBubble newBufferPosition
