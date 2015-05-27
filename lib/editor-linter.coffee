@@ -21,6 +21,7 @@ class EditorLinter
 
   lint: (OnChange) ->
     return if @progress OnChange
+    return if @Editor isnt atom.workspace.getActiveTextEditor()
     @progress OnChange, true
     @lint true unless OnChange
 
