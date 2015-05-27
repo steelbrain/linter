@@ -50,7 +50,7 @@ class EditorLinter
               RetVal.then (Results)=>
                 @Messages[Linter] = Results if Results instanceof Array
                 Resolve()
-              .catch (Error)->
+              .catch (Error)=>
                 delete @Messages[Linter] # Because it's emitting errors, it's messages will never be replaced unless we do so
                 atom.notifications.addError "#{Error.message}", {detail: Error.stack, dismissable: true}
                 Resolve()
