@@ -16,11 +16,11 @@ class EditorLinter
 
     @Subscriptions.add @Editor.onDidSave @lint.bind(@, false)
     @Subscriptions.add @Editor.onDidStopChanging @lint.bind(@, true)
-    @Subscriptions.add @Editor.onDidChangeCursorPosition ({newBufferPosition})=>
+    @Subscriptions.add @Editor.onDidChangeCursorPosition ({newBufferPosition}) =>
       @Linter.Messages = @Messages
       @Linter.View.updateBubble newBufferPosition
 
-  lint: (OnChange)->
+  lint: (OnChange) ->
     return if @progress OnChange
     @progress OnChange, true
     @lint true unless OnChange
@@ -39,7 +39,7 @@ class EditorLinter
           Trace: LinterTrace
         })
       )
-    Promise.all(Promises).then (Results)=>
+    Promise.all(Promises).then (Results) =>
       @progress OnChange, false
       Messages = []
       for Result in Results
@@ -69,14 +69,14 @@ class EditorLinter
         @InProgressFly = newValue
       else
         @InProgress = newValue
-  destroy:->
+  destroy: ->
     @Emitter.emit 'did-destroy'
     @Subscriptions.dispose()
 
-  onDidUpdate:(Callback)->
+  onDidUpdate: (Callback) ->
     @Emitter.on 'did-update', Callback
 
-  onDidDestroy:(Callback)->
+  onDidDestroy: (Callback) ->
     @Emitter.on 'did-destroy', Callback
 
 
