@@ -27,19 +27,7 @@ class EditorLinter
     @lint true unless OnChange
 
     Scopes = @Editor.scopeDescriptorForBufferPosition(@Editor.getCursorBufferPosition()).scopes
-    Promises = []
-
-    for Linter in @Linter.Linters
-      return if OnChange and not Linter.lintOnFly
-      return if (not OnChange) and Linter.lintOnFly
-      return unless (Scopes.filter (Entry) -> Linter.scopes.indexOf(Entry) isnt -1 ).length
-      Promises.push(
-        Linter.lint(@Editor, @Buffer, {
-          Error: LinterError,
-          Warning: LinterWarning,
-          Trace: LinterTrace
-        })
-      )
+    Promises = @lintResults OnChange, Scopes
     Promise.all(Promises).then (Results) =>
       @progress OnChange, false
       Messages = []
@@ -58,6 +46,20 @@ class EditorLinter
     .catch ->
       console.error arguments[0].stack
       @progress OnChange, false
+  lintResults: (OnChange, Scopes) ->
+    Promises = []
+    for Linter in @Linter.Linters
+      return if OnChange and not Linter.lintOnFly
+      return if (not OnChange) and Linter.lintOnFly
+      return unless (Scopes.filter (Entry) -> Linter.scopes.indexOf(Entry) isnt -1 ).length
+      Promises.push(
+        Linter.lint(@Editor, @Buffer, {
+          Error: LinterError,
+          Warning: LinterWarning,
+          Trace: LinterTrace
+        })
+      )
+    Promises
 
   progress: (onChange, newValue) ->
     if typeof newValue is 'undefined'
