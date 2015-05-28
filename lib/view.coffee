@@ -4,10 +4,6 @@
 Bubble = require './view-bubble'
 LeftTile = require './view-left-tile'
 
-#
-# When applying classes to views, we perform a substr on constructor name of the error,
-# so that LinterError becomes Error then we perform toLowerCase on it.
-#
 class LinterView extends EventEmitter
   constructor: (@Linter) ->
     super()
@@ -61,11 +57,11 @@ class LinterView extends EventEmitter
       Marker = TextEditor.markBufferRange [[P[0][0] - 1, P[0][1] - 1], [P[1][0] - 1, P[1][1]]], {invalidate: 'never'}
 
       @decorations.push TextEditor.decorateMarker(
-        Marker, type: 'line-number', class: 'line-number-' + Message.constructor.name.substr(6).toLowerCase()
+        Marker, type: 'line-number', class: 'line-number-' + Message.Type.toLowerCase()
       )
 
       @decorations.push TextEditor.decorateMarker(
-        Marker, type: 'highlight', class: 'highlight-' + Message.constructor.name.substr(6).toLowerCase()
+        Marker, type: 'highlight', class: 'highlight-' + Message.Type.toLowerCase()
       )
 
     @updateBubble(TextEditor.getCursors()[0].getBufferPosition())
@@ -87,8 +83,8 @@ class LinterView extends EventEmitter
     Ribbon = document.createElement 'span'
     Ribbon.classList.add 'badge'
     Ribbon.classList.add 'badge-flexible'
-    Ribbon.classList.add 'badge-' + Message.constructor.name.substr(6).toLowerCase()
-    Ribbon.textContent = Message.constructor.name.substr(6)
+    Ribbon.classList.add 'badge-' + Message.Type.toLowerCase()
+    Ribbon.textContent = Message.Type
 
     TheMessage = document.createElement('span')
     TheMessage.innerHTML = Message.Message
