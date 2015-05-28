@@ -13,19 +13,19 @@ class Linter
     @LintOnFly = true
     @Emitter = new Emitter
     @Subscriptions = new CompositeDisposable
-    @EditorLinters = {} # An object of Editor <--> Linter
+    @EditorLinters = new Map # An object of Editor <--> Linter
     @Linters = [] # I </3 coffee-script
     @Subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
       ActiveLinter = @getActiveEditorLinter()
       return unless ActiveLinter
-      ActiveLinter.lint(false)
+      ActiveLinter.lint false
     @Subscriptions.add atom.workspace.observeTextEditors (Editor) =>
       CurrentEditorLinter = new EditorLinter @, Editor
-      @EditorLinters[ Editor ] = CurrentEditorLinter
+      @EditorLinters.set Editor, CurrentEditorLinter
       @Emitter.emit 'linters-observe', CurrentEditorLinter
       Editor.onDidDestroy =>
         CurrentEditorLinter.destroy()
-        delete @EditorLinters[ CurrentEditorLinter ]
+        @EditorLinters.delete CurrentEditorLinter
 
   render: ->
     # Update `LeftTile` of `StatusBar`
@@ -41,13 +41,17 @@ class Linter
   getActiveEditorLinter: ->
     ActiveEditor = atom.workspace.getActiveTextEditor()
     return ActiveEditor unless ActiveEditor
-    return @EditorLinters[ ActiveEditor ]
+    return @EditorLinters.get ActiveEditor
 
   getLinter: (Editor) ->
-    return @EditorLinters[ Editor ]
+    return @EditorLinters.get Editor
 
   observeLinters: (Callback) ->
-    Callback(Linter) for Linter of @EditorLinters
+    `
+    for(Linter of this.EditorLinters){
+      Callback(Linter[1])
+    }
+    `
     @Emitter.on 'linters-observe', Callback
 
 module.exports = Linter
