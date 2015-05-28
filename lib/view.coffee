@@ -87,7 +87,10 @@ class LinterView extends EventEmitter
     Ribbon.textContent = Message.Type
 
     TheMessage = document.createElement('span')
-    TheMessage.innerHTML = Message.Message
+    if Message.HTML and Message.HTML.length
+      TheMessage.innerHTML = Message.HTML
+    else
+      TheMessage.textContent = Message.Message
 
     if Message.File
       Message.DisplayFile = Message.File
