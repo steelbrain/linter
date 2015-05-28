@@ -1,10 +1,11 @@
 {CompositeDisposable, Emitter} = require 'atom'
+Utils = require './utils'
 
 class EditorLinter
   constructor: (@Linter, @Editor) ->
     @InProgress = false
     @InProgressFly = false
-    @Messages = {}
+    @Messages = new Map
 
     @Emitter = new Emitter
     @Subscriptions = new CompositeDisposable
@@ -42,14 +43,14 @@ class EditorLinter
             RetVal = Linter.lint(@Editor, @Buffer, OnChange)
             if RetVal instanceof Promise
               RetVal.then (Results)=>
-                @Messages[Linter] = Results if Results instanceof Array
+                @Messages.set Linter, Results if Results instanceof Array
                 Resolve()
               .catch (Error)=>
-                delete @Messages[Linter] # Because it's emitting errors, it's messages will never be replaced unless we do so
+                @Messages.delete Linter
                 atom.notifications.addError "#{Error.message}", {detail: Error.stack, dismissable: true}
                 Resolve()
             else
-              @Messages[Linter] = RetVal if RetVal instanceof Array
+              @Messages.set Linter, Results if Results instanceof Array
               Resolve()
         ).then =>
           Messages = @getMessages()
@@ -72,8 +73,8 @@ class EditorLinter
         @InProgress = newValue
   getMessages: ->
     ToReturn = []
-    for i, Messages of @Messages
-      ToReturn = ToReturn.concat Messages
+    Utils.values(@Messages).forEach (Entry)->
+      ToReturn = ToReturn.concat Entry[1]
     ToReturn
 
   destroy: ->
