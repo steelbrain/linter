@@ -1,7 +1,5 @@
 {CompositeDisposable, Emitter} = require 'atom'
 
-{LinterTrace, LinterError, LinterWarning} = require './messages'
-
 class EditorLinter
   constructor: (@Linter, @Editor) ->
     @InProgress = false
@@ -41,11 +39,7 @@ class EditorLinter
       Promises.push(
         (
           new Promise (Resolve)=>
-            RetVal = Linter.lint(@Editor, @Buffer, {
-              Error: LinterError,
-              Warning: LinterWarning,
-              Trace: LinterTrace
-            })
+            RetVal = Linter.lint(@Editor, @Buffer, OnChange)
             if RetVal instanceof Promise
               RetVal.then (Results)=>
                 @Messages[Linter] = Results if Results instanceof Array
