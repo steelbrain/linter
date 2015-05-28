@@ -30,21 +30,41 @@ Linter-Plus expects an object like this from that function
 
 ```js
 {
-  scopes: ['.source.php'] # Replace it with a source of choice
-  lintOnFly: false # Replace to true for lint on fly
-  lint: function(TextEditor, TextBuffer, {Error, Warning, Trace}, wasTriggeredOnChange):array<Error> | Promise<array<Error>>
+  scopes: ['source.php'] # Replace it with a source of choice
+  lintOnFly: false # Replace to true for indicate your linter supports LintOnFly
+  lint: function(TextEditor, TextBuffer, wasTriggeredOnChange):array<Message> | Promise<array<Message>>
 }
 ```
 An error in the above example can be a `Warning` or `Error` provided to the lint function.
 
-#### API
+#### Error Object Shapes
 ```js
-class PlusTrace
-  constructor:(@Message, @File, @Position)
-class PlusError
-  constructor:(@Message, @File, @Position, @Trace)
-class PlusWarning
-  constructor:(@Message, @File, @Position, @Trace)
+// Error
+{
+  Type: "Error",
+  Message: ?String,
+  HTML: ?String,
+  File: String,
+  Position: ?Range,
+  Trace: array<Trace>
+}
+// Warning
+{
+  Type: "Warning",
+  Message: ?String,
+  HTML: ?String,
+  File: String,
+  Position: ?Range,
+  Trace: array<Trace>
+}
+// Trace
+{
+  Type: "Trace",
+  Message: ?String,
+  HTML: ?String,
+  File: String,
+  Position: ?Range
+}
 ```
 
 #### Why not use AtomLinter
