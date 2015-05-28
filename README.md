@@ -17,7 +17,7 @@ Registering a linter is a piece of cake. It provides three base classes `Error`,
 Add this to your package.json file
 ```js
 "providedServices": {
-  "linter.plus": {
+  "linter-plus": {
     "versions": {
       "0.1.0": "provideLinter"
     }
