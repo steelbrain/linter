@@ -7,10 +7,14 @@ class LinterView extends EventEmitter
   constructor: (@Linter) ->
     super()
     @Decorations = []
+    @Messages = []
+    @CountFile = 0
+    @CountProject = 0
     @BarCurrent = null
     @BarProject = null
     @BarStatus = null
     @Bubble = null
+    @Type = 'file'
     @Root = document.createElement 'div'
     @Root.id = 'linter-panel'
 
@@ -29,11 +33,11 @@ class LinterView extends EventEmitter
 
   updateBubble: (Point) ->
     @Bubble?.destroy()
-    return unless @Linter.Messages.length
+    return unless @Messages.length
     TextEditor = @Linter.ActiveEditor
     ActiveFile = TextEditor.getPath()
     Found = false
-    @Linter.Messages.forEach (Message) =>
+    @Messages.forEach (Message) =>
       return if Found
       return unless Message.File is ActiveFile
       return unless Message.Position
@@ -43,14 +47,35 @@ class LinterView extends EventEmitter
       Marker = TextEditor.markBufferRange LeRange, {invalidate: 'never'}
       @Bubble = TextEditor.decorateMarker Marker, type: 'overlay', item: Views.bubble(@, Message)
       Found = true
-
+  render: ->
+    @Messages = []
+    @CountFile = 0
+    @CountProject = 0
+    Values = @Linter.MessagesProject.values()
+    Value = Values.next()
+    while not Value.done
+      @Messages = @Messages.concat Value.value if @Type is 'project'
+      @CountProject += Value.value.length
+      Value = Values.next()
+    Values = @Linter.getActiveEditorLinter().Messages.values()
+    Value = Values.next()
+    while not Value.done
+      @Messages = @Messages.concat Value.value
+      @CountFile += Value.value.length
+      Value = Values.next()
+    if not @Messages.length
+      @Linter.ViewPanel.hide() if @Linter.ViewPanel.isVisible()
+      @remove()
+    else
+      @update()
+      @Linter.ViewPanel.show() unless @Linter.ViewPanel.isVisible()
   update: ->
     @Bubble?.destroy()
     @removeDecorations()
     @removeErrors()
     TextEditor = @Linter.ActiveEditor
     ActiveFile = TextEditor.getPath()
-    @Linter.Messages.forEach (Message) =>
+    @Messages.forEach (Message) =>
       Entry = @messageLine Message
       @Root.appendChild Entry
 
