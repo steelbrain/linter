@@ -96,10 +96,10 @@ class LinterView extends EventEmitter
     @BarStatus.Child.classList.add 'icon-check'
     @BarStatus.Child.textContent = 'No Errors'
     @Linter.StatusBar.addLeftTile
-      item: @BarCurrent,
+      item: @BarCurrent.Root,
       priority: -1001
     @Linter.StatusBar.addLeftTile
-      item: @BarProject,
+      item: @BarProject.Root,
       priority: -1000
     @Linter.StatusBar.addLeftTile
       item: @BarStatus.Root
