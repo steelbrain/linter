@@ -19,6 +19,9 @@ class LinterView extends EventEmitter
     @Root.id = 'linter-panel'
 
   remove: ->
+    @Messages = []
+    @CountFile = 0
+    @CountProject = 0
     @Bubble?.destroy()
     @removeDecorations()
     @Root.innerHTML = ''
@@ -58,12 +61,15 @@ class LinterView extends EventEmitter
     while not Value.done
       @Messages = @Messages.concat Value.value
       @CountFile += Value.value.length
+      @CountProject += Value.value.length
       Value = Values.next()
     if not @Messages.length
       @Linter.ViewPanel.hide() if @Linter.ViewPanel.isVisible()
       @remove()
+      @updateTiles()
     else
       @update()
+      @updateTiles()
       @Linter.ViewPanel.show() unless @Linter.ViewPanel.isVisible()
   update: ->
     @Bubble?.destroy()
@@ -88,6 +94,22 @@ class LinterView extends EventEmitter
       )
 
     @updateBubble(TextEditor.getCursors()[0].getBufferPosition())
+
+  updateTiles: ->
+    @BarCurrent.Child.textContent = @CountFile.toString()
+    @BarProject.Child.textContent = @CountProject.toString()
+    if @Messages.length
+      @BarStatus.Root.classList.remove 'linter-success'
+      @BarStatus.Root.classList.add 'linter-error'
+      @BarStatus.Child.classList.remove 'icon-check'
+      @BarStatus.Child.classList.add 'icon-x'
+      @BarStatus.Child.textContent = if @Messages.length is 1 then '1 Error' else @Messages.length + ' Errors'
+    else
+      @BarStatus.Root.classList.remove 'linter-error'
+      @BarStatus.Root.classList.add 'linter-success'
+      @BarStatus.Child.classList.remove 'icon-x'
+      @BarStatus.Child.classList.add 'icon-check'
+      @BarStatus.Child.textContent = 'No Errors'
 
   initTiles: ->
     @BarCurrent = Views.currentFile(this)
