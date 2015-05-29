@@ -1,5 +1,4 @@
 {CompositeDisposable, Emitter} = require 'atom'
-Utils = require './utils'
 
 class EditorLinter
   constructor: (@Linter, @Editor) ->

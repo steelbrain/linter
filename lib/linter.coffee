@@ -1,7 +1,6 @@
 Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
 EditorLinter = require './editor-linter'
-Utils = require './utils'
 
 class Linter
 
@@ -50,8 +49,11 @@ class Linter
     return @EditorLinters.get Editor
 
   observeLinters: (Callback) ->
-    Utils.values(@EditorLinters).forEach (Entry)->
-      Callback(Entry[1])
+    Values = @EditorLinters.values()
+    Value = Values.next()
+    while not Value.done
+      Callback(Value.value)
+      Value = Values.next()
     @Emitter.on 'linters-observe', Callback
 
 module.exports = Linter
