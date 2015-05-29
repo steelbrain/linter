@@ -43,14 +43,18 @@ class EditorLinter
             RetVal = Linter.lint(@Editor, @Buffer, OnChange)
             if RetVal instanceof Promise
               RetVal.then (Results)=>
-                @Messages.set Linter, Results if Results instanceof Array
+                if Results instanceof Array
+                  if Linter.scope is 'global' then @Linter.MessagesGlobal.set Linter, Results
+                  else @Messages.set Linter, Results
                 Resolve()
               .catch (Error)=>
                 @Messages.delete Linter
                 atom.notifications.addError "#{Error.message}", {detail: Error.stack, dismissable: true}
                 Resolve()
             else
-              @Messages.set Linter, Results if Results instanceof Array
+              if RetVal instanceof Array
+                if Linter.scope is 'global' then @Linter.MessagesGlobal.set Linter, RetVal
+                else @Messages.set Linter, RetVal
               Resolve()
         ).then =>
           Messages = @getMessages()

@@ -9,6 +9,7 @@ class Linter
     @View = new (require './view')(this)
     @ViewPanel = atom.workspace.addBottomPanel item: @View.root, visible: false
     @StatusBar = null
+    @MessagesGlobal = new Map
     @Messages = [] # A temp array to be used by views
 
     @LintOnFly = true
