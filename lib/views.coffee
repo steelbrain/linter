@@ -1,4 +1,4 @@
-Tiles = {
+Views = {
   currentFile:(View) ->
     Root = document.createElement 'div'
     Root.innerHTML = 'Current File'
@@ -26,5 +26,13 @@ Tiles = {
     Child.classList.add 'icon'
     Root.appendChild Child
     return {Root, Child}
+  bubble: (View, Message)->
+   Root = document.createElement 'div'
+   Root.id = 'linter-inline'
+   Root.appendChild View.messageLine Message
+   if Message.Trace and Message.Trace.length
+     Message.Trace.forEach (Trace)->
+       Root.appendChild View.messageLine Trace
+   return Root
 }
-module.exports = {Tiles}
+module.exports = Views

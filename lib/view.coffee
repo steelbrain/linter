@@ -10,9 +10,10 @@ class LinterView extends EventEmitter
     @Decorations = []
     @BarCurrent = null
     @BarProject = null
+    @BarStatus = null
+    @Bubble = null
     @Root = document.createElement 'div'
     @Root.id = 'linter-panel'
-    @Bubble = null
 
   remove: ->
     @Bubble?.destroy()
@@ -41,7 +42,7 @@ class LinterView extends EventEmitter
       LeRange = new Range([P[0][0] - 1, P[0][1] - 1], [P[1][0] - 1, P[1][1]])
       return unless LeRange.containsPoint Point
       Marker = TextEditor.markBufferRange LeRange, {invalidate: 'never'}
-      @Bubble = TextEditor.decorateMarker Marker, type: 'overlay', item: new Bubble(@, Message)
+      @Bubble = TextEditor.decorateMarker Marker, type: 'overlay', item: Views.bubble(@, Message)
       Found = true
 
   update: ->
@@ -69,9 +70,9 @@ class LinterView extends EventEmitter
     @updateBubble(TextEditor.getCursors()[0].getBufferPosition())
 
   initTiles: ->
-    @BarCurrent = Views.Tiles.currentFile(this)
-    @BarProject = Views.Tiles.wholeProject(this)
-    @BarStatus = Views.Tiles.status()
+    @BarCurrent = Views.currentFile(this)
+    @BarProject = Views.wholeProject(this)
+    @BarStatus = Views.status()
     @BarStatus.Child.classList.add 'icon-check'
     @BarStatus.Child.textContent = 'No Errors'
     @Linter.StatusBar.addLeftTile
