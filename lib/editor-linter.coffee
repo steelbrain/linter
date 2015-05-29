@@ -48,7 +48,8 @@ class EditorLinter
                   else @Messages.set Linter, Results
                 Resolve()
               .catch (Error)=>
-                @Messages.delete Linter
+                if Linter.scope is 'global' then @Linter.MessagesGlobal.delete Linter
+                else @Messages.delete Linter
                 atom.notifications.addError "#{Error.message}", {detail: Error.stack, dismissable: true}
                 Resolve()
             else
