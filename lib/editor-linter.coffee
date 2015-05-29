@@ -14,7 +14,6 @@ class EditorLinter
     @Subscriptions.add(@Editor.onDidSave @lint.bind(@, false))
     @Subscriptions.add(@Editor.onDidStopChanging @lint.bind(@, true)) if @Linter.LintOnFly
     @Subscriptions.add(@Editor.onDidChangeCursorPosition ({newBufferPosition}) =>
-      @Linter.Messages = @getMessages()
       @Linter.View.updateBubble newBufferPosition
     )
 
@@ -58,9 +57,7 @@ class EditorLinter
                 else @Messages.set Linter, RetVal
               Resolve()
         ).then =>
-          Messages = @getMessages()
-          @Emitter.emit 'did-update', Messages
-          @Linter.Messages = Messages
+          @Emitter.emit 'did-update'
           @Linter.render() if @Editor is atom.workspace.getActiveTextEditor()
       )
     Promises
@@ -76,11 +73,6 @@ class EditorLinter
         @InProgressFly = newValue
       else
         @InProgress = newValue
-  getMessages: ->
-    ToReturn = []
-    Utils.values(@Messages).forEach (Entry)->
-      ToReturn = ToReturn.concat Entry[1]
-    ToReturn
 
   destroy: ->
     @Emitter.emit 'did-destroy'
