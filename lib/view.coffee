@@ -2,13 +2,15 @@
 {Range} = require 'atom'
 
 Bubble = require './view-bubble'
-LeftTile = require './view-left-tile'
+Tiles = require './view-tiles'
 
 class LinterView extends EventEmitter
   constructor: (@Linter) ->
     super()
     @decorations = []
     @root = document.createElement 'div'
+    @BarCurrent = null
+    @BarProject = null
     @root.id = 'linter-panel'
     @bubble = null
 
@@ -66,16 +68,21 @@ class LinterView extends EventEmitter
 
     @updateBubble(TextEditor.getCursors()[0].getBufferPosition())
 
-  updateLeftTile: (nbMessages) ->
-    # Remove old tile
-    @leftTile?.destroy?()
-    @leftTile = null
-
-    # Create new tile with `@Linter.Messages` length
-    el = new LeftTile(nbMessages)
-    @leftTile = @Linter.StatusBar.addLeftTile
-      item: el
-      priority: -100
+  initTiles: ->
+    @BarCurrent = Tiles.currentFile(this)
+    @BarProject = Tiles.wholeProject(this)
+    @BarStatus = Tiles.status()
+    @BarStatus.Child.classList.add 'icon-check'
+    @BarStatus.Child.textContent = 'No Errors'
+    @Linter.StatusBar.addLeftTile
+      item: @BarCurrent,
+      priority: -1001
+    @Linter.StatusBar.addLeftTile
+      item: @BarProject,
+      priority: -1000
+    @Linter.StatusBar.addLeftTile
+      item: @BarStatus.Root
+      priority: -999
 
   messageLine: (Message) ->
     Entry = document.createElement 'div'
