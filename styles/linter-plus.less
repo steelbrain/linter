@@ -42,3 +42,20 @@ atom-text-editor::shadow .highlight-warning{
 .linter-success {
   color: @text-color-success;
 }
+
+.linter-tab{
+  display: inline-block;
+  background: @button-background-color;
+  border-radius: 7px;
+  padding: 0 10px;
+  color: @text-color;
+  margin-right: 1em;
+  cursor: pointer;
+  line-height: 2.2em;
+}
+.linter-tab.active{
+  color: @text-color-selected;
+  background: @button-background-color-selected;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
