@@ -47,24 +47,12 @@ class LinterView extends EventEmitter
       @Bubble = TextEditor.decorateMarker Marker, type: 'overlay', item: Views.bubble(@, Message)
       Found = true
   render: ->
+    return unless @Linter.ActiveEditor # When we don't have any editor
     @Messages = []
     @CountFile = 0
     @CountProject = 0
-    Values = @Linter.MessagesProject.values()
-    Value = Values.next()
-    while not Value.done
-      @Messages = @Messages.concat Value.value if @Type is 'project'
-      @CountProject += Value.value.length
-      Value = Values.next()
-    ActiveLinter = @Linter.getActiveEditorLinter()
-    return unless Values
-    Values = ActiveLinter.Messages.values()
-    Value = Values.next()
-    while not Value.done
-      @Messages = @Messages.concat Value.value
-      @CountFile += Value.value.length
-      @CountProject += Value.value.length
-      Value = Values.next()
+    @renderUpdateMessages(@Linter.MessagesProject.values())
+    @renderUpdateMessages(@Linter.getActiveEditorLinter().Messages.values())
     if not @Messages.length
       @Linter.ViewPanel.hide() if @Linter.ViewPanel.isVisible()
       @remove()
@@ -73,6 +61,19 @@ class LinterView extends EventEmitter
       @update()
       @updateTiles()
       @Linter.ViewPanel.show() unless @Linter.ViewPanel.isVisible()
+  renderUpdateMessages: (Values)->
+    isProject = @Type is 'project'
+    ActiveFile = @Linter.ActiveEditor.getPath()
+    Value = Values.next()
+    while not Value.done
+      Value.value.forEach (Message)=>
+        if (not (isProject or Message.File)) or Message.File is ActiveFile
+          @Messages.push Message
+          @CountFile = @CountFile + 1
+        else if isProject
+          @Messages.push Message
+        @CountProject = @CountProject + 1
+      Value = Values.next()
   update: ->
     @Bubble?.destroy()
     @removeDecorations()
