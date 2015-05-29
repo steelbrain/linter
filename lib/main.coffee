@@ -17,6 +17,7 @@ module.exports =
 
   consumeStatusBar: (statusBar) ->
     @Instance.StatusBar = statusBar
+    @Instance.View.initTiles()
 
   provideLinter: ->
     @Linter
