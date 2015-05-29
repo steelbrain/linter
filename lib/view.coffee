@@ -167,6 +167,6 @@ class LinterView extends EventEmitter
   onclick: (File, Position) ->
     atom.workspace.open(File).then =>
       return unless Position
-      @Linter.ActiveEditor.setCursorBufferPosition [Position[0][0] - 1, Position[0][1] - 1]
+      atom.workspace.getActiveTextEditor().setCursorBufferPosition [Position[0][0] - 1, Position[0][1] - 1]
 
 module.exports = LinterView
