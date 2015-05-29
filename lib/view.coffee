@@ -1,7 +1,6 @@
 {EventEmitter} = require 'events'
 {Range} = require 'atom'
 
-Bubble = require './view-bubble'
 Views = require './views'
 
 class LinterView extends EventEmitter
@@ -25,8 +24,8 @@ class LinterView extends EventEmitter
       try decoration.destroy()
 
   removeErrors: ->
-    while this.root.firstChild
-      this.root.removeChild this.root.firstChild
+    while this.Root.firstChild
+      this.Root.removeChild this.Root.firstChild
 
   updateBubble: (Point) ->
     @Bubble?.destroy()
