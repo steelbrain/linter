@@ -19,7 +19,7 @@ class EditorLinter
 
   lint: (OnChange) ->
     return if @progress OnChange
-    return if @Editor isnt atom.workspace.getActiveTextEditor()
+    return if @Editor isnt @Linter.ActiveEditor
     @progress OnChange, true
     @lint true unless OnChange
 
@@ -58,7 +58,7 @@ class EditorLinter
               Resolve()
         ).then =>
           @Emitter.emit 'did-update'
-          @Linter.render() if @Editor is atom.workspace.getActiveTextEditor()
+          @Linter.render() if @Editor is @Linter.ActiveEditor
       )
     Promises
 

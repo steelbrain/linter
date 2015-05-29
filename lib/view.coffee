@@ -28,7 +28,7 @@ class LinterView extends EventEmitter
   updateBubble: (Point) ->
     @bubble?.destroy()
     return unless @Linter.Messages.length
-    TextEditor = atom.workspace.getActiveTextEditor()
+    TextEditor = @Linter.ActiveEditor
     ActiveFile = TextEditor.getPath()
     Found = false
     @Linter.Messages.forEach (Message) =>
@@ -46,7 +46,7 @@ class LinterView extends EventEmitter
     @bubble?.destroy()
     @removeDecorations()
     @removeErrors()
-    TextEditor = atom.workspace.getActiveTextEditor()
+    TextEditor = @Linter.ActiveEditor
     ActiveFile = TextEditor.getPath()
     @Linter.Messages.forEach (Message) =>
       Entry = @messageLine Message
@@ -115,8 +115,8 @@ class LinterView extends EventEmitter
     return Entry
 
   onclick: (File, Position) ->
-    atom.workspace.open(File).then ->
+    atom.workspace.open(File).then =>
       return unless Position
-      atom.workspace.getActiveTextEditor().setCursorBufferPosition [Position[0][0] - 1, Position[0][1] - 1]
+      @Linter.ActiveEditor.setCursorBufferPosition [Position[0][0] - 1, Position[0][1] - 1]
 
 module.exports = LinterView

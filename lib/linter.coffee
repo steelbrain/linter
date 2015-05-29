@@ -11,13 +11,15 @@ class Linter
     @StatusBar = null
     @MessagesGlobal = new Map
     @Messages = [] # A temp array to be used by views
+    @ActiveEditor = atom.workspace.getActiveTextEditor()
 
     @LintOnFly = true
     @Emitter = new Emitter
     @Subscriptions = new CompositeDisposable
     @EditorLinters = new Map # An object of Editor <--> Linter
     @Linters = [] # I </3 coffee-script
-    @Subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
+    @Subscriptions.add atom.workspace.onDidChangeActivePaneItem (Editor)=>
+      @ActiveEditor = Editor
       ActiveLinter = @getActiveEditorLinter()
       return unless ActiveLinter
       ActiveLinter.lint false
@@ -41,9 +43,8 @@ class Linter
       @ViewPanel.show() unless @ViewPanel.isVisible()
 
   getActiveEditorLinter: ->
-    ActiveEditor = atom.workspace.getActiveTextEditor()
-    return ActiveEditor unless ActiveEditor
-    return @EditorLinters.get ActiveEditor
+    return null unless @ActiveEditor
+    return @EditorLinters.get @ActiveEditor
 
   getLinter: (Editor) ->
     return @EditorLinters.get Editor
