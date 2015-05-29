@@ -19,9 +19,6 @@ class LinterView extends EventEmitter
     @Root.id = 'linter-panel'
 
   remove: ->
-    @Messages = []
-    @CountFile = 0
-    @CountProject = 0
     @Bubble?.destroy()
     @removeDecorations()
     @Root.innerHTML = ''
