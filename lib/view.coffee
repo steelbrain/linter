@@ -21,15 +21,11 @@ class LinterView extends EventEmitter
   remove: ->
     @Bubble?.destroy()
     @removeDecorations()
-    @removeErrors()
+    @Root.innerHTML = ''
 
   removeDecorations: ->
     @Decorations.forEach (decoration) ->
       try decoration.destroy()
-
-  removeErrors: ->
-    while this.Root.firstChild
-      this.Root.removeChild this.Root.firstChild
 
   updateBubble: (Point) ->
     @Bubble?.destroy()
@@ -72,7 +68,7 @@ class LinterView extends EventEmitter
   update: ->
     @Bubble?.destroy()
     @removeDecorations()
-    @removeErrors()
+    @Root.innerHTML = ''
     TextEditor = @Linter.ActiveEditor
     ActiveFile = TextEditor.getPath()
     @Messages.forEach (Message) =>
