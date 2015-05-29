@@ -31,8 +31,6 @@ class Linter
         @EditorLinters.delete CurrentEditorLinter
 
   render: ->
-    # Update `LeftTile` of `StatusBar`
-    @View.updateLeftTile @Messages.length
 
     if not @Messages.length
       @ViewPanel.hide() if @ViewPanel.isVisible()
