@@ -2,7 +2,7 @@
 {Range} = require 'atom'
 
 Bubble = require './view-bubble'
-Tiles = require './view-tiles'
+Views = require './views'
 
 class LinterView extends EventEmitter
   constructor: (@Linter) ->
@@ -69,9 +69,9 @@ class LinterView extends EventEmitter
     @updateBubble(TextEditor.getCursors()[0].getBufferPosition())
 
   initTiles: ->
-    @BarCurrent = Tiles.currentFile(this)
-    @BarProject = Tiles.wholeProject(this)
-    @BarStatus = Tiles.status()
+    @BarCurrent = Views.Tiles.currentFile(this)
+    @BarProject = Views.Tiles.wholeProject(this)
+    @BarStatus = Views.Tiles.status()
     @BarStatus.Child.classList.add 'icon-check'
     @BarStatus.Child.textContent = 'No Errors'
     @Linter.StatusBar.addLeftTile

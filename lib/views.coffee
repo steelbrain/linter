@@ -27,4 +27,4 @@ Tiles = {
     Root.appendChild Child
     return {Root, Child}
 }
-module.exports = Tiles
+module.exports = {Tiles}
