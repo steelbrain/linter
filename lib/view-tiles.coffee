@@ -1,15 +1,3 @@
-{View} = require 'space-pen'
-
-class StatusTile extends View
-  @content: (numErrors) ->
-    if numErrors
-      @div class: 'linter-error inline-block', =>
-        @span class: 'icon icon-x', =>
-          @text if numErrors is 1 then " #{numErrors} error" else " #{numErrors} errors"
-    else
-      @div class: 'linter-success inline-block', =>
-        @span class: 'icon icon-check', =>
-          @text ' No errors'
 Tiles = {
   currentFile:(View) ->
     Root = document.createElement 'div'
@@ -30,5 +18,13 @@ Tiles = {
       Root.classList.add 'active'
       View.update()
     Root
+  status: ->
+    Root = document.createElement 'div'
+    Root.classList.add 'linter-success'
+    Root.classList.add 'inline-block'
+    Child = document.createElement 'span'
+    Child.classList.add 'icon'
+    Root.appendChild Child
+    return {Root, Child}
 }
-module.exports = {StatusTile, Tiles}
+module.exports = Tiles
