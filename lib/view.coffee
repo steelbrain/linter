@@ -56,7 +56,9 @@ class LinterView extends EventEmitter
       @Messages = @Messages.concat Value.value if @Type is 'project'
       @CountProject += Value.value.length
       Value = Values.next()
-    Values = @Linter.getActiveEditorLinter().Messages.values()
+    ActiveLinter = @Linter.getActiveEditorLinter()
+    return unless Values
+    Values = ActiveLinter.Messages.values()
     Value = Values.next()
     while not Value.done
       @Messages = @Messages.concat Value.value
