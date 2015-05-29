@@ -42,22 +42,22 @@ class EditorLinter
             if RetVal instanceof Promise
               RetVal.then (Results)=>
                 if Results instanceof Array
-                  if Linter.scope is 'global' then @Linter.MessagesGlobal.set Linter, Results
+                  if Linter.scope is 'project' then @Linter.MessagesProject.set Linter, Results
                   else @Messages.set Linter, Results
                 Resolve()
               .catch (Error)=>
-                if Linter.scope is 'global' then @Linter.MessagesGlobal.delete Linter
+                if Linter.scope is 'project' then @Linter.MessagesProject.delete Linter
                 else @Messages.delete Linter
                 atom.notifications.addError "#{Error.message}", {detail: Error.stack, dismissable: true}
                 Resolve()
             else
               if RetVal instanceof Array
-                if Linter.scope is 'global' then @Linter.MessagesGlobal.set Linter, RetVal
+                if Linter.scope is 'project' then @Linter.MessagesProject.set Linter, RetVal
                 else @Messages.set Linter, RetVal
               Resolve()
         ).then =>
           @Emitter.emit 'did-update'
-          @Linter.render() if @Editor is @Linter.ActiveEditor
+          @Linter.View.render() if @Editor is @Linter.ActiveEditor
       )
     Promises
 

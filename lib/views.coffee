@@ -7,7 +7,8 @@ Views = {
     Root.addEventListener 'click', ->
       View.BarProject.classList.remove 'active'
       Root.classList.add 'active'
-      View.update()
+      View.Type = 'file'
+      View.render()
     Root
   wholeProject: (View)->
     Root = document.createElement 'div'
@@ -16,7 +17,8 @@ Views = {
     Root.addEventListener 'click', ->
       View.BarCurrent.classList.remove 'active'
       Root.classList.add 'active'
-      View.update()
+      View.Type = 'project'
+      View.render()
     Root
   status: ->
     Root = document.createElement 'div'

@@ -8,8 +8,7 @@ class Linter
     @View = new (require './view')(this)
     @ViewPanel = atom.workspace.addBottomPanel item: @View.Root, visible: false
     @StatusBar = null
-    @MessagesGlobal = new Map
-    @Messages = [] # A temp array to be used by views
+    @MessagesProject = new Map
     @ActiveEditor = atom.workspace.getActiveTextEditor()
 
     @LintOnFly = true
@@ -29,15 +28,6 @@ class Linter
       Editor.onDidDestroy =>
         CurrentEditorLinter.destroy()
         @EditorLinters.delete CurrentEditorLinter
-
-  render: ->
-
-    if not @Messages.length
-      @ViewPanel.hide() if @ViewPanel.isVisible()
-      @View.remove()
-    else
-      @View.update()
-      @ViewPanel.show() unless @ViewPanel.isVisible()
 
   getActiveEditorLinter: ->
     return null unless @ActiveEditor
