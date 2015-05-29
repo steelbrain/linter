@@ -7,20 +7,20 @@ Tiles = require './view-tiles'
 class LinterView extends EventEmitter
   constructor: (@Linter) ->
     super()
-    @decorations = []
-    @root = document.createElement 'div'
+    @Decorations = []
     @BarCurrent = null
     @BarProject = null
-    @root.id = 'linter-panel'
-    @bubble = null
+    @Root = document.createElement 'div'
+    @Root.id = 'linter-panel'
+    @Bubble = null
 
   remove: ->
-    @bubble?.destroy()
+    @Bubble?.destroy()
     @removeDecorations()
     @removeErrors()
 
   removeDecorations: ->
-    @decorations.forEach (decoration) ->
+    @Decorations.forEach (decoration) ->
       try decoration.destroy()
 
   removeErrors: ->
@@ -28,7 +28,7 @@ class LinterView extends EventEmitter
       this.root.removeChild this.root.firstChild
 
   updateBubble: (Point) ->
-    @bubble?.destroy()
+    @Bubble?.destroy()
     return unless @Linter.Messages.length
     TextEditor = @Linter.ActiveEditor
     ActiveFile = TextEditor.getPath()
@@ -41,28 +41,28 @@ class LinterView extends EventEmitter
       LeRange = new Range([P[0][0] - 1, P[0][1] - 1], [P[1][0] - 1, P[1][1]])
       return unless LeRange.containsPoint Point
       Marker = TextEditor.markBufferRange LeRange, {invalidate: 'never'}
-      @bubble = TextEditor.decorateMarker Marker, type: 'overlay', item: new Bubble(@, Message)
+      @Bubble = TextEditor.decorateMarker Marker, type: 'overlay', item: new Bubble(@, Message)
       Found = true
 
   update: ->
-    @bubble?.destroy()
+    @Bubble?.destroy()
     @removeDecorations()
     @removeErrors()
     TextEditor = @Linter.ActiveEditor
     ActiveFile = TextEditor.getPath()
     @Linter.Messages.forEach (Message) =>
       Entry = @messageLine Message
-      @root.appendChild Entry
+      @Root.appendChild Entry
 
       return if Message.File isnt ActiveFile or not Message.Position
       P = Message.Position
       Marker = TextEditor.markBufferRange [[P[0][0] - 1, P[0][1] - 1], [P[1][0] - 1, P[1][1]]], {invalidate: 'never'}
 
-      @decorations.push TextEditor.decorateMarker(
+      @Decorations.push TextEditor.decorateMarker(
         Marker, type: 'line-number', class: 'line-number-' + Message.Type.toLowerCase()
       )
 
-      @decorations.push TextEditor.decorateMarker(
+      @Decorations.push TextEditor.decorateMarker(
         Marker, type: 'highlight', class: 'highlight-' + Message.Type.toLowerCase()
       )
 
