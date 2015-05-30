@@ -16,7 +16,7 @@ class Linter
     @Subscriptions = new CompositeDisposable
     @EditorLinters = new Map # An object of Editor <--> Linter
     @Linters = [] # I </3 coffee-script
-    @Subscriptions.add atom.workspace.onDidChangeActivePaneItem (Editor)=>
+    @Subscriptions.add atom.workspace.onDidChangeActivePaneItem (Editor) =>
       @ActiveEditor = Editor
       ActiveLinter = @getActiveEditorLinter()
       return unless ActiveLinter

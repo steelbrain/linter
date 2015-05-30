@@ -31,21 +31,21 @@ class EditorLinter
       @progress OnChange, false
   lintResults: (OnChange, Scopes) ->
     Promises = []
-    @Linter.Linters.forEach (Linter)=>
+    @Linter.Linters.forEach (Linter) =>
       return if OnChange and not Linter.lintOnFly
       return if (not OnChange) and Linter.lintOnFly
       return unless (Scopes.filter (Entry) -> Linter.scopes.indexOf(Entry) isnt -1 ).length
       Promises.push(
         (
-          new Promise (Resolve)=>
+          new Promise (Resolve) =>
             RetVal = Linter.lint(@Editor, @Buffer, OnChange)
             if RetVal instanceof Promise
-              RetVal.then (Results)=>
+              RetVal.then (Results) =>
                 if Results instanceof Array
                   if Linter.scope is 'project' then @Linter.MessagesProject.set Linter, Results
                   else @Messages.set Linter, Results
                 Resolve()
-              .catch (Error)=>
+              .catch (Error) =>
                 if Linter.scope is 'project' then @Linter.MessagesProject.delete Linter
                 else @Messages.delete Linter
                 atom.notifications.addError "#{Error.message}", {detail: Error.stack, dismissable: true}

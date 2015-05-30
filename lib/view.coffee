@@ -59,12 +59,12 @@ class LinterView extends EventEmitter
       @update()
       @updateTiles()
       @Linter.ViewPanel.show() unless @Linter.ViewPanel.isVisible()
-  renderUpdateMessages: (Values)->
+  renderUpdateMessages: (Values) ->
     isProject = @Type is 'project'
     ActiveFile = @Linter.ActiveEditor.getPath()
     Value = Values.next()
     while not Value.done
-      Value.value.forEach (Message)=>
+      Value.value.forEach (Message) =>
         if (not (isProject or Message.File)) or Message.File is ActiveFile
           @Messages.push Message
           @MessagesCurrentFile.push Message
@@ -167,7 +167,7 @@ class LinterView extends EventEmitter
     return Entry
 
   onclick: (File, Position) ->
-    atom.workspace.open(File).then =>
+    atom.workspace.open(File).then ->
       return unless Position
       atom.workspace.getActiveTextEditor().setCursorBufferPosition [Position[0][0] - 1, Position[0][1] - 1]
 
