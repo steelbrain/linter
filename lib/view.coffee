@@ -80,7 +80,7 @@ class LinterView extends EventEmitter
     TextEditor = @Linter.ActiveEditor
     ActiveFile = TextEditor.getPath()
     @Messages.forEach (Message) =>
-      Entry = @messageLine Message
+      Entry = @messageLine Message, (@MessagesCurrentFile.indexOf(Message) is -1 or @Type is 'project')
       @Root.appendChild Entry
 
       return if Message.File isnt ActiveFile or not Message.Position
@@ -129,7 +129,7 @@ class LinterView extends EventEmitter
       item: @BarStatus.Root
       priority: -999
 
-  messageLine: (Message) ->
+  messageLine: (Message, addPath = true) ->
     Entry = document.createElement 'div'
 
     Ribbon = document.createElement 'span'
@@ -155,9 +155,9 @@ class LinterView extends EventEmitter
       File.addEventListener 'click', @onclick.bind(null, Message.File, Message.Position)
       if Message.Position
         File.textContent =
-          'at line ' + Message.Position[0][0] + ' col ' + Message.Position[0][1] + ' in ' + Message.DisplayFile
-      else
-        File.textContent = 'in ' + Message.DisplayFile
+          'at line ' + Message.Position[0][0] + ' col ' + Message.Position[0][1] + ' '
+      if addPath
+        File.textContent += 'in ' + Message.DisplayFile
     else
       File = null
 
