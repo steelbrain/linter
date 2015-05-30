@@ -7,6 +7,7 @@ class LinterView extends EventEmitter
   constructor: (@Linter) ->
     super()
     @Decorations = []
+    @MessagesCurrentFile = []
     @Messages = []
     @CountFile = 0
     @CountProject = 0
@@ -66,6 +67,7 @@ class LinterView extends EventEmitter
       Value.value.forEach (Message)=>
         if (not (isProject or Message.File)) or Message.File is ActiveFile
           @Messages.push Message
+          @MessagesCurrentFile.push Message
           @CountFile = @CountFile + 1
         else if isProject
           @Messages.push Message
