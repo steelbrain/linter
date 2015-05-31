@@ -4,10 +4,6 @@ class LinterView
   constructor: (@Linter) ->
     @Messages = []
     @Bubble = null
-    @Type = 'file'
-
-  remove: ->
-    @Bubble?.destroy()
 
   updateBubble: (Point) ->
     @Bubble?.destroy()
