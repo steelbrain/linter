@@ -18,10 +18,11 @@ class Linter
     @Subscriptions = new CompositeDisposable
     @EditorLinters = new Map # An object of Editor <--> Linter
     @Linters = [] # I </3 coffee-script
-    window.tmp = Panel
     @Subscriptions.add atom.views.addViewProvider
       modelConstructor: Panel
       viewConstructor: PanelView
+    @Panel = new Panel this
+    @Panel.registerView atom.views.getView @Panel
     @Subscriptions.add atom.workspace.onDidChangeActivePaneItem (Editor) =>
       @ActiveEditor = Editor
       ActiveLinter = @getActiveEditorLinter()

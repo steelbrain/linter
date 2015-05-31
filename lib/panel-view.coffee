@@ -1,6 +1,3 @@
 class PanelView extends HTMLElement
-  register: (Model)->
-    @Model = Model
-    @Model.View = this
-
+  constructor: ->
 module.exports = PanelView
