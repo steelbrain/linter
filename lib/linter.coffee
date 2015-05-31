@@ -1,21 +1,35 @@
 Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
+LinterView = require './linter-view'
+Bubble = require './bubble'
+Panel = require './panel'
+PanelView = require './panel-view'
+Bottom = require './bottom'
 EditorLinter = require './editor-linter'
 
 class Linter
 
   constructor: ->
-    @View = new (require './view')(this)
-    @ViewPanel = atom.workspace.addBottomPanel item: @View.root, visible: false
-    @StatusBar = null
-    @Messages = [] # A temp array to be used by views
-
-    @LintOnFly = true
-    @Emitter = new Emitter
     @Subscriptions = new CompositeDisposable
-    @EditorLinters = new Map # An object of Editor <--> Linter
-    @Linters = [] # I </3 coffee-script
-    @Subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
+    @LintOnFly = true
+
+    @Emitter = new Emitter
+    @View = new LinterView this
+    @Bottom = new Bottom this
+    @Bubble = new Bubble this
+    @StatusBar = null
+    @MessagesProject = new Map
+    @ActiveEditor = atom.workspace.getActiveTextEditor()
+    @EditorLinters = new Map
+    @Linters = []
+
+    @Subscriptions.add atom.views.addViewProvider Panel, (Model)=>
+      @PanelView = ( new PanelView() ).initialize(Model, @)
+    @Panel = new Panel this
+    @PanelModal = atom.workspace.addBottomPanel item: @Panel, visible: false
+
+    @Subscriptions.add atom.workspace.onDidChangeActivePaneItem (Editor) =>
+      @ActiveEditor = Editor
       ActiveLinter = @getActiveEditorLinter()
       return unless ActiveLinter
       ActiveLinter.lint false
@@ -27,31 +41,30 @@ class Linter
         CurrentEditorLinter.destroy()
         @EditorLinters.delete CurrentEditorLinter
 
-  render: ->
-    # Update `LeftTile` of `StatusBar`
-    @View.updateLeftTile @Messages.length
-
-    if not @Messages.length
-      @ViewPanel.hide() if @ViewPanel.isVisible()
-      @View.remove()
-    else
-      @View.update()
-      @ViewPanel.show() unless @ViewPanel.isVisible()
-
   getActiveEditorLinter: ->
-    ActiveEditor = atom.workspace.getActiveTextEditor()
-    return ActiveEditor unless ActiveEditor
-    return @EditorLinters.get ActiveEditor
+    return null unless @ActiveEditor
+    return @EditorLinters.get @ActiveEditor
 
   getLinter: (Editor) ->
     return @EditorLinters.get Editor
 
+  eachLinter: (Callback)->
+    Values = @EditorLinters.values()
+    Value = Values.next()
+    while not Value.done
+      Callback(Value.value)
+      Value = Values.next()
   observeLinters: (Callback) ->
-    `
-    for(Linter of this.EditorLinters){
-      Callback(Linter[1])
-    }
-    `
+    @eachLinter Callback
     @Emitter.on 'linters-observe', Callback
+
+  deactivate: ->
+    @Subscriptions.dispose()
+    @Panel.removeDecorations()
+    @Bottom.remove()
+    @Bubble.remove()
+    @eachLinter (Linter)->
+      Linter.Subscriptions.dispose()
+    @PanelModal.destroy()
 
 module.exports = Linter

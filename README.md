@@ -31,6 +31,7 @@ Linter-Plus expects an object like this from that function
 ```js
 {
   scopes: ['source.php'] # Replace it with a source of choice
+  scope: 'file' or 'project' # lintOnFly must be false for project
   lintOnFly: false # Replace to true to indicate your linter supports LintOnFly
   lint: function(TextEditor, TextBuffer, wasTriggeredOnChange):array<Message> | Promise<array<Message>>
 }
