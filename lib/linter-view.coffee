@@ -36,7 +36,7 @@ class LinterView
       @Linter.PanelModal.show() unless @Linter.PanelModal.isVisible()
     @Linter.Bottom.update @Messages
   renderMessages: (Values) ->
-    isProject = @Linter.PanelView.Type is 'project'
+    isProject = @Linter.Panel.Type is 'project'
     ActiveFile = @Linter.ActiveEditor.getPath()
     Value = Values.next()
     ToReturn = []
