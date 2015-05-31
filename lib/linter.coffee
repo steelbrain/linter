@@ -10,61 +10,61 @@ EditorLinter = require './editor-linter'
 class Linter
 
   constructor: ->
-    @Subscriptions = new CompositeDisposable
-    @LintOnFly = true
+    @subscriptions = new CompositeDisposable
+    @lintOnFly = true
 
-    @Emitter = new Emitter
-    @View = new LinterView this
-    @Bottom = new Bottom this
-    @Bubble = new Bubble this
-    @StatusBar = null
-    @MessagesProject = new Map
-    @ActiveEditor = atom.workspace.getActiveTextEditor()
-    @EditorLinters = new Map
-    @Linters = []
+    @emitter = new Emitter
+    @view = new LinterView this
+    @bottom = new Bottom this
+    @bubble = new Bubble this
+    @statusBar = null
+    @messagesProject = new Map
+    @activeEditor = atom.workspace.getActiveTextEditor()
+    @editorLinters = new Map
+    @linters = []
 
-    @Subscriptions.add atom.views.addViewProvider Panel, (Model) =>
-      @PanelView = ( new PanelView() ).initialize(Model, @)
-    @Panel = new Panel this
-    @PanelModal = atom.workspace.addBottomPanel item: @Panel, visible: false
+    @subscriptions.add atom.views.addViewProvider Panel, (model) =>
+      @panelView = ( new PanelView() ).initialize(model, @)
+    @panel = new Panel this
+    @panelModal = atom.workspace.addBottomPanel item: @panel, visible: false
 
-    @Subscriptions.add atom.workspace.onDidChangeActivePaneItem (Editor) =>
-      @ActiveEditor = Editor
-      @View.render()
-    @Subscriptions.add atom.workspace.observeTextEditors (Editor) =>
-      CurrentEditorLinter = new EditorLinter @, Editor
-      @EditorLinters.set Editor, CurrentEditorLinter
-      @Emitter.emit 'linters-observe', CurrentEditorLinter
-      CurrentEditorLinter.lint false
-      Editor.onDidDestroy =>
-        CurrentEditorLinter.destroy()
-        @EditorLinters.delete CurrentEditorLinter
+    @subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
+      @activeEditor = editor
+      @view.render()
+    @subscriptions.add atom.workspace.observeTextEditors (editor) =>
+      currentEditorLinter = new EditorLinter @, editor
+      @editorLinters.set editor, currentEditorLinter
+      @emitter.emit 'linters-observe', currentEditorLinter
+      currentEditorLinter.lint false
+      editor.onDidDestroy =>
+        currentEditorLinter.destroy()
+        @editorLinters.delete currentEditorLinter
 
   getActiveEditorLinter: ->
-    return null unless @ActiveEditor
-    return @EditorLinters.get @ActiveEditor
+    return null unless @activeEditor
+    return @editorLinters.get @activeEditor
 
-  getLinter: (Editor) ->
-    return @EditorLinters.get Editor
+  getLinter: (editor) ->
+    return @editorLinters.get editor
 
-  eachLinter: (Callback) ->
-    Values = @EditorLinters.values()
-    Value = Values.next()
-    while not Value.done
-      Callback(Value.value)
-      Value = Values.next()
+  eachLinter: (callback) ->
+    values = @editorLinters.values()
+    value = values.next()
+    while not value.done
+      callback(value.value)
+      value = values.next()
 
-  observeLinters: (Callback) ->
-    @eachLinter Callback
-    @Emitter.on 'linters-observe', Callback
+  observeLinters: (callback) ->
+    @eachLinter callback
+    @emitter.on 'linters-observe', callback
 
   deactivate: ->
-    @Subscriptions.dispose()
-    @Panel.removeDecorations()
-    @Bottom.remove()
-    @Bubble.remove()
-    @eachLinter (Linter) ->
-      Linter.Subscriptions.dispose()
-    @PanelModal.destroy()
+    @subscriptions.dispose()
+    @panel.removeDecorations()
+    @bottom.remove()
+    @bubble.remove()
+    @eachLinter (linter) ->
+      linter.subscriptions.dispose()
+    @panelModal.destroy()
 
 module.exports = Linter

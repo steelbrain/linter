@@ -1,43 +1,43 @@
 Views = {
-  currentFile:(Linter) ->
-    Root = document.createElement 'div'
-    Root.innerHTML = 'Current File'
-    Root.classList.add 'linter-tab'
-    Root.classList.add 'active'
-    Root.addEventListener 'click', ->
-      Linter.Bottom.BarProject.Root.classList.remove 'active'
-      Root.classList.add 'active'
-      Linter.Panel.Type = 'file'
-      Linter.View.render()
-    Root.appendChild document.createTextNode ' '
-    Child = document.createElement 'span'
-    Child.classList.add 'badge-flexible'
-    Child.textContent = '0'
-    Root.appendChild Child
-    {Root, Child}
-  wholeProject: (Linter) ->
-    Root = document.createElement 'div'
-    Root.innerHTML = 'Project'
-    Root.classList.add 'linter-tab'
-    Root.addEventListener 'click', ->
-      Linter.Bottom.BarCurrent.Root.classList.remove 'active'
-      Root.classList.add 'active'
-      Linter.Panel.Type = 'project'
-      Linter.View.render()
-    Root.appendChild document.createTextNode ' '
-    Child = document.createElement 'span'
-    Child.classList.add 'badge'
-    Child.classList.add 'badge-flexible'
-    Child.textContent = '0'
-    Root.appendChild Child
-    {Root, Child}
+  currentFile:(linter) ->
+    root = document.createElement 'div'
+    root.innerHTML = 'Current File'
+    root.classList.add 'linter-tab'
+    root.classList.add 'active'
+    root.addEventListener 'click', ->
+      linter.bottom.barProject.root.classList.remove 'active'
+      root.classList.add 'active'
+      linter.panel.type = 'file'
+      linter.view.render()
+    root.appendChild document.createTextNode ' '
+    child = document.createElement 'span'
+    child.classList.add 'badge-flexible'
+    child.textContent = '0'
+    root.appendChild child
+    {root, child}
+  wholeProject: (linter) ->
+    root = document.createElement 'div'
+    root.innerHTML = 'Project'
+    root.classList.add 'linter-tab'
+    root.addEventListener 'click', ->
+      linter.bottom.barCurrent.root.classList.remove 'active'
+      root.classList.add 'active'
+      linter.panel.type = 'project'
+      linter.view.render()
+    root.appendChild document.createTextNode ' '
+    child = document.createElement 'span'
+    child.classList.add 'badge'
+    child.classList.add 'badge-flexible'
+    child.textContent = '0'
+    root.appendChild child
+    {root, child}
   status: ->
-    Root = document.createElement 'div'
-    Root.classList.add 'linter-success'
-    Root.classList.add 'inline-block'
-    Child = document.createElement 'span'
-    Child.classList.add 'icon'
-    Root.appendChild Child
-    return {Root, Child}
+    root = document.createElement 'div'
+    root.classList.add 'linter-success'
+    root.classList.add 'inline-block'
+    child = document.createElement 'span'
+    child.classList.add 'icon'
+    root.appendChild child
+    return {root, child}
 }
 module.exports = Views

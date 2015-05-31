@@ -1,86 +1,86 @@
 class LinterView
-  constructor: (@Linter) ->
-    @Messages = []
+  constructor: (Linter) ->
+    @messages = []
 
   render: ->
-    return @hide([]) unless @Linter.ActiveEditor # When we don't have any editor
-    return @hide([]) unless @Linter.ActiveEditor.getPath?() # When we have an invalid text editor
+    return @hide([]) unless linter.activeEditor # When we don't have any editor
+    return @hide([]) unless linter.activeEditor.getPath?() # When we have an invalid text editor
 
-    ActiveLinter = @Linter.getActiveEditorLinter()
+    activeLinter = linter.getActiveEditorLinter()
 
-    Messages = @renderMessages(@Linter.MessagesProject.values())
-    Messages = Messages.concat(@renderMessages(ActiveLinter.Messages.values())) if ActiveLinter
-    @Messages = Messages
+    messages = @renderMessages(linter.messagesProject.values())
+    messages = messages.concat(@renderMessages(activeLinter.messages.values())) if activeLinter
+    @messages = messages
 
-    if @Messages.length
-      @Linter.Panel.render @Messages
-      @Linter.PanelModal.show() unless @Linter.PanelModal.isVisible()
+    if @messages.length
+      linter.panel.render @messages
+      linter.panelModal.show() unless linter.panelModal.isVisible()
     else
-      @hide @Messages
+      @hide @messages
 
-    @Linter.Bubble.update @Linter.ActiveEditor.getCursorBufferPosition()
-    @Linter.Bottom.update @Messages
+    linter.bubble.update linter.activeEditor.getCursorBufferPosition()
+    linter.bottom.update @messages
 
-  hide: (Messages) ->
-    @Linter.PanelModal.hide() if @Linter.PanelModal.isVisible()
-    @Linter.Panel.render Messages
+  hide: (messages) ->
+    linter.panelModal.hide() if linter.panelModal.isVisible()
+    linter.panel.render messages
 
-  renderMessages: (Values) ->
-    isProject = @Linter.Panel.Type is 'project'
-    ActiveFile = @Linter.ActiveEditor.getPath()
-    Value = Values.next()
-    ToReturn = []
-    while not Value.done
-      Value.value.forEach (Message) =>
-        if (not Message.File and not isProject) or Message.File is ActiveFile
-          Message.CurrentFile = true
+  renderMessages: (values) ->
+    isProject = linter.panel.type is 'project'
+    activeFile = linter.activeEditor.getPath()
+    value = values.next()
+    toReturn = []
+    while not value.done
+      value.value.forEach (message) =>
+        if (not message.file and not isProject) or message.file is activeFile
+          message.currentFile = true
         else
-          Message.CurrentFile = false
-        ToReturn.push Message
-        @CountProject = @CountProject + 1
-      Value = Values.next()
-    ToReturn
+          message.currentFile = false
+        toReturn.push message
+        @countProject = @countProject + 1
+      value = values.next()
+    toReturn
 
-  messageLine: (Message, addPath = true) ->
-    Entry = document.createElement 'div'
+  messageLine: (message, addPath = true) ->
+    entry = document.createElement 'div'
 
-    Ribbon = document.createElement 'span'
-    Ribbon.classList.add 'badge'
-    Ribbon.classList.add 'badge-flexible'
-    Ribbon.classList.add 'badge-' + Message.Type.toLowerCase()
-    Ribbon.textContent = Message.Type
+    ribbon = document.createElement 'span'
+    ribbon.classList.add 'badge'
+    ribbon.classList.add 'badge-flexible'
+    ribbon.classList.add 'badge-' + message.type.toLowerCase()
+    ribbon.textContent = message.type
 
-    TheMessage = document.createElement('span')
-    if Message.HTML and Message.HTML.length
-      TheMessage.innerHTML = Message.HTML
+    theMessage = document.createElement('span')
+    if message.html and message.html.length
+      theMessage.innerHTML = message.html
     else
-      TheMessage.textContent = Message.Message
+      theMessage.textContent = message.message
 
-    if Message.File
-      Message.DisplayFile = Message.File
+    if message.file
+      message.displayFile = message.file
       try
-        atom.project.getPaths().forEach (Path) ->
-          return unless Message.File.indexOf(Path) is 0
-          Message.DisplayFile = Message.File.substr( Path.length + 1 ) # Remove the trailing slash as well
+        atom.project.getPaths().forEach (path) ->
+          return unless message.file.indexOf(path) is 0
+          message.displayFile = message.file.substr( path.length + 1 ) # Remove the trailing slash as well
           throw null
-      File = document.createElement 'a'
-      File.addEventListener 'click', @onclick.bind(null, Message.File, Message.Position)
-      if Message.Position
-        File.textContent =
-          'at line ' + Message.Position[0][0] + ' col ' + Message.Position[0][1] + ' '
+      file = document.createElement 'a'
+      file.addEventListener 'click', @onclick.bind(null, message.file, message.position)
+      if message.position
+        file.textContent =
+          'at line ' + message.position[0][0] + ' col ' + message.position[0][1] + ' '
       if addPath
-        File.textContent += 'in ' + Message.DisplayFile
+        file.textContent += 'in ' + message.displayFile
     else
-      File = null
+      file = null
 
-    Entry.appendChild Ribbon
-    Entry.appendChild TheMessage
-    Entry.appendChild File if File
-    return Entry
+    entry.appendChild ribbon
+    entry.appendChild theMessage
+    entry.appendChild file if file
+    return entry
 
-  onclick: (File, Position) ->
-    atom.workspace.open(File).then ->
-      return unless Position
-      atom.workspace.getActiveTextEditor().setCursorBufferPosition [Position[0][0] - 1, Position[0][1] - 1]
+  onclick: (file, position) ->
+    atom.workspace.open(file).then ->
+      return unless position
+      atom.workspace.getActiveTextEditor().setCursorBufferPosition [position[0][0] - 1, position[0][1] - 1]
 
 module.exports = LinterView

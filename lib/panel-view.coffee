@@ -1,14 +1,14 @@
 class PanelView extends HTMLElement
-  initialize: (@Model, @Linter) ->
-    @Model.View = this
+  initialize: (@model, @linter) ->
+    @model.view = this
 
   createdCallback: ->
     this.id = 'linter-panel'
 
-  render: (Messages) ->
+  render: (messages) ->
     @innerHTML = ''
-    Messages.forEach (Message) =>
-      return if @Model.Type is 'file' and not Message.CurrentFile
-      @appendChild @Linter.View.messageLine Message, @Model.Type is 'project'
+    messages.forEach (message) =>
+      return if @model.type is 'file' and not message.currentFile
+      @appendChild @linter.view.messageLine message, @model.type is 'project'
 
 module.exports = PanelView = document.registerElement('linter-panel-view', {prototype: PanelView.prototype})

@@ -1,44 +1,44 @@
 Views = require './bottom-views'
 
 class Bottom
-  constructor: (@Linter) ->
-    @BarCurrent = null
-    @BarProject = null
-    @BarStatus = null
+  constructor: (@linter) ->
+    @barCurrent = null
+    @barProject = null
+    @barStatus = null
 
-  initialize: (StatusBar) ->
-    @BarCurrent = Views.currentFile(@Linter)
-    @BarProject = Views.wholeProject(@Linter)
-    @BarStatus = Views.status()
-    @BarStatus.Child.classList.add 'icon-check'
-    @BarStatus.Child.textContent = 'No Errors'
-    StatusBar.addLeftTile
-      item: @BarCurrent.Root,
+  initialize: (statusBar) ->
+    @barCurrent = Views.currentFile(@linter)
+    @barProject = Views.wholeProject(@linter)
+    @barStatus = Views.status()
+    @barStatus.child.classList.add 'icon-check'
+    @barStatus.child.textContent = 'No Errors'
+    statusBar.addLeftTile
+      item: @barCurrent.root,
       priority: -1001
-    StatusBar.addLeftTile
-      item: @BarProject.Root,
+    statusBar.addLeftTile
+      item: @barProject.root,
       priority: -1000
-    StatusBar.addLeftTile
-      item: @BarStatus.Root
+    statusBar.addLeftTile
+      item: @barStatus.root
       priority: -999
 
-  update: (Messages) ->
-    CountTotal = Messages.length
-    CountFile = Messages.filter((Message) -> Message.CurrentFile).length
-    @BarCurrent.Child.textContent = CountFile.toString()
-    @BarProject.Child.textContent = CountTotal.toString()
-    if CountTotal
-      @BarStatus.Root.classList.remove 'linter-success'
-      @BarStatus.Root.classList.add 'linter-error'
-      @BarStatus.Child.classList.remove 'icon-check'
-      @BarStatus.Child.classList.add 'icon-x'
-      @BarStatus.Child.textContent = if CountTotal is 1 then '1 Error' else CountTotal + ' Errors'
+  update: (messages) ->
+    countTotal = messages.length
+    countFile = messages.filter((message) -> message.currentFile).length
+    @barCurrent.child.textContent = countFile.toString()
+    @barProject.child.textContent = countTotal.toString()
+    if countTotal
+      @barStatus.root.classList.remove 'linter-success'
+      @barStatus.root.classList.add 'linter-error'
+      @barStatus.child.classList.remove 'icon-check'
+      @barStatus.child.classList.add 'icon-x'
+      @barStatus.child.textContent = if countTotal is 1 then '1 Error' else countTotal + ' Errors'
     else
-      @BarStatus.Root.classList.remove 'linter-error'
-      @BarStatus.Root.classList.add 'linter-success'
-      @BarStatus.Child.classList.remove 'icon-x'
-      @BarStatus.Child.classList.add 'icon-check'
-      @BarStatus.Child.textContent = 'No Errors'
+      @barStatus.root.classList.remove 'linter-error'
+      @barStatus.root.classList.add 'linter-success'
+      @barStatus.child.classList.remove 'icon-x'
+      @barStatus.child.classList.add 'icon-check'
+      @barStatus.child.textContent = 'No Errors'
 
   remove: ->
     # Not removing on purpose

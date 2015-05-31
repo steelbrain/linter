@@ -2,26 +2,26 @@
 BubbleView = require './bubble-view'
 
 class Bubble
-  constructor: (@Linter) ->
-    @Bubble = null
+  constructor: (@linter) ->
+    @bubble = null
 
-  update: (Point) ->
+  update: (point) ->
     @remove()
-    return unless @Linter.View.Messages.length
-    TextEditor = @Linter.ActiveEditor
-    Found = false
-    @Linter.View.Messages.forEach (Message) =>
-      return if Found
-      return unless Message.CurrentFile
-      return unless Message.Position
-      P = Message.Position
-      ErrorRange = new Range([P[0][0] - 1, P[0][1] - 1], [P[1][0] - 1, P[1][1]])
-      return unless ErrorRange.containsPoint Point
-      Marker = TextEditor.markBufferRange ErrorRange, {invalidate: 'never'}
-      @Bubble = TextEditor.decorateMarker Marker, type: 'overlay', item: BubbleView(@Linter, Message)
-      Found = true
+    return unless @linter.view.messages.length
+    textEditor = @linter.activeEditor
+    found = false
+    @linter.view.messages.forEach (message) =>
+      return if found
+      return unless message.currentFile
+      return unless message.position
+      p = message.position
+      errorRange = new Range([p[0][0] - 1, p[0][1] - 1], [p[1][0] - 1, p[1][1]])
+      return unless errorRange.containsPoint point
+      marker = textEditor.markBufferRange errorRange, {invalidate: 'never'}
+      @bubble = textEditor.decorateMarker marker, type: 'overlay', item: BubbleView(@linter, message)
+      found = true
 
   remove: ->
-    @Bubble?.destroy()
+    @bubble?.destroy()
 
 module.exports = Bubble

@@ -1,87 +1,87 @@
 {CompositeDisposable, Emitter} = require 'atom'
 
 class EditorLinter
-  constructor: (@Linter, @Editor) ->
-    @InProgress = false
-    @InProgressFly = false
-    @Messages = new Map
+  constructor: (@linter, @editor) ->
+    @inProgress = false
+    @inProgressFly = false
+    @messages = new Map
 
-    @Emitter = new Emitter
-    @Subscriptions = new CompositeDisposable
-    @Buffer = Editor.getBuffer()
+    @emitter = new Emitter
+    @subscriptions = new CompositeDisposable
+    @buffer = Editor.getBuffer()
 
-    @Subscriptions.add(@Editor.onDidSave @lint.bind(@, false))
-    @Subscriptions.add(@Editor.onDidStopChanging @lint.bind(@, true)) if @Linter.LintOnFly
-    @Subscriptions.add(@Editor.onDidChangeCursorPosition ({newBufferPosition}) =>
-      @Linter.Bubble.update newBufferPosition
+    @subscriptions.add(@editor.onDidSave @lint.bind(@, false))
+    @subscriptions.add(@editor.onDidStopChanging @lint.bind(@, true)) if @linter.lintOnFly
+    @subscriptions.add(@editor.onDidChangeCursorPosition ({newBufferPosition}) =>
+      @linter.bubble.update newBufferPosition
     )
 
-  lint: (OnChange) ->
-    return if @progress OnChange
-    return if @Editor isnt @Linter.ActiveEditor
-    @progress OnChange, true
-    @lint true unless OnChange
+  lint: (onChange) ->
+    return if @progress onChange
+    return if @editor isnt @linter.activeEditor
+    @progress onChange, true
+    @lint true unless onChange
 
-    Scopes = @Editor.scopeDescriptorForBufferPosition(@Editor.getCursorBufferPosition()).scopes
-    Promises = @lintResults OnChange, Scopes
-    Promise.all(Promises).then =>
-      @progress OnChange, false
+    scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
+    promises = @lintResults onChange, scopes
+    promise.all(promises).then =>
+      @progress onChange, false
     .catch ->
       console.error arguments[0].stack
-      @progress OnChange, false
-  lintResults: (OnChange, Scopes) ->
-    Promises = []
-    @Linter.Linters.forEach (Linter) =>
-      return if OnChange and not Linter.lintOnFly
-      return if (not OnChange) and Linter.lintOnFly
-      return unless (Scopes.filter (Entry) -> Linter.scopes.indexOf(Entry) isnt -1 ).length
-      Promises.push(
+      @progress onChange, false
+  lintResults: (onChange, scopes) ->
+    promises = []
+    @linter.linters.forEach (linter) =>
+      return if onChange and not linter.lintOnFly
+      return if (not onChange) and linter.lintOnFly
+      return unless (scopes.filter (entry) -> linter.scopes.indexOf(entry) isnt -1 ).length
+      promises.push(
         (
-          new Promise (Resolve) =>
-            RetVal = Linter.lint(@Editor, @Buffer)
-            if RetVal instanceof Promise
-              RetVal.then (Results) =>
-                if Results instanceof Array
-                  if Linter.scope is 'project' then @Linter.MessagesProject.set Linter, Results
-                  else @Messages.set Linter, Results
-                Resolve()
-              .catch (Error) =>
-                if Linter.scope is 'project' then @Linter.MessagesProject.delete Linter
-                else @Messages.delete Linter
-                atom.notifications.addError "#{Error.message}", {detail: Error.stack, dismissable: true}
-                Resolve()
+          new Promise (resolve) =>
+            retVal = linter.lint(@editor, @buffer)
+            if retVal instanceof promise
+              retVal.then (results) =>
+                if results instanceof Array
+                  if linter.scope is 'project' then @linter.messagesProject.set linter, results
+                  else @messages.set linter, results
+                resolve()
+              .catch (error) =>
+                if linter.scope is 'project' then @linter.messagesProject.delete linter
+                else @messages.delete linter
+                atom.notifications.addError "#{error.message}", {detail: error.stack, dismissable: true}
+                resolve()
             else
-              if RetVal instanceof Array
-                if Linter.scope is 'project' then @Linter.MessagesProject.set Linter, RetVal
-                else @Messages.set Linter, RetVal
-              Resolve()
+              if retVal instanceof Array
+                if linter.scope is 'project' then @linter.messagesProject.set linter, retVal
+                else @messages.set linter, retVal
+              resolve()
         ).then =>
-          @Emitter.emit 'did-update'
-          @Linter.View.render() if @Editor is @Linter.ActiveEditor
+          @emitter.emit 'did-update'
+          @linter.view.render() if @editor is @linter.activeEditor
       )
-    Promises
+    promises
 
   progress: (onChange, newValue) ->
     if typeof newValue is 'undefined'
       if onChange
-        return @InProgressFly
+        return @inProgressFly
       else
-        return @InProgress
+        return @inProgress
     else
       if onChange
-        @InProgressFly = newValue
+        @inProgressFly = newValue
       else
-        @InProgress = newValue
+        @inProgress = newValue
 
   destroy: ->
-    @Emitter.emit 'did-destroy'
-    @Subscriptions.dispose()
+    @emitter.emit 'did-destroy'
+    @subscriptions.dispose()
 
-  onDidUpdate: (Callback) ->
-    @Emitter.on 'did-update', Callback
+  onDidUpdate: (callback) ->
+    @emitter.on 'did-update', callback
 
-  onDidDestroy: (Callback) ->
-    @Emitter.on 'did-destroy', Callback
+  onDidDestroy: (callback) ->
+    @emitter.on 'did-destroy', callback
 
 
 module.exports = EditorLinter
