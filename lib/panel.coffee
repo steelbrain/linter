@@ -19,8 +19,8 @@ class Panel
       return unless Message.Position
       return if @Type is 'file' and (not Message.CurrentFile)
       P = Message.Position
-      range = [[P[0][0] - 1, P[0][1] - 1], [P[1][0] - 1, P[1][1]]]
-      Marker = @Linter.ActiveEditor.markBufferRange range, {invalidate: 'never'}
+      Range = [[P[0][0] - 1, P[0][1] - 1], [P[1][0] - 1, P[1][1]]]
+      Marker = @Linter.ActiveEditor.markBufferRange Range, {invalidate: 'never'}
 
       @Decorations.push @Linter.ActiveEditor.decorateMarker(
         Marker, type: 'line-number', class: 'line-number-' + Message.Type.toLowerCase()
