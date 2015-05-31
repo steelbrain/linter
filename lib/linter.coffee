@@ -22,7 +22,7 @@ class Linter
     @Linters = []
 
     @Subscriptions.add atom.views.addViewProvider Panel, (Model)=>
-      @PanelView = ( new PanelView() ).registerModel(Model)
+      @PanelView = ( new PanelView() ).initialize(Model, @)
     @Panel = new Panel this
     @PanelModal = atom.workspace.addBottomPanel item: @Panel, visible: false
 
