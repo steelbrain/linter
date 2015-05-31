@@ -5,7 +5,7 @@ class Bubble
   constructor: (@Linter)->
     @Bubble = null
   update: (Point)->
-    @Bubble?.destroy()
+    @remove()
     return unless @Linter.View.Messages.length
     TextEditor = @Linter.ActiveEditor
     Found = false
@@ -19,4 +19,6 @@ class Bubble
       Marker = TextEditor.markBufferRange ErrorRange, {invalidate: 'never'}
       @Bubble = TextEditor.decorateMarker Marker, type: 'overlay', item: BubbleView(@Linter, Message)
       Found = true
+  remove: ->
+    @Bubble?.destroy()
 module.exports = Bubble

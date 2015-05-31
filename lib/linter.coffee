@@ -48,12 +48,23 @@ class Linter
   getLinter: (Editor) ->
     return @EditorLinters.get Editor
 
-  observeLinters: (Callback) ->
+  eachLinter: (Callback)->
     Values = @EditorLinters.values()
     Value = Values.next()
     while not Value.done
       Callback(Value.value)
       Value = Values.next()
+  observeLinters: (Callback) ->
+    @eachLinter Callback
     @Emitter.on 'linters-observe', Callback
+
+  deactivate: ->
+    @Subscriptions.dispose()
+    @Panel.removeDecorations()
+    @Bottom.remove()
+    @Bubble.remove()
+    @eachLinter (Linter)->
+      Linter.Subscriptions.dispose()
+    @PanelModal.destroy()
 
 module.exports = Linter

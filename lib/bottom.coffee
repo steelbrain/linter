@@ -37,5 +37,7 @@ class Bottom
       @BarStatus.Child.classList.remove 'icon-x'
       @BarStatus.Child.classList.add 'icon-check'
       @BarStatus.Child.textContent = 'No Errors'
+  remove: ->
+    # Not removing on purpose
 
 module.exports = Bottom
