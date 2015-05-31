@@ -1,5 +1,5 @@
 {
-  "name": "linter-plus",
+  "name": "linter",
   "main": "./lib/main",
   "author": "AtomLinter",
   "version": "0.2.0",
