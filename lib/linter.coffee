@@ -21,10 +21,10 @@ class Linter
     @EditorLinters = new Map
     @Linters = []
 
-    @Subscriptions.add atom.views.addViewProvider Panel, (Model)->
-      ( new PanelView() ).registerModel(Model)
+    @Subscriptions.add atom.views.addViewProvider Panel, (Model)=>
+      @PanelView = ( new PanelView() ).registerModel(Model)
     @Panel = new Panel this
-    @PanelView = atom.views.getView @Panel
+    @PanelModal = atom.workspace.addBottomPanel item: @Panel, visible: false
 
     @Subscriptions.add atom.workspace.onDidChangeActivePaneItem (Editor) =>
       @ActiveEditor = Editor

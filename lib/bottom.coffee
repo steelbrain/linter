@@ -20,7 +20,10 @@ class Bottom
     StatusBar.addLeftTile
       item: @BarStatus.Root
       priority: -999
-  update: (CountFile, CountProject, CountTotal)->
+  update: (Messages)->
+    CountTotal = Messages.length
+    CountFile = 0
+    CountProject = 0
     @BarCurrent.Child.textContent = CountFile.toString()
     @BarProject.Child.textContent = CountProject.toString()
     if CountTotal
