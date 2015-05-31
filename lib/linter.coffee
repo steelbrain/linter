@@ -1,11 +1,13 @@
 Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
+Panel = require './panel'
+PanelView = require './panel-view'
 EditorLinter = require './editor-linter'
 
 class Linter
 
   constructor: ->
-    @View = new (require './view')(this)
+    @View = new (require './panel-old')(this)
     @ViewPanel = atom.workspace.addBottomPanel item: @View.Root, visible: false
     @StatusBar = null
     @MessagesProject = new Map
@@ -16,6 +18,10 @@ class Linter
     @Subscriptions = new CompositeDisposable
     @EditorLinters = new Map # An object of Editor <--> Linter
     @Linters = [] # I </3 coffee-script
+    window.tmp = Panel
+    @Subscriptions.add atom.views.addViewProvider
+      modelConstructor: Panel
+      viewConstructor: PanelView
     @Subscriptions.add atom.workspace.onDidChangeActivePaneItem (Editor) =>
       @ActiveEditor = Editor
       ActiveLinter = @getActiveEditorLinter()
