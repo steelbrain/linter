@@ -37,6 +37,7 @@ class Linter
       CurrentEditorLinter = new EditorLinter @, Editor
       @EditorLinters.set Editor, CurrentEditorLinter
       @Emitter.emit 'linters-observe', CurrentEditorLinter
+      CurrentEditorLinter.lint false
       Editor.onDidDestroy =>
         CurrentEditorLinter.destroy()
         @EditorLinters.delete CurrentEditorLinter
