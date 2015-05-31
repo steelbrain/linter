@@ -1,29 +1,29 @@
 Views = {
-  currentFile:(View) ->
+  currentFile:(Linter) ->
     Root = document.createElement 'div'
     Root.innerHTML = 'Current File'
     Root.classList.add 'linter-tab'
     Root.classList.add 'active'
     Root.addEventListener 'click', ->
-      View.BarProject.Root.classList.remove 'active'
+      Linter.View.BarProject.Root.classList.remove 'active'
       Root.classList.add 'active'
-      View.Type = 'file'
-      View.render()
+      Linter.Panel.Type = 'file'
+      Linter.View.render()
     Root.appendChild document.createTextNode ' '
     Child = document.createElement 'span'
     Child.classList.add 'badge-flexible'
     Child.textContent = '0'
     Root.appendChild Child
     {Root, Child}
-  wholeProject: (View) ->
+  wholeProject: (Linter) ->
     Root = document.createElement 'div'
     Root.innerHTML = 'Project'
     Root.classList.add 'linter-tab'
     Root.addEventListener 'click', ->
-      View.BarCurrent.Root.classList.remove 'active'
+      Linter.View.BarCurrent.Root.classList.remove 'active'
       Root.classList.add 'active'
-      View.Type = 'project'
-      View.render()
+      Linter.Panel.Type = 'project'
+      Linter.View.render()
     Root.appendChild document.createTextNode ' '
     Child = document.createElement 'span'
     Child.classList.add 'badge'
