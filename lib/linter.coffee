@@ -7,8 +7,8 @@ EditorLinter = require './editor-linter'
 class Linter
 
   constructor: ->
-    @View = new (require './panel-old')(this)
-    @ViewPanel = atom.workspace.addBottomPanel item: @View.Root, visible: false
+    @View = new (require './linter-view')(this)
+#    @ViewPanel = atom.workspace.addBottomPanel item: @View.Root, visible: false
     @StatusBar = null
     @MessagesProject = new Map
     @ActiveEditor = atom.workspace.getActiveTextEditor()
@@ -18,11 +18,10 @@ class Linter
     @Subscriptions = new CompositeDisposable
     @EditorLinters = new Map # An object of Editor <--> Linter
     @Linters = [] # I </3 coffee-script
-    @Subscriptions.add atom.views.addViewProvider
-      modelConstructor: Panel
-      viewConstructor: PanelView
+    @Subscriptions.add atom.views.addViewProvider Panel, (Model)->
+      ( new PanelView() ).registerModel(Model)
     @Panel = new Panel this
-    @Panel.registerView atom.views.getView @Panel
+    @PanelView = atom.views.getView @Panel
     @Subscriptions.add atom.workspace.onDidChangeActivePaneItem (Editor) =>
       @ActiveEditor = Editor
       ActiveLinter = @getActiveEditorLinter()
