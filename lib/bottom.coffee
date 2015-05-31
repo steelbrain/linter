@@ -22,8 +22,8 @@ class Bottom
       priority: -999
   update: (Messages)->
     CountTotal = Messages.length
-    CountFile = 0
-    CountProject = 0
+    CountFile = Messages.filter( (Message) -> Message.CurrentFile).length
+    CountProject = CountTotal - CountFile
     @BarCurrent.Child.textContent = CountFile.toString()
     @BarProject.Child.textContent = CountProject.toString()
     if CountTotal
