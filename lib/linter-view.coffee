@@ -1,26 +1,7 @@
-{Range} = require 'atom'
-
 class LinterView
   constructor: (@Linter) ->
     @Messages = []
-    @Bubble = null
 
-  updateBubble: (Point) ->
-    @Bubble?.destroy()
-    return unless @Messages.length
-    TextEditor = @Linter.ActiveEditor
-    ActiveFile = TextEditor.getPath()
-    Found = false
-    @Messages.forEach (Message) =>
-      return if Found
-      return unless Message.File is ActiveFile
-      return unless Message.Position
-      P = Message.Position
-      ErrorRange = new Range([P[0][0] - 1, P[0][1] - 1], [P[1][0] - 1, P[1][1]])
-      return unless ErrorRange.containsPoint Point
-      Marker = TextEditor.markBufferRange ErrorRange, {invalidate: 'never'}
-      # @Bubble = TextEditor.decorateMarker Marker, type: 'overlay', item: Views.bubble(@, Message)
-      Found = true
   render: ->
     return unless @Linter.ActiveEditor # When we don't have any editor
     @Messages = @renderMessages(@Linter.MessagesProject.values()).concat(@renderMessages(@Linter.getActiveEditorLinter().Messages.values()))
@@ -31,6 +12,7 @@ class LinterView
       @Linter.Panel.render @Messages
       @Linter.PanelModal.show() unless @Linter.PanelModal.isVisible()
     @Linter.Bottom.update @Messages
+
   renderMessages: (Values) ->
     isProject = @Linter.Panel.Type is 'project'
     ActiveFile = @Linter.ActiveEditor.getPath()
