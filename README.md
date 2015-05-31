@@ -68,10 +68,6 @@ An error in the above example can be a `Warning` or `Error` provided to the lint
 }
 ```
 
-#### Why not use AtomLinter
-
-My initial idea was to submit a PR to AtomLinter and make the appropriate changes. But It would've made so many API breaking changes that I thought to create a separate package for it.
-
 #### Example Linter
 
 Have a look at [Linter-Hack](https://github.com/steelbrain/Atom-Hack/blob/rewrite/lib/atom-hack.coffee).
