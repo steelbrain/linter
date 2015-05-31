@@ -35,3 +35,5 @@ class Bottom
     StatusBar.addLeftTile
       item: @BarStatus.Root
       priority: -999
+
+module.exports = Bottom
