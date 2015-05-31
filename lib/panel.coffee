@@ -15,6 +15,7 @@ class Panel
     Messages.forEach (Message) =>
       return unless Message.CurrentFile # A custom property added while creating arrays of them
       return unless Message.Position
+      return if @Type is 'file' and (not Message.CurrentFile)
       P = Message.Position
       Marker = @Linter.ActiveEditor.markBufferRange [[P[0][0] - 1, P[0][1] - 1], [P[1][0] - 1, P[1][1]]], {invalidate: 'never'}
 

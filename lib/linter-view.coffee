@@ -22,12 +22,11 @@ class LinterView
     ToReturn = []
     while not Value.done
       Value.value.forEach (Message) =>
-        if (not (isProject or Message.File)) or Message.File is ActiveFile
+        if (not Message.File and not isProject) or Message.File is ActiveFile
           Message.CurrentFile = true
-          ToReturn.push Message
-        else if isProject
+        else
           Message.CurrentFile = false
-          ToReturn.push Message
+        ToReturn.push Message
         @CountProject = @CountProject + 1
       Value = Values.next()
     ToReturn
