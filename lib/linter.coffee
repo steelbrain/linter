@@ -1,6 +1,7 @@
 Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
 LinterView = require './linter-view'
+Bubble = require './bubble'
 Panel = require './panel'
 PanelView = require './panel-view'
 Bottom = require './bottom'
@@ -15,6 +16,7 @@ class Linter
     @Emitter = new Emitter
     @View = new LinterView this
     @Bottom = new Bottom this
+    @Bubble = new Bubble this
     @StatusBar = null
     @MessagesProject = new Map
     @ActiveEditor = atom.workspace.getActiveTextEditor()
