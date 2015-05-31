@@ -2,6 +2,7 @@ class Panel
   constructor: (@Linter)->
     @Decorations = []
     @Type = 'file'
+    @View = null
   removeDecorations: ->
     return unless @Decorations.length
     @Decorations.forEach (decoration) ->
@@ -9,6 +10,8 @@ class Panel
     @Decorations = []
   render: (Messages)->
     @removeDecorations()
+    if not Messages.length
+      return @View.innerHTML = ''
     Messages.forEach (Message) =>
       return unless Message.CurrentFile # A custom property added while creating arrays of them
       return unless Message.Position
