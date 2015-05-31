@@ -7,31 +7,37 @@
     }
   }
 }
+
 #linter-panel {
   display: block;
   overflow-y: scroll;
   max-height: 150px;
 }
-#linter-inline{
+
+#linter-inline {
   background-color: @overlay-background-color;
   padding: 5px;
   opacity: 0.8;
 }
-atom-text-editor::shadow .line-number-error{
+
+atom-text-editor::shadow .line-number-error {
   background-color: #c00 !important;
   color: white !important;
 }
-atom-text-editor::shadow .line-number-warning{
+
+atom-text-editor::shadow .line-number-warning {
   background-color: #ffaa2c !important;
   color: white !important;
 }
-atom-text-editor::shadow .highlight-error{
-  .region{
+
+atom-text-editor::shadow .highlight-error {
+  .region {
     border-bottom: 1px dashed #c00 !important;
   }
 }
-atom-text-editor::shadow .highlight-warning{
-  .region{
+
+atom-text-editor::shadow .highlight-warning {
+  .region {
     border-bottom: 1px dashed #ffaa2c !important;
   }
 }
@@ -44,7 +50,7 @@ atom-text-editor::shadow .highlight-warning{
   color: @text-color-success;
 }
 
-.linter-tab{
+.linter-tab {
   display: inline-block;
   background: @button-background-color;
   border-radius: 7px;
@@ -54,7 +60,8 @@ atom-text-editor::shadow .highlight-warning{
   cursor: pointer;
   line-height: 2.2em;
 }
-.linter-tab.active{
+
+.linter-tab.active {
   color: @text-color-selected;
   background: @button-background-color-selected;
   border-top-left-radius: 0;
