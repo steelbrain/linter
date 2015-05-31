@@ -6,6 +6,9 @@
   "description": "A Linter Provider with Cow Powers",
   "repository": "https://github.com/AtomLinter/linter-plus",
   "license": "MIT",
+  "scripts": {
+    "lint": "./node_modules/.bin/coffeelint lib -c coffeelint.json"
+  },
   "engines": {
     "atom": ">=0.174.0 <2.0.0"
   },
@@ -21,11 +24,14 @@
       }
     }
   },
-  "providedServices":{
+  "providedServices": {
     "linter-plus-self": {
-      "versions":{
+      "versions": {
         "0.1.0": "provideLinter"
       }
     }
+  },
+  "devDependencies": {
+    "coffeelint": "^1.9.7"
   }
 }

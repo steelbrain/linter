@@ -14,5 +14,9 @@ apm install linter-plus
 
 Have a look at [Linter-API](https://github.com/AtomLinter/linter-plus/wiki/Linter-API) in the wiki.
 
+#### Development
+
+Be sure to respect code style from `coffeelint.json`, use `$ npm run lint` for checking.
+
 #### License
 This project is licensed under the terms of MIT License. See the License file for more info.

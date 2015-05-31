@@ -2,9 +2,10 @@
 BubbleView = require './bubble-view'
 
 class Bubble
-  constructor: (@Linter)->
+  constructor: (@Linter) ->
     @Bubble = null
-  update: (Point)->
+
+  update: (Point) ->
     @remove()
     return unless @Linter.View.Messages.length
     TextEditor = @Linter.ActiveEditor
@@ -19,6 +20,8 @@ class Bubble
       Marker = TextEditor.markBufferRange ErrorRange, {invalidate: 'never'}
       @Bubble = TextEditor.decorateMarker Marker, type: 'overlay', item: BubbleView(@Linter, Message)
       Found = true
+
   remove: ->
     @Bubble?.destroy()
+
 module.exports = Bubble
