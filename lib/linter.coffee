@@ -30,9 +30,7 @@ class Linter
 
     @Subscriptions.add atom.workspace.onDidChangeActivePaneItem (Editor) =>
       @ActiveEditor = Editor
-      ActiveLinter = @getActiveEditorLinter()
-      return unless ActiveLinter
-      ActiveLinter.lint false
+      @View.render()
     @Subscriptions.add atom.workspace.observeTextEditors (Editor) =>
       CurrentEditorLinter = new EditorLinter @, Editor
       @EditorLinters.set Editor, CurrentEditorLinter
