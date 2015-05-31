@@ -38,7 +38,7 @@ class EditorLinter
       Promises.push(
         (
           new Promise (Resolve) =>
-            RetVal = Linter.lint(@Editor, @Buffer, OnChange)
+            RetVal = Linter.lint(@Editor, @Buffer)
             if RetVal instanceof Promise
               RetVal.then (Results) =>
                 if Results instanceof Array
