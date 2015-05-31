@@ -6,11 +6,6 @@ class LinterView
   constructor: (@Linter) ->
     @MessagesCurrentFile = []
     @Messages = []
-    @CountFile = 0
-    @CountProject = 0
-    @BarCurrent = null
-    @BarProject = null
-    @BarStatus = null
     @Bubble = null
     @Type = 'file'
 
@@ -37,15 +32,11 @@ class LinterView
     return unless @Linter.ActiveEditor # When we don't have any editor
     return @Linter.Panel.render([])
     @Messages = []
-    @CountFile = 0
-    @CountProject = 0
     @renderUpdateMessages(@Linter.MessagesProject.values())
     @renderUpdateMessages(@Linter.getActiveEditorLinter().Messages.values())
     if not @Messages.length
       @Linter.ViewPanel.hide() if @Linter.ViewPanel.isVisible()
-      @updateTiles()
     else
-      @updateTiles()
       @Linter.ViewPanel.show() unless @Linter.ViewPanel.isVisible()
   renderUpdateMessages: (Values) ->
     isProject = @Type is 'project'
@@ -61,37 +52,6 @@ class LinterView
           @Messages.push Message
         @CountProject = @CountProject + 1
       Value = Values.next()
-  updateTiles: ->
-    @BarCurrent.Child.textContent = @CountFile.toString()
-    @BarProject.Child.textContent = @CountProject.toString()
-    if @Messages.length
-      @BarStatus.Root.classList.remove 'linter-success'
-      @BarStatus.Root.classList.add 'linter-error'
-      @BarStatus.Child.classList.remove 'icon-check'
-      @BarStatus.Child.classList.add 'icon-x'
-      @BarStatus.Child.textContent = if @Messages.length is 1 then '1 Error' else @Messages.length + ' Errors'
-    else
-      @BarStatus.Root.classList.remove 'linter-error'
-      @BarStatus.Root.classList.add 'linter-success'
-      @BarStatus.Child.classList.remove 'icon-x'
-      @BarStatus.Child.classList.add 'icon-check'
-      @BarStatus.Child.textContent = 'No Errors'
-
-  initTiles: ->
-    @BarCurrent = Views.currentFile(@Linter)
-    @BarProject = Views.wholeProject(@Linter)
-    @BarStatus = Views.status()
-    @BarStatus.Child.classList.add 'icon-check'
-    @BarStatus.Child.textContent = 'No Errors'
-    @Linter.StatusBar.addLeftTile
-      item: @BarCurrent.Root,
-      priority: -1001
-    @Linter.StatusBar.addLeftTile
-      item: @BarProject.Root,
-      priority: -1000
-    @Linter.StatusBar.addLeftTile
-      item: @BarStatus.Root
-      priority: -999
 
   messageLine: (Message, addPath = true) ->
     Entry = document.createElement 'div'
