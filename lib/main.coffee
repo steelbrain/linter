@@ -8,7 +8,7 @@ module.exports =
       default: true
 
   activate: ->
-    @instance = new (require './linter.coffee')
+    @instance = new (require './linter-plus.coffee')
     atom.config.observe 'linter-plus.lintOnFly', (lintOnyFly) =>
       @instance.lintOnFly = lintOnyFly
 
