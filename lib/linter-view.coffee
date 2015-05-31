@@ -5,15 +5,19 @@ class LinterView
   render: ->
     return @hide([]) unless @Linter.ActiveEditor # When we don't have any editor
     return @hide([]) unless @Linter.ActiveEditor.getPath?() # When we have an invalid text editor
-    @Messages = @renderMessages(@Linter.MessagesProject.values())
+
     ActiveLinter = @Linter.getActiveEditorLinter()
-    if ActiveLinter
-      @Messages.concat @renderMessages(ActiveLinter.Messages.values())
-    if not @Messages.length
-      @hide @Messages
-    else
+
+    messages = @renderMessages(@Linter.MessagesProject.values())
+    messages = messages.concat(@renderMessages(ActiveLinter.Messages.values())) if ActiveLinter
+    @Messages = messages
+
+    if @Messages.length
       @Linter.Panel.render @Messages
       @Linter.PanelModal.show() unless @Linter.PanelModal.isVisible()
+    else
+      @hide @Messages
+
     @Linter.Bubble.update @Linter.ActiveEditor.getCursorBufferPosition()
     @Linter.Bottom.update @Messages
 
