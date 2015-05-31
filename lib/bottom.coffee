@@ -23,9 +23,8 @@ class Bottom
   update: (Messages)->
     CountTotal = Messages.length
     CountFile = Messages.filter( (Message) -> Message.CurrentFile).length
-    CountProject = CountTotal - CountFile
     @BarCurrent.Child.textContent = CountFile.toString()
-    @BarProject.Child.textContent = CountProject.toString()
+    @BarProject.Child.textContent = CountTotal.toString()
     if CountTotal
       @BarStatus.Root.classList.remove 'linter-success'
       @BarStatus.Root.classList.add 'linter-error'
