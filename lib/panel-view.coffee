@@ -4,6 +4,7 @@ class PanelView extends HTMLElement
   createdCallback: ->
     this.id = 'linter-panel'
   render: (Messages)->
+    @innerHTML = ''
     Messages.forEach (Message)=>
       @appendChild @Linter.View.messageLine Message, @Model.Type is 'project'
 module.exports = PanelView = document.registerElement('linter-panel-view', {prototype: PanelView.prototype})
