@@ -8,9 +8,9 @@ class LinterView
 
     ActiveLinter = @Linter.getActiveEditorLinter()
 
-    messages = @renderMessages(@Linter.MessagesProject.values())
-    messages = messages.concat(@renderMessages(ActiveLinter.Messages.values())) if ActiveLinter
-    @Messages = messages
+    Messages = @renderMessages(@Linter.MessagesProject.values())
+    Messages = Messages.concat(@renderMessages(ActiveLinter.Messages.values())) if ActiveLinter
+    @Messages = Messages
 
     if @Messages.length
       @Linter.Panel.render @Messages
