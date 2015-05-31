@@ -11,6 +11,7 @@ class LinterView
     else
       @Linter.Panel.render @Messages
       @Linter.PanelModal.show() unless @Linter.PanelModal.isVisible()
+    @Linter.Bubble.update @Linter.ActiveEditor.getCursorBufferPosition()
     @Linter.Bottom.update @Messages
 
   renderMessages: (Values) ->
