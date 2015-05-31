@@ -2,10 +2,8 @@ class Panel
   constructor: (@Linter)->
     @Decorations = []
     @Type = 'file'
-  registerView: (View)->
-    @View = View
-    @View.Model = this
   removeDecorations: ->
+    return unless @Decorations.length
     @Decorations.forEach (decoration) ->
       try decoration.destroy()
     @Decorations = []
