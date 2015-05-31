@@ -5,7 +5,7 @@ Views = {
     Root.classList.add 'linter-tab'
     Root.classList.add 'active'
     Root.addEventListener 'click', ->
-      Linter.View.BarProject.Root.classList.remove 'active'
+      Linter.Bottom.BarProject.Root.classList.remove 'active'
       Root.classList.add 'active'
       Linter.Panel.Type = 'file'
       Linter.View.render()
@@ -20,7 +20,7 @@ Views = {
     Root.innerHTML = 'Project'
     Root.classList.add 'linter-tab'
     Root.addEventListener 'click', ->
-      Linter.View.BarCurrent.Root.classList.remove 'active'
+      Linter.Bottom.BarCurrent.Root.classList.remove 'active'
       Root.classList.add 'active'
       Linter.Panel.Type = 'project'
       Linter.View.render()
