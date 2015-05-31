@@ -17,7 +17,7 @@ class LinterView
     @Linter.Bubble.update @Linter.ActiveEditor.getCursorBufferPosition()
     @Linter.Bottom.update @Messages
 
-  hide: (Messages)->
+  hide: (Messages) ->
     @Linter.PanelModal.hide() if @Linter.PanelModal.isVisible()
     @Linter.Panel.render Messages
 

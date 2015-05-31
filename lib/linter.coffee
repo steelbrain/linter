@@ -23,7 +23,7 @@ class Linter
     @EditorLinters = new Map
     @Linters = []
 
-    @Subscriptions.add atom.views.addViewProvider Panel, (Model)=>
+    @Subscriptions.add atom.views.addViewProvider Panel, (Model) =>
       @PanelView = ( new PanelView() ).initialize(Model, @)
     @Panel = new Panel this
     @PanelModal = atom.workspace.addBottomPanel item: @Panel, visible: false
@@ -47,12 +47,13 @@ class Linter
   getLinter: (Editor) ->
     return @EditorLinters.get Editor
 
-  eachLinter: (Callback)->
+  eachLinter: (Callback) ->
     Values = @EditorLinters.values()
     Value = Values.next()
     while not Value.done
       Callback(Value.value)
       Value = Values.next()
+
   observeLinters: (Callback) ->
     @eachLinter Callback
     @Emitter.on 'linters-observe', Callback
@@ -62,7 +63,7 @@ class Linter
     @Panel.removeDecorations()
     @Bottom.remove()
     @Bubble.remove()
-    @eachLinter (Linter)->
+    @eachLinter (Linter) ->
       Linter.Subscriptions.dispose()
     @PanelModal.destroy()
 

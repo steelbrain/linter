@@ -1,11 +1,12 @@
 Views = require './bottom-views'
 
 class Bottom
-  constructor: (@Linter)->
+  constructor: (@Linter) ->
     @BarCurrent = null
     @BarProject = null
     @BarStatus = null
-  initialize: (StatusBar)->
+
+  initialize: (StatusBar) ->
     @BarCurrent = Views.currentFile(@Linter)
     @BarProject = Views.wholeProject(@Linter)
     @BarStatus = Views.status()
@@ -20,9 +21,10 @@ class Bottom
     StatusBar.addLeftTile
       item: @BarStatus.Root
       priority: -999
-  update: (Messages)->
+
+  update: (Messages) ->
     CountTotal = Messages.length
-    CountFile = Messages.filter( (Message) -> Message.CurrentFile).length
+    CountFile = Messages.filter((Message) -> Message.CurrentFile).length
     @BarCurrent.Child.textContent = CountFile.toString()
     @BarProject.Child.textContent = CountTotal.toString()
     if CountTotal
@@ -37,6 +39,7 @@ class Bottom
       @BarStatus.Child.classList.remove 'icon-x'
       @BarStatus.Child.classList.add 'icon-check'
       @BarStatus.Child.textContent = 'No Errors'
+
   remove: ->
     # Not removing on purpose
 

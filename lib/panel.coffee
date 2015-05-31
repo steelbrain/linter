@@ -1,14 +1,16 @@
 class Panel
-  constructor: (@Linter)->
+  constructor: (@Linter) ->
     @Decorations = []
     @Type = 'file'
     @View = null
+
   removeDecorations: ->
     return unless @Decorations.length
     @Decorations.forEach (decoration) ->
       try decoration.destroy()
     @Decorations = []
-  render: (Messages)->
+
+  render: (Messages) ->
     @removeDecorations()
     if not Messages.length
       return @View.innerHTML = ''
@@ -17,7 +19,8 @@ class Panel
       return unless Message.Position
       return if @Type is 'file' and (not Message.CurrentFile)
       P = Message.Position
-      Marker = @Linter.ActiveEditor.markBufferRange [[P[0][0] - 1, P[0][1] - 1], [P[1][0] - 1, P[1][1]]], {invalidate: 'never'}
+      range = [[P[0][0] - 1, P[0][1] - 1], [P[1][0] - 1, P[1][1]]]
+      Marker = @Linter.ActiveEditor.markBufferRange range, {invalidate: 'never'}
 
       @Decorations.push @Linter.ActiveEditor.decorateMarker(
         Marker, type: 'line-number', class: 'line-number-' + Message.Type.toLowerCase()
@@ -27,4 +30,5 @@ class Panel
         Marker, type: 'highlight', class: 'highlight-' + Message.Type.toLowerCase()
       )
     @View.render Messages
+
 module.exports = Panel
