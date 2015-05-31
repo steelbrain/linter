@@ -4,7 +4,7 @@ class LinterView
 
   render: ->
     return @hide([]) unless @Linter.ActiveEditor # When we don't have any editor
-    return @hide([]) unless @Linter.ActiveEditor.getPath() # When we have an invalid text editor
+    return @hide([]) unless @Linter.ActiveEditor.getPath?() # When we have an invalid text editor
     @Messages = @renderMessages(@Linter.MessagesProject.values())
     ActiveLinter = @Linter.getActiveEditorLinter()
     if ActiveLinter
