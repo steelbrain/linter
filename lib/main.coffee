@@ -16,8 +16,7 @@ module.exports =
     @Instance.Linters.push Linter
 
   consumeStatusBar: (statusBar) ->
-    @Instance.StatusBar = statusBar
-    @Instance.View.initTiles()
+    @Instance.Bottom.initialize(statusBar)
 
   provideLinter: ->
     @Linter

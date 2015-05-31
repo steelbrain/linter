@@ -20,18 +20,18 @@ class Bottom
       @BarStatus.Child.classList.remove 'icon-x'
       @BarStatus.Child.classList.add 'icon-check'
       @BarStatus.Child.textContent = 'No Errors'
-  initialize: ->
+  initialize: (StatusBar)->
     @BarCurrent = Views.currentFile(@Linter)
     @BarProject = Views.wholeProject(@Linter)
     @BarStatus = Views.status()
     @BarStatus.Child.classList.add 'icon-check'
     @BarStatus.Child.textContent = 'No Errors'
-    @Linter.StatusBar.addLeftTile
+    StatusBar.addLeftTile
       item: @BarCurrent.Root,
       priority: -1001
-    @Linter.StatusBar.addLeftTile
+    StatusBar.addLeftTile
       item: @BarProject.Root,
       priority: -1000
-    @Linter.StatusBar.addLeftTile
+    StatusBar.addLeftTile
       item: @BarStatus.Root
       priority: -999
