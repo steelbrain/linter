@@ -1,12 +1,9 @@
-{EventEmitter} = require 'events'
 {Range} = require 'atom'
 
 Views = require './views'
 
-class LinterView extends EventEmitter
+class LinterView
   constructor: (@Linter) ->
-    super()
-    @Decorations = []
     @MessagesCurrentFile = []
     @Messages = []
     @CountFile = 0
@@ -16,17 +13,9 @@ class LinterView extends EventEmitter
     @BarStatus = null
     @Bubble = null
     @Type = 'file'
-    @Root = document.createElement 'div'
-    @Root.id = 'linter-panel'
 
   remove: ->
     @Bubble?.destroy()
-    @removeDecorations()
-    @Root.innerHTML = ''
-
-  removeDecorations: ->
-    @Decorations.forEach (decoration) ->
-      try decoration.destroy()
 
   updateBubble: (Point) ->
     @Bubble?.destroy()
@@ -46,6 +35,7 @@ class LinterView extends EventEmitter
       Found = true
   render: ->
     return unless @Linter.ActiveEditor # When we don't have any editor
+    return @Linter.Panel.render([])
     @Messages = []
     @CountFile = 0
     @CountProject = 0
@@ -53,10 +43,8 @@ class LinterView extends EventEmitter
     @renderUpdateMessages(@Linter.getActiveEditorLinter().Messages.values())
     if not @Messages.length
       @Linter.ViewPanel.hide() if @Linter.ViewPanel.isVisible()
-      @remove()
       @updateTiles()
     else
-      @update()
       @updateTiles()
       @Linter.ViewPanel.show() unless @Linter.ViewPanel.isVisible()
   renderUpdateMessages: (Values) ->
@@ -73,30 +61,6 @@ class LinterView extends EventEmitter
           @Messages.push Message
         @CountProject = @CountProject + 1
       Value = Values.next()
-  update: ->
-    @Bubble?.destroy()
-    @removeDecorations()
-    @Root.innerHTML = ''
-    TextEditor = @Linter.ActiveEditor
-    ActiveFile = TextEditor.getPath()
-    @Messages.forEach (Message) =>
-      Entry = @messageLine Message, (@MessagesCurrentFile.indexOf(Message) is -1 or @Type is 'project')
-      @Root.appendChild Entry
-
-      return if Message.File isnt ActiveFile or not Message.Position
-      P = Message.Position
-      Marker = TextEditor.markBufferRange [[P[0][0] - 1, P[0][1] - 1], [P[1][0] - 1, P[1][1]]], {invalidate: 'never'}
-
-      @Decorations.push TextEditor.decorateMarker(
-        Marker, type: 'line-number', class: 'line-number-' + Message.Type.toLowerCase()
-      )
-
-      @Decorations.push TextEditor.decorateMarker(
-        Marker, type: 'highlight', class: 'highlight-' + Message.Type.toLowerCase()
-      )
-
-    @updateBubble(TextEditor.getCursors()[0].getBufferPosition())
-
   updateTiles: ->
     @BarCurrent.Child.textContent = @CountFile.toString()
     @BarProject.Child.textContent = @CountProject.toString()
@@ -114,8 +78,8 @@ class LinterView extends EventEmitter
       @BarStatus.Child.textContent = 'No Errors'
 
   initTiles: ->
-    @BarCurrent = Views.currentFile(this)
-    @BarProject = Views.wholeProject(this)
+    @BarCurrent = Views.currentFile(@Linter)
+    @BarProject = Views.wholeProject(@Linter)
     @BarStatus = Views.status()
     @BarStatus.Child.classList.add 'icon-check'
     @BarStatus.Child.textContent = 'No Errors'
