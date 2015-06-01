@@ -1,8 +1,8 @@
-module.exports = (Linter, Message) ->
-  Root = document.createElement 'div'
-  Root.id = 'linter-inline'
-  Root.appendChild Linter.View.messageLine Message, false
-  if Message.Trace and Message.Trace.length
-    Message.Trace.forEach (Trace) ->
-      Root.appendChild Linter.View.messageLine Trace
-  return Root
+module.exports = (linter, message) ->
+  root = document.createElement 'div'
+  root.id = 'linter-inline'
+  root.appendChild linter.view.messageLine message, false
+  if message.trace and message.trace.length
+    message.trace.forEach (trace) ->
+      root.appendChild linter.view.messageLine trace
+  return root

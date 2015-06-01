@@ -1,5 +1,5 @@
 module.exports =
-  Instance: null
+  instance: null
   config:
     lintOnFly:
       title: 'Lint on fly'
@@ -8,18 +8,18 @@ module.exports =
       default: true
 
   activate: ->
-    @Instance = new (require './linter.coffee')
+    @instance = new (require './linter.coffee')
     atom.config.observe 'linter-plus.lintOnFly', (lintOnyFly) =>
-      @Instance.LintOnFly = lintOnyFly
+      @instance.lintOnFly = lintOnyFly
 
-  consumeLinter: (Linter) ->
-    @Instance.Linters.push Linter
+  consumeLinter: (linter) ->
+    @instance.linters.push linter
 
   consumeStatusBar: (statusBar) ->
-    @Instance.Bottom.initialize(statusBar)
+    @instance.bottom.initialize(statusBar)
 
   provideLinter: ->
     @Linter
 
   deactivate: ->
-    @Instance?.deactivate()
+    @instance?.deactivate()

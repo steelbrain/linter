@@ -1,34 +1,34 @@
 class Panel
-  constructor: (@Linter) ->
-    @Decorations = []
-    @Type = 'file'
-    @View = null
+  constructor: (@linter) ->
+    @decorations = []
+    @type = 'file'
+    @view = null
 
   removeDecorations: ->
-    return unless @Decorations.length
-    @Decorations.forEach (decoration) ->
+    return unless @decorations.length
+    @decorations.forEach (decoration) ->
       try decoration.destroy()
-    @Decorations = []
+    @decorations = []
 
-  render: (Messages) ->
+  render: (messages) ->
     @removeDecorations()
-    if not Messages.length
-      return @View.innerHTML = ''
-    Messages.forEach (Message) =>
-      return unless Message.CurrentFile # A custom property added while creating arrays of them
-      return unless Message.Position
-      return if @Type is 'file' and (not Message.CurrentFile)
-      P = Message.Position
-      Range = [[P[0][0] - 1, P[0][1] - 1], [P[1][0] - 1, P[1][1]]]
-      Marker = @Linter.ActiveEditor.markBufferRange Range, {invalidate: 'never'}
+    if not messages.length
+      return @view.innerHTML = ''
+    messages.forEach (message) =>
+      return unless message.currentFile # A custom property added while creating arrays of them
+      return unless message.position
+      return if @type is 'file' and (not message.currentFile)
+      p = message.position
+      range = [[p[0][0] - 1, p[0][1] - 1], [p[1][0] - 1, p[1][1]]]
+      marker = @linter.activeEditor.markBufferRange range, {invalidate: 'never'}
 
-      @Decorations.push @Linter.ActiveEditor.decorateMarker(
-        Marker, type: 'line-number', class: 'line-number-' + Message.Type.toLowerCase()
+      @decorations.push @linter.activeEditor.decorateMarker(
+        marker, type: 'line-number', class: 'line-number-' + message.type.toLowerCase()
       )
 
-      @Decorations.push @Linter.ActiveEditor.decorateMarker(
-        Marker, type: 'highlight', class: 'highlight-' + Message.Type.toLowerCase()
+      @decorations.push @linter.activeEditor.decorateMarker(
+        marker, type: 'highlight', class: 'highlight-' + message.type.toLowerCase()
       )
-    @View.render Messages
+    @view.render messages
 
 module.exports = Panel
