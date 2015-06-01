@@ -13,8 +13,8 @@ class Bubble
     @linter.view.messages.forEach (message) =>
       return if found
       return unless message.currentFile
-      return unless message.position
-      p = message.position
+      return unless message.Position
+      p = message.Position
       errorRange = new Range([p[0][0] - 1, p[0][1] - 1], [p[1][0] - 1, p[1][1]])
       return unless errorRange.containsPoint point
       marker = textEditor.markBufferRange errorRange, {invalidate: 'never'}

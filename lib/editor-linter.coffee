@@ -8,7 +8,7 @@ class EditorLinter
 
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
-    @buffer = Editor.getBuffer()
+    @buffer = @editor.getBuffer()
 
     @subscriptions.add(@editor.onDidSave @lint.bind(@, false))
     @subscriptions.add(@editor.onDidStopChanging @lint.bind(@, true)) if @linter.lintOnFly
@@ -24,7 +24,7 @@ class EditorLinter
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
     promises = @lintResults onChange, scopes
-    promise.all(promises).then =>
+    Promise.all(promises).then =>
       @progress onChange, false
     .catch ->
       console.error arguments[0].stack
@@ -39,7 +39,7 @@ class EditorLinter
         (
           new Promise (resolve) =>
             retVal = linter.lint(@editor, @buffer)
-            if retVal instanceof promise
+            if retVal instanceof Promise
               retVal.then (results) =>
                 if results instanceof Array
                   if linter.scope is 'project' then @linter.messagesProject.set linter, results
