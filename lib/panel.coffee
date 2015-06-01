@@ -16,18 +16,18 @@ class Panel
       return @view.innerHTML = ''
     messages.forEach (message) =>
       return unless message.currentFile # A custom property added while creating arrays of them
-      return unless message.Position
+      return unless message.position
       return if @type is 'file' and (not message.currentFile)
-      p = message.Position
+      p = message.position
       range = [[p[0][0] - 1, p[0][1] - 1], [p[1][0] - 1, p[1][1]]]
       marker = @linter.activeEditor.markBufferRange range, {invalidate: 'never'}
 
       @decorations.push @linter.activeEditor.decorateMarker(
-        marker, type: 'line-number', class: 'line-number-' + message.Type.toLowerCase()
+        marker, type: 'line-number', class: 'line-number-' + message.type.toLowerCase()
       )
 
       @decorations.push @linter.activeEditor.decorateMarker(
-        marker, type: 'highlight', class: 'highlight-' + message.Type.toLowerCase()
+        marker, type: 'highlight', class: 'highlight-' + message.type.toLowerCase()
       )
     @view.render messages
 
