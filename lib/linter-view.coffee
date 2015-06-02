@@ -32,7 +32,7 @@ class LinterView
     toReturn = []
     while not value.done
       value.value.forEach (message) =>
-        if (not message.File and not isProject) or message.File is activeFile
+        if (not message.file and not isProject) or message.file is activeFile
           message.currentFile = true
         else
           message.currentFile = false
@@ -47,27 +47,27 @@ class LinterView
     ribbon = document.createElement 'span'
     ribbon.classList.add 'badge'
     ribbon.classList.add 'badge-flexible'
-    ribbon.classList.add 'badge-' + message.Type.toLowerCase()
-    ribbon.textContent = message.Type
+    ribbon.classList.add 'badge-' + message.type.toLowerCase()
+    ribbon.textContent = message.type
 
     theMessage = document.createElement('span')
-    if message.HTML and message.HTML.length
-      theMessage.innerHTML = message.HTML
+    if message.html and message.html.length
+      theMessage.innerHTML = message.html
     else
-      theMessage.textContent = message.Message
+      theMessage.textContent = message.message
 
-    if message.File
-      message.displayFile = message.File
+    if message.file
+      message.displayFile = message.file
       try
         atom.project.getPaths().forEach (path) ->
-          return unless message.File.indexOf(path) is 0
-          message.displayFile = message.File.substr( path.length + 1 ) # Remove the trailing slash as well
+          return unless message.file.indexOf(path) is 0
+          message.displayFile = message.file.substr( path.length + 1 ) # Remove the trailing slash as well
           throw null
       file = document.createElement 'a'
-      file.addEventListener 'click', @onclick.bind(null, message.File, message.Position)
-      if message.Position
+      file.addEventListener 'click', @onclick.bind(null, message.file, message.position)
+      if message.position
         file.textContent =
-          'at line ' + message.Position[0][0] + ' col ' + message.Position[0][1] + ' '
+          'at line ' + message.position[0][0] + ' col ' + message.position[0][1] + ' '
       if addPath
         file.textContent += 'in ' + message.displayFile
     else
