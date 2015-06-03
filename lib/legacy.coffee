@@ -1,7 +1,7 @@
 
 typeMap =
   info: 'Trace'
-  warn: 'Warning'
+  warning: 'Warning'
   error: 'Error'
 
 transform = (filePath, textEditor, results) ->
@@ -9,7 +9,8 @@ transform = (filePath, textEditor, results) ->
     [ [startLine, startCol], [ endLine, endCol ] ] = (range.serialize?() ? range)
 
     msg =  {
-      type: typeMap[level]
+      # If the type is non-standard just pass along whatever it was
+      type: typeMap[level] ? level
       message: message
       file: filePath
       # These are all 0-indexed, but the `Position` needs a range where
