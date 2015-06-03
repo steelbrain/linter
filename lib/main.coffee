@@ -12,6 +12,13 @@ module.exports =
     atom.config.observe 'linter-plus.lintOnFly', (lintOnyFly) =>
       @instance.lintOnFly = lintOnyFly
 
+    legacy = require('./legacy.coffee')
+    for atomPackage in atom.packages.getLoadedPackages()
+      if atomPackage.metadata['linter-package'] is true
+        implemention = atomPackage.metadata['linter-implementation'] ? atomPackage.name
+        linter = legacy(require "#{atomPackage.path}/lib/#{implemention}")
+        @consumeLinter(linter)
+
   consumeLinter: (linter) ->
     @instance.linters.push linter
 

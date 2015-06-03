@@ -1,5 +1,5 @@
 {
-  "name": "linter-plus",
+  "name": "linter",
   "main": "./lib/main",
   "author": "AtomLinter",
   "version": "0.2.0",
@@ -33,5 +33,9 @@
   },
   "devDependencies": {
     "coffeelint": "^1.9.7"
+  },
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "space-pen": "^5.1.1"
   }
 }
