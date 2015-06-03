@@ -3,9 +3,10 @@ path = require 'path'
 {CompositeDisposable, Range, Point, BufferedProcess} = require 'atom'
 _ = null
 XRegExp = null
-{MessagePanelView} = require 'atom-message-panel'
-{log, warn} = require './utils'
 
+# These are NOOPs in linter-plus
+log = -> undefined
+warn = -> undefined
 
 # Public: The base class for linters.
 # Subclasses must at a minimum define the attributes syntax, cmd, and regex.
@@ -180,14 +181,20 @@ class Linter
     process.onWillThrowError (err) =>
       return unless err?
       if err.error.code is 'ENOENT'
-        ignored = atom.config.get('linter.ignoredLinterErrors')
-        subtle = atom.config.get('linter.subtleLinterErrors')
+        # Add defaults because the new linter doesn't include these configs
+        ignored = atom.config.get('linter.ignoredLinterErrors') ? []
+        subtle = atom.config.get('linter.subtleLinterErrors') ? []
         warningMessageTitle = "The linter binary '#{@linterName}' cannot be found."
         if @linterName in subtle
-          # Show a small notification at the bottom of the screen
-          message = new MessagePanelView(title: warningMessageTitle)
-          message.attach()
-          message.toggle() # Fold the panel
+          # Just mark the error on the first line. This has to be the old style
+          callback([{
+            level: 'error'
+            message: warningMessageTitle
+            range: [
+              [ 0, 0],
+              [ 0, 0]
+            ]
+          }])
         else if @linterName not in ignored
           # Prompt user, ask if they want to fully or partially ignore warnings
           atom.confirm
