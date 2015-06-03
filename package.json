@@ -33,5 +33,9 @@
   },
   "devDependencies": {
     "coffeelint": "^1.9.7"
+  },
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "space-pen": "^5.1.1"
   }
 }
