@@ -186,15 +186,7 @@ class Linter
         subtle = atom.config.get('linter.subtleLinterErrors') ? []
         warningMessageTitle = "The linter binary '#{@linterName}' cannot be found."
         if @linterName in subtle
-          # Just mark the error on the first line. This has to be the old style
-          callback([{
-            level: 'error'
-            message: warningMessageTitle
-            range: [
-              [ 0, 0],
-              [ 0, 0]
-            ]
-          }])
+          atom.notifications.addError(warningMessageTitle)
         else if @linterName not in ignored
           # Prompt user, ask if they want to fully or partially ignore warnings
           atom.confirm
