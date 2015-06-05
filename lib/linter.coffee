@@ -215,6 +215,8 @@ class Linter
         warn "command `#{command}` timed out after #{@executionTimeout} ms"
       , @executionTimeout
 
+    @afterSpawnProcess(process, command, args, options, filePath)
+
   # Public: Gives subclasses a chance to read or change the command, args and
   #         options, before creating new BufferedProcess while lintFile.
   #   command: a string of executablePath
@@ -224,6 +226,17 @@ class Linter
   # Override this if you want to read or change these arguments
   beforeSpawnProcess: (command, args, options) =>
     {command: command, args: args, options: options}
+
+  # Public: Gives subclasses a chance to read or change the child process,
+  #         after creating new BufferedProcess while lintFile.
+  #         Useful for passing data via stdin (process.process.stdin).
+  #   process: the child process (BufferedProcess)
+  #   command: a string of executablePath
+  #   args: an array of string arguments
+  #   options: an object of options (has cwd field)
+  #   filePath: a string of lint target filePath
+  # Override to read or change the child process (default: no-op)
+  afterSpawnProcess: (process, command, args, options, filePath) ->
 
   # Private: process the string result of a linter execution using the regex
   #          as the message builder
