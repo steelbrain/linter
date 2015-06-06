@@ -23,6 +23,7 @@ class EditorLinter
     @lint true unless onChange
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
+    scopes.push '*' # Ensure that everything can be linted with a wildcard.
     promises = @lintResults onChange, scopes
     Promise.all(promises).then =>
       @progress onChange, false
