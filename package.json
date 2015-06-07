@@ -7,7 +7,7 @@
   "repository": "https://github.com/AtomLinter/linter-plus",
   "license": "MIT",
   "scripts": {
-    "lint": "./node_modules/.bin/coffeelint lib -c coffeelint.json"
+    "lint": "coffeelint lib coffeelint.json"
   },
   "engines": {
     "atom": ">=0.174.0 <2.0.0"
@@ -31,11 +31,7 @@
       }
     }
   },
-  "devDependencies": {
-    "coffeelint": "^1.9.7"
-  },
   "dependencies": {
-    "lodash": "^2.4.1",
-    "space-pen": "^5.1.1"
+    "lodash": "^2.4.1"
   }
 }
