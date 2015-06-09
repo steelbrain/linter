@@ -18,7 +18,11 @@ class Bubble
       errorRange = new Range([p[0][0] - 1, p[0][1] - 1], [p[1][0] - 1, p[1][1]])
       return unless errorRange.containsPoint point
       marker = textEditor.markBufferRange errorRange, {invalidate: 'never'}
-      @bubble = textEditor.decorateMarker marker, type: 'overlay', item: BubbleView(@linter, message)
+      @bubble = textEditor.decorateMarker(marker, {
+        type: 'overlay',
+        position: 'tail',
+        item: BubbleView(@linter, message)
+      })
       found = true
 
   remove: ->
