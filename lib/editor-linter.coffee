@@ -1,5 +1,15 @@
 {CompositeDisposable, Emitter} = require 'atom'
 
+validateResults = (results) ->
+  unless results instanceof Array
+    throw new Error("Invalid linter response. found typeof " + (typeof results))
+
+  for r in results
+    unless r.type?
+      throw new Error('Missing "type". found keys', Object.keys(r))
+
+  return results
+
 class EditorLinter
   constructor: (@linter, @editor) ->
     @inProgress = false
@@ -31,36 +41,27 @@ class EditorLinter
       console.error arguments[0].stack
       @progress onChange, false
   lintResults: (onChange, scopes) ->
-    promises = []
-    @linter.linters.forEach (linter) =>
+    return @linter.linters.map (linter) =>
       return if onChange and not linter.lintOnFly
       return if (not onChange) and linter.lintOnFly
       return unless (scopes.filter (entry) -> linter.scopes.indexOf(entry) isnt -1 ).length
-      promises.push(
-        (
-          new Promise (resolve) =>
-            retVal = linter.lint(@editor, @buffer)
-            if retVal instanceof Promise
-              retVal.then (results) =>
-                if results instanceof Array
-                  if linter.scope is 'project' then @linter.messagesProject.set linter, results
-                  else @messages.set linter, results
-                resolve()
-              .catch (error) =>
-                if linter.scope is 'project' then @linter.messagesProject.delete linter
-                else @messages.delete linter
-                atom.notifications.addError "#{error.message}", {detail: error.stack, dismissable: true}
-                resolve()
-            else
-              if retVal instanceof Array
-                if linter.scope is 'project' then @linter.messagesProject.set linter, retVal
-                else @messages.set linter, retVal
-              resolve()
-        ).then =>
-          @emitter.emit 'did-update'
-          @linter.view.render() if @editor is @linter.activeEditor
+
+      return new Promise((resolve) =>
+        # Using this callback style instead of `Promise.resolve` means we'll
+        # catch any exceptions thrown by `linter.lint`
+        resolve(linter.lint(@editor, @buffer))
+      ).then(validateResults)
+      .then((results) =>
+        if linter.scope is 'project' then @linter.messagesProject.set linter, results
+        else @messages.set linter, results
+      ).catch((error) =>
+        if linter.scope is 'project' then @linter.messagesProject.delete linter
+        else @messages.delete linter
+        atom.notifications.addError "#{error.message}", {detail: error.stack, dismissable: true}
+      ).then(=> # finally
+        @emitter.emit 'did-update'
+        @linter.view.render() if @editor is @linter.activeEditor
       )
-    promises
 
   progress: (onChange, newValue) ->
     if typeof newValue is 'undefined'
