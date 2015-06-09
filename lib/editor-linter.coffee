@@ -40,6 +40,7 @@ class EditorLinter
     .catch ->
       console.error arguments[0].stack
       @progress onChange, false
+
   lintResults: (onChange, scopes) ->
     return @linter.linters.map (linter) =>
       return if onChange and not linter.lintOnFly
