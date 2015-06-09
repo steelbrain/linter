@@ -13,9 +13,14 @@
     "atom": ">=0.174.0 <2.0.0"
   },
   "consumedServices": {
-    "linter-plus": {
+    "linter": {
       "versions": {
         "0.1.0": "consumeLinter"
+      }
+    },
+    "linter-plus": {
+      "versions": {
+        "0.1.0": "consumeLinterPlus"
       }
     },
     "status-bar": {

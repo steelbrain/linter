@@ -18,8 +18,14 @@ module.exports =
         implemention = atomPackage.metadata['linter-implementation'] ? atomPackage.name
         linter = legacy(require "#{atomPackage.path}/lib/#{implemention}")
         @consumeLinter(linter)
+      if atomPackage.metadata.providedServices?['linter-plus']?.versions['0.1.0']
+        atom.notifications.addWarning("#{atomPackage.name} still provides
+        `linter-plus` this has been depricated in favor of `linter`")
 
   consumeLinter: (linter) ->
+    @instance.linters.push linter
+
+  consumeLinterPlus: (linter) ->
     @instance.linters.push linter
 
   consumeStatusBar: (statusBar) ->
