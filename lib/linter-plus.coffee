@@ -16,12 +16,21 @@ class Linter
     @emitter = new Emitter
     @view = new LinterView this
     @bottom = new Bottom this
-    @bubble = new Bubble this
     @statusBar = null
     @messagesProject = new Map
     @activeEditor = atom.workspace.getActiveTextEditor()
     @editorLinters = new Map
     @linters = []
+
+    if atom.config.get "editor.showErrorInline"
+      @bubble = new Bubble this
+
+    atom.config.observe 'linter.showErrorInline', (showErrorInline) =>
+      if showErrorInline
+        @bubble = new Bubble this
+      else
+        @bubble?.remove()
+        @bubble = null
 
     @subscriptions.add atom.views.addViewProvider Panel, (model) =>
       @panelView = ( new PanelView() ).initialize(model, @)
@@ -62,7 +71,7 @@ class Linter
     @subscriptions.dispose()
     @panel.removeDecorations()
     @bottom.remove()
-    @bubble.remove()
+    @bubble?.remove()
     @eachLinter (linter) ->
       linter.subscriptions.dispose()
     @panelModal.destroy()

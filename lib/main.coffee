@@ -6,6 +6,9 @@ module.exports =
       description: 'Lint files while typing, without the need to save them'
       type: 'boolean'
       default: true
+    showErrorInline:
+      type: 'boolean'
+      default: true
 
   activate: ->
     @instance = new (require './linter-plus.coffee')
