@@ -30,6 +30,7 @@ class Linter
 
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
       @activeEditor = editor
+      @getLinter(editor)?.lint(false)
       @view.render()
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       currentEditorLinter = new EditorLinter @, editor
@@ -41,8 +42,7 @@ class Linter
         @editorLinters.delete currentEditorLinter
 
   getActiveEditorLinter: ->
-    return null unless @activeEditor
-    return @editorLinters.get @activeEditor
+    return @getLinter(@activeEditor)
 
   getLinter: (editor) ->
     return @editorLinters.get editor

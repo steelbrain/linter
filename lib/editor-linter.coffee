@@ -30,6 +30,7 @@ class EditorLinter
     .catch ->
       console.error arguments[0].stack
       @progress onChange, false
+
   lintResults: (onChange, scopes) ->
     promises = []
     @linter.linters.forEach (linter) =>
