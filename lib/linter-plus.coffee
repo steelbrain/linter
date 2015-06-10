@@ -3,7 +3,6 @@ Path = require 'path'
 LinterView = require './linter-view-manager'
 LinterViews = require './linter-views'
 Bubble = require './bubble'
-PanelView = require './views/panel'
 EditorLinter = require './editor-linter'
 H = require './h'
 
@@ -29,10 +28,6 @@ class Linter
       else
         @bubble?.remove()
         @bubble = null
-
-    @panel = new PanelView
-    @panel.initialize(@)
-    @panelModel = atom.workspace.addBottomPanel item: @panel, visible: false
 
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
       @activeEditor = editor
@@ -74,8 +69,6 @@ class Linter
     @bubble?.remove()
     @eachLinter (linter) ->
       linter.subscriptions.dispose()
-    @panelModel.destroy()
-    @panel.removeDecorations()
     @views.deactivate()
 
 module.exports = Linter

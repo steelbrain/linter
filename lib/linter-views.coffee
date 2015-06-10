@@ -1,6 +1,7 @@
 BottomTabFile = require './views/bottom-tab-file'
 BottomTabProject = require './views/bottom-tab-project'
 BottomStatus = require './views/bottom-status'
+Panel = require './views/panel'
 
 class LinterViews
   constructor: (@linter)->
@@ -9,10 +10,13 @@ class LinterViews
     @bottomTabFile = new BottomTabFile()
     @bottomTabProject = new BottomTabProject()
     @bottomStatus = new BottomStatus()
+    @panel = new Panel
 
     @bottomTabFile.initialize(@linter)
     @bottomTabProject.initialize(@linter)
     @bottomStatus.initialize()
+    @panel.initialize(@linter)
+    @panelWorkspace = atom.workspace.addBottomPanel item: @panel, visible: false
 
     # Set default tab to File
     @scope = 'file'
@@ -20,7 +24,7 @@ class LinterViews
 
   # This message is called in editor-linter.coffee
   render: ->
-    
+
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar)->
@@ -34,7 +38,8 @@ class LinterViews
       item: @bottomStatus,
       priority: -999
 
-# this method is called on package deactivate
+  # this method is called on package deactivate
   deactivate: ->
-
+    @panel.removeDecorations()
+    @panelWorkspace.destroy()
 module.exports = LinterViews

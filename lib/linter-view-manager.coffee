@@ -13,19 +13,19 @@ class ViewManager
     @messages = messages
 
     if @messages.length
-      @linter.panel.render @messages
-      @linter.panelModel.show() unless @linter.panelModel.isVisible()
+      @linter.views.panel.render @messages
+      @linter.views.panelWorkspace.show() unless @linter.views.panelWorkspace.isVisible()
     else
       @hide()
 
     @linter.bubble?.update @linter.activeEditor.getCursorBufferPosition()
 
   hide: ->
-    @linter.panelModel.hide() if @linter.panelModel.isVisible()
-    @linter.panel.innerHTML = ''
+    @linter.views.panelWorkspace.hide() if @linter.views.panelWorkspace.isVisible()
+    @linter.views.panel.innerHTML = ''
 
   renderMessages: (values) ->
-    isProject = @linter.panel.type is 'project'
+    isProject = @linter.views.type is 'project'
     activeFile = @linter.activeEditor.getPath()
     value = values.next()
     toReturn = []
