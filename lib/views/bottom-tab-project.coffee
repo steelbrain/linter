@@ -7,5 +7,6 @@ class BottomTabProject extends BottomTab
     @linter.views.scope = 'project'
     @linter.views.bottomTabFile.active = false
     @active = true
+    @linter.views.panel.render(@linter.views.messages)
 
 module.exports = BottomTabProject = document.registerElement('linter-bottom-tab-project', {prototype: BottomTabProject.prototype})
