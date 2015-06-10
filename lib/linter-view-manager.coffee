@@ -14,14 +14,14 @@ class ViewManager
 
     if @messages.length
       @linter.panel.render @messages
-      @linter.panelModal.show() unless @linter.panelModal.isVisible()
+      @linter.panelModel.show() unless @linter.panelModel.isVisible()
     else
       @hide()
 
     @linter.bubble?.update @linter.activeEditor.getCursorBufferPosition()
 
   hide: ->
-    @linter.panelModal.hide() if @linter.panelModal.isVisible()
+    @linter.panelModel.hide() if @linter.panelModel.isVisible()
     @linter.panel.innerHTML = ''
 
   renderMessages: (values) ->

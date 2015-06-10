@@ -3,8 +3,7 @@ Path = require 'path'
 LinterView = require './linter-view-manager'
 LinterViews = require './linter-views'
 Bubble = require './bubble'
-Panel = require './panel'
-PanelView = require './views/panel-old'
+PanelView = require './views/panel'
 EditorLinter = require './editor-linter'
 H = require './h'
 
@@ -21,7 +20,7 @@ class Linter
     @messagesProject = new Map
     @activeEditor = atom.workspace.getActiveTextEditor()
     @editorLinters = new Map
-    @h = new H
+    @h = H
     @linters = []
 
     @subscriptions.add atom.config.observe 'linter.showErrorInline', (showErrorInline) =>
@@ -31,10 +30,9 @@ class Linter
         @bubble?.remove()
         @bubble = null
 
-    @subscriptions.add atom.views.addViewProvider Panel, (model) =>
-      @panelView = ( new PanelView() ).initialize(model, @)
-    @panel = new Panel this
-    @panelModal = atom.workspace.addBottomPanel item: @panel, visible: false
+    @panel = new PanelView
+    @panel.initialize(@)
+    @panelModel = atom.workspace.addBottomPanel item: @panel, visible: false
 
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
       @activeEditor = editor
@@ -76,7 +74,8 @@ class Linter
     @bubble?.remove()
     @eachLinter (linter) ->
       linter.subscriptions.dispose()
-    @panelModal.destroy()
+    @panelModel.destroy()
+    @panel.removeDecorations()
     @views.deactivate()
 
 module.exports = Linter
