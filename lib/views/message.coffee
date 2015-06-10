@@ -1,5 +1,7 @@
+# This file is imported in views/panel
+
 class Message extends HTMLElement
-  initialize: (message)->
+  initialize: (message, addPath)->
     @message = message
 
     # The ribbon
