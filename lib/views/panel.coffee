@@ -1,3 +1,5 @@
+Message = require './message'
+
 class PanelView extends HTMLElement
   initialize:(@linter)->
     @id = 'linter-panel'
@@ -26,6 +28,8 @@ class PanelView extends HTMLElement
         @decorations.push @linter.activeEditor.decorateMarker(
           marker, type: 'highlight', class: 'highlight-' + message.type.toLowerCase()
         )
-      @appendChild @linter.view.messageLine message, @linter.views.scope is 'project'
+      MessageLine = new Message()
+      MessageLine.initialize(message, @linter.views.scope is 'project')
+      @appendChild MessageLine
 
 module.exports = PanelView = document.registerElement('linter-panel-view', {prototype: PanelView.prototype})
