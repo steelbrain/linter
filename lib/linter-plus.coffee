@@ -1,6 +1,6 @@
 Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
-LinterView = require './linter-view'
+LinterView = require './linter-view-manager'
 Bubble = require './bubble'
 Panel = require './panel'
 PanelView = require './views/panel'

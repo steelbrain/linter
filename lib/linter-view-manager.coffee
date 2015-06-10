@@ -1,4 +1,4 @@
-class LinterView
+class ViewManager
   constructor: (@linter) ->
     @messages = []
 
@@ -83,4 +83,4 @@ class LinterView
       return unless position
       atom.workspace.getActiveTextEditor().setCursorBufferPosition [position[0][0] - 1, position[0][1] - 1]
 
-module.exports = LinterView
+module.exports = ViewManager
