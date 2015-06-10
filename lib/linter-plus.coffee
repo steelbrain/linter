@@ -1,6 +1,7 @@
 Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
 LinterView = require './linter-view-manager'
+LinterViews = require './linter-views'
 Bubble = require './bubble'
 Panel = require './panel'
 PanelView = require './views/panel'
@@ -15,6 +16,7 @@ class Linter
 
     @emitter = new Emitter
     @view = new LinterView this
+    @views = new LinterViews this
     @bottom = new Bottom this
     @statusBar = null
     @messagesProject = new Map
@@ -76,5 +78,6 @@ class Linter
     @eachLinter (linter) ->
       linter.subscriptions.dispose()
     @panelModal.destroy()
+    @views.deactivate()
 
 module.exports = Linter
