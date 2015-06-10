@@ -20,7 +20,7 @@
     },
     "linter-plus": {
       "versions": {
-        "0.1.0": "consumeLinterPlus"
+        "0.1.0": "consumeLinter"
       }
     },
     "status-bar": {

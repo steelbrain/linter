@@ -28,9 +28,6 @@ module.exports =
   consumeLinter: (linter) ->
     @instance.linters.push linter
 
-  consumeLinterPlus: (linter) ->
-    @instance.linters.push linter
-
   consumeStatusBar: (statusBar) ->
     @instance.bottom.initialize(statusBar)
 
