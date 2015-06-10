@@ -39,8 +39,12 @@ class Linter
 
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
       @activeEditor = editor
-      @getLinter(editor)?.lint(false)
-      @view.render()
+      # Exceptions thrown here prevent switching tabs
+      try
+        @getLinter(editor)?.lint(false)
+        @view.render()
+      catch error
+        atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       currentEditorLinter = new EditorLinter @, editor
       @editorLinters.set editor, currentEditorLinter
