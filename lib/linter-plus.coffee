@@ -3,7 +3,7 @@ Path = require 'path'
 LinterView = require './linter-view'
 Bubble = require './bubble'
 Panel = require './panel'
-PanelView = require './panel-view'
+PanelView = require './views/panel'
 Bottom = require './bottom'
 EditorLinter = require './editor-linter'
 
