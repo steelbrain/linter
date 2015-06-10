@@ -7,6 +7,8 @@ module.exports =
       type: 'boolean'
       default: true
     showErrorInline:
+      title: "Show Inline Tooltips"
+      descriptions: "Show inline tooltips for errors"
       type: 'boolean'
       default: true
 
