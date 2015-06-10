@@ -20,6 +20,17 @@ class EditorLinter
       @editor.onDidStopChanging => @lint(true)
     )
 
+  # Called on package deactivate
+  destroy: ->
+    @emitter.emit 'did-destroy'
+    @subscriptions.dispose()
+
+  onDidUpdate: (callback)->
+    @emitter.on 'did-update', callback
+
+  onDidDestroy: (callback)->
+    @emitter.on 'did-destroy', callback
+
   lint: (wasTriggeredOnChange)->
     return unless @editor is @linter.activeEditor
     return if @_lock(wasTriggeredOnChange)
