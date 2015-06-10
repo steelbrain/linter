@@ -7,7 +7,6 @@ EditorLinter = require './editor-linter'
 H = require './h'
 
 class Linter
-
   constructor: ->
     @subscriptions = new CompositeDisposable
     @lintOnFly = true
