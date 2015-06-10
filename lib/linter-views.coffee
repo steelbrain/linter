@@ -24,7 +24,13 @@ class LinterViews
 
   # This message is called in editor-linter.coffee
   render: ->
+    return @panel.hide() unless @linter.activeEditor
+    return @panel.hide() unless @linter.activeEditor?.getPath()
 
+    activeLinter = @linter.getActiveEditorLinter()
+    messages = LinterViews._extractMessages(@linter.messagesProject)
+    messages = messages.concat(LinterViews._extractMessages(activeLinter.messages)) if activeLinter
+    @messages = messages
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar)->
@@ -42,4 +48,8 @@ class LinterViews
   deactivate: ->
     @panel.removeDecorations()
     @panelWorkspace.destroy()
+
+  # This method is called in render, and classifies the messages according to scope
+  @_extractMessages: (Gen)->
+
 module.exports = LinterViews
