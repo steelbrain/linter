@@ -59,7 +59,7 @@ class EditorLinter
         else @messages.set linter, results
 
         @emitter.emit 'did-update'
-        @linter.view.render() if @editor is @linter.activeEditor
+        @linter.views.render() if @editor is @linter.activeEditor
 
   # This method sets or gets the lock status of given type
   _lock: (wasTriggeredOnChange, value)->
