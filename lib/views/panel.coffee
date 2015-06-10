@@ -1,5 +1,5 @@
 class PanelView extends HTMLElement
-  initialize(@linter)->
+  initialize:(@linter)->
     @id = 'linter-panel'
     @decorations = []
   removeDecorations: ->
