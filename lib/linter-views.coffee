@@ -4,6 +4,8 @@ BottomStatus = require './views/bottom-status'
 
 class LinterViews
   constructor: (@linter)->
+    @messages = []
+
     @bottomTabFile = new BottomTabFile()
     @bottomTabProject = new BottomTabProject()
     @bottomStatus = new BottomStatus()
@@ -15,6 +17,10 @@ class LinterViews
     # Set default tab to File
     @scope = 'file'
     @bottomTabFile.active = true
+
+  # This message is called in editor-linter.coffee
+  render: ->
+    
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar)->
