@@ -1,5 +1,5 @@
 {CompositeDisposable} = require 'atom'
-
+Linter = null
 
 # Public: linter package initialization, sets up the linter for usages by atom
 class LinterInitializer
@@ -80,12 +80,12 @@ class LinterInitializer
     @setDefaultOldConfig()
     @linterViews = new Set()
     @subscriptions = new CompositeDisposable
-    linterClasses = []
+    @linterClasses = []
 
     for atomPackage in atom.packages.getLoadedPackages()
       if atomPackage.metadata['linter-package'] is true
         implemention = atomPackage.metadata['linter-implementation'] ? atomPackage.name
-        linterClasses.push(require "#{atomPackage.path}/lib/#{implemention}")
+        @linterClasses.push(require "#{atomPackage.path}/lib/#{implemention}")
 
     @enabled = true
     StatusBarView = require './statusbar-view'
@@ -101,10 +101,20 @@ class LinterInitializer
       return if editor.linterView?
 
       linterView = new LinterView(editor, @statusBarView, @statusBarSummaryView,
-                                  @inlineView, linterClasses)
+                                  @inlineView, @linterClasses)
       @linterViews.add linterView
       @subscriptions.add linterView.onDidDestroy =>
         @linterViews.delete linterView
+
+  addLinterClass: (linterClass) ->
+    # If @enabled, then the existing instances of LinterView will not show
+    # messages from these linters because each LinterView has already invoked
+    # its initLinters() method.
+    @linterClasses.push linterClass
+
+  provideLinterClass: ->
+    Linter ?= require './linter'
+    return Linter
 
   # Public: deactivate the plugin and unregister all subscriptions
   deactivate: ->
