@@ -19,6 +19,7 @@ class EditorLinter
     @subscriptions.add(
       @editor.onDidStopChanging => @lint(true)
     )
+
   lint: (wasTriggeredOnChange)->
     return unless @editor is @linter.activeEditor
     return if @_lock(wasTriggeredOnChange)
@@ -55,6 +56,7 @@ class EditorLinter
     return @[key] if typeof value is 'undefined'
     @[key] = value
 
+  # Checks the responses for any kind-of errors
   @validateResults: (results)->
     if (not results) or results.constructor.name isnt 'Array'
       throw new Error "Got invalid response from Linter, Type: #{typeof results}"
