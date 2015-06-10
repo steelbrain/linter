@@ -29,7 +29,7 @@ module.exports =
     @instance.linters.push linter
 
   consumeStatusBar: (statusBar) ->
-    @instance.bottom.initialize(statusBar)
+    @instance.views.attachBottom(statusBar)
 
   provideLinter: ->
     @Linter
