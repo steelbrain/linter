@@ -1,8 +1,6 @@
 Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
-LinterView = require './linter-view-manager'
 LinterViews = require './linter-views'
-Bubble = require './bubble'
 EditorLinter = require './editor-linter'
 H = require './h'
 
@@ -12,7 +10,6 @@ class Linter
     @lintOnFly = true
 
     @emitter = new Emitter
-    @view = new LinterView this
     @views = new LinterViews this
     @statusBar = null
     @messagesProject = new Map
@@ -21,19 +18,12 @@ class Linter
     @h = H
     @linters = []
 
-    @subscriptions.add atom.config.observe 'linter.showErrorInline', (showErrorInline) =>
-      if showErrorInline
-        @bubble = new Bubble this
-      else
-        @bubble?.remove()
-        @bubble = null
-
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
       @activeEditor = editor
       # Exceptions thrown here prevent switching tabs
       try
         @getLinter(editor)?.lint(false)
-        @view.render()
+        @views.render()
       catch error
         atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
@@ -65,7 +55,6 @@ class Linter
   deactivate: ->
     @subscriptions.dispose()
     @panel.removeDecorations()
-    @bubble?.remove()
     @eachLinter (linter) ->
       linter.subscriptions.dispose()
     @views.deactivate()
