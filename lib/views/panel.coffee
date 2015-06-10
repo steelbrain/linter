@@ -10,6 +10,7 @@ class PanelView extends HTMLElement
       try decoration.destroy()
     @decorations = []
   hide: ->
+    @removeDecorations()
     @innerHTML = ''
     @linter.views.panelWorkspace.hide() if @linter.views.panelWorkspace.isVisible()
   render: (messages) ->
