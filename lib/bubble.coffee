@@ -1,5 +1,5 @@
 {Range} = require 'atom'
-BubbleView = require './bubble-view'
+BubbleView = require './views/bubble'
 
 class Bubble
   constructor: (@linter) ->
