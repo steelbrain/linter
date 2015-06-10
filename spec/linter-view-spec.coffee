@@ -1,12 +1,14 @@
-sinon = require "sinon"
+sinon = require 'sinon'
 chai = require 'chai'
-Editor = require atom.config.resourcePath + "/src/text-editor"
+{allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
 
+Editor = require "#{atom.config.resourcePath}/src/text-editor"
 LinterView = require "../lib/linter-view.coffee"
 Linter = require "../lib/linter.coffee"
 
 expect = chai.expect
-
+sinon = allowUnsafeEval -> sinon
+sinon = allowUnsafeNewFunction -> sinon
 
 describe "LinterView:lint", ->
   class CatFileLinter extends Linter
