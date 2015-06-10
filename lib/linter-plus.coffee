@@ -22,10 +22,7 @@ class Linter
     @editorLinters = new Map
     @linters = []
 
-    if atom.config.get "editor.showErrorInline"
-      @bubble = new Bubble this
-
-    atom.config.observe 'linter.showErrorInline', (showErrorInline) =>
+    @subscriptions.add atom.config.observe 'linter.showErrorInline', (showErrorInline) =>
       if showErrorInline
         @bubble = new Bubble this
       else
