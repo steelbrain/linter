@@ -11,6 +11,7 @@ class PanelView extends HTMLElement
     @decorations = []
   hide: ->
     @removeDecorations()
+    @linter.views.bubble?.remove()
     @innerHTML = ''
     @linter.views.panelWorkspace.hide() if @linter.views.panelWorkspace.isVisible()
   render: (messages) ->
