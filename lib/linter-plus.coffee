@@ -5,7 +5,6 @@ LinterViews = require './linter-views'
 Bubble = require './bubble'
 Panel = require './panel'
 PanelView = require './views/panel'
-Bottom = require './bottom'
 EditorLinter = require './editor-linter'
 
 class Linter
@@ -17,7 +16,6 @@ class Linter
     @emitter = new Emitter
     @view = new LinterView this
     @views = new LinterViews this
-    @bottom = new Bottom this
     @statusBar = null
     @messagesProject = new Map
     @activeEditor = atom.workspace.getActiveTextEditor()
@@ -73,7 +71,6 @@ class Linter
   deactivate: ->
     @subscriptions.dispose()
     @panel.removeDecorations()
-    @bottom.remove()
     @bubble?.remove()
     @eachLinter (linter) ->
       linter.subscriptions.dispose()

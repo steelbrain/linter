@@ -19,7 +19,6 @@ class ViewManager
       @hide()
 
     @linter.bubble?.update @linter.activeEditor.getCursorBufferPosition()
-    @linter.bottom?.update @messages
 
   hide: ->
     @linter.panelModal.hide() if @linter.panelModal.isVisible()
