@@ -21,7 +21,7 @@ class EditorLinter
     )
   lint: (wasTriggeredOnChange)->
     return unless @editor is @linter.activeEditor
-    return unless @_lock(wasTriggeredOnChange)
+    return if @_lock(wasTriggeredOnChange)
     @lint(true) unless wasTriggeredOnChange # Trigger onFly linters on save.
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
@@ -42,7 +42,7 @@ class EditorLinter
       ).then(EditorLinter.validateResults).catch((error)->
         atom.notifications.addError error, {detail: error.stack, dismissible: true}
         []
-      ).then =>
+      ).then (results)=>
         if linter.scope is 'project' then @linter.messagesProject.set linter, results
         else @messages.set linter, results
 
