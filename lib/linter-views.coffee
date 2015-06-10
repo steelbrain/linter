@@ -5,7 +5,7 @@ Panel = require './views/panel'
 Bubble = require './views/bubble'
 
 class LinterViews
-  constructor: (@linter)->
+  constructor: (@linter) ->
     @messages = []
 
     @bottomTabFile = new BottomTabFile()
@@ -53,7 +53,7 @@ class LinterViews
     @bottomStatus.count = counts.project
 
   # This method is called when we get the status-bar service
-  attachBottom: (statusBar)->
+  attachBottom: (statusBar) ->
     statusBar.addLeftTile
       item: @bottomTabFile,
       priority: -1001
@@ -71,13 +71,13 @@ class LinterViews
     @bubble?.remove()
 
   # This method is called in render, and classifies the messages according to scope
-  _extractMessages: (Gen, counts)->
+  _extractMessages: (Gen, counts) ->
     isProject = @scope is 'project'
     activeFile = @linter.activeEditor.getPath()
     ToReturn = []
-    @linter.h.genValues(Gen).forEach (Entry)->
+    @linter.h.genValues(Gen).forEach (Entry) ->
       # Entry === Array<Messages>
-      Entry.forEach (message)->
+      Entry.forEach (message) ->
         if (not message.file and not isProject) or message.file is activeFile
           counts.file++
           counts.project++

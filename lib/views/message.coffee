@@ -1,7 +1,7 @@
 # This file is imported in views/panel
 
 class Message extends HTMLElement
-  initialize: (message, addPath)->
+  initialize: (message, addPath) ->
     @message = message
 
     # The ribbon
@@ -41,6 +41,8 @@ class Message extends HTMLElement
   onClick: ->
     atom.workspace.open(@message.file).then =>
       return unless @message.position
-      atom.workspace.getActiveTextEditor().setCursorBufferPosition [@message.position[0][0] - 1, @message.position[0][1] - 1]
+      atom.workspace.getActiveTextEditor().setCursorBufferPosition(
+        [@message.position[0][0] - 1, @message.position[0][1] - 1]
+      )
 
 module.exports = Message = document.registerElement('linter-message', {prototype: Message.prototype})

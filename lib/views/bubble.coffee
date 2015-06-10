@@ -2,9 +2,9 @@
 Message = require './message'
 
 class Bubble
-  constructor: (@linter)->
+  constructor: (@linter) ->
     @bubble = null
-  render: (message)->
+  render: (message) ->
     root = document.createElement 'div'
     root.id = 'linter-inline'
     MessageLine = new Message()
@@ -17,7 +17,7 @@ class Bubble
         root.appendChild MessageLine
     root
 
-  update: (point)->
+  update: (point) ->
     @remove()
     return unless @linter.views.messages.length
     textEditor = @linter.activeEditor

@@ -1,7 +1,7 @@
 Message = require './message'
 
 class PanelView extends HTMLElement
-  initialize:(@linter)->
+  initialize:(@linter) ->
     @id = 'linter-panel'
     @decorations = []
   removeDecorations: ->
@@ -12,10 +12,10 @@ class PanelView extends HTMLElement
   hide: ->
     @innerHTML = ''
     @linter.views.panelWorkspace.hide() if @linter.views.panelWorkspace.isVisible()
-  render: (messages)->
+  render: (messages) ->
     @removeDecorations()
     @innerHTML = ''
-    messages.forEach (message)=>
+    messages.forEach (message) =>
       if @linter.views.scope is 'file'
         return unless message.currentFile
       if message.currentFile and message.position

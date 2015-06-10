@@ -1,7 +1,7 @@
 {CompositeDisposable, Emitter} = require 'atom'
 
 class EditorLinter
-  constructor: (@linter, @editor)->
+  constructor: (@linter, @editor) ->
     @inProgress = false
     @inProgressFly = false
     @messages = new Map
@@ -25,13 +25,13 @@ class EditorLinter
     @emitter.emit 'did-destroy'
     @subscriptions.dispose()
 
-  onDidUpdate: (callback)->
+  onDidUpdate: (callback) ->
     @emitter.on 'did-update', callback
 
-  onDidDestroy: (callback)->
+  onDidDestroy: (callback) ->
     @emitter.on 'did-destroy', callback
 
-  lint: (wasTriggeredOnChange)->
+  lint: (wasTriggeredOnChange) ->
     return unless @editor is @linter.activeEditor
     return if @_lock(wasTriggeredOnChange)
     @lint(true) unless wasTriggeredOnChange # Trigger onFly linters on save.
@@ -43,18 +43,18 @@ class EditorLinter
       @_lock(wasTriggeredOnChange, false)
 
   # This method returns an array of promises to be used in _lint
-  _lint: (wasTriggeredOnChange, scopes)->
-    return @linter.linters.map (linter)=>
+  _lint: (wasTriggeredOnChange, scopes) ->
+    return @linter.linters.map (linter) =>
       return if wasTriggeredOnChange and not linter.lintOnFly
       return if (not wasTriggeredOnChange) and linter.lintOnFly
       return unless (scopes.filter (entry) -> linter.scopes.indexOf(entry) isnt -1 ).length
 
-      new Promise((resolve)=>
+      new Promise((resolve) =>
         resolve(linter.lint(@editor))
-      ).then(EditorLinter.validateResults).catch((error)->
+      ).then(EditorLinter.validateResults).catch((error) ->
         atom.notifications.addError error, {detail: error.stack, dismissible: true}
         []
-      ).then (results)=>
+      ).then (results) =>
         if linter.scope is 'project' then @linter.messagesProject.set linter, results
         else @messages.set linter, results
 
@@ -62,16 +62,16 @@ class EditorLinter
         @linter.views.render() if @editor is @linter.activeEditor
 
   # This method sets or gets the lock status of given type
-  _lock: (wasTriggeredOnChange, value)->
+  _lock: (wasTriggeredOnChange, value) ->
     key = wasTriggeredOnChange ? 'inProgressFly' : 'inProgress'
     return @[key] if typeof value is 'undefined'
     @[key] = value
 
   # Checks the responses for any kind-of errors
-  @validateResults: (results)->
+  @validateResults: (results) ->
     if (not results) or results.constructor.name isnt 'Array'
       throw new Error "Got invalid response from Linter, Type: #{typeof results}"
-    results.forEach (Result)->
+    results.forEach (Result) ->
       unless Result.type
         throw new Error "Missing type field on Linter Response, Got: #{Object.keys(results)}"
     results

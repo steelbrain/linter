@@ -221,7 +221,7 @@ class Linter
   #   options: an object of options (has cwd field)
   # Returns an object of {command, args, options}
   # Override this if you want to read or change these arguments
-  beforeSpawnProcess: (command, args, options) =>
+  beforeSpawnProcess: (command, args, options) ->
     {command: command, args: args, options: options}
 
   # Private: process the string result of a linter execution using the regex

@@ -1,7 +1,7 @@
 BottomTab = require './bottom-tab'
 
 class BottomTabFile extends BottomTab
-  initialize: (@linter)->
+  initialize: (@linter) ->
     BottomTab.prototype.initialize.call(this, "Current File") # document.registerElement destroys it prototype chain
   onClick: ->
     @linter.views.scope = 'file'
@@ -9,4 +9,5 @@ class BottomTabFile extends BottomTab
     @active = true
     @linter.views.panel.render(@linter.views.messages)
 
-module.exports = BottomTabFile = document.registerElement('linter-bottom-tab-file', {prototype: BottomTabFile.prototype})
+module.exports = BottomTabFile = document.registerElement('linter-bottom-tab-file',
+  {prototype: BottomTabFile.prototype})
