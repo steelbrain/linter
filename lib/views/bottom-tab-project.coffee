@@ -1,8 +1,8 @@
 BottomTab = require './bottom-tab'
 
 class BottomTabProject extends BottomTab
-  initialize: (linter)->
-    BottomTab.prototype.initialize.call(this, "Current File", linter) ## document.registerElement destroys it prototype chain
+  initialize: (@linter)->
+    BottomTab.prototype.initialize.call(this, "Current File") ## document.registerElement destroys it prototype chain
   onClick: ->
     @linter.views.scope = 'project'
     @linter.views.bottomTabFile.active = false
