@@ -33,8 +33,7 @@ class EditorLinter
   lint: (onChange) ->
     return if @editor isnt @linter.activeEditor
 
-    # When linting is triggered by a save we need to also run back through and
-    # run the linters that trigger on the fly.
+    # When linting is triggered on save, we also trigger the onFly linters
     if not onChange
       @lint true
 
