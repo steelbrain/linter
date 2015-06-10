@@ -6,6 +6,7 @@ Bubble = require './bubble'
 Panel = require './panel'
 PanelView = require './views/panel'
 EditorLinter = require './editor-linter'
+H = require './h'
 
 class Linter
 
@@ -20,6 +21,7 @@ class Linter
     @messagesProject = new Map
     @activeEditor = atom.workspace.getActiveTextEditor()
     @editorLinters = new Map
+    @h = new H
     @linters = []
 
     @subscriptions.add atom.config.observe 'linter.showErrorInline', (showErrorInline) =>
