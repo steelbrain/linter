@@ -4,7 +4,7 @@ LinterView = require './linter-view-manager'
 LinterViews = require './linter-views'
 Bubble = require './bubble'
 Panel = require './panel'
-PanelView = require './views/panel'
+PanelView = require './views/panel-old'
 EditorLinter = require './editor-linter'
 H = require './h'
 
