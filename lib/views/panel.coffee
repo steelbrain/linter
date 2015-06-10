@@ -16,7 +16,7 @@ class PanelView extends HTMLElement
     messages.forEach (message)=>
       return unless message.currentFile # A custom property added while creating arrays of them
       return unless message.position
-      return if @type is 'file' and (not message.currentFile)
+      return if @scope is 'file' and (not message.currentFile)
       p = message.position
       range = [[p[0][0] - 1, p[0][1] - 1], [p[1][0] - 1, p[1][1]]]
       marker = @linter.activeEditor.markBufferRange range, {invalidate: 'never'}
@@ -26,6 +26,6 @@ class PanelView extends HTMLElement
       @decorations.push @linter.activeEditor.decorateMarker(
         marker, type: 'highlight', class: 'highlight-' + message.type.toLowerCase()
       )
-      @appendChild @linter.view.messageLine message, @linter.views.type is 'project'
+      @appendChild @linter.view.messageLine message, @linter.views.scope is 'project'
 
 module.exports = PanelView = document.registerElement('linter-panel-view', {prototype: PanelView.prototype})
