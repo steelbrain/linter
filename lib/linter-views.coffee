@@ -27,10 +27,21 @@ class LinterViews
     return @panel.hide() unless @linter.activeEditor
     return @panel.hide() unless @linter.activeEditor?.getPath()
 
+    counts = {project: 0, file: 0}
     activeLinter = @linter.getActiveEditorLinter()
-    messages = LinterViews._extractMessages(@linter.messagesProject)
-    messages = messages.concat(LinterViews._extractMessages(activeLinter.messages)) if activeLinter
+    messages = @._extractMessages(@linter.messagesProject, counts)
+    messages = messages.concat(@._extractMessages(activeLinter.messages, counts)) if activeLinter
     @messages = messages
+
+    if messages.length
+      @panel.render messages
+      @panelWorkspace.show() unless @panelWorkspace.isVisible()
+    else
+      @panel.hide()
+
+    @bottomTabFile.count = counts.file
+    @bottomTabProject.count = counts.project
+    @bottomStatus.count = counts.project
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar)->
@@ -50,6 +61,20 @@ class LinterViews
     @panelWorkspace.destroy()
 
   # This method is called in render, and classifies the messages according to scope
-  @_extractMessages: (Gen)->
-
+  _extractMessages: (Gen, counts)->
+    isProject = @scope is 'project'
+    activeFile = @linter.activeEditor.getPath()
+    ToReturn = []
+    @linter.h.genValues(Gen).forEach (Entry)->
+      # Entry === Array<Messages>
+      Entry.forEach (message)->
+        if (not message.file and not isProject) or message.file is activeFile
+          counts.file++
+          counts.project++
+          message.currentFile = true
+        else
+          counts.project++
+          message.currentFile = false
+        ToReturn.push message
+    ToReturn
 module.exports = LinterViews
