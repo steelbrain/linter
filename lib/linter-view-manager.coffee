@@ -3,8 +3,8 @@ class ViewManager
     @messages = []
 
   render: ->
-    return @hide([]) unless @linter.activeEditor # When we don't have any editor
-    return @hide([]) unless @linter.activeEditor.getPath?() # When we have an invalid text editor
+    return @hide() unless @linter.activeEditor # When we don't have any editor
+    return @hide() unless @linter.activeEditor.getPath?() # When we have an invalid text editor
 
     activeLinter = @linter.getActiveEditorLinter()
 
@@ -16,14 +16,14 @@ class ViewManager
       @linter.panel.render @messages
       @linter.panelModal.show() unless @linter.panelModal.isVisible()
     else
-      @hide @messages
+      @hide()
 
     @linter.bubble?.update @linter.activeEditor.getCursorBufferPosition()
     @linter.bottom?.update @messages
 
-  hide: (messages) ->
+  hide: ->
     @linter.panelModal.hide() if @linter.panelModal.isVisible()
-    @linter.panel.render messages
+    @linter.panel.innerHTML = ''
 
   renderMessages: (values) ->
     isProject = @linter.panel.type is 'project'
