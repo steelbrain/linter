@@ -10,6 +10,10 @@ validateResults = (results) ->
 
   return results
 
+showError = (error) ->
+  atom.notifications.addError "#{error.message}", {detail: error.stack, dismissable: true}
+  return []
+
 class EditorLinter
   constructor: (@linter, @editor) ->
     @inProgress = false
@@ -27,19 +31,19 @@ class EditorLinter
     )
 
   lint: (onChange) ->
-    return if @progress onChange
     return if @editor isnt @linter.activeEditor
-    @progress onChange, true
-    @lint true unless onChange
 
-    scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
-    scopes.push '*' # Ensure that everything can be linted with a wildcard.
-    promises = @lintResults onChange, scopes
-    Promise.all(promises).then =>
-      @progress onChange, false
-    .catch ->
-      console.error arguments[0].stack
-      @progress onChange, false
+    # When linting is triggered by a save we need to also run back through and
+    # run the linters that trigger on the fly.
+    if not onChange
+      @lint true
+
+    @_promiseLock(onChange, =>
+      scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
+      scopes.push '*' # Ensure that everything can be linted with a wildcard.
+      return Promise.all(@lintResults(onChange, scopes))
+    )
+    undefined
 
   lintResults: (onChange, scopes) ->
     return @linter.linters.map (linter) =>
@@ -52,29 +56,23 @@ class EditorLinter
         # catch any exceptions thrown by `linter.lint`
         resolve(linter.lint(@editor, @buffer))
       ).then(validateResults)
+      .catch(showError)
       .then((results) =>
         if linter.scope is 'project' then @linter.messagesProject.set linter, results
         else @messages.set linter, results
-      ).catch((error) =>
-        if linter.scope is 'project' then @linter.messagesProject.delete linter
-        else @messages.delete linter
-        atom.notifications.addError "#{error.message}", {detail: error.stack, dismissable: true}
-      ).then(=> # finally
+
         @emitter.emit 'did-update'
         @linter.view.render() if @editor is @linter.activeEditor
       )
 
-  progress: (onChange, newValue) ->
-    if typeof newValue is 'undefined'
-      if onChange
-        return @inProgressFly
-      else
-        return @inProgress
-    else
-      if onChange
-        @inProgressFly = newValue
-      else
-        @inProgress = newValue
+  _promiseLock: (onChange, callback) ->
+    key = if onChange then 'inProgressFly' else 'inProgress'
+
+    return if @[key]
+    @[key] = true
+    callback().catch(showError).then( =>
+      @[key] = false
+    )
 
   destroy: ->
     @emitter.emit 'did-destroy'
