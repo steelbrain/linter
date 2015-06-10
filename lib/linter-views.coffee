@@ -2,6 +2,7 @@ BottomTabFile = require './views/bottom-tab-file'
 BottomTabProject = require './views/bottom-tab-project'
 BottomStatus = require './views/bottom-status'
 Panel = require './views/panel'
+Bubble = require './views/bubble'
 
 class LinterViews
   constructor: (@linter)->
@@ -22,10 +23,18 @@ class LinterViews
     @scope = 'file'
     @bottomTabFile.active = true
 
+    # Bubble
+    @linter.subscriptions.add atom.config.observe 'linter.showErrorInline', (showErrorInline) =>
+      if showErrorInline
+        @bubble = new Bubble @linter
+      else
+        @bubble?.remove()
+        @bubble = null
+
   # This message is called in editor-linter.coffee
   render: ->
     return @panel.hide() unless @linter.activeEditor
-    return @panel.hide() unless @linter.activeEditor?.getPath()
+    return @panel.hide() unless @linter.activeEditor.getPath?()
 
     counts = {project: 0, file: 0}
     activeLinter = @linter.getActiveEditorLinter()
@@ -59,6 +68,7 @@ class LinterViews
   deactivate: ->
     @panel.removeDecorations()
     @panelWorkspace.destroy()
+    @bubble?.remove()
 
   # This method is called in render, and classifies the messages according to scope
   _extractMessages: (Gen, counts)->
