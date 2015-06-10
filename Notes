@@ -1,1 +1,0 @@
-This PR removes the textBuffer parameter to lint function. That is an API breaking change.
