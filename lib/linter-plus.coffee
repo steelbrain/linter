@@ -5,7 +5,7 @@ Bubble = require './bubble'
 Panel = require './panel'
 PanelView = require './views/panel'
 Bottom = require './bottom'
-EditorLinter = require './editor-linter-old'
+EditorLinter = require './editor-linter'
 
 class Linter
 
