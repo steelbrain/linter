@@ -42,11 +42,7 @@ class LinterViews
     messages = messages.concat(@._extractMessages(activeLinter.messages, counts)) if activeLinter
     @messages = messages
 
-    if messages.length
-      @panel.render messages
-      @panelWorkspace.show() unless @panelWorkspace.isVisible()
-    else
-      @panel.hide()
+    @panel.update()
 
     @bottomTabFile.count = counts.file
     @bottomTabProject.count = counts.project

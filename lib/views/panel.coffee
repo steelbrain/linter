@@ -9,6 +9,14 @@ class PanelView extends HTMLElement
     @decorations.forEach (decoration) ->
       try decoration.destroy()
     @decorations = []
+
+  update: ->
+    if @linter.views.messages.length
+      @render @linter.views.messages
+      @linter.views.panelWorkspace.show() unless @linter.views.panelWorkspace.isVisible()
+    else
+      @hide()
+
   hide: ->
     @removeDecorations()
     @linter.views.bubble?.remove()
