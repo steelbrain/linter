@@ -78,6 +78,7 @@ class LinterViews
     @linter.h.genValues(Gen).forEach (Entry) ->
       # Entry === Array<Messages>
       Entry.forEach (message) ->
+        # If there's no file prop on message and the panel scope is file then count is as current
         if (not message.file and not isProject) or message.file is activeFile
           counts.file++
           counts.project++
