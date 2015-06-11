@@ -33,10 +33,10 @@ class PanelView extends HTMLElement
         range = [[p[0][0] - 1, p[0][1] - 1], [p[1][0] - 1, p[1][1]]]
         marker = @linter.activeEditor.markBufferRange range, {invalidate: 'never'}
         @decorations.push @linter.activeEditor.decorateMarker(
-          marker, type: 'line-number', class: 'line-number-' + message.type.toLowerCase()
+          marker, type: 'line-number', class: "line-number-#{message.type.toLowerCase()}"
         )
         @decorations.push @linter.activeEditor.decorateMarker(
-          marker, type: 'highlight', class: 'highlight-' + message.type.toLowerCase()
+          marker, type: 'highlight', class: "highlight-#{message.type.toLowerCase()}"
         )
       MessageLine = new Message()
       MessageLine.initialize(message, @linter.views.scope is 'project')
