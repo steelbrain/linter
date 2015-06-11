@@ -64,8 +64,10 @@ class EditorLinter
   # This method sets or gets the lock status of given type
   _lock: (wasTriggeredOnChange, value) ->
     key = wasTriggeredOnChange ? 'inProgressFly' : 'inProgress'
-    return @[key] if typeof value is 'undefined'
-    @[key] = value
+    if typeof value is 'undefined'
+      @[key]
+    else
+      @[key] = value
 
   # Checks the responses for any kind-of errors
   @validateResults: (results) ->
