@@ -8,15 +8,15 @@ class LinterViews
   constructor: (@linter) ->
     @messages = []
 
-    @bottomTabFile = new BottomTabFile()
-    @bottomTabProject = new BottomTabProject()
-    @bottomStatus = new BottomStatus()
-    @panel = new Panel
+    @bottomTabFile = new BottomTabFile() # consumed in views/bottom-tab-project
+    @bottomTabProject = new BottomTabProject() # consumed in views/bottom-tab-file
+    @panel = new Panel # consumed in views/bottom-tab-{file, project}
+    @_bottomStatus = new BottomStatus()
 
     @bottomTabFile.initialize(@linter)
     @bottomTabProject.initialize(@linter)
-    @bottomStatus.initialize()
     @panel.initialize(@linter)
+    @_bottomStatus.initialize()
     @panelWorkspace = atom.workspace.addBottomPanel item: @panel, visible: false
 
     # Set default tab to File
@@ -50,7 +50,7 @@ class LinterViews
 
     @bottomTabFile.count = counts.file
     @bottomTabProject.count = counts.project
-    @bottomStatus.count = counts.project
+    @_bottomStatus.count = counts.project
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
@@ -61,7 +61,7 @@ class LinterViews
       item: @bottomTabProject,
       priority: -1000
     statusBar.addLeftTile
-      item: @bottomStatus,
+      item: @_bottomStatus,
       priority: -999
 
   # this method is called on package deactivate
