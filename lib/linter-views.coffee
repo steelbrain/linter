@@ -20,7 +20,7 @@ class LinterViews
     @panelWorkspace = atom.workspace.addBottomPanel item: @panel, visible: false
 
     # Set default tab to File
-    @scope = 'file'
+    @scope = 'file' # the value of @scope is changed from views/bottom-tab-{file, project}
     @bottomTabFile.active = true
 
     # Bubble
