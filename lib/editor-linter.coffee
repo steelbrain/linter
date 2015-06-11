@@ -42,7 +42,7 @@ class EditorLinter
     Promise.all(@_lint(wasTriggeredOnChange, scopes)).then =>
       @_lock(wasTriggeredOnChange, false)
 
-  # This method returns an array of promises to be used in _lint
+  # This method returns an array of promises to be used in lint
   _lint: (wasTriggeredOnChange, scopes) ->
     return @linter.linters.map (linter) =>
       return if wasTriggeredOnChange and not linter.lintOnFly
