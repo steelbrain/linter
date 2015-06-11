@@ -1,5 +1,5 @@
 BottomTabFile = require './views/bottom-tab-file'
-BottomTabProject = require './views/bottom-tab-project-old'
+BottomTabProject = require './views/bottom-tab-project'
 BottomStatus = require './views/bottom-status'
 Panel = require './views/panel'
 Bubble = require './views/bubble'
