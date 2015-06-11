@@ -2,7 +2,7 @@ Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
 LinterViews = require './linter-views'
 EditorLinter = require './editor-linter'
-H = require './h'
+H = require './helpers'
 
 class Linter
   constructor: ->
