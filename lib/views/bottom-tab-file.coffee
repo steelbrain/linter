@@ -2,7 +2,7 @@ BottomTab = require './bottom-tab'
 
 class BottomTabFile extends BottomTab
   initialize: (@linter) ->
-    BottomTab.prototype.initialize.call(this, "Current File") # document.registerElement destroys it prototype chain
+    BottomTab.prototype.initialize.call(this, "Current File") # CoffeeScript's way of extending stuff is BAD
   onClick: ->
     @linter.views.scope = 'file'
     @linter.views.bottomTabProject.active = false
