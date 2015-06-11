@@ -54,7 +54,6 @@ class Linter
 
   deactivate: ->
     @subscriptions.dispose()
-    @panel.removeDecorations()
     @eachLinter (linter) ->
       linter.subscriptions.dispose()
     @views.deactivate()
