@@ -37,6 +37,9 @@ class Linter
   # current working directory, overridden in linters that need it
   cwd: null
 
+  # environment variables, overridden in linters that need it
+  env: {}
+
   defaultLevel: 'error'
 
   linterName: null
@@ -147,7 +150,9 @@ class Linter
     log 'is node executable: ' + @isNodeExecutable
 
     # options for BufferedProcess, same syntax with child_process.spawn
-    options = {cwd: @cwd}
+    options =
+      cwd: @cwd
+      env: _.merge global.process.env, @env
 
     dataStdout = []
     dataStderr = []
