@@ -4,34 +4,32 @@ class Message extends HTMLElement
   initialize: (@message, @addPath)->
 
   attachedCallback: ->
-
-    # The link
-    if @message.file
-      @message.displayFile = @message.file
-      try
-        atom.project.getPaths().forEach (path) =>
-          return unless @message.file.indexOf(path) is 0
-          @message.displayFile = @message.file.substr( path.length + 1 ) # Remove the trailing slash as well
-          throw null
-      file = document.createElement 'a'
-      file.addEventListener 'click', Message.onClick.bind(null, @message.file, @message.position)
-      if @message.position
-        file.textContent =
-          'at line ' + @message.position[0][0] + ' col ' + @message.position[0][1] + ' '
-      if @addPath
-        file.textContent += 'in ' + @message.displayFile
-    else
-      file = null
     @appendChild Message.renderRibbon(@message.type)
     @appendChild Message.renderMessage(@message)
-    @appendChild file if file
+    @appendChild Message.renderLink(@message, @addPath) if @message.file
 
-  @renderRibbon: (Type)->
+  @renderLink: (message, addPath)->
+    displayFile = message.file
+    try
+      atom.project.getPaths().forEach (path) =>
+        return if message.file.indexOf(path) isnt 0 or displayFile isnt message.file # Avoid double replacing
+        displayFile = message.file.substr( path.length + 1 ) # Remove the trailing slash as well
+        throw null
+    El = document.createElement 'a'
+    El.addEventListener 'click', ->
+      Message.onClick message.file, message.position
+    if message.position
+      El.textContent = "at line #{message.position[0][0]} col #{message.position[0][1]} "
+    if addPath
+      El.textContent += "in #{displayFile}"
+    El
+
+  @renderRibbon: (type)->
     El = document.createElement 'span'
     El.classList.add 'badge'
     El.classList.add 'badge-flexible'
-    El.classList.add "badge-#{Type.toLowerCase()}"
-    El.textContent = Type
+    El.classList.add "badge-#{type.toLowerCase()}"
+    El.textContent = type
     El
 
   @renderMessage: (message)->
