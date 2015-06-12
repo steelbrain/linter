@@ -49,14 +49,11 @@ class LinterViews
     @_bottomStatus.count = counts.project
 
   # consumed in views/bottom-tab-{file, project}
-  update: ->
-    @_panel.update()
-
-  # consumed in views/bottom-tab-{file, project}
   changeTab: (Tab)->
     @scope = Tab
     @_bottomTabProject.active = Tab is 'project'
     @_bottomTabFile.active = Tab is 'file'
+    @_panel.update()
 
   # consumed in views/panel
   setPanelVisibility: (Status)->
