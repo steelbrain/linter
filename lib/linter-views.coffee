@@ -58,6 +58,7 @@ class LinterViews
     @_bottomTabProject.active = Tab is 'project'
     @_bottomTabFile.active = Tab is 'file'
 
+  # consumed in views/panel
   panelVisibility: (Status)->
     if Status
       @_panelWorkspace.show() unless @_panelWorkspace.isVisible()
