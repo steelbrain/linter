@@ -17,7 +17,7 @@ class LinterViews
     @_bottomTabProject.initialize(@linter)
     @_panel.initialize(@linter)
     @_bottomStatus.initialize()
-    @panelWorkspace = atom.workspace.addBottomPanel item: @_panel, visible: false
+    @_panelWorkspace = atom.workspace.addBottomPanel item: @_panel, visible: false
 
     # Set default tab to File
     @scope = 'file' # the value of @scope is changed from views/bottom-tab-{file, project}
@@ -58,6 +58,12 @@ class LinterViews
     @_bottomTabProject.active = Tab is 'project'
     @_bottomTabFile.active = Tab is 'file'
 
+  panelVisibility: (Status)->
+    if Status
+      @_panelWorkspace.show() unless @_panelWorkspace.isVisible()
+    else
+      @_panelWorkspace.hide() if @_panelWorkspace.isVisible()
+
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
     statusBar.addLeftTile
@@ -73,7 +79,7 @@ class LinterViews
   # this method is called on package deactivate
   deactivate: ->
     @_panel.removeDecorations()
-    @panelWorkspace.destroy()
+    @_panelWorkspace.destroy()
     @bubble?.remove()
 
   # This method is called in render, and classifies the messages according to scope

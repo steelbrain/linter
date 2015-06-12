@@ -13,7 +13,7 @@ class PanelView extends HTMLElement
   update: ->
     if @linter.views.messages.length
       @render @linter.views.messages
-      @linter.views.panelWorkspace.show() unless @linter.views.panelWorkspace.isVisible()
+      @linter.views.panelVisibility(true)
     else
       @hide()
 
@@ -21,7 +21,7 @@ class PanelView extends HTMLElement
     @removeDecorations()
     @linter.views.bubble?.remove()
     @innerHTML = ''
-    @linter.views.panelWorkspace.hide() if @linter.views.panelWorkspace.isVisible()
+    @linter.views.panelVisibility(false)
   render: (messages) ->
     @removeDecorations()
     @innerHTML = ''
