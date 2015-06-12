@@ -8,20 +8,20 @@ class LinterViews
   constructor: (@linter) ->
     @messages = []
 
-    @bottomTabFile = new BottomTabFile() # consumed in views/bottom-tab-project
-    @bottomTabProject = new BottomTabProject() # consumed in views/bottom-tab-file
-    @panel = new Panel # consumed in views/bottom-tab-{file, project}
+    @_bottomTabFile = new BottomTabFile() # consumed in views/bottom-tab-project
+    @_bottomTabProject = new BottomTabProject() # consumed in views/bottom-tab-file
+    @_panel = new Panel
     @_bottomStatus = new BottomStatus()
 
-    @bottomTabFile.initialize(@linter)
-    @bottomTabProject.initialize(@linter)
-    @panel.initialize(@linter)
+    @_bottomTabFile.initialize(@linter)
+    @_bottomTabProject.initialize(@linter)
+    @_panel.initialize(@linter)
     @_bottomStatus.initialize()
-    @panelWorkspace = atom.workspace.addBottomPanel item: @panel, visible: false
+    @panelWorkspace = atom.workspace.addBottomPanel item: @_panel, visible: false
 
     # Set default tab to File
     @scope = 'file' # the value of @scope is changed from views/bottom-tab-{file, project}
-    @bottomTabFile.active = true
+    @_bottomTabFile.active = true
 
     # Bubble
     @linter.subscriptions.add atom.config.observe 'linter.showErrorInline', (showErrorInline) =>
@@ -33,8 +33,8 @@ class LinterViews
 
   # This message is called in editor-linter.coffee
   render: ->
-    return @panel.hide() unless @linter.activeEditor
-    return @panel.hide() unless @linter.activeEditor.getPath?()
+    return @_panel.hide() unless @linter.activeEditor
+    return @_panel.hide() unless @linter.activeEditor.getPath?()
 
     counts = {project: 0, file: 0}
     activeLinter = @linter.getActiveEditorLinter()
@@ -42,19 +42,29 @@ class LinterViews
     messages = messages.concat(@._extractMessages(activeLinter.messages, counts)) if activeLinter
     @messages = messages
 
-    @panel.update()
+    @_panel.update()
 
-    @bottomTabFile.count = counts.file
-    @bottomTabProject.count = counts.project
+    @_bottomTabFile.count = counts.file
+    @_bottomTabProject.count = counts.project
     @_bottomStatus.count = counts.project
+
+  # consumed in views/bottom-tab-{file, project}
+  update: ->
+    @_panel.update()
+
+  # consumed in views/bottom-tab-{file, project}
+  changeTab: (Tab)->
+    @scope = Tab
+    @_bottomTabProject.active = Tab is 'project'
+    @_bottomTabFile.active = Tab is 'file'
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
     statusBar.addLeftTile
-      item: @bottomTabFile,
+      item: @_bottomTabFile,
       priority: -1001
     statusBar.addLeftTile
-      item: @bottomTabProject,
+      item: @_bottomTabProject,
       priority: -1000
     statusBar.addLeftTile
       item: @_bottomStatus,
@@ -62,7 +72,7 @@ class LinterViews
 
   # this method is called on package deactivate
   deactivate: ->
-    @panel.removeDecorations()
+    @_panel.removeDecorations()
     @panelWorkspace.destroy()
     @bubble?.remove()
 
