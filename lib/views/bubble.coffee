@@ -1,16 +1,28 @@
 {Range} = require 'atom'
-BubbleView = require './bubble-view'
+Message = require './message'
 
 class Bubble
   constructor: (@linter) ->
     @bubble = null
+  render: (message) ->
+    root = document.createElement 'div'
+    root.id = 'linter-inline'
+    MessageLine = new Message()
+    MessageLine.initialize(message, false)
+    root.appendChild MessageLine
+    if message.trace and message.trace.length
+      message.trace.forEach (trace) ->
+        MessageLine = new Message()
+        MessageLine.initialize(trace, true)
+        root.appendChild MessageLine
+    root
 
   update: (point) ->
     @remove()
-    return unless @linter.view.messages.length
+    return unless @linter.views.messages.length
     textEditor = @linter.activeEditor
     found = false
-    @linter.view.messages.forEach (message) =>
+    @linter.views.messages.forEach (message) =>
       return if found
       return unless message.currentFile
       return unless message.position
@@ -21,10 +33,9 @@ class Bubble
       @bubble = textEditor.decorateMarker(marker, {
         type: 'overlay',
         position: 'tail',
-        item: BubbleView(@linter, message)
+        item: @render(message)
       })
       found = true
-
   remove: ->
     @bubble?.destroy()
 

@@ -7,6 +7,8 @@ module.exports =
       type: 'boolean'
       default: true
     showErrorInline:
+      title: "Show Inline Tooltips"
+      descriptions: "Show inline tooltips for errors"
       type: 'boolean'
       default: true
 
@@ -18,8 +20,8 @@ module.exports =
     legacy = require('./legacy.coffee')
     for atomPackage in atom.packages.getLoadedPackages()
       if atomPackage.metadata['linter-package'] is true
-        implemention = atomPackage.metadata['linter-implementation'] ? atomPackage.name
-        linter = legacy(require "#{atomPackage.path}/lib/#{implemention}")
+        implementation = atomPackage.metadata['linter-implementation'] ? atomPackage.name
+        linter = legacy(require "#{atomPackage.path}/lib/#{implementation}")
         @consumeLinter(linter)
       if atomPackage.metadata.providedServices?['linter-plus']?.versions['0.1.0']
         atom.notifications.addWarning("#{atomPackage.name} still provides
@@ -28,11 +30,8 @@ module.exports =
   consumeLinter: (linter) ->
     @instance.linters.push linter
 
-  consumeLinterPlus: (linter) ->
-    @instance.linters.push linter
-
   consumeStatusBar: (statusBar) ->
-    @instance.bottom.initialize(statusBar)
+    @instance.views.attachBottom(statusBar)
 
   provideLinter: ->
     @Linter
