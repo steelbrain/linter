@@ -4,19 +4,6 @@ class Message extends HTMLElement
   initialize: (@message, @addPath)->
 
   attachedCallback: ->
-    # The ribbon
-    ribbon = document.createElement 'span'
-    ribbon.classList.add 'badge'
-    ribbon.classList.add 'badge-flexible'
-    ribbon.classList.add "badge-#{@message.type.toLowerCase()}"
-    ribbon.textContent = @message.type
-
-    # The message
-    theMessage = document.createElement('span')
-    if @message.html and @message.html.length
-      theMessage.innerHTML = message.html
-    else
-      theMessage.textContent = @message.message
 
     # The link
     if @message.file
@@ -27,7 +14,7 @@ class Message extends HTMLElement
           @message.displayFile = @message.file.substr( path.length + 1 ) # Remove the trailing slash as well
           throw null
       file = document.createElement 'a'
-      file.addEventListener 'click', @onClick.bind(this, @message.file, @message.position)
+      file.addEventListener 'click', Message.onClick.bind(null, @message.file, @message.position)
       if @message.position
         file.textContent =
           'at line ' + @message.position[0][0] + ' col ' + @message.position[0][1] + ' '
@@ -35,14 +22,31 @@ class Message extends HTMLElement
         file.textContent += 'in ' + @message.displayFile
     else
       file = null
-    @appendChild ribbon
-    @appendChild theMessage
+    @appendChild Message.renderRibbon(@message.type)
+    @appendChild Message.renderMessage(@message)
     @appendChild file if file
-  onClick: ->
-    atom.workspace.open(@message.file).then =>
-      return unless @message.position
+
+  @renderRibbon: (Type)->
+    El = document.createElement 'span'
+    El.classList.add 'badge'
+    El.classList.add 'badge-flexible'
+    El.classList.add "badge-#{Type.toLowerCase()}"
+    El.textContent = Type
+    El
+
+  @renderMessage: (message)->
+    El = document.createElement 'span'
+    if message.html
+      El.innerHTML = message.html
+    else
+      El.textContent = message.message
+    El
+
+  @onClick: (file, position)->
+    atom.workspace.open(file).then ->
+      return unless position
       atom.workspace.getActiveTextEditor().setCursorBufferPosition(
-        [@message.position[0][0] - 1, @message.position[0][1] - 1]
+        [position[0][0] - 1, position[0][1] - 1]
       )
 
-module.exports = Message = document.registerElement('linter-message', {prototype: Message.prototype})
+module.exports = document.registerElement('linter-message', {prototype: Message.prototype})
