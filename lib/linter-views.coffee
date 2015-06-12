@@ -8,8 +8,8 @@ class LinterViews
   constructor: (@linter) ->
     @messages = []
 
-    @_bottomTabFile = new BottomTabFile() # consumed in views/bottom-tab-project
-    @_bottomTabProject = new BottomTabProject() # consumed in views/bottom-tab-file
+    @_bottomTabFile = new BottomTabFile()
+    @_bottomTabProject = new BottomTabProject()
     @_panel = new Panel
     @_bottomStatus = new BottomStatus()
 
