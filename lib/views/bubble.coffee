@@ -25,11 +25,9 @@ class Bubble
     @linter.views.messages.forEach (message) =>
       return if found
       return unless message.currentFile
-      return unless message.position
-      p = message.position
-      errorRange = new Range([p[0][0] - 1, p[0][1] - 1], [p[1][0] - 1, p[1][1]])
-      return unless errorRange.containsPoint point
-      marker = textEditor.markBufferRange errorRange, {invalidate: 'never'}
+      return unless message.range
+      return unless message.range.containsPoint point
+      marker = textEditor.markBufferRange message.range, {invalidate: 'never'}
       @bubble = textEditor.decorateMarker(marker, {
         type: 'overlay',
         position: 'tail',
