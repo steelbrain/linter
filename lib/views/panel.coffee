@@ -4,11 +4,13 @@ class PanelView extends HTMLElement
   initialize:(@linter) ->
     @id = 'linter-panel'
     @decorations = []
-  removeDecorations: ->
+
+  empty: ->
     return unless @decorations.length
     @decorations.forEach (decoration) ->
       try decoration.destroy()
     @decorations = []
+    @innerHTML = ''
 
   update: ->
     if @linter.views.messages.length
@@ -18,13 +20,11 @@ class PanelView extends HTMLElement
       @hide()
 
   hide: ->
-    @removeDecorations()
-    @linter.views.bubble?.remove()
-    @innerHTML = ''
+    @empty()
     @linter.views.setPanelVisibility(false)
+
   render: (messages) ->
-    @removeDecorations()
-    @innerHTML = ''
+    @empty()
     messages.forEach (message) =>
       if @linter.views.scope is 'file'
         return unless message.currentFile
