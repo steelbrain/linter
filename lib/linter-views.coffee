@@ -1,7 +1,6 @@
 BottomTabFile = require './views/bottom-tab-file'
 BottomTabProject = require './views/bottom-tab-project'
 BottomStatus = require './views/bottom-status'
-Panel = require './views/panel'
 Message = require './views/message'
 Bubble = require './views/bubble'
 
@@ -12,7 +11,7 @@ class LinterViews
 
     @_bottomTabFile = new BottomTabFile()
     @_bottomTabProject = new BottomTabProject()
-    @_panel = new Panel
+    @_panel = document.createElement 'div'
     @_bottomStatus = new BottomStatus()
 
     @_bottomTabFile.initialize(@linter)
@@ -23,6 +22,7 @@ class LinterViews
     # Set default tab to File
     @scope = 'file' # the value of @scope is changed from views/bottom-tab-{file, project}
     @_bottomTabFile.active = true
+    @_panel.id = 'linter-panel'
 
     # Bubble
     @linter.subscriptions.add atom.config.observe 'linter.showErrorInline', (showErrorInline) =>
