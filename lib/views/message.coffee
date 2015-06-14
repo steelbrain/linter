@@ -37,7 +37,7 @@ class Message extends HTMLElement
     if message.html
       El.innerHTML = message.html
     else
-      El.textContent = message.message
+      El.textContent = message.text
     El
 
   @onClick: (file, range)->
