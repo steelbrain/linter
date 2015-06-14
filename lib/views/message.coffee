@@ -6,18 +6,18 @@ class Message extends HTMLElement
   attachedCallback: ->
     @appendChild Message.renderRibbon(@message.type)
     @appendChild Message.renderMessage(@message)
-    @appendChild Message.renderLink(@message, @addPath) if @message.file
+    @appendChild Message.renderLink(@message, @addPath) if @message.filePath
 
   @renderLink: (message, addPath)->
-    displayFile = message.file
+    displayFile = message.filePath
     try
       atom.project.getPaths().forEach (path) =>
-        return if message.file.indexOf(path) isnt 0 or displayFile isnt message.file # Avoid double replacing
-        displayFile = message.file.substr( path.length + 1 ) # Remove the trailing slash as well
+        return if message.filePath.indexOf(path) isnt 0 or displayFile isnt message.filePath # Avoid double replacing
+        displayFile = message.filePath.substr( path.length + 1 ) # Remove the trailing slash as well
         throw null
     El = document.createElement 'a'
     El.addEventListener 'click', ->
-      Message.onClick message.file, message.range
+      Message.onClick message.filePath, message.range
     if message.range
       El.textContent = "at line #{message.range.start.row + 1} col #{message.range.start.column + 1} "
     if addPath
