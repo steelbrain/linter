@@ -73,10 +73,9 @@ class EditorLinter
   @validateResults: (results) ->
     if (not results) or results.constructor.name isnt 'Array'
       throw new Error "Got invalid response from Linter, Type: #{typeof results}"
-    for result, key in results
+    for result in results
       unless result.type
         throw new Error "Missing type field on Linter Response, Got: #{Object.keys(result)}"
       result.range = Range.fromObject result.range if result.range?
-      results[key] = result
     results
 module.exports = EditorLinter
