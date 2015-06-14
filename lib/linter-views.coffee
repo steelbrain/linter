@@ -123,10 +123,10 @@ class LinterViews
       if message.currentFile and message.range #Add the decorations to the current TextEditor
         marker = @linter.activeEditor.markBufferRange message.range, {invalidate: 'never'}
         @_decorations.push @linter.activeEditor.decorateMarker(
-          marker, type: 'line-number', class: "line-number-#{message.type.toLowerCase()}"
+          marker, type: 'line-number', class: "linter-highlight #{message.type.toLowerCase()}"
         )
         @_decorations.push @linter.activeEditor.decorateMarker(
-          marker, type: 'highlight', class: "highlight-#{message.type.toLowerCase()}"
+          marker, type: 'highlight', class: "linter-highlight #{message.type.toLowerCase()}"
         )
       Element = Message.fromMessage(message, @_scope is 'project')
       @_panel.appendChild Element

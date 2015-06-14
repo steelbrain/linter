@@ -28,7 +28,8 @@ class Message extends HTMLElement
     El = document.createElement 'span'
     El.classList.add 'badge'
     El.classList.add 'badge-flexible'
-    El.classList.add "badge-#{type.toLowerCase()}"
+    El.classList.add "linter-highlight"
+    El.classList.add type.toLowerCase()
     El.textContent = type
     El
 
