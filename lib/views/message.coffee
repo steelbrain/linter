@@ -10,11 +10,9 @@ class Message extends HTMLElement
 
   @renderLink: (message, addPath)->
     displayFile = message.filePath
-    try
-      atom.project.getPaths().forEach (path) =>
-        return if message.filePath.indexOf(path) isnt 0 or displayFile isnt message.filePath # Avoid double replacing
-        displayFile = message.filePath.substr( path.length + 1 ) # Remove the trailing slash as well
-        throw null
+    atom.project.getPaths().forEach (path) =>
+      return if message.filePath.indexOf(path) isnt 0 or displayFile isnt message.filePath # Avoid double replacing
+      displayFile = message.filePath.substr( path.length + 1 ) # Remove the trailing slash as well
     El = document.createElement 'a'
     El.addEventListener 'click', ->
       Message.onClick message.filePath, message.range
