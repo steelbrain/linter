@@ -13,7 +13,8 @@ class EditorLinter
       @editor.onDidSave => @lint(false)
     )
     @subscriptions.add(
-      @editor.onDidChangeCursorPosition ({newBufferPosition}) => @linter.views.updateBubble(newBufferPosition)
+      @editor.onDidChangeCursorPosition ({newBufferPosition}) =>
+        @linter.views.updateBubble(newBufferPosition)
     )
     return unless @linter.lintOnFly
     @subscriptions.add(
