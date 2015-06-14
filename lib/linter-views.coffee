@@ -21,7 +21,7 @@ class LinterViews
     @_panelWorkspace = atom.workspace.addBottomPanel item: @_panel, visible: false
 
     # Set default tab to File
-    @scope = 'file' # the value of @scope is changed from views/bottom-tab-{file, project}
+    @_scope = 'file'
     @_bottomTabFile.active = true
     @_panel.id = 'linter-panel'
 
@@ -69,7 +69,7 @@ class LinterViews
 
   # consumed in views/bottom-tab-{file, project}
   changeTab: (Tab)->
-    @scope = Tab
+    @_scope = Tab
     @_bottomTabProject.active = Tab is 'project'
     @_bottomTabFile.active = Tab is 'file'
     @_renderPanel()
@@ -115,7 +115,7 @@ class LinterViews
       return @setPanelVisibility(false)
     @setPanelVisibility(true)
     @_messages.forEach (message)=>
-      if @scope is 'file' then return unless message.currentFile
+      if @_scope is 'file' then return unless message.currentFile
       if message.currentFile and message.range #Add the decorations to the current TextEditor
         marker = @linter.activeEditor.markBufferRange message.range, {invalidate: 'never'}
         @_decorations.push @linter.activeEditor.decorateMarker(
@@ -124,7 +124,7 @@ class LinterViews
         @_decorations.push @linter.activeEditor.decorateMarker(
           marker, type: 'highlight', class: "highlight-#{message.type.toLowerCase()}"
         )
-      Element = Message.fromMessage(message, @scope is 'project')
+      Element = Message.fromMessage(message, @_scope is 'project')
       @_panel.appendChild Element
     @updateBubble()
 
@@ -137,7 +137,7 @@ class LinterViews
 
   # This method is called in render, and classifies the messages according to scope
   _extractMessages: (Gen, counts) ->
-    isProject = @scope is 'project'
+    isProject = @_scope is 'project'
     activeFile = @linter.activeEditor.getPath()
     ToReturn = []
     @linter.h.genValues(Gen).forEach (Entry) ->
