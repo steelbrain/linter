@@ -16,8 +16,8 @@ transform = (filePath, textEditor, results) ->
       # These are all 0-indexed, but the `Position` needs a range where
       # everything is 1-indexed
       position: [
-        [ startLine + 1, startCol + 1],
-        [ endLine + 1, endCol + 1 ]
+        [ startLine, startCol],
+        [ endLine, endCol]
       ]
     }
 

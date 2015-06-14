@@ -90,9 +90,7 @@ class LinterViews
     @messages.forEach (message)=>
       if @scope is 'file' then return unless message.currentFile
       if message.currentFile and message.range #Add the decorations to the current TextEditor
-        p = message.range
-        range = [[p[0][0] - 1, p[0][1] - 1], [p[1][0] - 1, p[1][1]]]
-        marker = @linter.activeEditor.markBufferRange range, {invalidate: 'never'}
+        marker = @linter.activeEditor.markBufferRange message.range, {invalidate: 'never'}
         @_decorations.push @linter.activeEditor.decorateMarker(
           marker, type: 'line-number', class: "line-number-#{message.type.toLowerCase()}"
         )

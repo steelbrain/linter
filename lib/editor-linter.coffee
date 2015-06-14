@@ -1,4 +1,4 @@
-{CompositeDisposable, Emitter} = require 'atom'
+{CompositeDisposable, Emitter, Range} = require 'atom'
 
 class EditorLinter
   constructor: (@linter, @editor) ->
@@ -76,5 +76,8 @@ class EditorLinter
     for result, key in results
       unless result.type
         throw new Error "Missing type field on Linter Response, Got: #{Object.keys(result)}"
+      if result.range
+        result.range = new Range(result.range[0], result.range[1]) if result.range.constructor.name is 'Array'
+      results[key] = result
     results
 module.exports = EditorLinter
