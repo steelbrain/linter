@@ -3,28 +3,8 @@ Message = require './message'
 class PanelView extends HTMLElement
   initialize:(@linter) ->
     @id = 'linter-panel'
-    @_decorations = []
-
-  empty: ->
-    return unless @_decorations.length
-    @_decorations.forEach (decoration) ->
-      try decoration.destroy()
-    @_decorations = []
-    @innerHTML = ''
-
-  update: ->
-    if @linter.views.messages.length
-      @render @linter.views.messages
-      @linter.views.setPanelVisibility(true)
-    else
-      @hide()
-
-  hide: ->
-    @empty()
-    @linter.views.setPanelVisibility(false)
 
   render: (messages) ->
-    @empty()
     messages.forEach (message) =>
       if @linter.views.scope is 'file'
         return unless message.currentFile
