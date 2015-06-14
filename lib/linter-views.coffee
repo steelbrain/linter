@@ -55,7 +55,7 @@ class LinterViews
       continue unless message.range
       continue unless message.range.containsPoint point
       @_bubble = @linter.activeEditor.decorateMarker(
-        @linter.activeEditor.markBufferRange message.range, {invalidate: 'never'},
+        @linter.activeEditor.markBufferRange(message.range, {invalidate: 'never'}),
         {
           type: 'overlay',
           position: 'tail',
