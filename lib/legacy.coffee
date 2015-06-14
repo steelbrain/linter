@@ -13,8 +13,6 @@ transform = (filePath, textEditor, results) ->
       type: typeMap[level] ? level
       message: message
       file: filePath
-      # These are all 0-indexed, but the `Position` needs a range where
-      # everything is 1-indexed
       position: [
         [ startLine, startCol],
         [ endLine, endCol]
