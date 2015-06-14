@@ -2,6 +2,7 @@ BottomTabFile = require './views/bottom-tab-file'
 BottomTabProject = require './views/bottom-tab-project'
 BottomStatus = require './views/bottom-status'
 Panel = require './views/panel'
+Message = require './views/message'
 Bubble = require './views/bubble'
 
 class LinterViews
@@ -16,7 +17,6 @@ class LinterViews
 
     @_bottomTabFile.initialize(@linter)
     @_bottomTabProject.initialize(@linter)
-    @_panel.initialize(@linter)
     @_bottomStatus.initialize()
     @_panelWorkspace = atom.workspace.addBottomPanel item: @_panel, visible: false
 
@@ -85,7 +85,23 @@ class LinterViews
     @_removeDecorations()
     @bubble?.remove()
     if not @messages.length
-      return @linter.views.setPanelVisibility(false)
+      return @setPanelVisibility(false)
+    @setPanelVisibility(true)
+    @messages.forEach (message)=>
+      if @scope is 'file' then return unless message.currentFile
+      if message.currentFile and message.position #Add the decorations to the current TextEditor
+        p = message.position
+        range = [[p[0][0] - 1, p[0][1] - 1], [p[1][0] - 1, p[1][1]]]
+        marker = @linter.activeEditor.markBufferRange range, {invalidate: 'never'}
+        @_decorations.push @linter.activeEditor.decorateMarker(
+          marker, type: 'line-number', class: "line-number-#{message.type.toLowerCase()}"
+        )
+        @_decorations.push @linter.activeEditor.decorateMarker(
+          marker, type: 'highlight', class: "highlight-#{message.type.toLowerCase()}"
+        )
+      Element = Message.fromMessage(message, @scope is 'project')
+      @_panel.appendChild Element
+    @bubble?.update(@linter.activeEditor.getCursorBufferPosition())
 
 
   _removeDecorations: ->
