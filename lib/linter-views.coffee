@@ -15,10 +15,10 @@ class LinterViews
     @_bottomStatus = new BottomStatus()
 
     @_bottomTabFile.initialize("Current File", =>
-      @changeTab('file')
+      @_changeTab('file')
     )
     @_bottomTabProject.initialize("Project", =>
-      @changeTab('project')
+      @_changeTab('project')
     )
     @_bottomStatus.initialize()
     @_panelWorkspace = atom.workspace.addBottomPanel item: @_panel, visible: false
@@ -67,13 +67,6 @@ class LinterViews
       )
       break
 
-  # consumed in views/bottom-tab-{file, project}
-  changeTab: (Tab)->
-    @_scope = Tab
-    @_bottomTabProject.active = Tab is 'project'
-    @_bottomTabFile.active = Tab is 'file'
-    @_renderPanel()
-
   # consumed in views/panel
   setPanelVisibility: (Status)->
     if Status
@@ -98,6 +91,12 @@ class LinterViews
     @_panel.removeDecorations()
     @_panelWorkspace.destroy()
     @_removeBubble()
+
+  _changeTab: (Tab)->
+    @_scope = Tab
+    @_bottomTabProject.active = Tab is 'project'
+    @_bottomTabFile.active = Tab is 'file'
+    @_renderPanel()
 
   _removeBubble: ->
     return unless @_bubble
