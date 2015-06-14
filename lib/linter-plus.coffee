@@ -41,11 +41,7 @@ class Linter
     return @editorLinters.get editor
 
   eachLinter: (callback) ->
-    values = @editorLinters.values()
-    value = values.next()
-    while not value.done
-      callback(value.value)
-      value = values.next()
+    @h.genValue(@editorLinters, callback)
 
   observeLinters: (callback) ->
     @eachLinter callback
