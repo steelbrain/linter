@@ -3,13 +3,13 @@ Message = require './message'
 class PanelView extends HTMLElement
   initialize:(@linter) ->
     @id = 'linter-panel'
-    @decorations = []
+    @_decorations = []
 
   empty: ->
-    return unless @decorations.length
-    @decorations.forEach (decoration) ->
+    return unless @_decorations.length
+    @_decorations.forEach (decoration) ->
       try decoration.destroy()
-    @decorations = []
+    @_decorations = []
     @innerHTML = ''
 
   update: ->
@@ -32,10 +32,10 @@ class PanelView extends HTMLElement
         p = message.position
         range = [[p[0][0] - 1, p[0][1] - 1], [p[1][0] - 1, p[1][1]]]
         marker = @linter.activeEditor.markBufferRange range, {invalidate: 'never'}
-        @decorations.push @linter.activeEditor.decorateMarker(
+        @_decorations.push @linter.activeEditor.decorateMarker(
           marker, type: 'line-number', class: "line-number-#{message.type.toLowerCase()}"
         )
-        @decorations.push @linter.activeEditor.decorateMarker(
+        @_decorations.push @linter.activeEditor.decorateMarker(
           marker, type: 'highlight', class: "highlight-#{message.type.toLowerCase()}"
         )
       MessageLine = new Message()
