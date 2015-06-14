@@ -12,7 +12,7 @@ class LinterViews
     @_bottomTabFile = new BottomTabFile()
     @_bottomTabProject = new BottomTabProject()
     @_panel = document.createElement 'div'
-    @_bubble = document.createElement 'div'
+    @_bubble = null
     @_bottomStatus = new BottomStatus()
 
     @_bottomTabFile.initialize(@linter)
@@ -54,6 +54,13 @@ class LinterViews
       continue unless message.currentFile
       continue unless message.range
       continue unless message.range.containsPoint point
+      marker = @linter.activeEditor.markBufferRange message.range, {invalidate: 'never'}
+      @_bubble = @linter.activeEditor.decorateMarker(marker, {
+        type: 'overlay',
+        position: 'tail',
+        item: @_renderBubble(message)
+      })
+      break
 
   removeBubble: ->
     return unless @_bubble
@@ -90,12 +97,20 @@ class LinterViews
   deactivate: ->
     @_panel.removeDecorations()
     @_panelWorkspace.destroy()
-    @bubble?.remove()
+    @removeBubble()
+
+  _renderBubble: (message)->
+    bubble = document.createElement 'div'
+    bubble.id = 'linter-inline'
+    bubble.appendChild Message.fromMessage(message)
+    if message.trace then message.trace.forEach (trace)->
+      bubble.appendChild Message.fromMessage(trace)
+    bubble
 
   _renderPanel: ->
     @_panel.innerHTML = ''
     @_removeDecorations()
-    @bubble?.remove()
+    @removeBubble()
     if not @_messages.length
       return @setPanelVisibility(false)
     @setPanelVisibility(true)
@@ -111,7 +126,7 @@ class LinterViews
         )
       Element = Message.fromMessage(message, @scope is 'project')
       @_panel.appendChild Element
-    @bubble?.update(@linter.activeEditor.getCursorBufferPosition())
+    @updateBubble()
 
 
   _removeDecorations: ->
