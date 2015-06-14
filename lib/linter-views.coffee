@@ -46,7 +46,7 @@ class LinterViews
     @_bottomStatus.count = counts.project
 
   updateBubble: (point)->
-    @removeBubble()
+    @_removeBubble()
     return unless @_showBubble
     return unless @_messages.length
     point = point || @linter.activeEditor.getCursorBufferPosition()
@@ -61,11 +61,6 @@ class LinterViews
         item: @_renderBubble(message)
       })
       break
-
-  removeBubble: ->
-    return unless @_bubble
-    @_bubble.destroy()
-    @_bubble = null
 
   # consumed in views/bottom-tab-{file, project}
   changeTab: (Tab)->
@@ -97,7 +92,12 @@ class LinterViews
   deactivate: ->
     @_panel.removeDecorations()
     @_panelWorkspace.destroy()
-    @removeBubble()
+    @_removeBubble()
+
+  _removeBubble: ->
+    return unless @_bubble
+    @_bubble.destroy()
+    @_bubble = null
 
   _renderBubble: (message)->
     bubble = document.createElement 'div'
@@ -110,7 +110,7 @@ class LinterViews
   _renderPanel: ->
     @_panel.innerHTML = ''
     @_removeDecorations()
-    @removeBubble()
+    @_removeBubble()
     if not @_messages.length
       return @setPanelVisibility(false)
     @setPanelVisibility(true)
