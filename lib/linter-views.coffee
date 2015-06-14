@@ -7,6 +7,7 @@ Bubble = require './views/bubble'
 class LinterViews
   constructor: (@linter) ->
     @messages = []
+    @_decorations = []
 
     @_bottomTabFile = new BottomTabFile()
     @_bottomTabProject = new BottomTabProject()
@@ -42,8 +43,7 @@ class LinterViews
     messages = messages.concat(@._extractMessages(activeLinter.messages, counts)) if activeLinter
     @messages = messages
 
-    @_panel.update()
-
+    @_renderPanel()
     @_bottomTabFile.count = counts.file
     @_bottomTabProject.count = counts.project
     @_bottomStatus.count = counts.project
@@ -53,7 +53,7 @@ class LinterViews
     @scope = Tab
     @_bottomTabProject.active = Tab is 'project'
     @_bottomTabFile.active = Tab is 'file'
-    @_panel.update()
+    @_renderPanel()
 
   # consumed in views/panel
   setPanelVisibility: (Status)->
@@ -79,6 +79,20 @@ class LinterViews
     @_panel.removeDecorations()
     @_panelWorkspace.destroy()
     @bubble?.remove()
+
+  _renderPanel: ->
+    @_panel.innerHTML = ''
+    @_removeDecorations()
+    @bubble?.remove()
+    if not @messages.length
+      return @linter.views.setPanelVisibility(false)
+
+
+  _removeDecorations: ->
+    return unless @_decorations.length
+    @_decorations.forEach (decoration) ->
+      try decoration.destroy()
+    @_decorations = []
 
   # This method is called in render, and classifies the messages according to scope
   _extractMessages: (Gen, counts) ->
