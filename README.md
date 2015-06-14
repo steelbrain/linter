@@ -32,6 +32,7 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 
 #### for Typescript
 - [linter-tslint](https://atom.io/packages/linter-tslint), for Typescript, using `tslint`
+- [atom-typescript](https://github.com/TypeStrong/atom-typescript), for Compile Errors
 
 #### for Dart
 - [linter-dartanalyzer](https://atom.io/packages/linter-dartanalyzer), for Dart using `dartanalyzer`
