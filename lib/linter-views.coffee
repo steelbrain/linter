@@ -49,7 +49,7 @@ class LinterViews
     @_bottomStatus.count = counts.project
 
   # consumed in editor-linter, _renderPanel
-  updateBubble: (point)->
+  updateBubble: (point) ->
     @_removeBubble()
     return unless @_showBubble
     return unless @_messages.length
@@ -69,7 +69,7 @@ class LinterViews
       break
 
   # consumed in views/panel
-  setPanelVisibility: (Status)->
+  setPanelVisibility: (Status) ->
     if Status
       @_panelWorkspace.show() unless @_panelWorkspace.isVisible()
     else
@@ -93,7 +93,7 @@ class LinterViews
     @_panelWorkspace.destroy()
     @_removeBubble()
 
-  _changeTab: (Tab)->
+  _changeTab: (Tab) ->
     @_scope = Tab
     @_bottomTabProject.active = Tab is 'project'
     @_bottomTabFile.active = Tab is 'file'
@@ -104,11 +104,11 @@ class LinterViews
     @_bubble.destroy()
     @_bubble = null
 
-  _renderBubble: (message)->
+  _renderBubble: (message) ->
     bubble = document.createElement 'div'
     bubble.id = 'linter-inline'
     bubble.appendChild Message.fromMessage(message)
-    if message.trace then message.trace.forEach (trace)->
+    if message.trace then message.trace.forEach (trace) ->
       bubble.appendChild Message.fromMessage(trace, true)
     bubble
 
@@ -119,7 +119,7 @@ class LinterViews
     if not @_messages.length
       return @setPanelVisibility(false)
     @setPanelVisibility(true)
-    @_messages.forEach (message)=>
+    @_messages.forEach (message) =>
       if @_scope is 'file' then return unless message.currentFile
       if message.currentFile and message.range #Add the decorations to the current TextEditor
         marker = @linter.activeEditor.markBufferRange message.range, {invalidate: 'never'}
