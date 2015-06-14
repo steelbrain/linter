@@ -52,7 +52,7 @@ class EditorLinter
 
       new Promise((resolve) =>
         resolve(linter.lint(@editor))
-      ).then(EditorLinter.validateResults).catch((error) ->
+      ).then(EditorLinter._validateResults).catch((error) ->
         atom.notifications.addError error, {detail: error.stack, dismissible: true}
         []
       ).then (results) =>
@@ -71,13 +71,13 @@ class EditorLinter
       @[key] = value
 
   # Checks the responses for any kind-of errors
-  @validateResults: (results) ->
+  @_validateResults: (results) ->
     if (not results) or results.constructor.name isnt 'Array'
       throw new Error "Got invalid response from Linter, Type: #{typeof results}"
     for result in results
       unless result.type
         throw new Error "Missing type field on Linter Response, Got: #{Object.keys(result)}"
       result.range = Range.fromObject result.range if result.range?
-      EditorLinter.validateResults(result.trace) if result.trace
+      EditorLinter._validateResults(result.trace) if result.trace
     results
 module.exports = EditorLinter
