@@ -11,7 +11,6 @@ class Linter
 
     @emitter = new Emitter
     @views = new LinterViews this
-    @statusBar = null
     @messagesProject = new Map
     @activeEditor = atom.workspace.getActiveTextEditor()
     @editorLinters = new Map
