@@ -76,8 +76,7 @@ class EditorLinter
     for result, key in results
       unless result.type
         throw new Error "Missing type field on Linter Response, Got: #{Object.keys(result)}"
-      if result.range
-        result.range = new Range(result.range[0], result.range[1]) if result.range.constructor.name is 'Array'
+      result.range = Range.fromObject result.range if result.range?
       results[key] = result
     results
 module.exports = EditorLinter
