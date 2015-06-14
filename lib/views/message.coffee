@@ -47,4 +47,10 @@ class Message extends HTMLElement
         [position[0][0] - 1, position[0][1] - 1]
       )
 
-module.exports = document.registerElement('linter-message', {prototype: Message.prototype})
+  @fromMessage: (message, showPaths)->
+    MessageLine = new MessageElement()
+    MessageLine.initialize(message, showPaths)
+    MessageLine
+
+module.exports = MessageElement = document.registerElement('linter-message', {prototype: Message.prototype})
+module.exports.fromMessage = Message.fromMessage
