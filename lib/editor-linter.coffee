@@ -16,10 +16,10 @@ class EditorLinter
       @editor.onDidChangeCursorPosition ({newBufferPosition}) =>
         @linter.views.updateBubble(newBufferPosition)
     )
-    return unless @linter.lintOnFly
-    @subscriptions.add(
-      @editor.onDidStopChanging => @lint(true) if @linter.lintOnFly
-    )
+    if @linter.lintOnFly
+      @subscriptions.add(
+        @editor.onDidStopChanging => @lint(true) if @linter.lintOnFly
+      )
 
   # Called on package deactivate
   destroy: ->
