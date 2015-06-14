@@ -18,7 +18,7 @@ class EditorLinter
     )
     return unless @linter.lintOnFly
     @subscriptions.add(
-      @editor.onDidStopChanging => @lint(true)
+      @editor.onDidStopChanging => @lint(true) if @linter.lintOnFly
     )
 
   # Called on package deactivate
