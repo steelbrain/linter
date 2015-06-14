@@ -19,7 +19,7 @@ class Message extends HTMLElement
     El.addEventListener 'click', ->
       Message.onClick message.file, message.range
     if message.range
-      El.textContent = "at line #{message.range[0][0]} col #{message.range[0][1]} "
+      El.textContent = "at line #{message.range.start.row + 1} col #{message.range.start.column + 1} "
     if addPath
       El.textContent += "in #{displayFile}"
     El
@@ -40,12 +40,10 @@ class Message extends HTMLElement
       El.textContent = message.message
     El
 
-  @onClick: (file, position)->
+  @onClick: (file, range)->
     atom.workspace.open(file).then ->
-      return unless position
-      atom.workspace.getActiveTextEditor().setCursorBufferPosition(
-        [position[0][0] - 1, position[0][1] - 1]
-      )
+      return unless range
+      atom.workspace.getActiveTextEditor().setCursorBufferPosition(range.start)
 
   @fromMessage: (message, showPaths)->
     MessageLine = new MessageElement()
