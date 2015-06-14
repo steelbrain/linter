@@ -54,12 +54,14 @@ class LinterViews
       continue unless message.currentFile
       continue unless message.range
       continue unless message.range.containsPoint point
-      marker = @linter.activeEditor.markBufferRange message.range, {invalidate: 'never'}
-      @_bubble = @linter.activeEditor.decorateMarker(marker, {
-        type: 'overlay',
-        position: 'tail',
-        item: @_renderBubble(message)
-      })
+      @_bubble = @linter.activeEditor.decorateMarker(
+        @linter.activeEditor.markBufferRange message.range, {invalidate: 'never'},
+        {
+          type: 'overlay',
+          position: 'tail',
+          item: @_renderBubble(message)
+        }
+      )
       break
 
   # consumed in views/bottom-tab-{file, project}
