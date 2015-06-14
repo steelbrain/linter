@@ -40,18 +40,16 @@ atom-text-editor::shadow .linter-highlight, .linter-highlight{
   &.error {
     background-color: @background-color-error;
     color: white;
-  }
-  // Styling the gutter
-  .region .error{
-    border-bottom: 1px dashed @background-color-error;
+    .region {
+      border-bottom: 1px dashed @background-color-error;
+    }
   }
   &.warning {
     background-color: @background-color-warning;
     color: white;
-  }
-  // Styling the gutter
-  .region .warning {
-    border-bottom: 1px dashed @background-color-warning;
+    .region {
+      border-bottom: 1px dashed @background-color-warning;
+    }
   }
 
   // Used by bottom status icon
