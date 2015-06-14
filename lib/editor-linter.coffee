@@ -78,5 +78,6 @@ class EditorLinter
       unless result.type
         throw new Error "Missing type field on Linter Response, Got: #{Object.keys(result)}"
       result.range = Range.fromObject result.range if result.range?
+      EditorLinter.validateResults(result.trace) if result.trace
     results
 module.exports = EditorLinter
