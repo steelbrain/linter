@@ -48,6 +48,7 @@ class LinterViews
     @_bottomTabProject.count = counts.project
     @_bottomStatus.count = counts.project
 
+  # consumed in editor-linter, _renderPanel
   updateBubble: (point)->
     @_removeBubble()
     return unless @_showBubble
