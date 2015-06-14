@@ -17,9 +17,9 @@ class Message extends HTMLElement
         throw null
     El = document.createElement 'a'
     El.addEventListener 'click', ->
-      Message.onClick message.file, message.position
-    if message.position
-      El.textContent = "at line #{message.position[0][0]} col #{message.position[0][1]} "
+      Message.onClick message.file, message.range
+    if message.range
+      El.textContent = "at line #{message.range[0][0]} col #{message.range[0][1]} "
     if addPath
       El.textContent += "in #{displayFile}"
     El
