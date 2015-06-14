@@ -29,11 +29,11 @@ module.exports = (ClassicLinter) ->
   editorMap = new WeakMap()
 
   return {
-    scopes: ClassicLinter.syntax
+    grammarScopes: ClassicLinter.syntax
     scope: 'file'
     lintOnFly: true
 
-    lint: (textEditor, textBuffer) ->
+    lint: (textEditor) ->
 
       # Try to reuse the same instance if we can.
       linter = editorMap.get(textEditor)
