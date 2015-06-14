@@ -1,5 +1,4 @@
-BottomTabFile = require './views/bottom-tab-file'
-BottomTabProject = require './views/bottom-tab-project'
+BottomTab = require './views/bottom-tab'
 BottomStatus = require './views/bottom-status'
 Message = require './views/message'
 
@@ -9,14 +8,18 @@ class LinterViews
     @_decorations = []
     @_showBubble = true
 
-    @_bottomTabFile = new BottomTabFile()
-    @_bottomTabProject = new BottomTabProject()
+    @_bottomTabFile = new BottomTab()
+    @_bottomTabProject = new BottomTab()
     @_panel = document.createElement 'div'
     @_bubble = null
     @_bottomStatus = new BottomStatus()
 
-    @_bottomTabFile.initialize(@linter)
-    @_bottomTabProject.initialize(@linter)
+    @_bottomTabFile.initialize("Current File", =>
+      @changeTab('file')
+    )
+    @_bottomTabProject.initialize("Project", =>
+      @changeTab('project')
+    )
     @_bottomStatus.initialize()
     @_panelWorkspace = atom.workspace.addBottomPanel item: @_panel, visible: false
 
