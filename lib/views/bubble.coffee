@@ -19,10 +19,10 @@ class Bubble
 
   update: (point) ->
     @remove()
-    return unless @linter.views.messages.length
+    return unless @linter.views._messages.length
     textEditor = @linter.activeEditor
     found = false
-    @linter.views.messages.forEach (message) =>
+    @linter.views._messages.forEach (message) =>
       return if found
       return unless message.currentFile
       return unless message.range

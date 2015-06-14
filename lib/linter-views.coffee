@@ -6,7 +6,7 @@ Bubble = require './views/bubble'
 
 class LinterViews
   constructor: (@linter) ->
-    @messages = []
+    @_messages = []
     @_decorations = []
 
     @_bottomTabFile = new BottomTabFile()
@@ -41,7 +41,7 @@ class LinterViews
     activeLinter = @linter.getActiveEditorLinter()
     messages = @._extractMessages(@linter.messagesProject, counts)
     messages = messages.concat(@._extractMessages(activeLinter.messages, counts)) if activeLinter
-    @messages = messages
+    @_messages = messages
 
     @_renderPanel()
     @_bottomTabFile.count = counts.file
@@ -84,10 +84,10 @@ class LinterViews
     @_panel.innerHTML = ''
     @_removeDecorations()
     @bubble?.remove()
-    if not @messages.length
+    if not @_messages.length
       return @setPanelVisibility(false)
     @setPanelVisibility(true)
-    @messages.forEach (message)=>
+    @_messages.forEach (message)=>
       if @scope is 'file' then return unless message.currentFile
       if message.currentFile and message.range #Add the decorations to the current TextEditor
         marker = @linter.activeEditor.markBufferRange message.range, {invalidate: 'never'}
