@@ -2,16 +2,17 @@ BottomTabFile = require './views/bottom-tab-file'
 BottomTabProject = require './views/bottom-tab-project'
 BottomStatus = require './views/bottom-status'
 Message = require './views/message'
-Bubble = require './views/bubble'
 
 class LinterViews
   constructor: (@linter) ->
     @_messages = []
     @_decorations = []
+    @_showBubble = true
 
     @_bottomTabFile = new BottomTabFile()
     @_bottomTabProject = new BottomTabProject()
     @_panel = document.createElement 'div'
+    @_bubble = document.createElement 'div'
     @_bottomStatus = new BottomStatus()
 
     @_bottomTabFile.initialize(@linter)
@@ -25,12 +26,8 @@ class LinterViews
     @_panel.id = 'linter-panel'
 
     # Bubble
-    @linter.subscriptions.add atom.config.observe 'linter.showErrorInline', (showErrorInline) =>
-      if showErrorInline
-        @bubble = new Bubble @linter
-      else
-        @bubble?.remove()
-        @bubble = null
+    @linter.subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
+      @_showBubble = showBubble
 
   # This message is called in editor-linter.coffee
   render: ->
@@ -47,6 +44,21 @@ class LinterViews
     @_bottomTabFile.count = counts.file
     @_bottomTabProject.count = counts.project
     @_bottomStatus.count = counts.project
+
+  updateBubble: (point)->
+    @removeBubble()
+    return unless @_showBubble
+    return unless @_messages.length
+    point = point || @linter.activeEditor.getCursorBufferPosition()
+    for message in @_messages
+      continue unless message.currentFile
+      continue unless message.range
+      continue unless message.range.containsPoint point
+
+  removeBubble: ->
+    return unless @_bubble
+    @_bubble.destroy()
+    @_bubble = null
 
   # consumed in views/bottom-tab-{file, project}
   changeTab: (Tab)->
