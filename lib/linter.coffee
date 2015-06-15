@@ -1,7 +1,6 @@
 fs = require 'fs'
 path = require 'path'
 {CompositeDisposable, Range, Point, BufferedProcess} = require 'atom'
-_ = null
 XRegExp = null
 
 # These are NOOPs in linter-plus
@@ -290,10 +289,9 @@ class Linter
     return text?.length or 0
 
   getEditorScopesForPosition: (position) ->
-    _ ?= require 'lodash'
     try
       # return a copy in case it gets mutated (hint: it does)
-      _.clone @editor.displayBuffer.tokenizedBuffer.scopesForPosition(position)
+      @editor.displayBuffer.tokenizedBuffer.scopesForPosition(position).slice()
     catch
       # this can throw if the line has since been deleted
       []
