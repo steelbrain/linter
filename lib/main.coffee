@@ -25,7 +25,11 @@ module.exports =
         @consumeLinter(linter)
 
   consumeLinter: (linter) ->
-    @instance.linters.push linter
+    if linter.grammarScopes instanceof Array and typeof linter.lint is 'function'
+      @instance.linters.push linter
+    else
+      err = new Error("Invalid Linter Provided")
+      atom.notifications.addError err.message, {detail: err.stack}
 
   consumeStatusBar: (statusBar) ->
     @instance.views.attachBottom(statusBar)
