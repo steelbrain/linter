@@ -11,9 +11,9 @@ transform = (filePath, textEditor, results) ->
     msg =  {
       # If the type is non-standard just pass along whatever it was
       type: typeMap[level] ? level
-      message: message
-      file: filePath
-      position: [
+      text: message
+      filePath: filePath
+      range: [
         [ startLine, startCol],
         [ endLine, endCol]
       ]
