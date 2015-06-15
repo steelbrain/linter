@@ -39,8 +39,8 @@ module.exports =
 
   _validateLinter: (linter) ->
     if linter.grammarScopes instanceof Array and typeof linter.lint is 'function'
-      return true
+      true
     else
       err = new Error("Invalid Linter Provided")
       atom.notifications.addError err.message, {detail: err.stack}
-      return false
+      false
