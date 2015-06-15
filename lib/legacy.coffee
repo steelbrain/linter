@@ -11,13 +11,11 @@ transform = (filePath, textEditor, results) ->
     msg =  {
       # If the type is non-standard just pass along whatever it was
       type: typeMap[level] ? level
-      message: message
-      file: filePath
-      # These are all 0-indexed, but the `Position` needs a range where
-      # everything is 1-indexed
-      position: [
-        [ startLine + 1, startCol + 1],
-        [ endLine + 1, endCol + 1 ]
+      text: message
+      filePath: filePath
+      range: [
+        [ startLine, startCol],
+        [ endLine, endCol]
       ]
     }
 
@@ -29,11 +27,11 @@ module.exports = (ClassicLinter) ->
   editorMap = new WeakMap()
 
   return {
-    scopes: ClassicLinter.syntax
+    grammarScopes: ClassicLinter.syntax
     scope: 'file'
     lintOnFly: true
 
-    lint: (textEditor, textBuffer) ->
+    lint: (textEditor) ->
 
       # Try to reuse the same instance if we can.
       linter = editorMap.get(textEditor)

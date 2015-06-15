@@ -1,11 +1,9 @@
 @import "ui-variables";
-#linter-panel, #linter-inline{
-  &> linter-message{
-    display: block;
-    padding: 0 0 0 10px;
-    span {
-      padding: 3px 5px;
-    }
+linter-message {
+  display: block;
+  padding: 2px 0 0 10px;
+  span {
+    padding: 3px 5px;
   }
 }
 
@@ -20,31 +18,7 @@
   padding: 5px;
 }
 
-atom-text-editor::shadow .line-number-error {
-  background-color: #c00 !important;
-}
-
-atom-text-editor::shadow .line-number-warning {
-  background-color: #ffaa2c !important;
-}
-
-atom-text-editor::shadow .highlight-error .region {
-  border-bottom: 1px dashed #c00 !important;
-}
-
-atom-text-editor::shadow .highlight-warning .region {
-  border-bottom: 1px dashed #ffaa2c !important;
-}
-
-.linter-error {
-  color: @text-color-error;
-}
-
-.linter-success {
-  color: @text-color-success;
-}
-
-.linter-tab {
+linter-bottom-tab {
   display: inline-block;
   background: @button-background-color;
   border-radius: 7px;
@@ -53,11 +27,36 @@ atom-text-editor::shadow .highlight-warning .region {
   margin-right: 1em;
   cursor: pointer;
   line-height: 2.2em;
+  &.active {
+    color: @text-color-selected;
+    background: @button-background-color-selected;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
 }
 
-.linter-tab.active {
-  color: @text-color-selected;
-  background: @button-background-color-selected;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+// Styling Error Types
+atom-text-editor::shadow .linter-highlight, .linter-highlight{
+  &.error {
+    background-color: @background-color-error;
+    color: white;
+    .region {
+      border-bottom: 1px dashed @background-color-error;
+    }
+  }
+  &.warning {
+    background-color: @background-color-warning;
+    color: white;
+    .region {
+      border-bottom: 1px dashed @background-color-warning;
+    }
+  }
+
+  // Used by bottom status icon
+  &.status-error {
+    color: @background-color-error;
+  }
+  &.status-success{
+    color: @background-color-success;
+  }
 }

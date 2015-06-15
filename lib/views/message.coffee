@@ -1,48 +1,56 @@
 # This file is imported in views/panel
 
 class Message extends HTMLElement
-  initialize: (message, addPath) ->
-    @message = message
+  initialize: (@message, @addPath) ->
 
-    # The ribbon
-    ribbon = document.createElement 'span'
-    ribbon.classList.add 'badge'
-    ribbon.classList.add 'badge-flexible'
-    ribbon.classList.add 'badge-' + message.type.toLowerCase()
-    ribbon.textContent = message.type
+  attachedCallback: ->
+    @appendChild Message.renderRibbon(@message.type)
+    @appendChild Message.renderMessage(@message)
+    @appendChild Message.renderLink(@message, @addPath) if @message.filePath
 
-    # The message
-    theMessage = document.createElement('span')
-    if message.html and message.html.length
-      theMessage.innerHTML = message.html
+  @renderLink: (message, addPath) ->
+    displayFile = message.filePath
+    atom.project.getPaths().forEach (path) ->
+      return if message.filePath.indexOf(path) isnt 0 or displayFile isnt message.filePath # Avoid double replacing
+      displayFile = message.filePath.substr( path.length + 1 ) # Remove the trailing slash as well
+    el = document.createElement 'a'
+    el.addEventListener 'click', ->
+      Message.onClick message.filePath, message.range
+    if message.range
+      el.textContent = "at line #{message.range.start.row + 1} col #{message.range.start.column + 1} "
+    if addPath
+      el.textContent += "in #{displayFile}"
+    el
+
+  @renderRibbon: (type) ->
+    el = document.createElement 'span'
+    el.classList.add 'badge'
+    el.classList.add 'badge-flexible'
+    el.classList.add "linter-highlight"
+    el.classList.add type.toLowerCase()
+    el.textContent = type
+    el
+
+  @renderMessage: (message) ->
+    el = document.createElement 'span'
+    if message.html
+      if typeof message.html is 'string'
+        el.innerHTML = message.html
+      else
+        el.appendChild message.html
     else
-      theMessage.textContent = message.message
+      el.textContent = message.text
+    el
 
-    # The link
-    if message.file
-      message.displayFile = message.file
-      try
-        atom.project.getPaths().forEach (path) ->
-          return unless message.file.indexOf(path) is 0
-          message.displayFile = message.file.substr( path.length + 1 ) # Remove the trailing slash as well
-          throw null
-      file = document.createElement 'a'
-      file.addEventListener 'click', @onClick.bind(this, message.file, message.position)
-      if message.position
-        file.textContent =
-          'at line ' + message.position[0][0] + ' col ' + message.position[0][1] + ' '
-      if addPath
-        file.textContent += 'in ' + message.displayFile
-    else
-      file = null
-    @appendChild ribbon
-    @appendChild theMessage
-    @appendChild file if file
-  onClick: ->
-    atom.workspace.open(@message.file).then =>
-      return unless @message.position
-      atom.workspace.getActiveTextEditor().setCursorBufferPosition(
-        [@message.position[0][0] - 1, @message.position[0][1] - 1]
-      )
+  @onClick: (file, range) ->
+    atom.workspace.open(file).then ->
+      return unless range
+      atom.workspace.getActiveTextEditor().setCursorBufferPosition(range.start)
 
-module.exports = Message = document.registerElement('linter-message', {prototype: Message.prototype})
+  @fromMessage: (message, showPaths) ->
+    MessageLine = new MessageElement()
+    MessageLine.initialize(message, showPaths)
+    MessageLine
+
+module.exports = MessageElement = document.registerElement('linter-message', {prototype: Message.prototype})
+module.exports.fromMessage = Message.fromMessage

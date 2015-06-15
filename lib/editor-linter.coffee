@@ -1,4 +1,4 @@
-{CompositeDisposable, Emitter} = require 'atom'
+{CompositeDisposable, Emitter, Range} = require 'atom'
 
 class EditorLinter
   constructor: (@linter, @editor) ->
@@ -13,12 +13,13 @@ class EditorLinter
       @editor.onDidSave => @lint(false)
     )
     @subscriptions.add(
-      @editor.onDidChangeCursorPosition ({newBufferPosition}) => @linter.views.bubble?.update(newBufferPosition)
+      @editor.onDidChangeCursorPosition ({newBufferPosition}) =>
+        @linter.views.updateBubble(newBufferPosition)
     )
-    return unless @linter.lintOnFly
-    @subscriptions.add(
-      @editor.onDidStopChanging => @lint(true)
-    )
+    if @linter.lintOnFly
+      @subscriptions.add(
+        @editor.onDidStopChanging => @lint(true) if @linter.lintOnFly
+      )
 
   # Called on package deactivate
   destroy: ->
@@ -47,12 +48,12 @@ class EditorLinter
     return @linter.linters.map (linter) =>
       return if wasTriggeredOnChange and not linter.lintOnFly
       return if (not wasTriggeredOnChange) and linter.lintOnFly
-      return unless (scopes.filter (entry) -> linter.scopes.indexOf(entry) isnt -1 ).length
+      return unless (scopes.filter (entry) -> linter.grammarScopes.indexOf(entry) isnt -1 ).length
 
       new Promise((resolve) =>
         resolve(linter.lint(@editor))
-      ).then(EditorLinter.validateResults).catch((error) ->
-        atom.notifications.addError error, {detail: error.stack, dismissible: true}
+      ).then(EditorLinter._validateResults).catch((error) ->
+        atom.notifications.addError error.message, {detail: error.stack}
         []
       ).then (results) =>
         if linter.scope is 'project' then @linter.messagesProject.set linter, results
@@ -70,11 +71,13 @@ class EditorLinter
       @[key] = value
 
   # Checks the responses for any kind-of errors
-  @validateResults: (results) ->
+  @_validateResults: (results) ->
     if (not results) or results.constructor.name isnt 'Array'
       throw new Error "Got invalid response from Linter, Type: #{typeof results}"
     for result in results
       unless result.type
         throw new Error "Missing type field on Linter Response, Got: #{Object.keys(result)}"
+      result.range = Range.fromObject result.range if result.range?
+      EditorLinter._validateResults(result.trace) if result.trace
     results
 module.exports = EditorLinter
