@@ -25,11 +25,8 @@ module.exports =
         @consumeLinter(linter)
 
   consumeLinter: (linter) ->
-    if linter.grammarScopes instanceof Array and typeof linter.lint is 'function'
+    if @_validateLinter(linter)
       @instance.linters.push linter
-    else
-      err = new Error("Invalid Linter Provided")
-      atom.notifications.addError err.message, {detail: err.stack}
 
   consumeStatusBar: (statusBar) ->
     @instance.views.attachBottom(statusBar)
@@ -39,3 +36,11 @@ module.exports =
 
   deactivate: ->
     @instance?.deactivate()
+
+  _validateLinter: (linter) ->
+    if linter.grammarScopes instanceof Array and typeof linter.lint is 'function'
+      return true
+    else
+      err = new Error("Invalid Linter Provided")
+      atom.notifications.addError err.message, {detail: err.stack}
+      return false
