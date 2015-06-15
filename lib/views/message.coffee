@@ -34,7 +34,10 @@ class Message extends HTMLElement
   @renderMessage: (message) ->
     El = document.createElement 'span'
     if message.html
-      El.innerHTML = message.html
+      if typeof message.html is 'string'
+        El.innerHTML = message.html
+      else
+        El.appendChild message.html
     else
       El.textContent = message.text
     El
