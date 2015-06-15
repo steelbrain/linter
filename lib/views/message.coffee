@@ -13,34 +13,34 @@ class Message extends HTMLElement
     atom.project.getPaths().forEach (path) ->
       return if message.filePath.indexOf(path) isnt 0 or displayFile isnt message.filePath # Avoid double replacing
       displayFile = message.filePath.substr( path.length + 1 ) # Remove the trailing slash as well
-    El = document.createElement 'a'
-    El.addEventListener 'click', ->
+    el = document.createElement 'a'
+    el.addEventListener 'click', ->
       Message.onClick message.filePath, message.range
     if message.range
-      El.textContent = "at line #{message.range.start.row + 1} col #{message.range.start.column + 1} "
+      el.textContent = "at line #{message.range.start.row + 1} col #{message.range.start.column + 1} "
     if addPath
-      El.textContent += "in #{displayFile}"
-    El
+      el.textContent += "in #{displayFile}"
+    el
 
   @renderRibbon: (type) ->
-    El = document.createElement 'span'
-    El.classList.add 'badge'
-    El.classList.add 'badge-flexible'
-    El.classList.add "linter-highlight"
-    El.classList.add type.toLowerCase()
-    El.textContent = type
-    El
+    el = document.createElement 'span'
+    el.classList.add 'badge'
+    el.classList.add 'badge-flexible'
+    el.classList.add "linter-highlight"
+    el.classList.add type.toLowerCase()
+    el.textContent = type
+    el
 
   @renderMessage: (message) ->
-    El = document.createElement 'span'
+    el = document.createElement 'span'
     if message.html
       if typeof message.html is 'string'
-        El.innerHTML = message.html
+        el.innerHTML = message.html
       else
-        El.appendChild message.html
+        el.appendChild message.html
     else
-      El.textContent = message.text
-    El
+      el.textContent = message.text
+    el
 
   @onClick: (file, range) ->
     atom.workspace.open(file).then ->
