@@ -43,13 +43,14 @@ class EditorLinter
 
   # This method returns an array of promises to be used in lint
   _lint: (wasTriggeredOnChange, scopes) ->
-    return @linter.linters.map (linter) =>
+    Promises = []
+    @linter.linters.forEach (linter)=>
       if @linter.lintOnFly
         return if wasTriggeredOnChange isnt linter.lintOnFly
 
       return unless scopes.some (entry) -> entry in linter.grammarScopes
 
-      new Promise((resolve) =>
+      Promises.push new Promise((resolve) =>
         resolve(linter.lint(@editor))
       ).then(EditorLinter._validateResults).catch((error) ->
         atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
@@ -60,6 +61,7 @@ class EditorLinter
 
         @_emitter.emit 'did-update'
         @linter.views.render() if @editor is @linter.activeEditor
+    Promises
 
   # This method sets or gets the lock status of given type
   _lock: (wasTriggeredOnChange, value) ->

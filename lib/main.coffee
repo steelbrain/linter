@@ -1,3 +1,4 @@
+{Disposable} = require('atom')
 module.exports =
   instance: null
   config:
@@ -22,10 +23,22 @@ module.exports =
         linter = legacy(require "#{atomPackage.path}/lib/#{implementation}")
         @consumeLinter(linter)
 
-  consumeLinter: (linter) ->
-    if @_validateLinter(linter)
-      @instance.linters.push linter
-
+  consumeLinter: (linters) ->
+    unless linters instanceof Array
+      linters = [ linters ]
+    for linter in linters
+      if @_validateLinter(linter)
+        @instance.linters.add linter
+    new Disposable =>
+      for linter in linters
+        return unless @instance.linters.has(linter)
+        if linter.scope is 'project'
+          @instance.messagesProject.delete(linter)
+        else
+          @instance.eachEditorLinter (editorLinter)->
+            editorLinter.messages.delete(linter)
+        @instance.linters.delete(linter)
+      @instance.views.render()
   consumeStatusBar: (statusBar) ->
     @instance.views.attachBottom(statusBar)
 
