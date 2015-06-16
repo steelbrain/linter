@@ -56,6 +56,6 @@ class Linter
     @_subscriptions.dispose()
     @eachLinter (linter) ->
       linter.destroy()
-    @views.deactivate()
+    @views.destroy()
 
 module.exports = Linter

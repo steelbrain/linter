@@ -83,7 +83,7 @@ class LinterViews
       priority: -999
 
   # this method is called on package deactivate
-  deactivate: ->
+  destroy: ->
     @_panel.removeDecorations()
     @_panelWorkspace.destroy()
     @_removeBubble()
