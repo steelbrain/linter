@@ -40,13 +40,13 @@ class Linter
         @_editorLinters.delete currentEditorLinter
 
   getActiveEditorLinter: ->
-    return @getLinter(@activeEditor)
+    return @getLinter @activeEditor
 
   getLinter: (editor) ->
     return @_editorLinters.get editor
 
   eachLinter: (callback) ->
-    @h.genValue(@_editorLinters, callback)
+    @h.genValue @_editorLinters, callback
 
   observeLinters: (callback) ->
     @eachLinter callback
