@@ -25,7 +25,7 @@ class Linter
       @activeEditor = editor
       # Exceptions thrown here prevent switching tabs
       try
-        @getLinter(editor)?.lint(false)
+        @getEditorLinter(editor)?.lint(false)
         @views.render()
       catch error
         atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
@@ -39,9 +39,9 @@ class Linter
         @_editorLinters.delete currentEditorLinter
 
   getActiveEditorLinter: ->
-    return @getLinter @activeEditor
+    return @getEditorLinter @activeEditor
 
-  getLinter: (editor) ->
+  getEditorLinter: (editor) ->
     return @_editorLinters.get editor
 
   eachEditorLinter: (callback) ->
