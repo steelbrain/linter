@@ -45,7 +45,7 @@ class Linter
     return @_editorLinters.get editor
 
   eachEditorLinter: (callback) ->
-    @h.genValue @_editorLinters, callback
+    @_editorLinters.forEach(callback)
 
   observeEditorLinters: (callback) ->
     @eachEditorLinter callback
