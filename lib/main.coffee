@@ -14,8 +14,6 @@ module.exports =
 
   activate: ->
     @instance = new (require './linter-plus.coffee')
-    atom.config.observe 'linter-plus.lintOnFly', (lintOnyFly) =>
-      @instance.lintOnFly = lintOnyFly
 
     legacy = require('./legacy.coffee')
     for atomPackage in atom.packages.getLoadedPackages()

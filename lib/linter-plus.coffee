@@ -7,7 +7,6 @@ H = require './helpers'
 class Linter
   constructor: ->
     @subscriptions = new CompositeDisposable
-    @lintOnFly = true
 
     @emitter = new Emitter
     @views = new LinterViews this
@@ -17,6 +16,8 @@ class Linter
     @h = H
     @linters = []
 
+    @subscriptions.add atom.config.observe 'linter-plus.lintOnFly', (value) =>
+      @lintOnFly = value
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
       @activeEditor = editor
       # Exceptions thrown here prevent switching tabs

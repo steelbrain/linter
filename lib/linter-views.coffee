@@ -34,8 +34,7 @@ class LinterViews
 
   # This message is called in editor-linter.coffee
   render: ->
-    return @setPanelVisibility(false) unless @linter.activeEditor
-    return @setPanelVisibility(false) unless @linter.activeEditor.getPath?()
+    return @setPanelVisibility(false) unless @linter.activeEditor?.getPath?()
 
     counts = {project: 0, file: 0}
     activeLinter = @linter.getActiveEditorLinter()
@@ -56,8 +55,7 @@ class LinterViews
     point = point || @linter.activeEditor.getCursorBufferPosition()
     for message in @_messages
       continue unless message.currentFile
-      continue unless message.range
-      continue unless message.range.containsPoint point
+      continue unless message.range?.containsPoint? point
       @_bubble = @linter.activeEditor.decorateMarker(
         @linter.activeEditor.markBufferRange(message.range, {invalidate: 'never'}),
         {

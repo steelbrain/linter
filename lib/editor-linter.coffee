@@ -16,10 +16,9 @@ class EditorLinter
       @editor.onDidChangeCursorPosition ({newBufferPosition}) =>
         @linter.views.updateBubble(newBufferPosition)
     )
-    if @linter.lintOnFly
-      @subscriptions.add(
-        @editor.onDidStopChanging => @lint(true) if @linter.lintOnFly
-      )
+    @subscriptions.add(
+      @editor.onDidStopChanging => @lint(true) if @linter.lintOnFly
+    )
 
   # Called on package deactivate
   destroy: ->
@@ -35,7 +34,6 @@ class EditorLinter
   lint: (wasTriggeredOnChange) ->
     return unless @editor is @linter.activeEditor
     return if @_lock(wasTriggeredOnChange)
-    @lint(true) unless wasTriggeredOnChange # Trigger onFly linters on save.
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
     scopes.push '*' # To allow global linters
@@ -46,14 +44,15 @@ class EditorLinter
   # This method returns an array of promises to be used in lint
   _lint: (wasTriggeredOnChange, scopes) ->
     return @linter.linters.map (linter) =>
-      return if wasTriggeredOnChange and not linter.lintOnFly
-      return if (not wasTriggeredOnChange) and linter.lintOnFly
-      return unless (scopes.filter (entry) -> linter.grammarScopes.indexOf(entry) isnt -1 ).length
+      if @linter.lintOnFly
+        return if wasTriggeredOnChange isnt linter.lintOnFly
+
+      return unless scopes.some (entry) -> entry in linter.grammarScopes
 
       new Promise((resolve) =>
         resolve(linter.lint(@editor))
       ).then(EditorLinter._validateResults).catch((error) ->
-        atom.notifications.addError error.message, {detail: error.stack}
+        atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
         []
       ).then (results) =>
         if linter.scope is 'project' then @linter.messagesProject.set linter, results
