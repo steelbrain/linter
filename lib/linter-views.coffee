@@ -54,9 +54,7 @@ class LinterViews
     return unless @_messages.length
     point = point || @linter.activeEditor.getCursorBufferPosition()
     for message in @_messages
-      continue unless message.currentFile
-      continue unless message.range
-      continue unless message.range.containsPoint point
+      continue unless message.range?.containsPoint? point
       @_bubble = @linter.activeEditor.decorateMarker(
         @linter.activeEditor.markBufferRange(message.range, {invalidate: 'never'}),
         {
