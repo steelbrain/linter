@@ -42,6 +42,6 @@
   },
   "no_implicit_parens":{
     "name": "no_implicit_parens",
-    "level": "error"
+    "level": "warn"
   }
 }
