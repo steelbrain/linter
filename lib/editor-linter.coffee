@@ -52,7 +52,7 @@ class EditorLinter
   _lint: (wasTriggeredOnChange, scopes) ->
     return @linter.linters.map (linter) =>
       return if wasTriggeredOnChange isnt linter.lintOnFly
-      return unless (scopes.filter (entry) -> linter.grammarScopes.indexOf(entry) isnt -1 ).length
+      return unless scopes.some (entry) -> entry in linter.grammarScopes
 
       new Promise((resolve) =>
         resolve(linter.lint(@editor))
