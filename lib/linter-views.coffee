@@ -140,7 +140,7 @@ class LinterViews
     isProject = @_scope is 'project'
     activeFile = @linter.activeEditor.getPath()
     ToReturn = []
-    @linter.h.genValues(Gen).forEach (Entry) ->
+    Gen.forEach (Entry) ->
       # Entry === Array<Messages>
       Entry.forEach (message) ->
         # If there's no file prop on message and the panel scope is file then count is as current
