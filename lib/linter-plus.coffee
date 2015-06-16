@@ -17,7 +17,6 @@ class Linter
     @h = H
     @linters = [] # Values are pushed here from Main::consumeLinter
 
-    # Bubble
     @_subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
       @views.showBubble = showBubble
     @_subscriptions.add atom.config.observe 'linter-plus.lintOnFly', (value) =>
