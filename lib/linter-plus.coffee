@@ -44,16 +44,16 @@ class Linter
   getLinter: (editor) ->
     return @_editorLinters.get editor
 
-  eachLinter: (callback) ->
+  eachEditorLinter: (callback) ->
     @h.genValue @_editorLinters, callback
 
-  observeLinters: (callback) ->
-    @eachLinter callback
+  observeEditorLinters: (callback) ->
+    @eachEditorLinter callback
     @_emitter.on 'linters-observe', callback
 
   deactivate: ->
     @_subscriptions.dispose()
-    @eachLinter (linter) ->
+    @eachEditorLinter (linter) ->
       linter.destroy()
     @views.destroy()
 

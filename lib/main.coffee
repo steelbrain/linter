@@ -35,7 +35,7 @@ module.exports =
           if item.scope is 'project'
             @instance.messagesProject.delete(item)
           else
-            @instance.eachLinter (editorLinter) ->
+            @instance.eachEditorLinter (editorLinter) ->
               editorLinter.messages.delete(item)
           false
         true
