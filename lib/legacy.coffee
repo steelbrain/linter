@@ -25,9 +25,12 @@ transform = (filePath, textEditor, results) ->
 module.exports = (ClassicLinter) ->
 
   editorMap = new WeakMap()
+  grammarScopes = ClassicLinter.syntax
+  unless grammarScopes instanceof Array
+    grammarScopes = [ grammarScopes ]
 
   return {
-    grammarScopes: ClassicLinter.syntax
+    grammarScopes
     scope: 'file'
     lintOnFly: true
 
