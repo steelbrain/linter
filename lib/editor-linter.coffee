@@ -63,7 +63,7 @@ class EditorLinter
 
   # This method sets or gets the lock status of given type
   _lock: (wasTriggeredOnChange, value) ->
-    key = wasTriggeredOnChange ? '_inProgressFly' : 'inProgress'
+    key = wasTriggeredOnChange ? '_inProgressFly' : '_inProgress'
     if typeof value is 'undefined'
       @[key]
     else
