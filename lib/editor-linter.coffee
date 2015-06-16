@@ -51,8 +51,7 @@ class EditorLinter
   # This method returns an array of promises to be used in lint
   _lint: (wasTriggeredOnChange, scopes) ->
     return @linter.linters.map (linter) =>
-      return if wasTriggeredOnChange and not linter.lintOnFly
-      return if (not wasTriggeredOnChange) and linter.lintOnFly
+      return if wasTriggeredOnChange isnt linter.lintOnFly
       return unless (scopes.filter (entry) -> linter.grammarScopes.indexOf(entry) isnt -1 ).length
 
       new Promise((resolve) =>
