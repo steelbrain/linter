@@ -24,7 +24,7 @@ module.exports =
 
   consumeLinter: (linter) ->
     if linter instanceof Array
-      for singleLinter of linter
+      for singleLinter in linter
         @consumeLinter(singleLinter)
     else
       if @_validateLinter(linter)
