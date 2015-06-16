@@ -31,11 +31,9 @@ class EditorLinter
   onDidDestroy: (callback) ->
     @emitter.on 'did-destroy', callback
 
-  lint: (wasTriggeredOnChange, _forceOnFly) ->
+  lint: (wasTriggeredOnChange) ->
     return unless @editor is @linter.activeEditor
-    return if wasTriggeredOnChange and ((not _forceOnFly) or (not @linter.lintOnFly))
-    return if @_lock(wasTriggeredOnChange, true)
-    @lint(true) unless wasTriggeredOnChange # Trigger onFly linters on save.
+    return if @_lock(wasTriggeredOnChange)
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
     scopes.push '*' # To allow global linters
@@ -46,7 +44,9 @@ class EditorLinter
   # This method returns an array of promises to be used in lint
   _lint: (wasTriggeredOnChange, scopes) ->
     return @linter.linters.map (linter) =>
-      return if wasTriggeredOnChange isnt linter.lintOnFly
+      if @linter.lintOnFly
+        return if wasTriggeredOnChange isnt linter.lintOnFly
+
       return unless scopes.some (entry) -> entry in linter.grammarScopes
 
       new Promise((resolve) =>
