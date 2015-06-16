@@ -17,7 +17,7 @@ class Linter
     @h = H
     @linters = []
 
-    @subscriptions.add atom.config.observe 'linter-plus.lintOnFly', (value) =>
+    @subscriptions.add atom.config.onDidChange 'linter-plus.lintOnFly', (value) =>
       @_setLintOnFly(value)
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
       @activeEditor = editor
