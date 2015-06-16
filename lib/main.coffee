@@ -30,9 +30,14 @@ module.exports =
       if @_validateLinter(linter)
         @instance.linters.push linter
     new Disposable =>
-      @instance.linters = @instance.linters.filter (item) ->
-        linters.indexOf(item) is -1
-
+      @instance.linters = @instance.linters.filter (item) =>
+        unless item in linters
+          if item.scope is 'project'
+            @instance.messagesProject.delete(item)
+          else
+            @instance.eachLinter (editorLinter) -> editorLinter.messages.delete(item)
+          false
+        true
   consumeStatusBar: (statusBar) ->
     @instance.views.attachBottom(statusBar)
 
