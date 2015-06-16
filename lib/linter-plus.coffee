@@ -17,6 +17,8 @@ class Linter
     @h = H
     @linters = []
 
+    @subscriptions.add atom.config.observe 'linter-plus.lintOnFly', (value) =>
+      @_setLintOnFly(value)
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
       @activeEditor = editor
       # Exceptions thrown here prevent switching tabs
@@ -52,5 +54,9 @@ class Linter
     @eachLinter (linter) ->
       linter.subscriptions.dispose()
     @views.deactivate()
+
+  _setLintOnFly: (value) ->
+    @eachLinter (linter) ->
+      linter.setLintOnFly(value)
 
 module.exports = Linter

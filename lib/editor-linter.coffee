@@ -16,21 +16,26 @@ class EditorLinter
       @editor.onDidChangeCursorPosition ({newBufferPosition}) =>
         @linter.views.updateBubble(newBufferPosition)
     )
-    if @linter.lintOnFly
-      @subscriptions.add(
-        @editor.onDidStopChanging => @lint(true) if @linter.lintOnFly
-      )
+    @setLintOnFly(@linter.lintOnFly)
 
   # Called on package deactivate
   destroy: ->
     @emitter.emit 'did-destroy'
     @subscriptions.dispose()
+    @subscription_fly?.dispose()
 
   onDidUpdate: (callback) ->
     @emitter.on 'did-update', callback
 
   onDidDestroy: (callback) ->
     @emitter.on 'did-destroy', callback
+
+  setLintOnFly: (value) ->
+    if value
+      @subscription_fly = @editor.onDidStopChanging => @lint(true) if @linter.lintOnFly
+    else
+      @subscription_fly?.dispose()
+      @subscription_fly = null
 
   lint: (wasTriggeredOnChange) ->
     return unless @editor is @linter.activeEditor
