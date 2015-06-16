@@ -23,8 +23,12 @@ module.exports =
         @consumeLinter(linter)
 
   consumeLinter: (linter) ->
-    if @_validateLinter(linter)
-      @instance.linters.push linter
+    if linter instanceof Array
+      for singleLinter of linter
+        @consumeLinter(singleLinter)
+    else
+      if @_validateLinter(linter)
+        @instance.linters.push linter
 
   consumeStatusBar: (statusBar) ->
     @instance.views.attachBottom(statusBar)
