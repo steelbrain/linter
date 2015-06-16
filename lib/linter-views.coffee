@@ -34,8 +34,7 @@ class LinterViews
 
   # This message is called in editor-linter.coffee
   render: ->
-    return @setPanelVisibility(false) unless @linter.activeEditor
-    return @setPanelVisibility(false) unless @linter.activeEditor.getPath?()
+    return @setPanelVisibility(false) unless @linter.activeEditor?.getPath?()
 
     counts = {project: 0, file: 0}
     activeLinter = @linter.getActiveEditorLinter()
