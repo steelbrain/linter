@@ -2,7 +2,6 @@ Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
 LinterViews = require './linter-views'
 EditorLinter = require './editor-linter'
-H = require './helpers'
 
 class Linter
   constructor: ->
@@ -14,7 +13,6 @@ class Linter
     @views = new LinterViews this # Used by editor-linter to trigger views.render
     @messagesProject = new Map # Values set in editor-linter and consumed in views.render
     @activeEditor = atom.workspace.getActiveTextEditor()
-    @h = H
     @linters = new Set # Values are pushed here from Main::consumeLinter
 
     @_subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
