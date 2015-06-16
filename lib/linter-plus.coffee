@@ -7,6 +7,7 @@ H = require './helpers'
 class Linter
   constructor: ->
     @subscriptions = new CompositeDisposable
+    @lintOnFly = true # A default art value, to be immediately replaced by the observe config below
 
     @emitter = new Emitter
     @views = new LinterViews this
@@ -16,6 +17,9 @@ class Linter
     @h = H
     @linters = []
 
+    # Bubble
+    @subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
+      @views.showBubble = showBubble
     @subscriptions.add atom.config.observe 'linter-plus.lintOnFly', (value) =>
       @lintOnFly = value
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
