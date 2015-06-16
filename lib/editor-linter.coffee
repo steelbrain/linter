@@ -31,10 +31,10 @@ class EditorLinter
   onDidDestroy: (callback) ->
     @emitter.on 'did-destroy', callback
 
-  lint: (wasTriggeredOnChange) ->
+  lint: (wasTriggeredOnChange, _forceOnFly) ->
     return unless @editor is @linter.activeEditor
-    return if wasTriggeredOnChange and not @linter.lintOnFly
-    return if @_lock(wasTriggeredOnChange)
+    return if wasTriggeredOnChange and ((not _forceOnFly) or (not @linter.lintOnFly))
+    return if @_lock(wasTriggeredOnChange, true)
     @lint(true) unless wasTriggeredOnChange # Trigger onFly linters on save.
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
