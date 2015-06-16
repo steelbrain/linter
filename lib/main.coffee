@@ -14,31 +14,44 @@ module.exports =
       default: true
 
   activate: ->
-    @instance = new (require './linter-plus.coffee')
+    LinterPlus = require('./linter-plus.coffee')
+    @instance = new LinterPlus()
 
     legacy = require('./legacy.coffee')
     for atomPackage in atom.packages.getLoadedPackages()
       if atomPackage.metadata['linter-package'] is true
         implementation = atomPackage.metadata['linter-implementation'] ? atomPackage.name
-        linter = legacy(require "#{atomPackage.path}/lib/#{implementation}")
+        linter = legacy(require("#{atomPackage.path}/lib/#{implementation}"))
         @consumeLinter(linter)
 
   consumeLinter: (linters) ->
     unless linters instanceof Array
       linters = [ linters ]
+
     for linter in linters
-      if @_validateLinter(linter)
-        @instance.linters.add linter
-    new Disposable =>
+      try
+        if @_validateLinter(linter)
+          @instance.linters.add(linter)
+      catch err
+        atom.notifications.addError("Invalid Linter: #{err.message}", {
+          detail: err.stack,
+          dismissable: true
+        })
+
+    new Disposable(=>
       for linter in linters
         return unless @instance.linters.has(linter)
         if linter.scope is 'project'
           @instance.messagesProject.delete(linter)
         else
-          @instance.eachEditorLinter (editorLinter)->
+          @instance.eachEditorLinter((editorLinter) ->
             editorLinter.messages.delete(linter)
+          )
         @instance.linters.delete(linter)
+
       @instance.views.render()
+    )
+
   consumeStatusBar: (statusBar) ->
     @instance.views.attachBottom(statusBar)
 
@@ -49,9 +62,16 @@ module.exports =
     @instance?.deactivate()
 
   _validateLinter: (linter) ->
-    if linter.grammarScopes instanceof Array and typeof linter.lint is 'function'
-      true
-    else
-      err = new Error("Invalid Linter Provided")
-      atom.notifications.addError err.message, {detail: err.stack}
-      false
+    unless linter.grammarScopes instanceof Array
+      message = "grammarScopes is not an Array. (see console for more info)"
+      console.warn(message)
+      console.warn('grammarScopes', linter.grammarScopes)
+      throw new Error(message)
+
+    unless linter.lint?
+      throw new Error("Missing linter.lint")
+
+    if typeof linter.lint isnt 'function'
+      throw new Error("linter.lint isn't a function")
+
+    return true
