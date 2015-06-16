@@ -1,7 +1,7 @@
 @import "ui-variables";
 linter-message {
   display: block;
-  padding: 2px 0 0 10px;
+  padding: 3px 0 0 0;
   span {
     padding: 3px 5px;
   }
@@ -11,10 +11,13 @@ linter-message {
   display: block;
   overflow-y: scroll;
   max-height: 150px;
+  padding: 0 10px;
 }
 
 #linter-inline {
-  background-color: @app-background-color;
+  opacity: 0.9;
+  border-radius: 15px;
+  background: @base-background-color;
   padding: 5px;
 }
 
@@ -49,6 +52,13 @@ atom-text-editor::shadow .linter-highlight, .linter-highlight{
     color: white;
     .region {
       border-bottom: 1px dashed @background-color-warning;
+    }
+  }
+  &.trace {
+    background-color: @background-color-info;
+    color: white;
+    .region {
+      border-bottom: 1px dashed @background-color-info;
     }
   }
 

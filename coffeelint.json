@@ -39,5 +39,9 @@
   "spacing_after_comma": {
     "name": "spacing_after_comma",
     "level": "error"
+  },
+  "no_implicit_parens":{
+    "name": "no_implicit_parens",
+    "level": "warn"
   }
 }

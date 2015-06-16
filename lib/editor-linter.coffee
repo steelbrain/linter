@@ -2,34 +2,34 @@
 
 class EditorLinter
   constructor: (@linter, @editor) ->
-    @inProgress = false
-    @inProgressFly = false
-    @messages = new Map
+    @messages = new Map # Consumed by LinterViews::render
+    @_inProgress = false
+    @_inProgressFly = false
 
-    @emitter = new Emitter
-    @subscriptions = new CompositeDisposable
+    @_emitter = new Emitter
+    @_subscriptions = new CompositeDisposable
 
-    @subscriptions.add(
+    @_subscriptions.add(
       @editor.onDidSave => @lint(false)
     )
-    @subscriptions.add(
+    @_subscriptions.add(
       @editor.onDidChangeCursorPosition ({newBufferPosition}) =>
         @linter.views.updateBubble(newBufferPosition)
     )
-    @subscriptions.add(
+    @_subscriptions.add(
       @editor.onDidStopChanging => @lint(true) if @linter.lintOnFly
     )
 
   # Called on package deactivate
   destroy: ->
-    @emitter.emit 'did-destroy'
-    @subscriptions.dispose()
+    @_emitter.emit 'did-destroy'
+    @_subscriptions.dispose()
 
   onDidUpdate: (callback) ->
-    @emitter.on 'did-update', callback
+    @_emitter.on 'did-update', callback
 
   onDidDestroy: (callback) ->
-    @emitter.on 'did-destroy', callback
+    @_emitter.on 'did-destroy', callback
 
   lint: (wasTriggeredOnChange) ->
     return unless @editor is @linter.activeEditor
@@ -58,12 +58,12 @@ class EditorLinter
         if linter.scope is 'project' then @linter.messagesProject.set linter, results
         else @messages.set linter, results
 
-        @emitter.emit 'did-update'
+        @_emitter.emit 'did-update'
         @linter.views.render() if @editor is @linter.activeEditor
 
   # This method sets or gets the lock status of given type
   _lock: (wasTriggeredOnChange, value) ->
-    key = wasTriggeredOnChange ? 'inProgressFly' : 'inProgress'
+    key = wasTriggeredOnChange ? '_inProgressFly' : '_inProgress'
     if typeof value is 'undefined'
       @[key]
     else
@@ -79,4 +79,5 @@ class EditorLinter
       result.range = Range.fromObject result.range if result.range?
       EditorLinter._validateResults(result.trace) if result.trace
     results
+
 module.exports = EditorLinter

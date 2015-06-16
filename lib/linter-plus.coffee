@@ -6,19 +6,22 @@ H = require './helpers'
 
 class Linter
   constructor: ->
-    @subscriptions = new CompositeDisposable
+    @lintOnFly = true # A default art value, to be immediately replaced by the observe config below
+    @_subscriptions = new CompositeDisposable
 
-    @emitter = new Emitter
-    @views = new LinterViews this
-    @messagesProject = new Map
+    @_emitter = new Emitter
+    @_editorLinters = new Map
+    @views = new LinterViews this # Used by editor-linter to trigger views.render
+    @messagesProject = new Map # Values set in editor-linter and consumed in views.render
     @activeEditor = atom.workspace.getActiveTextEditor()
-    @editorLinters = new Map
     @h = H
-    @linters = []
+    @linters = [] # Values are pushed here from Main::consumeLinter
 
-    @subscriptions.add atom.config.observe 'linter-plus.lintOnFly', (value) =>
+    @_subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
+      @views.showBubble = showBubble
+    @_subscriptions.add atom.config.observe 'linter-plus.lintOnFly', (value) =>
       @lintOnFly = value
-    @subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
+    @_subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
       @activeEditor = editor
       # Exceptions thrown here prevent switching tabs
       try
@@ -26,32 +29,32 @@ class Linter
         @views.render()
       catch error
         atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
-    @subscriptions.add atom.workspace.observeTextEditors (editor) =>
+    @_subscriptions.add atom.workspace.observeTextEditors (editor) =>
       currentEditorLinter = new EditorLinter @, editor
-      @editorLinters.set editor, currentEditorLinter
-      @emitter.emit 'linters-observe', currentEditorLinter
+      @_editorLinters.set editor, currentEditorLinter
+      @_emitter.emit 'linters-observe', currentEditorLinter
       currentEditorLinter.lint false
       editor.onDidDestroy =>
         currentEditorLinter.destroy()
-        @editorLinters.delete currentEditorLinter
+        @_editorLinters.delete currentEditorLinter
 
   getActiveEditorLinter: ->
-    return @getLinter(@activeEditor)
+    return @getLinter @activeEditor
 
   getLinter: (editor) ->
-    return @editorLinters.get editor
+    return @_editorLinters.get editor
 
   eachLinter: (callback) ->
-    @h.genValue(@editorLinters, callback)
+    @h.genValue @_editorLinters, callback
 
   observeLinters: (callback) ->
     @eachLinter callback
-    @emitter.on 'linters-observe', callback
+    @_emitter.on 'linters-observe', callback
 
   deactivate: ->
-    @subscriptions.dispose()
+    @_subscriptions.dispose()
     @eachLinter (linter) ->
-      linter.subscriptions.dispose()
-    @views.deactivate()
+      linter.destroy()
+    @views.destroy()
 
 module.exports = Linter
