@@ -38,6 +38,7 @@ module.exports =
             @instance.eachLinter (editorLinter) -> editorLinter.messages.delete(item)
           false
         true
+      @instance.views.render()
   consumeStatusBar: (statusBar) ->
     @instance.views.attachBottom(statusBar)
 
