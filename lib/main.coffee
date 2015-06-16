@@ -1,3 +1,4 @@
+{Disposable} = require('atom')
 module.exports =
   instance: null
   config:
@@ -22,12 +23,15 @@ module.exports =
         linter = legacy(require "#{atomPackage.path}/lib/#{implementation}")
         @consumeLinter(linter)
 
-  consumeLinter: (linter) ->
-    if linter instanceof Array
-      for singleLinter in linter
-        @_consumeLinter(singleLinter)
-    else
-      @_consumeLinter(linter)
+  consumeLinter: (linters) ->
+    unless linters instanceof Array
+      linters = [ linters ]
+    for linter in linters
+      if @_validateLinter(linter)
+        @instance.linters.push linter
+    new Disposable =>
+      @instance.linters = @instance.linters.filter (item) ->
+        linters.indexOf(item) is -1
 
   consumeStatusBar: (statusBar) ->
     @instance.views.attachBottom(statusBar)
@@ -38,9 +42,10 @@ module.exports =
   deactivate: ->
     @instance?.deactivate()
 
-  _consumeLinter: (linter) ->
+  _validateLinter: (linter) ->
     if linter.grammarScopes instanceof Array and typeof linter.lint is 'function'
-      @instance.linters.push linter
+      true
     else
       err = new Error("Invalid Linter Provided")
       atom.notifications.addError err.message, {detail: err.stack}
+      false
