@@ -28,18 +28,16 @@ module.exports =
       linters = [ linters ]
     for linter in linters
       if @_validateLinter(linter)
-        @instance.linters.push linter
+        @instance.linters.add linter
     new Disposable =>
-      @instance.linters = @instance.linters.filter (item) =>
-        if item in linters
-          if item.scope is 'project'
-            @instance.messagesProject.delete(item)
-          else
-            @instance.eachEditorLinter (editorLinter) ->
-              editorLinter.messages.delete(item)
-          false
-        true
-       @instance.views.render()
+      for linter of linters
+        return unless @instance.linters.has(linter)
+        if linter.scope is 'project'
+          @instance.messagesProject.delete(linter)
+        else
+          @instance.eachEditorLinter (editorLinter)->
+            editorLinter.messages.delete(linter)
+      @instance.views.render()
   consumeStatusBar: (statusBar) ->
     @instance.views.attachBottom(statusBar)
 

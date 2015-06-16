@@ -15,7 +15,7 @@ class Linter
     @messagesProject = new Map # Values set in editor-linter and consumed in views.render
     @activeEditor = atom.workspace.getActiveTextEditor()
     @h = H
-    @linters = [] # Values are pushed here from Main::consumeLinter
+    @linters = new Set # Values are pushed here from Main::consumeLinter
 
     @_subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
       @views.showBubble = showBubble

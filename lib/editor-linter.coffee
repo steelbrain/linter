@@ -43,7 +43,7 @@ class EditorLinter
 
   # This method returns an array of promises to be used in lint
   _lint: (wasTriggeredOnChange, scopes) ->
-    return @linter.linters.map (linter) =>
+    @linter.h.genValues(@linter.linters).map (linter) =>
       if @linter.lintOnFly
         return if wasTriggeredOnChange isnt linter.lintOnFly
 
