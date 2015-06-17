@@ -1,4 +1,3 @@
-{CompositeDisposable} = require 'atom'
 BottomTab = require './views/bottom-tab'
 BottomStatus = require './views/bottom-status'
 Message = require './views/message'
