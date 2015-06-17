@@ -7,6 +7,7 @@ class LinterViews
     @showBubble = true # Altered by the config observer in linter-plus
     @_messages = []
     @_decorations = []
+    @_statusTiles = []
 
     @_bottomTabFile = new BottomTab()
     @_bottomTabProject = new BottomTab()
@@ -72,21 +73,23 @@ class LinterViews
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
-    statusBar.addLeftTile
+    @_statusTiles.push statusBar.addLeftTile
       item: @_bottomTabFile,
       priority: -1001
-    statusBar.addLeftTile
+    @_statusTiles.push statusBar.addLeftTile
       item: @_bottomTabProject,
       priority: -1000
-    statusBar.addLeftTile
+    @_statusTiles.push statusBar.addLeftTile
       item: @_bottomStatus,
       priority: -999
 
   # this method is called on package deactivate
   destroy: ->
-    @_panel.removeDecorations()
+    @_removeDecorations()
     @_panelWorkspace.destroy()
     @_removeBubble()
+    for statusTile in @_statusTiles
+      statusTile.destroy()
 
   _changeTab: (Tab) ->
     @_scope = Tab
