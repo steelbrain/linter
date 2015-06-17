@@ -1,3 +1,4 @@
+{CompositeDisposable} = require 'atom'
 BottomTab = require './views/bottom-tab'
 BottomStatus = require './views/bottom-status'
 Message = require './views/message'
@@ -7,6 +8,7 @@ class LinterViews
     @showBubble = true # Altered by the config observer in linter-plus
     @_messages = []
     @_decorations = []
+    @_subscriptions = new CompositeDisposable
 
     @_bottomTabFile = new BottomTab()
     @_bottomTabProject = new BottomTab()
@@ -72,18 +74,19 @@ class LinterViews
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
-    @linter.subscriptions.add statusBar.addLeftTile
+    @_subscriptions.add statusBar.addLeftTile
       item: @_bottomTabFile,
       priority: -1001
-    @linter.subscriptions.add statusBar.addLeftTile
+    @_subscriptions.add statusBar.addLeftTile
       item: @_bottomTabProject,
       priority: -1000
-    @linter.subscriptions.add statusBar.addLeftTile
+    @_subscriptions.add statusBar.addLeftTile
       item: @_bottomStatus,
       priority: -999
 
   # this method is called on package deactivate
   destroy: ->
+    @_subscriptions.dispose()
     @_panel.removeDecorations()
     @_panelWorkspace.destroy()
     @_removeBubble()
