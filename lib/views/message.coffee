@@ -27,7 +27,8 @@ class Message extends HTMLElement
     el.classList.add 'badge'
     el.classList.add 'badge-flexible'
     el.classList.add "linter-highlight"
-    el.classList.add type.toLowerCase()
+    for typeEntry in type.toLowerCase().split(' ')
+      el.classList.add typeEntry
     el.textContent = type
     el
 
