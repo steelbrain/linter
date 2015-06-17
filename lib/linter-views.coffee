@@ -86,7 +86,7 @@ class LinterViews
 
   # this method is called on package deactivate
   destroy: ->
-    @_panel.removeDecorations()
+    @_removeDecorations()
     @_panelWorkspace.destroy()
     @_removeBubble()
     for statusTile in @_statusTiles.push
