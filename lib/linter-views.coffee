@@ -88,7 +88,7 @@ class LinterViews
     @_removeDecorations()
     @_panelWorkspace.destroy()
     @_removeBubble()
-    for statusTile in @_statusTiles.push
+    for statusTile in @_statusTiles
       statusTile.destroy()
 
   _changeTab: (Tab) ->
