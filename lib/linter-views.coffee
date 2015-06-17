@@ -6,7 +6,7 @@ class LinterViews
   constructor: (@linter) ->
     @showBubble = true # Altered by the config observer in linter-plus
     @_messages = []
-    @_decorations = []
+    @_markers = []
     @_statusTiles = []
 
     @_bottomTabFile = new BottomTab()
@@ -85,7 +85,7 @@ class LinterViews
 
   # this method is called on package deactivate
   destroy: ->
-    @_removeDecorations()
+    @_removeMarkers()
     @_panelWorkspace.destroy()
     @_removeBubble()
     for statusTile in @_statusTiles
@@ -112,7 +112,7 @@ class LinterViews
 
   _renderPanel: ->
     @_panel.innerHTML = ''
-    @_removeDecorations()
+    @_removeMarkers()
     @_removeBubble()
     if not @_messages.length
       return @setPanelVisibility(false)
@@ -120,11 +120,11 @@ class LinterViews
     @_messages.forEach (message) =>
       if @_scope is 'file' then return unless message.currentFile
       if message.currentFile and message.range #Add the decorations to the current TextEditor
-        marker = @linter.activeEditor.markBufferRange message.range, {invalidate: 'never'}
-        @_decorations.push @linter.activeEditor.decorateMarker(
+        @_markers.push marker = @linter.activeEditor.markBufferRange message.range, {invalidate: 'never'}
+        @linter.activeEditor.decorateMarker(
           marker, type: 'line-number', class: "linter-highlight #{message.class}"
         )
-        @_decorations.push @linter.activeEditor.decorateMarker(
+        @linter.activeEditor.decorateMarker(
           marker, type: 'highlight', class: "linter-highlight #{message.class}"
         )
       Element = Message.fromMessage(message, @_scope is 'project')
@@ -132,11 +132,11 @@ class LinterViews
     @updateBubble()
 
 
-  _removeDecorations: ->
-    return unless @_decorations.length
-    @_decorations.forEach (decoration) ->
-      try decoration.destroy()
-    @_decorations = []
+  _removeMarkers: ->
+    return unless @_markers.length
+    for marker in @_markers
+      try marker.destroy()
+    @_markers = []
 
   # This method is called in render, and classifies the messages according to scope
   _extractMessages: (Gen, counts) ->
