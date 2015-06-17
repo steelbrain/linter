@@ -4,7 +4,7 @@ class Message extends HTMLElement
   initialize: (@message, @addPath) ->
 
   attachedCallback: ->
-    @appendChild Message.renderRibbon(@message.type)
+    @appendChild Message.renderRibbon(@message)
     @appendChild Message.renderMessage(@message)
     @appendChild Message.renderLink(@message, @addPath) if @message.filePath
 
@@ -22,14 +22,13 @@ class Message extends HTMLElement
       el.textContent += "in #{displayFile}"
     el
 
-  @renderRibbon: (type) ->
+  @renderRibbon: (message) ->
     el = document.createElement 'span'
     el.classList.add 'badge'
     el.classList.add 'badge-flexible'
     el.classList.add "linter-highlight"
-    for typeEntry in type.toLowerCase().split(' ')
-      el.classList.add typeEntry
-    el.textContent = type
+    el.classList.add message.class
+    el.textContent = message.type
     el
 
   @renderMessage: (message) ->
