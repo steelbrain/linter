@@ -72,13 +72,13 @@ class LinterViews
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
-    statusBar.addLeftTile
+    @linter.subscriptions.add statusBar.addLeftTile
       item: @_bottomTabFile,
       priority: -1001
-    statusBar.addLeftTile
+    @linter.subscriptions.add statusBar.addLeftTile
       item: @_bottomTabProject,
       priority: -1000
-    statusBar.addLeftTile
+    @linter.subscriptions.add statusBar.addLeftTile
       item: @_bottomStatus,
       priority: -999
 
