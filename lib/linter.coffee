@@ -30,6 +30,7 @@ class Linter
   #      closest matching syntax element based on your code syntax (optional)
   # colStart: column to on which to start a higlight (optional)
   # colEnd: column to end highlight (optional)
+  # file: the file that a message should be displayed in (optional)
   regex: ''
 
   regexFlags: ''
@@ -40,6 +41,8 @@ class Linter
   defaultLevel: 'error'
 
   linterName: null
+
+  lintingFile: ''
 
   executablePath: null
 
@@ -143,6 +146,8 @@ class Linter
   lintFile: (filePath, callback) ->
     # build the command with arguments to lint the file
     {command, args} = @getCmdAndArgs(filePath)
+
+    @lintingFile = filePath
 
     log 'is node executable: ' + @isNodeExecutable
 
@@ -252,6 +257,7 @@ class Linter
   #        (optional)
   #   colStart: column to on which to start a higlight (optional)
   #   colEnd: column to end highlight (optional)
+  #   file: the file that a message should be displayed in (optional)
   createMessage: (match) ->
     if match.error
       level = 'error'
@@ -323,7 +329,13 @@ class Linter
   #        (optional)
   #   colStart: column to on which to start a higlight (optional)
   #   colEnd: column to end highlight (optional)
+  #   file: the file that a message should be displayed in (optional)
   computeRange: (match) ->
+    if match.file?
+      if match.file isnt @lintingFile
+        # TODO: Display something in treeView indicating that there are errors
+        # in another file.
+        return
 
     decrementParse = (x) ->
       Math.max 0, parseInt(x) - 1
