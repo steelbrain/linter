@@ -1,4 +1,6 @@
 @import "ui-variables";
+@import 'octicon-utf-codes';
+
 linter-message {
   display: block;
   padding: 3px 0 0 0;
@@ -38,25 +40,47 @@ linter-bottom-tab {
   }
 }
 
+atom-text-editor::shadow .linter-highlight .icon-right{
+  visibility: visible;
+  &::before{
+    content: @primitive-dot;
+    font-size: 1.1em;
+  }
+}
 // Styling Error Types
 atom-text-editor::shadow .linter-highlight, .linter-highlight{
   &.error {
-    background-color: @background-color-error;
-    color: white;
+    &:not(.line-number){
+      background-color: @background-color-error;
+      color: white;
+    }
+    .icon-right::before{
+      color: @background-color-error;
+    }
     .region {
       border-bottom: 1px dashed @background-color-error;
     }
   }
   &.warning {
-    background-color: @background-color-warning;
-    color: white;
+    &:not(.line-number){
+      background-color: @background-color-warning;
+      color: white;
+    }
+    .icon-right::before{
+      color: @background-color-warning;
+    }
     .region {
       border-bottom: 1px dashed @background-color-warning;
     }
   }
   &.trace {
-    background-color: @background-color-info;
-    color: white;
+    &:not(.line-number){
+      background-color: @background-color-info;
+      color: white;
+    }
+    .icon-right::before{
+      color: @background-color-info;
+    }
     .region {
       border-bottom: 1px dashed @background-color-info;
     }
