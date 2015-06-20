@@ -3,9 +3,10 @@
 
 linter-message {
   display: block;
-  padding: 3px 0 0 0;
+  padding: 2px;
+  font-size: @font-size;
   span {
-    padding: 3px 5px;
+    padding: 0 6px;
   }
 }
 
@@ -13,30 +14,69 @@ linter-message {
   display: block;
   overflow-y: scroll;
   max-height: 150px;
-  padding: 0 10px;
+  padding: 4px 8px;
 }
 
 #linter-inline {
-  opacity: 0.9;
-  border-radius: 15px;
-  background: @base-background-color;
-  padding: 5px;
+  @linter-inline-link: fade(@base-background-color, 66%);
+  @linter-inline-fg: @base-background-color;
+  @linter-inline-bg: @text-color;
+  margin-top: 4px;
+  padding: 4px;
+  color: @linter-inline-fg;
+  border-radius: @component-border-radius * 1.5;
+  border-top-left-radius: 0;
+  background: @linter-inline-bg;
+  box-shadow: 0 1px 3px hsla(0, 0, 0%, 0.4);
+
+  // pointer arrow
+  &::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: 0;
+    border: 4px solid;
+    border-color: transparent transparent @linter-inline-bg @linter-inline-bg;
+  }
+  a {
+    color: @linter-inline-link;
+    margin-right: 4px;
+  }
+  .badge {
+    margin-top: -2px;
+  }
 }
 
 linter-bottom-tab {
   display: inline-block;
-  background: @button-background-color;
-  border-radius: 7px;
-  padding: 0 10px;
-  color: @text-color;
-  margin-right: 1em;
+  margin-right: -1px; // hide left border
+  padding: 0 .6em;
+  line-height: 1.8em;
+  vertical-align: middle;
+  color: @text-color-subtle;
+  border: 1px solid @button-border-color;
+  background: fade(@button-background-color, 33%);
   cursor: pointer;
-  line-height: 2.2em;
+  &:first-of-type {
+    border-top-left-radius: @component-border-radius;
+    border-bottom-left-radius: @component-border-radius;
+  }
+  &:last-of-type {
+    margin-right: .6em;
+    border-top-right-radius: @component-border-radius;
+    border-bottom-right-radius: @component-border-radius;
+  }
+
+  &:active {
+    background: transparent;
+  }
   &.active {
-    color: @text-color-selected;
-    background: @button-background-color-selected;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+    color: @text-color-highlight;
+    background: @button-background-color;
+  }
+
+  .count {
+    margin-left: .2em;
   }
 }
 
@@ -49,6 +89,9 @@ atom-text-editor::shadow .linter-highlight .icon-right{
 }
 // Styling Error Types
 atom-text-editor::shadow .linter-highlight, .linter-highlight{
+  &.badge {
+    border-radius: @component-border-radius;
+  }
   &.error {
     &:not(.line-number){
       background-color: @background-color-error;
