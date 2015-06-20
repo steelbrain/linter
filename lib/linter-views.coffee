@@ -35,9 +35,10 @@ class LinterViews
     return @setPanelVisibility(false) unless @linter.activeEditor?.getPath?()
 
     counts = {project: 0, file: 0}
-    activeLinter = @linter.getActiveEditorLinter()
-    messages = @._extractMessages(@linter.messagesProject, counts)
-    messages = messages.concat(@._extractMessages(activeLinter.messages, counts)) if activeLinter
+    messages = []
+    @linter.eachEditorLinter (editorLinter)=>
+      messages = messages.concat @_extractMessages(editorLinter.messages, counts)
+    messages = messages.concat(@._extractMessages(@linter.messagesProject, counts))
     @_messages = messages
 
     @_renderPanel()
