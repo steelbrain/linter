@@ -30,7 +30,7 @@ linter-bottom-tab {
   line-height: 2em;
   color: @text-color;
   border: 1px solid @button-border-color;
-  background: @button-background-color;
+  background: fade(@button-background-color, 33%);
   cursor: pointer;
   &:first-of-type {
     border-top-left-radius: 4px;
@@ -42,9 +42,12 @@ linter-bottom-tab {
     border-bottom-right-radius: 4px;
   }
 
+  &:active {
+    background: transparent;
+  }
   &.active {
     color: @text-color-selected;
-    background: @button-background-color-selected;
+    background: @button-background-color;
   }
 
   .count {
