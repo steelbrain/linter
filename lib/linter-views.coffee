@@ -32,8 +32,6 @@ class LinterViews
 
   # This message is called in editor-linter.coffee
   render: ->
-    return @setPanelVisibility(false) unless @linter.activeEditor?.getPath?()
-
     counts = {project: 0, file: 0}
     messages = []
     @linter.eachEditorLinter (editorLinter)=>
@@ -51,6 +49,7 @@ class LinterViews
     @_removeBubble()
     return unless @showBubble
     return unless @_messages.length
+    return unless @linter.activeEditor?.getPath?()
     point = point || @linter.activeEditor.getCursorBufferPosition()
     for message in @_messages
       continue unless message.currentFile
@@ -142,7 +141,7 @@ class LinterViews
   # This method is called in render, and classifies the messages according to scope
   _extractMessages: (Gen, counts) ->
     isProject = @_scope is 'project'
-    activeFile = @linter.activeEditor.getPath()
+    activeFile = @linter.activeEditor?.getPath?()
     ToReturn = []
     Gen.forEach (Entry) ->
       # Entry === Array<Messages>
