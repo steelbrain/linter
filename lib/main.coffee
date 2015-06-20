@@ -38,7 +38,7 @@ module.exports =
           dismissable: true
         })
 
-    new Disposable(=>
+    new Disposable( =>
       for linter in linters
         return unless @instance.linters.has(linter)
         if linter.scope is 'project'
