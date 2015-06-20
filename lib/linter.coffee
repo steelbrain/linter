@@ -1,11 +1,11 @@
 fs = require 'fs'
 path = require 'path'
 {CompositeDisposable, Range, Point, BufferedProcess} = require 'atom'
-_ = null
 XRegExp = null
-{MessagePanelView} = require 'atom-message-panel'
-{log, warn} = require './utils'
 
+# These are NOOPs in linter-plus
+log = -> undefined
+warn = -> undefined
 
 # Public: The base class for linters.
 # Subclasses must at a minimum define the attributes syntax, cmd, and regex.
@@ -180,14 +180,12 @@ class Linter
     process.onWillThrowError (err) =>
       return unless err?
       if err.error.code is 'ENOENT'
-        ignored = atom.config.get('linter.ignoredLinterErrors')
-        subtle = atom.config.get('linter.subtleLinterErrors')
+        # Add defaults because the new linter doesn't include these configs
+        ignored = atom.config.get('linter.ignoredLinterErrors') ? []
+        subtle = atom.config.get('linter.subtleLinterErrors') ? []
         warningMessageTitle = "The linter binary '#{@linterName}' cannot be found."
         if @linterName in subtle
-          # Show a small notification at the bottom of the screen
-          message = new MessagePanelView(title: warningMessageTitle)
-          message.attach()
-          message.toggle() # Fold the panel
+          atom.notifications.addError(warningMessageTitle)
         else if @linterName not in ignored
           # Prompt user, ask if they want to fully or partially ignore warnings
           atom.confirm
@@ -222,7 +220,7 @@ class Linter
   #   options: an object of options (has cwd field)
   # Returns an object of {command, args, options}
   # Override this if you want to read or change these arguments
-  beforeSpawnProcess: (command, args, options) =>
+  beforeSpawnProcess: (command, args, options) ->
     {command: command, args: args, options: options}
 
   # Private: process the string result of a linter execution using the regex
@@ -291,10 +289,9 @@ class Linter
     return text?.length or 0
 
   getEditorScopesForPosition: (position) ->
-    _ ?= require 'lodash'
     try
       # return a copy in case it gets mutated (hint: it does)
-      _.clone @editor.displayBuffer.tokenizedBuffer.scopesForPosition(position)
+      @editor.displayBuffer.tokenizedBuffer.scopesForPosition(position).slice()
     catch
       # this can throw if the line has since been deleted
       []

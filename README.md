@@ -148,23 +148,6 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 1. `$ apm install linter` – Install the main package.
 2. `$ apm install linter-jshint` – Install the linter you need, here `jshint`.
 
-## Configuration
-
-* **Lint on save** [On / Off] - Lint the file when you save it
-* **Lint on change** [On / Off] - Lint the file as you type
-* **Show highlighting** [On / Off] - Highlight the range of wrong code
-* **Show gutters**: [On / Off] - Show dot in the gutter on line error
-* **Show messages around cursor** [On / Off] - Show error description in the status bar
-* **Show status bar when cursor is in error range** [On / Off] - Either show status bar when the cursor is on the error line, or show it when the cursor is focus the range of wrong code
-* **Show error inline** [On / Off] - Shows the error or warning message next to the code as opposed to in the status bar.
-* **Lint on change interval** [in ms] - Interval between two lints while you are writing code
-
-## Common errors
-
-* `npm ERR! code ENOGIT` - You need to install git before installing linter. See [#114](https://github.com/AtomLinter/Linter/issues/102).
-* `env: node: No such file or directory` – There's a problem with your node path – [check this](http://stackoverflow.com/a/20077620).
-* `spawn ENOENT` or `spawn ENOTDIR` - A linter can't find a path to the executable. Try starting Atom from a shell via `atom` to make sure it gets your `PATH`. See also [#102](https://github.com/AtomLinter/Linter/issues/102), [#150](https://github.com/AtomLinter/Linter/issues/150).
-
 ## Documentation
 http://atomlinter.github.io/Linter/
 
@@ -191,6 +174,10 @@ Also, run `$ grunt dev` before any submission and while developing, it will achi
 * Lint any trailing spaces and ensure new line at end of file
 
 You can generate the doc with `$ grunt doc`, it will open in your default browser.
+
+## Registering a Linter
+
+Have a look at [Linter-API](https://github.com/AtomLinter/Linter/wiki/Linter-API) in the wiki.
 
 ## Donation
 

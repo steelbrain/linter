@@ -1,41 +1,37 @@
 {
   "name": "linter",
-  "main": "./lib/init",
   "version": "0.12.7",
-  "private": true,
   "description": "Validates your code using linters.",
   "repository": "https://github.com/AtomLinter/Linter.git",
+  "main": "./lib/main",
+  "author": "AtomLinter",
   "license": "MIT",
+  "scripts": {
+    "lint": "coffeelint lib coffeelint.json"
+  },
   "engines": {
-    "atom": ">=0.175.0",
-    "node": ">= 0.10.0"
+    "atom": ">=0.174.0 <2.0.0"
+  },
+  "consumedServices": {
+    "linter": {
+      "versions": {
+        "0.3.0": "consumeLinter"
+      }
+    },
+    "status-bar": {
+      "versions": {
+        "^1.0.0": "consumeStatusBar"
+      }
+    }
+  },
+  "providedServices": {
+    "linter-plus-self": {
+      "versions": {
+        "0.1.0": "provideLinter"
+      }
+    }
   },
   "dependencies": {
-    "atom-message-panel": "^1.2.2",
-    "chai": "^1.9.1",
-    "emissary": "^1.0.0",
-    "jshint": "^2.4.4",
-    "lodash": "^2.4.1",
-    "rimraf": "^2.2.8",
-    "shelljs": "^0.2.6",
-    "sinon": "^1.10.0",
-    "space-pen": "^4.3.3",
-    "temp": "~0.8.0",
-    "xregexp": "2.0.0"
-  },
-  "devDependencies": {
-    "biscotto": "^2.1.1",
-    "grunt": "^0.4.5",
-    "grunt-coffeelint": "^0.0.10",
-    "grunt-contrib-clean": "^0.5.0",
-    "grunt-contrib-coffee": "^0.10.1",
-    "grunt-contrib-connect": "^0.7.1",
-    "grunt-contrib-watch": "^0.5.3",
-    "grunt-exec": "^0.4.5",
-    "grunt-gh-pages": "^0.9.1",
-    "grunt-lesslint": "^1.1.3",
-    "grunt-lintspaces": "^0.5.1",
-    "load-grunt-tasks": "^0.4.0",
-    "pygments": "^0.2.0"
+    "xregexp": "^2.0.0"
   }
 }
