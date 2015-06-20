@@ -26,19 +26,20 @@ linter-message {
 linter-bottom-tab {
   display: inline-block;
   margin-right: -1px; // hide left border
-  padding: 0 .8em;
-  line-height: 2.2em;
-  vertical-align: top;
+  padding: 0 .6em;
+  line-height: 1.8em;
+  vertical-align: middle;
   color: @text-color-subtle;
   border: 1px solid @button-border-color;
-  border-top: none;
   background: fade(@button-background-color, 33%);
   cursor: pointer;
   &:first-of-type {
+    border-top-left-radius: @component-border-radius;
     border-bottom-left-radius: @component-border-radius;
   }
   &:last-of-type {
-    margin-right: .75em;
+    margin-right: .6em;
+    border-top-right-radius: @component-border-radius;
     border-bottom-right-radius: @component-border-radius;
   }
 
