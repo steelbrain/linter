@@ -34,7 +34,7 @@ class LinterViews
   render: ->
     counts = {project: 0, file: 0}
     messages = []
-    @linter.eachEditorLinter (editorLinter)=>
+    @linter.eachEditorLinter (editorLinter) =>
       messages = messages.concat @_extractMessages(editorLinter.messages, counts)
     messages = messages.concat(@._extractMessages(@linter.messagesProject, counts))
     @_messages = messages
