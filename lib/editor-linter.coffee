@@ -54,7 +54,7 @@ class EditorLinter
   # This method returns an array of promises to be used in lint
   _lint: (wasTriggeredOnChange, scopes) ->
     Promises = []
-    @linter.linters.forEach (linter) =>
+    @linter.getLinters().forEach (linter) =>
       if @linter.lintOnFly
         return if wasTriggeredOnChange isnt linter.lintOnFly
 
