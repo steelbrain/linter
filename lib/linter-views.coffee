@@ -4,7 +4,7 @@ Message = require './views/message'
 
 class LinterViews
   constructor: (@linter) ->
-    @showBubble = true # Altered by the config observer in linter-plus
+    @_showBubble = true # Altered by the config observer in linter-plus
     @_messages = []
     @_markers = []
     @_statusTiles = []
@@ -29,6 +29,9 @@ class LinterViews
     @_bottomTabFile.active = true
     @_panel.id = 'linter-panel'
 
+  # Called in config observer of linter-plus.coffee
+  setShowBubble: (showBubble) ->
+    @_showBubble = showBubble
 
   # This message is called in editor-linter.coffee
   render: ->
@@ -47,7 +50,7 @@ class LinterViews
   # consumed in editor-linter, _renderPanel
   updateBubble: (point) ->
     @_removeBubble()
-    return unless @showBubble
+    return unless @_showBubble
     return unless @_messages.length
     return unless @linter.activeEditor?.getPath?()
     point = point || @linter.activeEditor.getCursorBufferPosition()

@@ -16,7 +16,7 @@ class Linter
     @linters = new Set # Values are pushed here from Main::consumeLinter
 
     @_subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
-      @views.showBubble = showBubble
+      @views.setShowBubble(showBubble)
     @_subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
     @_subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
