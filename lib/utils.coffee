@@ -1,3 +1,4 @@
+#TODO: Remove me
 findFile = require './util'
 
 log = (args...) ->
