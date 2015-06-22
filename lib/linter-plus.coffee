@@ -13,7 +13,7 @@ class Linter
     @_subscriptions = new CompositeDisposable
     @_emitter = new Emitter
     @_editorLinters = new Map
-    @messagesProject = new Map # Values set in editor-linter and consumed in views.render
+    @_messagesProject = new Map # Values set in editor-linter and consumed in views.render
     @activeEditor = atom.workspace.getActiveTextEditor()
     @linters = new Set # Values are pushed here from Main::consumeLinter
 
@@ -39,13 +39,13 @@ class Linter
         @_editorLinters.delete currentEditorLinter
 
   getProjectMessages: ->
-    @messagesProject
+    @_messagesProject
 
   setProjectMessages: (linter, messages) ->
-    @messagesProject.set(linter, messages)
+    @_messagesProject.set(linter, messages)
 
   deleteProjectMessages: (linter) ->
-    @messagesProject.delete(linter)
+    @_messagesProject.delete(linter)
 
   getActiveEditorLinter: ->
     return @getEditorLinter @activeEditor

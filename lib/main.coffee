@@ -42,7 +42,7 @@ module.exports =
       for linter in linters
         return unless @instance.linters.has(linter)
         if linter.scope is 'project'
-          @instance.messagesProject.delete(linter)
+          @instance.deleteProjectMessages(linter)
         else
           @instance.eachEditorLinter((editorLinter) ->
             editorLinter.deleteMessages(linter)

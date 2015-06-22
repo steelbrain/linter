@@ -66,8 +66,10 @@ class EditorLinter
         atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
         []
       ).then (results) =>
-        if linter.scope is 'project' then @linter.messagesProject.set linter, results
-        else @_messages.set linter, results
+        if linter.scope is 'project'
+          @linter.setProjectMessages(linter, results)
+        else
+          @setMessages(linter, results)
 
         @_emitter.emit 'did-update'
         @linter.views.render() if @editor is @linter.activeEditor

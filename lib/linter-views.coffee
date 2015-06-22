@@ -39,7 +39,7 @@ class LinterViews
     messages = []
     @linter.eachEditorLinter (editorLinter) =>
       messages = messages.concat @_extractMessages(editorLinter.getMessages(), counts)
-    messages = messages.concat(@._extractMessages(@linter.messagesProject, counts))
+    messages = messages.concat(@._extractMessages(@linter.getProjectMessages(), counts))
     @_messages = messages
 
     @_renderPanel()
