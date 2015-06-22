@@ -38,8 +38,14 @@ class Linter
         @_editorLinters.delete currentEditorLinter
 
   addLinter: (linter) ->
-    if(Helpers.validateLinter(linter))
-      @linters.add(linter)
+    try
+      if(Helpers.validateLinter(linter))
+        @linters.add(linter)
+    catch err
+      atom.notifications.addError("Invalid Linter: #{err.message}", {
+        detail: err.stack,
+        dismissable: true
+      })
 
   deleteLinter: (linter) ->
     @linters.delete(linter)
