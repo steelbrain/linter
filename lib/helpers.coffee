@@ -11,3 +11,17 @@ Helpers = module.exports =
       result.class = result.type.toLowerCase().replace(' ', '-')
       Helpers.validateResults(result.trace) if result.trace
     results
+  validateLinter: (linter) ->
+    unless linter.grammarScopes instanceof Array
+      message = "grammarScopes is not an Array. (see console for more info)"
+      console.warn(message)
+      console.warn('grammarScopes', linter.grammarScopes)
+      throw new Error(message)
+
+    unless linter.lint?
+      throw new Error("Missing linter.lint")
+
+    if typeof linter.lint isnt 'function'
+      throw new Error("linter.lint isn't a function")
+
+    return true
