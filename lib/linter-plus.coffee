@@ -35,7 +35,7 @@ class Linter
       currentEditorLinter.lint false
       editor.onDidDestroy =>
         currentEditorLinter.destroy()
-        @_editorLinters.delete currentEditorLinter
+        @_editorLinters.delete editor
 
   addLinter: (linter) ->
     try
