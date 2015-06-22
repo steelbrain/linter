@@ -15,7 +15,7 @@ class Linter
     @_emitter = new Emitter
     @_editorLinters = new Map
     @_messagesProject = new Map # Values set in editor-linter and consumed in views.render
-    @linters = new Set # Values are pushed here from Main::consumeLinter
+    @_linters = new Set # Values are pushed here from Main::consumeLinter
 
     @_subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
       @views.setShowBubble(showBubble)
@@ -40,7 +40,7 @@ class Linter
   addLinter: (linter) ->
     try
       if(Helpers.validateLinter(linter))
-        @linters.add(linter)
+        @_linters.add(linter)
     catch err
       atom.notifications.addError("Invalid Linter: #{err.message}", {
         detail: err.stack,
@@ -48,13 +48,13 @@ class Linter
       })
 
   deleteLinter: (linter) ->
-    @linters.delete(linter)
+    @_linters.delete(linter)
 
   hasLinter: (linter) ->
-    @linters.has(linter)
+    @_linters.has(linter)
 
   getLinters: ->
-    @linters
+    @_linters
 
   getProjectMessages: ->
     @_messagesProject
