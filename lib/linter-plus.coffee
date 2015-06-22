@@ -50,6 +50,9 @@ class Linter
   deleteLinter: (linter) ->
     @linters.delete(linter)
 
+  hasLinter: (linter) ->
+    @linters.has(linter)
+
   getLinters: ->
     @linters
 
