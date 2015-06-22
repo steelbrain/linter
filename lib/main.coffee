@@ -29,25 +29,18 @@ module.exports =
       linters = [ linters ]
 
     for linter in linters
-      try
-        if @_validateLinter(linter)
-          @instance.linters.add(linter)
-      catch err
-        atom.notifications.addError("Invalid Linter: #{err.message}", {
-          detail: err.stack,
-          dismissable: true
-        })
+      @instance.addLinter(linter)
 
     new Disposable( =>
       for linter in linters
-        return unless @instance.linters.has(linter)
+        return unless @instance.hasLinter(linter)
         if linter.scope is 'project'
-          @instance.messagesProject.delete(linter)
+          @instance.deleteProjectMessages(linter)
         else
           @instance.eachEditorLinter((editorLinter) ->
-            editorLinter.messages.delete(linter)
+            editorLinter.deleteMessages(linter)
           )
-        @instance.linters.delete(linter)
+        @instance.deleteLinter(linter)
 
       @instance.views.render()
     )
@@ -60,18 +53,3 @@ module.exports =
 
   deactivate: ->
     @instance?.deactivate()
-
-  _validateLinter: (linter) ->
-    unless linter.grammarScopes instanceof Array
-      message = "grammarScopes is not an Array. (see console for more info)"
-      console.warn(message)
-      console.warn('grammarScopes', linter.grammarScopes)
-      throw new Error(message)
-
-    unless linter.lint?
-      throw new Error("Missing linter.lint")
-
-    if typeof linter.lint isnt 'function'
-      throw new Error("linter.lint isn't a function")
-
-    return true

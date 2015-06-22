@@ -4,7 +4,7 @@ Message = require './views/message'
 
 class LinterViews
   constructor: (@linter) ->
-    @showBubble = true # Altered by the config observer in linter-plus
+    @_showBubble = true # Altered by the config observer in linter-plus
     @_messages = []
     @_markers = []
     @_statusTiles = []
@@ -29,14 +29,17 @@ class LinterViews
     @_bottomTabFile.active = true
     @_panel.id = 'linter-panel'
 
+  # Called in config observer of linter-plus.coffee
+  setShowBubble: (showBubble) ->
+    @_showBubble = showBubble
 
   # This message is called in editor-linter.coffee
   render: ->
     counts = {project: 0, file: 0}
     messages = []
     @linter.eachEditorLinter (editorLinter) =>
-      messages = messages.concat @_extractMessages(editorLinter.messages, counts)
-    messages = messages.concat(@._extractMessages(@linter.messagesProject, counts))
+      messages = messages.concat @_extractMessages(editorLinter.getMessages(), counts)
+    messages = messages.concat(@._extractMessages(@linter.getProjectMessages(), counts))
     @_messages = messages
 
     @_renderPanel()
@@ -47,15 +50,16 @@ class LinterViews
   # consumed in editor-linter, _renderPanel
   updateBubble: (point) ->
     @_removeBubble()
-    return unless @showBubble
+    return unless @_showBubble
     return unless @_messages.length
-    return unless @linter.activeEditor?.getPath?()
-    point = point || @linter.activeEditor.getCursorBufferPosition()
+    activeEditor = atom.workspace.getActiveTextEditor()
+    return unless activeEditor?.getPath?()
+    point = point || activeEditor.getCursorBufferPosition()
     for message in @_messages
       continue unless message.currentFile
       continue unless message.range?.containsPoint? point
-      @_bubble = @linter.activeEditor.decorateMarker(
-        @linter.activeEditor.markBufferRange(message.range, {invalidate: 'never'}),
+      @_bubble = activeEditor.decorateMarker(
+        activeEditor.markBufferRange(message.range, {invalidate: 'never'}),
         {
           type: 'overlay',
           position: 'tail',
@@ -117,14 +121,15 @@ class LinterViews
     if not @_messages.length
       return @setPanelVisibility(false)
     @setPanelVisibility(true)
+    activeEditor = atom.workspace.getActiveTextEditor()
     @_messages.forEach (message) =>
       if @_scope is 'file' then return unless message.currentFile
       if message.currentFile and message.range #Add the decorations to the current TextEditor
-        @_markers.push marker = @linter.activeEditor.markBufferRange message.range, {invalidate: 'never'}
-        @linter.activeEditor.decorateMarker(
+        @_markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
+        activeEditor.decorateMarker(
           marker, type: 'line-number', class: "linter-highlight #{message.class}"
         )
-        @linter.activeEditor.decorateMarker(
+        activeEditor.decorateMarker(
           marker, type: 'highlight', class: "linter-highlight #{message.class}"
         )
       Element = Message.fromMessage(message, @_scope is 'project')
@@ -141,7 +146,7 @@ class LinterViews
   # This method is called in render, and classifies the messages according to scope
   _extractMessages: (Gen, counts) ->
     isProject = @_scope is 'project'
-    activeFile = @linter.activeEditor?.getPath?()
+    activeFile = atom.workspace.getActiveTextEditor()?.getPath?()
     ToReturn = []
     Gen.forEach (Entry) ->
       # Entry === Array<Messages>

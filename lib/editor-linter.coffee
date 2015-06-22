@@ -1,8 +1,9 @@
 {CompositeDisposable, Emitter, Range} = require 'atom'
+Helpers = require './helpers'
 
 class EditorLinter
   constructor: (@linter, @editor) ->
-    @messages = new Map # Consumed by LinterViews::render
+    @_messages = new Map # Consumed by LinterViews::render
     @_inProgress = false
     @_inProgressFly = false
 
@@ -20,6 +21,15 @@ class EditorLinter
       @editor.onDidStopChanging => @lint(true) if @linter.lintOnFly
     )
 
+  getMessages: ->
+    @_messages
+
+  deleteMessages: (linter) ->
+    @_messages.delete(linter)
+
+  setMessages: (linter, messages) ->
+    @_messages.set(linter, Helpers.validateResults(messages))
+
   # Called on package deactivate
   destroy: ->
     @_emitter.emit 'did-destroy'
@@ -32,7 +42,7 @@ class EditorLinter
     @_emitter.on 'did-destroy', callback
 
   lint: (wasTriggeredOnChange) ->
-    return unless @editor is @linter.activeEditor
+    return unless @editor is atom.workspace.getActiveTextEditor()
     return if @_lock(wasTriggeredOnChange)
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
@@ -44,7 +54,7 @@ class EditorLinter
   # This method returns an array of promises to be used in lint
   _lint: (wasTriggeredOnChange, scopes) ->
     Promises = []
-    @linter.linters.forEach (linter) =>
+    @linter.getLinters().forEach (linter) =>
       if @linter.lintOnFly
         return if wasTriggeredOnChange isnt linter.lintOnFly
 
@@ -52,15 +62,16 @@ class EditorLinter
 
       Promises.push new Promise((resolve) =>
         resolve(linter.lint(@editor))
-      ).then(EditorLinter._validateResults).catch((error) ->
-        atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
-        []
-      ).then (results) =>
-        if linter.scope is 'project' then @linter.messagesProject.set linter, results
-        else @messages.set linter, results
-
+      ).then((results) =>
+        if linter.scope is 'project'
+          @linter.setProjectMessages(linter, results)
+        else
+          @setMessages(linter, results)
         @_emitter.emit 'did-update'
-        @linter.views.render() if @editor is @linter.activeEditor
+        @linter.views.render() if @editor is atom.workspace.getActiveTextEditor()
+      ).catch (error) ->
+        atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
+
     Promises
 
   # This method sets or gets the lock status of given type
@@ -70,17 +81,5 @@ class EditorLinter
       @[key]
     else
       @[key] = value
-
-  # Checks the responses for any kind-of errors
-  @_validateResults: (results) ->
-    if (not results) or results.constructor.name isnt 'Array'
-      throw new Error "Got invalid response from Linter, Type: #{typeof results}"
-    for result in results
-      unless result.type
-        throw new Error "Missing type field on Linter Response, Got: #{Object.keys(result)}"
-      result.range = Range.fromObject result.range if result.range?
-      result.class = result.type.toLowerCase().replace(' ', '-')
-      EditorLinter._validateResults(result.trace) if result.trace
-    results
 
 module.exports = EditorLinter
