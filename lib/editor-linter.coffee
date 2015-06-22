@@ -1,4 +1,5 @@
 {CompositeDisposable, Emitter, Range} = require 'atom'
+Helpers = require './helpers'
 
 class EditorLinter
   constructor: (@linter, @editor) ->
@@ -59,7 +60,7 @@ class EditorLinter
 
       Promises.push new Promise((resolve) =>
         resolve(linter.lint(@editor))
-      ).then(EditorLinter._validateResults).catch((error) ->
+      ).then(Helpers.validateResults).catch((error) ->
         atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
         []
       ).then (results) =>
@@ -77,17 +78,5 @@ class EditorLinter
       @[key]
     else
       @[key] = value
-
-  # Checks the responses for any kind-of errors
-  @_validateResults: (results) ->
-    if (not results) or results.constructor.name isnt 'Array'
-      throw new Error "Got invalid response from Linter, Type: #{typeof results}"
-    for result in results
-      unless result.type
-        throw new Error "Missing type field on Linter Response, Got: #{Object.keys(result)}"
-      result.range = Range.fromObject result.range if result.range?
-      result.class = result.type.toLowerCase().replace(' ', '-')
-      EditorLinter._validateResults(result.trace) if result.trace
-    results
 
 module.exports = EditorLinter
