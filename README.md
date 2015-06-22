@@ -16,7 +16,7 @@ Have a look at [Linter-API](https://github.com/AtomLinter/linter-plus/wiki/Linte
 
 #### Development
 
-Be sure to respect code style from `coffeelint.json`, use `$ npm run lint` for checking.
+Be sure to respect code style from `coffeelint.json` and `.eslintrc`, use `$ npm run lint` for checking (Install globaly coffeelint && eslint `$ npm i -g eslint coffeelint`).
 
 #### License
 This project is licensed under the terms of MIT License. See the License file for more info.
