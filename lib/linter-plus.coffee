@@ -38,7 +38,8 @@ class Linter
         @_editorLinters.delete currentEditorLinter
 
   addLinter: (linter) ->
-    @linters.add(linter)
+    if(Helpers.validateLinter(linter))
+      @linters.add(linter)
 
   deleteLinter: (linter) ->
     @linters.delete(linter)
