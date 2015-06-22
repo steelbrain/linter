@@ -5,12 +5,14 @@ EditorLinter = require './editor-linter'
 
 class Linter
   constructor: ->
+    # Public Stuff
     @lintOnFly = true # A default art value, to be immediately replaced by the observe config below
-    @_subscriptions = new CompositeDisposable
+    @views = new LinterViews this # Used by editor-linter to trigger views.render
 
+    # Private Stuff
+    @_subscriptions = new CompositeDisposable
     @_emitter = new Emitter
     @_editorLinters = new Map
-    @views = new LinterViews this # Used by editor-linter to trigger views.render
     @messagesProject = new Map # Values set in editor-linter and consumed in views.render
     @activeEditor = atom.workspace.getActiveTextEditor()
     @linters = new Set # Values are pushed here from Main::consumeLinter
