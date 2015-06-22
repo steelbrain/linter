@@ -37,6 +37,15 @@ class Linter
         currentEditorLinter.destroy()
         @_editorLinters.delete currentEditorLinter
 
+  addLinter: (linter) ->
+    @linters.add(linter)
+
+  deleteLinter: (linter) ->
+    @linters.delete(linter)
+
+  getLinters: ->
+    @linters
+
   getProjectMessages: ->
     @_messagesProject
 
