@@ -2,6 +2,7 @@ Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
 LinterViews = require './linter-views'
 EditorLinter = require './editor-linter'
+Helpers = require './helpers'
 
 class Linter
   constructor: ->
@@ -40,7 +41,7 @@ class Linter
     @_messagesProject
 
   setProjectMessages: (linter, messages) ->
-    @_messagesProject.set(linter, messages)
+    @_messagesProject.set(linter, Helpers.validateResults(messages))
 
   deleteProjectMessages: (linter) ->
     @_messagesProject.delete(linter)

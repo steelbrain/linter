@@ -28,7 +28,7 @@ class EditorLinter
     @_messages.delete(linter)
 
   setMessages: (linter, messages) ->
-    @_messages.set(linter, messages)
+    @_messages.set(linter, Helpers.validateResults(messages))
 
   # Called on package deactivate
   destroy: ->
@@ -62,17 +62,16 @@ class EditorLinter
 
       Promises.push new Promise((resolve) =>
         resolve(linter.lint(@editor))
-      ).then(Helpers.validateResults).catch((error) ->
-        atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
-        []
-      ).then (results) =>
+      ).then((results) =>
         if linter.scope is 'project'
           @linter.setProjectMessages(linter, results)
         else
           @setMessages(linter, results)
-
         @_emitter.emit 'did-update'
         @linter.views.render() if @editor is atom.workspace.getActiveTextEditor()
+      ).catch (error) ->
+        atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
+
     Promises
 
   # This method sets or gets the lock status of given type
