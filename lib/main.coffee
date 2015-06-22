@@ -45,7 +45,7 @@ module.exports =
           @instance.messagesProject.delete(linter)
         else
           @instance.eachEditorLinter((editorLinter) ->
-            editorLinter.messages.delete(linter)
+            editorLinter.deleteMessages(linter)
           )
         @instance.linters.delete(linter)
 

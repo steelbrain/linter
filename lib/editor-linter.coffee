@@ -2,7 +2,7 @@
 
 class EditorLinter
   constructor: (@linter, @editor) ->
-    @messages = new Map # Consumed by LinterViews::render
+    @_messages = new Map # Consumed by LinterViews::render
     @_inProgress = false
     @_inProgressFly = false
 
@@ -19,6 +19,13 @@ class EditorLinter
     @_subscriptions.add(
       @editor.onDidStopChanging => @lint(true) if @linter.lintOnFly
     )
+
+  getMessages: ->
+    @_messages
+  deleteMessages: (linter)->
+    @_messages.delete(linter)
+  setMessages: (linter, messages)->
+    @_messages.set(linter, messages)
 
   # Called on package deactivate
   destroy: ->
@@ -57,7 +64,7 @@ class EditorLinter
         []
       ).then (results) =>
         if linter.scope is 'project' then @linter.messagesProject.set linter, results
-        else @messages.set linter, results
+        else @_messages.set linter, results
 
         @_emitter.emit 'did-update'
         @linter.views.render() if @editor is @linter.activeEditor
