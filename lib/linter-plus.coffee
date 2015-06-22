@@ -14,7 +14,6 @@ class Linter
     @_emitter = new Emitter
     @_editorLinters = new Map
     @_messagesProject = new Map # Values set in editor-linter and consumed in views.render
-    @activeEditor = atom.workspace.getActiveTextEditor()
     @linters = new Set # Values are pushed here from Main::consumeLinter
 
     @_subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
@@ -22,7 +21,6 @@ class Linter
     @_subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
     @_subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
-      @activeEditor = editor
       # Exceptions thrown here prevent switching tabs
       try
         @getEditorLinter(editor)?.lint(false)
@@ -48,7 +46,7 @@ class Linter
     @_messagesProject.delete(linter)
 
   getActiveEditorLinter: ->
-    return @getEditorLinter @activeEditor
+    return @getEditorLinter atom.workspace.getActiveTextEditor()
 
   getEditorLinter: (editor) ->
     return @_editorLinters.get editor

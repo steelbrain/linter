@@ -42,7 +42,7 @@ class EditorLinter
     @_emitter.on 'did-destroy', callback
 
   lint: (wasTriggeredOnChange) ->
-    return unless @editor is @linter.activeEditor
+    return unless @editor is atom.workspace.getActiveTextEditor()
     return if @_lock(wasTriggeredOnChange)
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
@@ -72,7 +72,7 @@ class EditorLinter
           @setMessages(linter, results)
 
         @_emitter.emit 'did-update'
-        @linter.views.render() if @editor is @linter.activeEditor
+        @linter.views.render() if @editor is atom.workspace.getActiveTextEditor()
     Promises
 
   # This method sets or gets the lock status of given type
