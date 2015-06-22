@@ -23,9 +23,11 @@ class EditorLinter
 
   getMessages: ->
     @_messages
-  deleteMessages: (linter)->
+
+  deleteMessages: (linter) ->
     @_messages.delete(linter)
-  setMessages: (linter, messages)->
+
+  setMessages: (linter, messages) ->
     @_messages.set(linter, messages)
 
   # Called on package deactivate
