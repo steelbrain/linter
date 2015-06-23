@@ -33,16 +33,7 @@ module.exports =
 
     new Disposable( =>
       for linter in linters
-        return unless @instance.hasLinter(linter)
-        if linter.scope is 'project'
-          @instance.deleteProjectMessages(linter)
-        else
-          @instance.eachEditorLinter((editorLinter) ->
-            editorLinter.deleteMessages(linter)
-          )
         @instance.deleteLinter(linter)
-
-      @instance.views.render()
     )
 
   consumeStatusBar: (statusBar) ->
