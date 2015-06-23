@@ -1,3 +1,5 @@
+fs = require('fs')
+temp = require('temp')
 
 typeMap =
   info: 'Trace'
@@ -44,9 +46,23 @@ module.exports = (ClassicLinter) ->
 
       filePath = textEditor.getPath()
 
-      return new Promise((resolve) ->
-        linter.lintFile(filePath, (results) ->
-          resolve(transform(filePath, textEditor, results))
+      tmpOptions = {
+        prefix: 'AtomLinter'
+        suffix: textEditor.getGrammar().scopeName
+      }
+      return new Promise((resolve, reject) ->
+        temp.open(tmpOptions, (err, info) ->
+          return reject(err) if err
+
+          fs.write(info.fd, textEditor.getText())
+          fs.close(info.fd, (err) ->
+            return reject(err) if err
+            linter.lintFile(info.path, (results) ->
+              fs.unlink(info.path)
+
+              resolve(transform(filePath, textEditor, results))
+            )
+          )
         )
       )
   }
