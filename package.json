@@ -15,7 +15,7 @@
   "consumedServices": {
     "linter": {
       "versions": {
-        "0.3.0": "consumeLinter"
+        "^1.0.0": "consumeLinter"
       }
     },
     "status-bar": {
