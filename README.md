@@ -1,22 +1,28 @@
-Linter-Plus
-==========
+# Linter
 
-Linter-Plus is a base Linter Provider for Atom. It allows packages to consume an extremely easy to use API and lint files like a piece of cake.
-This package was inspired from AtomLinter.
+> Lint your code with ease in [Atom Editor](http://atom.io)
+>
+> The idea is to stop the linter plugins war, by providing a top level API for linters to parse and display errors in the Atom editor.
 
-#### Installation
+![Preview](http://g.recordit.co/13RfmirPz2.gif)
 
-```sh
-apm install linter-plus
-```
+## How to / Installation
 
-#### Registering a Linter
+Install package through Atom or use CLI:
 
-Have a look at [Linter-API](https://github.com/AtomLinter/linter-plus/wiki/Linter-API) in the wiki.
+* `$ apm install linter`
 
-#### Development
+## Availables linters
 
-Be sure to respect code style from `coffeelint.json` and `.eslintrc`, use `$ npm run lint` for checking (Install globaly coffeelint && eslint `$ npm i -g eslint coffeelint`).
+[Full linters list](http://atomlinter.github.io/)
 
-#### License
-This project is licensed under the terms of MIT License. See the License file for more info.
+## API Documentation
+
+[Linter API wiki](https://github.com/AtomLinter/Linter/wiki/Linter-API)
+
+## Contribute
+
+Stick to imposed codestyle:
+
+* `$ npm i -g coffeelint eslint`
+* `$ npm run lint`
