@@ -31,10 +31,9 @@ module.exports =
     for linter in linters
       @instance.addLinter(linter)
 
-    new Disposable( =>
+    new Disposable =>
       for linter in linters
         @instance.deleteLinter(linter)
-    )
 
   consumeStatusBar: (statusBar) ->
     @instance.views.attachBottom(statusBar)
