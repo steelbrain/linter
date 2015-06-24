@@ -43,6 +43,7 @@ class EditorLinter
 
   lint: (wasTriggeredOnChange) ->
     return unless @editor is atom.workspace.getActiveTextEditor()
+    return unless @editor.getPath()
     return if @_lock(wasTriggeredOnChange)
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
