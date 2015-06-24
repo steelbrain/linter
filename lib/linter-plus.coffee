@@ -33,7 +33,7 @@ class Linter
     @_subscriptions.add atom.workspace.observeTextEditors (editor) =>
       currentEditorLinter = new EditorLinter @, editor
       @_editorLinters.set editor, currentEditorLinter
-      @_emitter.emit 'linters-observe', currentEditorLinter
+      @_emitter.emit 'observe-editor-linters', currentEditorLinter
       currentEditorLinter.lint false
       editor.onDidDestroy =>
         currentEditorLinter.destroy()
@@ -86,7 +86,7 @@ class Linter
 
   observeEditorLinters: (callback) ->
     @eachEditorLinter callback
-    @_emitter.on 'linters-observe', callback
+    @_emitter.on 'observe-editor-linters', callback
 
   deactivate: ->
     @_subscriptions.dispose()
