@@ -5,9 +5,15 @@ class Commands
     @_subscriptions = new CompositeDisposable
     @_subscriptions.add atom.commands.add 'atom-workspace',
       'linter:next-error': @nextError.bind(@)
+      'linter:toggle': @toggleLinter.bind(@)
 
     # Default values
     @_messages = null
+
+  toggleLinter: ->
+    activeEditorLinter = @linter.getActiveEditorLinter()
+    return unless activeEditorLinter
+    activeEditorLinter.toggleStatus()
 
   nextError: ->
     if not @_messages or (next = @_messages.next()).done
