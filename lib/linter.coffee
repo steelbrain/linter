@@ -258,7 +258,7 @@ class Linter
     else if match.info
       level = 'info'
     else
-      level = match.level or 'error'
+      level = match.level or @defaultLevel
 
     # If no line/col is found, assume a full file error
     # TODO: This conflicts with the docs above that say line is required :(
