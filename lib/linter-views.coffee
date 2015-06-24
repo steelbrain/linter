@@ -98,9 +98,9 @@ class LinterViews
     @_statusTiles.push statusBar.addLeftTile
       item: @_bottomTabProject,
       priority: -1000
-    @_statusTiles.push statusBar.addLeftTile
+    @_statusTiles.push statusBar.addRightTile
       item: @_bottomStatus,
-      priority: -999
+      priority: 1
 
   # this method is called on package deactivate
   destroy: ->
