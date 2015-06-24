@@ -32,6 +32,7 @@ class EditorLinter
     @_status = status
     if not status
       @_messages.clear()
+      @linter.views.render()
 
   getMessages: ->
     @_messages
