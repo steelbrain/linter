@@ -3,12 +3,14 @@ Path = require 'path'
 LinterViews = require './linter-views'
 EditorLinter = require './editor-linter'
 Helpers = require './helpers'
+Commands = require './commands'
 
 class Linter
   constructor: ->
     # Public Stuff
     @lintOnFly = true # A default art value, to be immediately replaced by the observe config below
     @views = new LinterViews this # Used by editor-linter to trigger views.render
+    @commands = new Commands this
 
     # Private Stuff
     @_subscriptions = new CompositeDisposable
@@ -102,5 +104,6 @@ class Linter
     @eachEditorLinter (linter) ->
       linter.destroy()
     @views.destroy()
+    @commands.destroy()
 
 module.exports = Linter
