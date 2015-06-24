@@ -1,3 +1,6 @@
+# Upcoming
+* Fix a bug where messages from legacy provider
+
 # 1.0.2
 
 * Lint requests are now ignored until the file is saved
