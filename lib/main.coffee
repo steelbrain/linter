@@ -7,6 +7,10 @@ module.exports =
       description: 'Lint files while typing, without the need to save them'
       type: 'boolean'
       default: true
+    showErrorPanel:
+      title: "Show Error Panel at the bottom"
+      type: 'boolean'
+      default: true
     showErrorInline:
       title: "Show Inline Tooltips"
       descriptions: "Show inline tooltips for errors"

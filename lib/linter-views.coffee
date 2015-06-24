@@ -4,7 +4,7 @@ Message = require './views/message'
 
 class LinterViews
   constructor: (@linter) ->
-    @_showPanel = true
+    @_showPanel = true # Altered by config observer in linter-plus
     @_showBubble = true # Altered by the config observer in linter-plus
     @_messages = []
     @_markers = []
@@ -29,6 +29,16 @@ class LinterViews
     @_scope = 'file'
     @_bottomTabFile.active = true
     @_panel.id = 'linter-panel'
+
+  # Called in config observer of linter-plus.coffee
+  setShowPanel: (showPanel) ->
+    console.log showPanel
+    atom.config.set('linter.showErrorPanel', showPanel)
+    @_showPanel = showPanel
+    if showPanel
+      @_panel.removeAttribute('hidden')
+    else
+      @_panel.setAttribute('hidden', true)
 
   # Called in config observer of linter-plus.coffee
   setShowBubble: (showBubble) ->
@@ -103,14 +113,12 @@ class LinterViews
       @_showPanel = not @_showPanel
     else
       @_showPanel = true
+    @setShowPanel(@_showPanel)
     if @_showPanel
       @_scope = Tab
       @_bottomTabProject.active = Tab is 'project'
       @_bottomTabFile.active = Tab is 'file'
-      @_panel.removeAttribute('hidden')
       @_renderPanel()
-    else
-      @_panel.setAttribute('hidden', true)
 
   _removeBubble: ->
     return unless @_bubble
