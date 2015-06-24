@@ -29,9 +29,7 @@ class Linter
       # Exceptions thrown here prevent switching tabs
       try
         editorLinter = @getEditorLinter(editor)
-        if editorLinter
-          editorLinter.lint(false)
-          @_emitter.emit('observe-active-editor-linter', editorLinter)
+        editorLinter?.lint(false)
         @views.render()
 
       catch error
@@ -89,11 +87,6 @@ class Linter
 
   eachEditorLinter: (callback) ->
     @_editorLinters.forEach(callback)
-
-  # Called whenever active pane changes, with the current linter
-  observeActiveEditorLinter: (callback) ->
-    callback(@getActiveEditorLinter())
-    @_emitter.on 'observe-active-editor-linter', callback
 
   observeEditorLinters: (callback) ->
     @eachEditorLinter callback
