@@ -1,5 +1,7 @@
 # Upcoming
-* Fix a bug where messages from legacy provider
+
+* Treat legacy messages as text instead of html
+* Fix a bug causing linter messages to briefly disappear and reappear
 
 # 1.0.2
 
