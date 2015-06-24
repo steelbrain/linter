@@ -2,6 +2,19 @@ fs = require('fs')
 path = require('path')
 temp = require('temp')
 
+promiseWrap = (obj, methodName) ->
+  return (args...) ->
+    return new Promise((resolve, reject) ->
+      obj[methodName](args..., (err, result) ->
+        return reject(err) if err
+        resolve(result)
+      )
+    )
+
+mkdir = promiseWrap(temp, 'mkdir')
+writeFile = promiseWrap(fs, 'writeFile')
+unlink = promiseWrap(fs, 'unlink')
+
 typeMap =
   info: 'Trace'
   warning: 'Warning'
@@ -25,6 +38,8 @@ transform = (filePath, textEditor, results) ->
     return msg
   )
 
+
+
 module.exports = (ClassicLinter) ->
 
   editorMap = new WeakMap()
@@ -45,33 +60,30 @@ module.exports = (ClassicLinter) ->
         linter = new ClassicLinter(textEditor)
         editorMap.set(textEditor, linter)
 
+      lintFile = (filename) ->
+        dfd = Promise.defer()
+        linter.lintFile(tmpFile, dfd.resolve)
+        return dfd.promise
+
       filePath = textEditor.getPath()
 
       tmpOptions = {
         prefix: 'AtomLinter'
         suffix: textEditor.getGrammar().scopeName
       }
-      return new Promise((resolve, reject) ->
-        temp.mkdir('AtomLinter', (err, tmpDir) ->
-          return reject(err) if err
 
-          try
-            tmpFile = path.join(tmpDir, path.basename(filePath))
-            fs.writeFileSync(tmpFile, textEditor.getText())
+      return mkdir('AtomLinter').then((tmpDir) ->
+        tmpFile = path.join(tmpDir, path.basename(filePath))
 
-            linter.lintFile(tmpFile, (results) ->
-              # fs.rmdir only works on empty directories, so we have to delete
-              # the file first
-              fs.unlink(tmpFile, ->
-                # If either of these fail it'll just leave temporary files. No
-                # need to reject the promise over it
-                fs.rmdir(tmpDir)
-              )
+        writeFile(tmpFile, textEditor.getText()).then(->
+          lintFile(tmpFile).then((results) ->
 
-              resolve(transform(filePath, textEditor, results))
-            )
-          catch error
-            reject(error)
+            # If either of these fail it'll just leave temporary files. No
+            # need to reject the promise over it
+            unlink(tmpFile).then(-> fs.rmdir(tmpDir))
+
+            return transform(filePath, textEditor, results)
+          )
         )
       )
   }
