@@ -23,6 +23,8 @@ class LinterViews
       @_changeTab('project')
     )
     @_bottomStatus.initialize()
+    @_bottomStatus.addEventListener 'click', ->
+      atom.commands.dispatch atom.views.getView(atom.workspace), 'linter:next-error'
     @_panelWorkspace = atom.workspace.addBottomPanel item: @_panel, visible: false
 
     # Set default tab to File
