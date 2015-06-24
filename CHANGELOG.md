@@ -2,6 +2,7 @@
 
 * Treat legacy messages as text instead of html
 * Fix a bug causing linter messages to briefly disappear and reappear
+* Fix memory leak (Markers weren't getting cleaned up)
 
 # 1.0.2
 
