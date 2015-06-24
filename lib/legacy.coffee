@@ -62,7 +62,7 @@ module.exports = (ClassicLinter) ->
 
       lintFile = (filename) ->
         dfd = Promise.defer()
-        linter.lintFile(tmpFile, dfd.resolve)
+        linter.lintFile(filename, dfd.resolve)
         return dfd.promise
 
       filePath = textEditor.getPath()
