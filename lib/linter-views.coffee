@@ -99,6 +99,7 @@ class LinterViews
 
   # this method is called on package deactivate
   destroy: ->
+    @_messages.clear()
     @_removeMarkers()
     @_panelWorkspace.destroy()
     @_removeBubble()
