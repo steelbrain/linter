@@ -1,10 +1,11 @@
-@import "ui-variables";
+@import 'ui-variables';
 @import 'octicon-utf-codes';
 
 linter-message {
   display: block;
   padding: 2px;
   font-size: @font-size;
+
   span {
     padding: 0 6px;
   }
@@ -15,6 +16,7 @@ linter-message {
   overflow-y: scroll;
   max-height: 150px;
   padding: 4px 8px;
+
   &[hidden]{
     display: none;
   }
@@ -46,10 +48,12 @@ linter-message {
     border: 4px solid;
     border-color: transparent transparent @linter-inline-bg @linter-inline-bg;
   }
+
   a {
     color: @linter-inline-link;
     margin-right: 4px;
   }
+
   .badge {
     margin-top: -2px;
   }
@@ -65,10 +69,12 @@ linter-bottom-tab {
   border: 1px solid @button-border-color;
   background: fade(@button-background-color, 33%);
   cursor: pointer;
+
   &:first-of-type {
     border-top-left-radius: @component-border-radius;
     border-bottom-left-radius: @component-border-radius;
   }
+
   &:last-of-type {
     margin-right: .6em;
     border-top-right-radius: @component-border-radius;
@@ -78,6 +84,7 @@ linter-bottom-tab {
   &:active {
     background: transparent;
   }
+
   &.active {
     color: @text-color-highlight;
     background: @button-background-color;
@@ -90,6 +97,7 @@ linter-bottom-tab {
 
 atom-text-editor::shadow .linter-highlight .icon-right{
   visibility: visible;
+
   &::before{
     content: @primitive-dot;
     font-size: 1.1em;
@@ -100,38 +108,47 @@ atom-text-editor::shadow .linter-highlight, .linter-highlight{
   &.badge {
     border-radius: @component-border-radius;
   }
+
   &.error {
     &:not(.line-number){
       background-color: @background-color-error;
       color: white;
     }
+
     .icon-right::before{
       color: @background-color-error;
     }
+
     .region {
       border-bottom: 1px dashed @background-color-error;
     }
   }
+
   &.warning {
     &:not(.line-number){
       background-color: @background-color-warning;
       color: white;
     }
+
     .icon-right::before{
       color: @background-color-warning;
     }
+
     .region {
       border-bottom: 1px dashed @background-color-warning;
     }
   }
+
   &.trace {
     &:not(.line-number){
       background-color: @background-color-info;
       color: white;
     }
+
     .icon-right::before{
       color: @background-color-info;
     }
+
     .region {
       border-bottom: 1px dashed @background-color-info;
     }
@@ -139,9 +156,16 @@ atom-text-editor::shadow .linter-highlight, .linter-highlight{
 
   // Used by bottom status icon
   &.status-error {
+    cursor: pointer;
     color: @background-color-error;
   }
-  &.status-success{
+
+  &.status-success {
     color: @background-color-success;
+  }
+
+  &.status-warning {
+    cursor: pointer;
+    color: @background-color-warning;
   }
 }
