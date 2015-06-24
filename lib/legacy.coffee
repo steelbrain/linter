@@ -1,4 +1,5 @@
 fs = require('fs')
+path = require('path')
 temp = require('temp')
 
 typeMap =
@@ -51,15 +52,18 @@ module.exports = (ClassicLinter) ->
         suffix: textEditor.getGrammar().scopeName
       }
       return new Promise((resolve, reject) ->
-        temp.open(tmpOptions, (err, info) ->
+        temp.mkdir('AtomLinter', (err, tmpDir) ->
           return reject(err) if err
 
           try
-            fs.writeSync(info.fd, textEditor.getText())
-            fs.closeSync(info.fd)
+            tmpFile = path.join(tmpDir, path.basename(filePath))
+            fs.writeFileSync(tmpFile, textEditor.getText())
 
-            linter.lintFile(info.path, (results) ->
-              fs.unlink(info.path)
+            linter.lintFile(tmpFile, (results) ->
+              # fs.rmdir only works on empty directories, so we have to delete
+              # the file first
+              fs.unlink(tmpFile)
+              fs.rmdir(tmpDir)
 
               resolve(transform(filePath, textEditor, results))
             )
