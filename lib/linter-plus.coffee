@@ -28,8 +28,7 @@ class Linter
     @_subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
       # Exceptions thrown here prevent switching tabs
       try
-        editorLinter = @getEditorLinter(editor)
-        editorLinter?.lint(false)
+        @getEditorLinter(editor)?.lint(false)
         @views.render()
 
       catch error
