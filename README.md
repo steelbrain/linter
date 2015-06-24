@@ -18,6 +18,23 @@ Install package through Atom or use CLI:
 
 * `$ apm install linter`
 
+## Configuration
+
+You can customize shortcuts to Linter commands:
+
+* `linter:next-error` (jump to next error line)
+* `linter:next-warning` (jump to next warning line)
+* `linter:toggle` (disable / enable linters)
+
+Atom -> Open You Keymap:
+
+```
+'atom-workspace':
+  'linter:next-error': 'ctrl-alt-e'
+  'linter:next-warning': 'ctrl-alt-w'
+  'linter:toggle': 'ctrl-alt-t'
+```
+
 ## Availables linters
 
 [Full linters list](http://atomlinter.github.io/)
