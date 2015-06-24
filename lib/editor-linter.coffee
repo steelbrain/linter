@@ -4,6 +4,7 @@ Helpers = require './helpers'
 class EditorLinter
   constructor: (@linter, @editor) ->
     @_messages = new Map # Consumed by LinterViews::render
+    @_status = true
     @_inProgress = false
     @_inProgressFly = false
 
@@ -20,6 +21,18 @@ class EditorLinter
     @_subscriptions.add(
       @editor.onDidStopChanging => @lint(true) if @linter.lintOnFly
     )
+
+  toggleStatus: ->
+    @setStatus !@_status
+
+  getStatus: ->
+    @_status
+
+  setStatus: (status) ->
+    @_status = status
+    if not status
+      @_messages.clear()
+      @linter.views.render()
 
   getMessages: ->
     @_messages
@@ -42,6 +55,7 @@ class EditorLinter
     @_emitter.on 'did-destroy', callback
 
   lint: (wasTriggeredOnChange) ->
+    return unless @_status
     return unless @editor is atom.workspace.getActiveTextEditor()
     return unless @editor.getPath()
     return if @_lock(wasTriggeredOnChange)
@@ -77,7 +91,11 @@ class EditorLinter
 
   # This method sets or gets the lock status of given type
   _lock: (wasTriggeredOnChange, value) ->
-    key = wasTriggeredOnChange ? '_inProgressFly' : '_inProgress'
+    key =
+      if wasTriggeredOnChange
+        '_inProgressFly'
+      else
+        '_inProgress'
     if typeof value is 'undefined'
       @[key]
     else
