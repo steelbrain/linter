@@ -6,7 +6,7 @@ class LinterViews
   constructor: (@linter) ->
     @_showPanel = true # Altered by config observer in linter-plus
     @_showBubble = true # Altered by the config observer in linter-plus
-    @_messages = []
+    @_messages = new Set
     @_markers = []
     @_statusTiles = []
 
@@ -30,6 +30,9 @@ class LinterViews
     @_bottomTabFile.active = true
     @_panel.id = 'linter-panel'
 
+  getMessages: ->
+    @_messages
+
   # Called in config observer of linter-plus.coffee
   setShowPanel: (showPanel) ->
     atom.config.set('linter.showErrorPanel', showPanel)
@@ -46,11 +49,10 @@ class LinterViews
   # This message is called in editor-linter.coffee
   render: ->
     counts = {project: 0, file: 0}
-    messages = []
+    @_messages.clear()
     @linter.eachEditorLinter (editorLinter) =>
-      messages = messages.concat @_extractMessages(editorLinter.getMessages(), counts)
-    messages = messages.concat(@._extractMessages(@linter.getProjectMessages(), counts))
-    @_messages = messages
+      @_extractMessages(editorLinter.getMessages(), counts)
+    @._extractMessages(@linter.getProjectMessages(), counts)
 
     @_renderPanel()
     @_bottomTabFile.count = counts.file
@@ -61,13 +63,13 @@ class LinterViews
   updateBubble: (point) ->
     @_removeBubble()
     return unless @_showBubble
-    return unless @_messages.length
+    return unless @_messages.size
     activeEditor = atom.workspace.getActiveTextEditor()
     return unless activeEditor?.getPath?()
     point = point || activeEditor.getCursorBufferPosition()
-    for message in @_messages
-      continue unless message.currentFile
-      continue unless message.range?.containsPoint? point
+    try @_messages.forEach (message)=>
+      return unless message.currentFile
+      return unless message.range?.containsPoint? point
       @_bubble = activeEditor.decorateMarker(
         activeEditor.markBufferRange(message.range, {invalidate: 'never'}),
         {
@@ -76,7 +78,7 @@ class LinterViews
           item: @_renderBubble(message)
         }
       )
-      break
+      throw null
 
   # consumed in views/panel
   setPanelVisibility: (Status) ->
@@ -137,7 +139,7 @@ class LinterViews
     @_panel.innerHTML = ''
     @_removeMarkers()
     @_removeBubble()
-    if not @_messages.length
+    if not @_messages.size
       return @setPanelVisibility(false)
     @setPanelVisibility(true)
     activeEditor = atom.workspace.getActiveTextEditor()
@@ -166,10 +168,9 @@ class LinterViews
   _extractMessages: (Gen, counts) ->
     isProject = @_scope is 'project'
     activeFile = atom.workspace.getActiveTextEditor()?.getPath?()
-    ToReturn = []
-    Gen.forEach (Entry) ->
+    Gen.forEach (Entry) =>
       # Entry === Array<Messages>
-      Entry.forEach (message) ->
+      Entry.forEach (message) =>
         # If there's no file prop on message and the panel scope is file then count is as current
         if (not message.filePath and not isProject) or message.filePath is activeFile
           counts.file++
@@ -178,6 +179,5 @@ class LinterViews
         else
           counts.project++
           message.currentFile = false
-        ToReturn.push message
-    ToReturn
+        @_messages.add message
 module.exports = LinterViews
