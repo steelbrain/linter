@@ -62,8 +62,11 @@ module.exports = (ClassicLinter) ->
             linter.lintFile(tmpFile, (results) ->
               # fs.rmdir only works on empty directories, so we have to delete
               # the file first
-              fs.unlink(tmpFile)
-              fs.rmdir(tmpDir)
+              fs.unlink(tmpFile, ->
+                # If either of these fail it'll just leave temporary files. No
+                # need to reject the promise over it
+                fs.rmdir(tmpDir)
+              )
 
               resolve(transform(filePath, textEditor, results))
             )
