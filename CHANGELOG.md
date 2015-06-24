@@ -1,5 +1,9 @@
 # Upcoming
 
+# 1.0.4
+
+* Fix a critical bug introduced by 1.0.3
+
 # 1.0.3
 
 * Treat legacy messages as text instead of html
