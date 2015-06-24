@@ -32,7 +32,6 @@ class LinterViews
 
   # Called in config observer of linter-plus.coffee
   setShowPanel: (showPanel) ->
-    console.log showPanel
     atom.config.set('linter.showErrorPanel', showPanel)
     @_showPanel = showPanel
     if showPanel
