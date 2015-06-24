@@ -4,6 +4,7 @@ Message = require './views/message'
 
 class LinterViews
   constructor: (@linter) ->
+    @_showPanel = true
     @_showBubble = true # Altered by the config observer in linter-plus
     @_messages = []
     @_markers = []
@@ -96,10 +97,20 @@ class LinterViews
       statusTile.destroy()
 
   _changeTab: (Tab) ->
-    @_scope = Tab
-    @_bottomTabProject.active = Tab is 'project'
-    @_bottomTabFile.active = Tab is 'file'
-    @_renderPanel()
+    if @_bottomTabFile.active and Tab is 'file'
+      @_showPanel = not @_showPanel
+    else if @_bottomTabProject.active and Tab is 'project'
+      @_showPanel = not @_showPanel
+    else
+      @_showPanel = true
+    if @_showPanel
+      @_scope = Tab
+      @_bottomTabProject.active = Tab is 'project'
+      @_bottomTabFile.active = Tab is 'file'
+      @_panel.removeAttribute('hidden')
+      @_renderPanel()
+    else
+      @_panel.setAttribute('hidden', true)
 
   _removeBubble: ->
     return unless @_bubble
