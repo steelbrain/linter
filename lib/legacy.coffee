@@ -54,15 +54,17 @@ module.exports = (ClassicLinter) ->
         temp.open(tmpOptions, (err, info) ->
           return reject(err) if err
 
-          fs.write(info.fd, textEditor.getText())
-          fs.close(info.fd, (err) ->
-            return reject(err) if err
+          try
+            fs.writeSync(info.fd, textEditor.getText())
+            fs.closeSync(info.fd)
+
             linter.lintFile(info.path, (results) ->
               fs.unlink(info.path)
 
               resolve(transform(filePath, textEditor, results))
             )
-          )
+          catch error
+            reject(error)
         )
       )
   }
