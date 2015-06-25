@@ -17,7 +17,7 @@ class Commands
     activeEditorLinter.toggleStatus()
 
   setBubleTransparent: ->
-    @linter.getActiveEditorLinter()?.setBubbleTransparent()
+    @linter.views.setBubbleTransparent()
 
   nextError: ->
     if not @_messages or (next = @_messages.next()).done

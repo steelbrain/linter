@@ -25,9 +25,6 @@ class EditorLinter
   toggleStatus: ->
     @setStatus !@_status
 
-  setBubbleTransparent: ->
-    @linter.views.setBubbleTransparent()
-
   getStatus: ->
     @_status
 
