@@ -2,7 +2,6 @@
 
 * Fix message render for non TextEditor panes (Fixes #610)
 * Make the bubble follow cursor
-* Show a nicer error if linter binary doesn't exist (Fixes #612)
 
 # 1.0.4
 
