@@ -155,11 +155,11 @@ class Linter
 
     stdout = (output) ->
       log 'stdout', output
-      dataStdout += output
+      dataStdout.push output
 
     stderr = (output) ->
       warn 'stderr', output
-      dataStderr += output
+      dataStderr.push output
 
     exit = =>
       exited = true
@@ -168,8 +168,8 @@ class Linter
           reportFilePath = @getReportFilePath(filePath)
           if fs.existsSync reportFilePath
             data = fs.readFileSync(reportFilePath)
-        when 'stdout' then data = dataStdout
-        else data = dataStderr
+        when 'stdout' then data = dataStdout.join('')
+        else data = dataStderr.join('')
       @processMessage data, callback
 
     {command, args, options} = @beforeSpawnProcess(command, args, options)
