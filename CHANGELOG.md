@@ -1,5 +1,7 @@
 # Upcoming
 
+* Fix message render for non TextEditor panes
+
 # 1.0.4
 
 * Fix a critical bug introduced by 1.0.3
