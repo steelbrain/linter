@@ -6,7 +6,7 @@ class Commands
     @_subscriptions.add atom.commands.add 'atom-workspace',
       'linter:next-error': @nextError.bind(@)
       'linter:toggle': @toggleLinter.bind(@)
-      'linter:set-bubble-transparent': @setBubleTransparent.bind(@)
+      'linter:set-bubble-transparent': @setBubleTransparent
 
     # Default values
     @_messages = null
@@ -16,7 +16,7 @@ class Commands
     return unless activeEditorLinter
     activeEditorLinter.toggleStatus()
 
-  setBubleTransparent: ->
+  setBubleTransparent: =>
     @linter.views.setBubbleTransparent()
 
   nextError: ->
