@@ -136,6 +136,12 @@ class Linter
   getNodeExecutablePath: ->
     path.join atom.packages.getApmPath(), '..', 'node'
 
+  linterNotFound: ->
+    notFoundMessage = "Linting has been halted.
+        Please install the linter binary or disable the linter plugin depending on it.
+        Make sure to reload Atom to detect changes"
+    atom.notifications.addError("The linter binary '#{@linterName}' cannot be found.", {detail: notFoundMessage, dismissable: true})
+
   # Public: Primary entry point for a linter, executes the linter then calls
   #         processMessage in order to handle standard output
   #
@@ -155,61 +161,42 @@ class Linter
 
     stdout = (output) ->
       log 'stdout', output
-      dataStdout += output
+      dataStdout.push output
 
     stderr = (output) ->
       warn 'stderr', output
-      dataStderr += output
+      dataStderr.push output
 
-    exit = =>
+    exit = (exitCode)=>
       exited = true
+      if exitCode is 8
+        # Exit code of node when the file you execute doesn't exist
+        return @linterNotFound()
       switch @errorStream
         when 'file'
           reportFilePath = @getReportFilePath(filePath)
           if fs.existsSync reportFilePath
             data = fs.readFileSync(reportFilePath)
-        when 'stdout' then data = dataStdout
-        else data = dataStderr
+        when 'stdout' then data = dataStdout.join('')
+        else data = dataStderr.join('')
       @processMessage data, callback
 
     {command, args, options} = @beforeSpawnProcess(command, args, options)
     log("beforeSpawnProcess:", command, args, options)
 
-    process = new BufferedProcess({command, args, options,
+    SpawnedProcess = new BufferedProcess({command, args, options,
                                   stdout, stderr, exit})
-    process.onWillThrowError (err) =>
+    SpawnedProcess.onWillThrowError (err) =>
       return unless err?
       if err.error.code is 'ENOENT'
         # Add defaults because the new linter doesn't include these configs
-        ignored = atom.config.get('linter.ignoredLinterErrors') ? []
-        subtle = atom.config.get('linter.subtleLinterErrors') ? []
-        warningMessageTitle = "The linter binary '#{@linterName}' cannot be found."
-        if @linterName in subtle
-          atom.notifications.addError(warningMessageTitle)
-        else if @linterName not in ignored
-          # Prompt user, ask if they want to fully or partially ignore warnings
-          atom.confirm
-            message: warningMessageTitle
-            detailedMessage: 'Is it on your path? Please follow the installation
-            guide for your linter. Would you like further notifications to be
-            fully or partially suppressed? You can change this later in the
-            linter package settings.'
-            buttons:
-              Fully: =>
-                ignored.push @linterName
-                atom.config.set('linter.ignoredLinterErrors', ignored)
-              Partially: =>
-                subtle.push @linterName
-                atom.config.set('linter.subtleLinterErrors', subtle)
-        else
-          console.log warningMessageTitle
-        err.handle()
+        @linterNotFound()
 
     # Kill the linter process if it takes too long
     if @executionTimeout > 0
       setTimeout =>
         return if exited
-        process.kill()
+        SpawnedProcess.kill()
         warn "command `#{command}` timed out after #{@executionTimeout} ms"
       , @executionTimeout
 
