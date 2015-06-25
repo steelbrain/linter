@@ -4,6 +4,7 @@
 * Make the bubble follow cursor
 * Show a nicer error if linter binary doesn't exist (Fixes #612)
 * Add set-bubble-transparent command to set the bubble transparent until the key is released (Fixes #608)
+* Deselect bottom tab when error panel is hidden
 
 # 1.0.4
 

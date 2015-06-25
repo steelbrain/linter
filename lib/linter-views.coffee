@@ -138,6 +138,9 @@ class LinterViews
       @_bottomTabProject.active = Tab is 'project'
       @_bottomTabFile.active = Tab is 'file'
       @_renderPanel()
+    else
+      @_bottomTabProject.active = no
+      @_bottomTabFile.active = no
 
   _removeBubble: ->
     return unless @_bubble
