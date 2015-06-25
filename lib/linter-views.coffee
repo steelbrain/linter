@@ -170,12 +170,13 @@ class LinterViews
   # This method is called in render, and classifies the messages according to scope
   _extractMessages: (Gen, counts) ->
     isProject = @_scope is 'project'
-    activeFile = atom.workspace.getActiveTextEditor()?.getPath?()
+    activeEditor = atom.workspace.getActiveTextEditor()
+    activeFile = activeEditor?.getPath?()
     Gen.forEach (Entry) =>
       # Entry === Array<Messages>
       Entry.forEach (message) =>
         # If there's no file prop on message and the panel scope is file then count is as current
-        if (not message.filePath and not isProject) or message.filePath is activeFile
+        if activeEditor and ((not message.filePath and not isProject) or message.filePath is activeFile)
           counts.file++
           counts.project++
           message.currentFile = true
