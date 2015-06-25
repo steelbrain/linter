@@ -81,11 +81,11 @@ class LinterViews
     return unless @_showBubble
     return unless @_messages.size
     activeEditor = atom.workspace.getActiveTextEditor()
-    return unless activeEditor?.getPath?()
+    return unless activeEditor?.getPath()
     point = point || activeEditor.getCursorBufferPosition()
     try @_messages.forEach (message) =>
       return unless message.currentFile
-      return unless message.range?.containsPoint? point
+      return unless message.range?.containsPoint point
       @_bubble = activeEditor.markBufferRange([point, point], {invalidate: 'never'})
       activeEditor.decorateMarker(
         @_bubble
@@ -185,7 +185,7 @@ class LinterViews
   _extractMessages: (Gen, counts) ->
     isProject = @_scope is 'project'
     activeEditor = atom.workspace.getActiveTextEditor()
-    activeFile = activeEditor?.getPath?()
+    activeFile = activeEditor?.getPath()
     Gen.forEach (Entry) =>
       # Entry === Array<Messages>
       Entry.forEach (message) =>

@@ -4,19 +4,17 @@ class Commands
   constructor: (@linter) ->
     @_subscriptions = new CompositeDisposable
     @_subscriptions.add atom.commands.add 'atom-workspace',
-      'linter:next-error': @nextError.bind(@)
-      'linter:toggle': @toggleLinter.bind(@)
-      'linter:set-bubble-transparent': => @setBubleTransparent()
+      'linter:next-error': => @nextError
+      'linter:toggle': => @toggleLinter
+      'linter:set-bubble-transparent': => @setBubbleTransparent()
 
     # Default values
     @_messages = null
 
   toggleLinter: ->
-    activeEditorLinter = @linter.getActiveEditorLinter()
-    return unless activeEditorLinter
-    activeEditorLinter.toggleStatus()
+    @linter.getActiveEditorLinter()?.toggleStatus()
 
-  setBubleTransparent: ->
+  setBubbleTransparent: ->
     @linter.views.setBubbleTransparent()
 
   nextError: ->

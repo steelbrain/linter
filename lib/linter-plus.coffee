@@ -25,10 +25,10 @@ class Linter
       @views.setShowPanel(showPanel)
     @_subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
-    @_subscriptions.add atom.workspace.onDidChangeActivePaneItem (editor) =>
+    @_subscriptions.add atom.workspace.onDidChangeActivePaneItem (paneItem) =>
       # Exceptions thrown here prevent switching tabs
       try
-        @getEditorLinter(editor)?.lint(false)
+        @getEditorLinter(paneItem)?.lint(false)
         @views.render()
 
       catch error
