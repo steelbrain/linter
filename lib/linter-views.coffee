@@ -48,6 +48,20 @@ class LinterViews
   setShowBubble: (showBubble) ->
     @_showBubble = showBubble
 
+  setBubbleOpaque: ->
+    bubble = document.getElementById('linter-inline')
+    if bubble
+      bubble.classList.remove 'transparent'
+    document.removeEventListener 'keyup', @setBubbleOpaque
+    window.removeEventListener 'blur', @setBubbleOpaque
+
+  setBubbleTransparent: ->
+    bubble = document.getElementById('linter-inline')
+    if bubble
+      bubble.classList.add 'transparent'
+      document.addEventListener 'keyup', @setBubbleOpaque
+      window.addEventListener 'blur', @setBubbleOpaque
+
   # This message is called in editor-linter.coffee
   render: ->
     counts = {project: 0, file: 0}

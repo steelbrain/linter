@@ -3,6 +3,7 @@
 * Fix message render for non TextEditor panes (Fixes #610)
 * Make the bubble follow cursor
 * Show a nicer error if linter binary doesn't exist (Fixes #612)
+* Add set-bubble-transparent command to set the bubble transparent until the key is released (Fixes #608)
 
 # 1.0.4
 

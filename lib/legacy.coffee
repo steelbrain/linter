@@ -21,6 +21,7 @@ typeMap =
   error: 'Error'
 
 transform = (filePath, textEditor, results) ->
+  return [] unless results
   results.map(({message, level, range}) ->
     [ [startLine, startCol], [ endLine, endCol ] ] = (range.serialize?() ? range)
 
