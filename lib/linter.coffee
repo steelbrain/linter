@@ -136,6 +136,12 @@ class Linter
   getNodeExecutablePath: ->
     path.join atom.packages.getApmPath(), '..', 'node'
 
+  linterNotFound: ->
+    notFoundMessage = "Linting has been halted.
+        Please install the linter binary or disable the linter plugin depending on it.
+        Make sure to reload Atom to detect changes"
+    atom.notifications.addError("The linter binary '#{@linterName}' cannot be found.", {detail: notFoundMessage, dismissable: true})
+
   # Public: Primary entry point for a linter, executes the linter then calls
   #         processMessage in order to handle standard output
   #
@@ -165,7 +171,7 @@ class Linter
       exited = true
       if exitCode is 8
         # Exit code of node when the file you execute doesn't exist
-        return atom.notifications.addError("The linter binary '#{@linterName}' cannot be found.", {detail: "Linting has been halted.\nPlease install the linter binary or disable the linter plugin depending on it.\nMake sure to reload Atom to detect changes", dismissable: true})
+        return @linterNotFound()
       switch @errorStream
         when 'file'
           reportFilePath = @getReportFilePath(filePath)
@@ -184,7 +190,7 @@ class Linter
       return unless err?
       if err.error.code is 'ENOENT'
         # Add defaults because the new linter doesn't include these configs
-        atom.notifications.addError("The linter binary '#{@linterName}' cannot be found.", {detail: "Linting has been halted.\nPlease install the linter binary or disable the linter plugin depending on it.\nMake sure to reload Atom to detect changes", dismissable: true})
+        @linterNotFound()
 
     # Kill the linter process if it takes too long
     if @executionTimeout > 0
