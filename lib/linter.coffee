@@ -175,9 +175,9 @@ class Linter
     {command, args, options} = @beforeSpawnProcess(command, args, options)
     log("beforeSpawnProcess:", command, args, options)
 
-    process = new BufferedProcess({command, args, options,
+    SpawnedProcess = new BufferedProcess({command, args, options,
                                   stdout, stderr, exit})
-    process.onWillThrowError (err) =>
+    SpawnedProcess.onWillThrowError (err) =>
       return unless err?
       if err.error.code is 'ENOENT'
         # Add defaults because the new linter doesn't include these configs
@@ -209,7 +209,7 @@ class Linter
     if @executionTimeout > 0
       setTimeout =>
         return if exited
-        process.kill()
+        SpawnedProcess.kill()
         warn "command `#{command}` timed out after #{@executionTimeout} ms"
       , @executionTimeout
 
