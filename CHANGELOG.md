@@ -1,5 +1,7 @@
 # Upcoming
 
+* Make the bubble follow cursor
+
 # 1.0.4
 
 * Fix a critical bug introduced by 1.0.3
