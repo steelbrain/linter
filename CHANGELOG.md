@@ -1,6 +1,6 @@
 # Upcoming
 
-* Fix message render for non TextEditor panes
+* Fix message render for non TextEditor panes (Fixes #610)
 
 # 1.0.4
 
