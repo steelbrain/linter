@@ -11,9 +11,7 @@ class Commands
     @_messages = null
 
   toggleLinter: ->
-    activeEditorLinter = @linter.getActiveEditorLinter()
-    return unless activeEditorLinter
-    activeEditorLinter.toggleStatus()
+    @linter.getActiveEditorLinter()?.toggleStatus()
 
   nextError: ->
     if not @_messages or (next = @_messages.next()).done
