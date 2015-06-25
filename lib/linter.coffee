@@ -161,8 +161,11 @@ class Linter
       warn 'stderr', output
       dataStderr.push output
 
-    exit = =>
+    exit = (exitCode)=>
       exited = true
+      if exitCode is 8
+        # Exit code of node when the file you execute doesn't exist
+        return atom.notifications.addError("The linter binary '#{@linterName}' cannot be found.", {detail: "Linting has been halted.\nPlease install the linter binary or disable the linter plugin depending on it.\nMake sure to reload Atom to detect changes", dismissable: true})
       switch @errorStream
         when 'file'
           reportFilePath = @getReportFilePath(filePath)
@@ -181,29 +184,7 @@ class Linter
       return unless err?
       if err.error.code is 'ENOENT'
         # Add defaults because the new linter doesn't include these configs
-        ignored = atom.config.get('linter.ignoredLinterErrors') ? []
-        subtle = atom.config.get('linter.subtleLinterErrors') ? []
-        warningMessageTitle = "The linter binary '#{@linterName}' cannot be found."
-        if @linterName in subtle
-          atom.notifications.addError(warningMessageTitle)
-        else if @linterName not in ignored
-          # Prompt user, ask if they want to fully or partially ignore warnings
-          atom.confirm
-            message: warningMessageTitle
-            detailedMessage: 'Is it on your path? Please follow the installation
-            guide for your linter. Would you like further notifications to be
-            fully or partially suppressed? You can change this later in the
-            linter package settings.'
-            buttons:
-              Fully: =>
-                ignored.push @linterName
-                atom.config.set('linter.ignoredLinterErrors', ignored)
-              Partially: =>
-                subtle.push @linterName
-                atom.config.set('linter.subtleLinterErrors', subtle)
-        else
-          console.log warningMessageTitle
-        err.handle()
+        atom.notifications.addError("The linter binary '#{@linterName}' cannot be found.", {detail: "Linting has been halted.\nPlease install the linter binary or disable the linter plugin depending on it.\nMake sure to reload Atom to detect changes", dismissable: true})
 
     # Kill the linter process if it takes too long
     if @executionTimeout > 0
