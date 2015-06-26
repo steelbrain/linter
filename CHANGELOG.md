@@ -1,3 +1,7 @@
+# Upcoming
+
+* Hide Status Bar buttons when Active Pane is not an editor
+
 # 1.0.5
 
 * Fix message render for non TextEditor panes (Fixes #610)
