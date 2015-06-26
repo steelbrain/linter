@@ -2,11 +2,44 @@
 @import 'octicon-utf-codes';
 
 linter-message {
-  display: block;
+  display: flex;
+  align-items: flex-start;
   padding: 2px;
   font-size: @font-size;
   span {
     padding: 0 6px;
+  }
+  & > a {
+    align-self: flex-end;
+  }
+}
+
+linter-multiline-message {
+  display: block;
+  pointer-events: none;
+  -webkit-nav-index: 0;
+  line {
+    display: block;
+    white-space: pre;
+  }
+  line:not(:first-child) {
+    display: none;
+  }
+  line:first-child:not(:nth-last-of-type(1))::after {
+    content: "…";
+    margin-left: 1ch;
+    padding: 0.1em 0.5em;
+    pointer-events: auto;
+    border-radius: 2px;
+    background-color: rgba(255,255,255,0.2);
+  }
+  &:focus, &.expanded {
+    line::after {
+      visibility: hidden;
+    }
+    line:not(:first-child) {
+      display: block;
+    }
   }
 }
 
