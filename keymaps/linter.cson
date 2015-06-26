@@ -1,2 +1,14 @@
 'atom-text-editor:not(.mini)':
   'alt': 'linter:set-bubble-transparent'
+
+'.platform-darwin atom-text-editor:not(.mini)':
+  'ctrl-cmd-l': 'linter:lint'
+  'ctrl-cmd-e': 'linter:next-error'
+
+'.platform-linux atom-text-editor:not(.mini)':
+  'ctrl-k ctrl-l': 'linter:lint'
+  'ctrl-k n': 'linter:next-error'
+
+'.platform-windows atom-text-editor:not(.mini)':
+  'ctrl-k ctrl-l': 'linter:lint'
+  'ctrl-k n': 'linter:next-error'
