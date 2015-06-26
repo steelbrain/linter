@@ -155,7 +155,7 @@ class LinterViews
     bubble.id = 'linter-inline'
     bubble.appendChild Message.fromMessage(message)
     if message.trace then message.trace.forEach (trace) ->
-      bubble.appendChild Message.fromMessage(trace, true)
+      bubble.appendChild Message.fromMessage(trace, addPath: true)
     bubble
 
   _renderPanel: ->
@@ -176,7 +176,7 @@ class LinterViews
         activeEditor.decorateMarker(
           marker, type: 'highlight', class: "linter-highlight #{message.class}"
         )
-      Element = Message.fromMessage(message, @_scope is 'project')
+      Element = Message.fromMessage(message, addPath: @_scope is 'project', cloneNode: true)
       @_panel.appendChild Element
     @updateBubble()
 

@@ -65,14 +65,19 @@ class Linter
   getLinters: ->
     @_linters
 
+  onDidChangeProjectMessages: (callback)->
+    @_emitter.on 'did-change-project-messages', callback
+
   getProjectMessages: ->
     @_messagesProject
 
   setProjectMessages: (linter, messages) ->
     @_messagesProject.set(linter, Helpers.validateResults(messages))
+    @_emitter.emit 'did-change-project-messages', @_messagesProject
 
   deleteProjectMessages: (linter) ->
     @_messagesProject.delete(linter)
+    @_emitter.emit 'did-change-project-messages', @_messagesProject
 
   getActiveEditorLinter: ->
     return @getEditorLinter atom.workspace.getActiveTextEditor()
