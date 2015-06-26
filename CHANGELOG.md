@@ -1,3 +1,7 @@
+# Upcoming
+
+* Add some default keybindings
+
 # 1.0.7
 
 * Rename the status line summary (from `Errors` to `Issues`)
