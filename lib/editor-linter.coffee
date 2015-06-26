@@ -82,8 +82,8 @@ class EditorLinter
           @linter.setProjectMessages(linter, results)
         else
           @setMessages(linter, results)
-        @_emitter.emit 'did-update'
-        @linter.views.render() if @editor is atom.workspace.getActiveTextEditor()
+          @linter.views.render() if @editor is atom.workspace.getActiveTextEditor()
+          @_emitter.emit 'did-update'
       ).catch (error) ->
         atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
 
