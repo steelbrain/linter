@@ -1,4 +1,4 @@
-# 1.0.7
+# Upcoming
 
 * Rename the status line summary (from `Errors` to `Issues`)
 
