@@ -47,7 +47,7 @@ module.exports =
     @instance.views.attachBottom(statusBar)
 
   provideLinter: ->
-    @Linter
+    @instance
 
   deactivate: ->
     @instance?.deactivate()

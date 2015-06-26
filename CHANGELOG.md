@@ -1,3 +1,7 @@
+# 1.0.8
+
+* Fix a critical error in self service provider
+
 # 1.0.7
 
 * Rename the status line summary (from `Errors` to `Issues`)
