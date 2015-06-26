@@ -6,6 +6,8 @@ class LinterViews
   constructor: (@linter) ->
     @_showPanel = true # Altered by config observer in linter-plus
     @_showBubble = true # Altered by the config observer in linter-plus
+    @_underlineIssues = true # Altered by config observer in linter-plus
+
     @_messages = new Set
     @_markers = []
     @_statusTiles = []
@@ -35,6 +37,13 @@ class LinterViews
   getMessages: ->
     @_messages
 
+# consumed in views/panel
+  setPanelVisibility: (Status) ->
+    if Status
+      @_panelWorkspace.show() unless @_panelWorkspace.isVisible()
+    else
+      @_panelWorkspace.hide() if @_panelWorkspace.isVisible()
+
   # Called in config observer of linter-plus.coffee
   setShowPanel: (showPanel) ->
     atom.config.set('linter.showErrorPanel', showPanel)
@@ -45,8 +54,9 @@ class LinterViews
       @_panel.setAttribute('hidden', true)
 
   # Called in config observer of linter-plus.coffee
-  setShowBubble: (showBubble) ->
-    @_showBubble = showBubble
+  setShowBubble: (@_showBubble) ->
+
+  setUnderlineIssues: (@_underlineIssues) ->
 
   setBubbleOpaque: ->
     bubble = document.getElementById('linter-inline')
@@ -99,13 +109,6 @@ class LinterViews
         }
       )
       throw null
-
-  # consumed in views/panel
-  setPanelVisibility: (Status) ->
-    if Status
-      @_panelWorkspace.show() unless @_panelWorkspace.isVisible()
-    else
-      @_panelWorkspace.hide() if @_panelWorkspace.isVisible()
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
@@ -168,7 +171,7 @@ class LinterViews
     activeEditor = atom.workspace.getActiveTextEditor()
     @_messages.forEach (message) =>
       if @_scope is 'file' then return unless message.currentFile
-      if message.currentFile and message.range #Add the decorations to the current TextEditor
+      if @_underlineIssues and message.currentFile and message.range #Add the decorations to the current TextEditor
         @_markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
         activeEditor.decorateMarker(
           marker, type: 'line-number', class: "linter-highlight #{message.class}"

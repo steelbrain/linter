@@ -8,12 +8,16 @@ module.exports =
       type: 'boolean'
       default: true
     showErrorPanel:
-      title: "Show Error Panel at the bottom"
+      title: 'Show Error Panel at the bottom'
       type: 'boolean'
       default: true
     showErrorInline:
-      title: "Show Inline Tooltips"
-      descriptions: "Show inline tooltips for errors"
+      title: 'Show Inline Tooltips'
+      descriptions: 'Show inline tooltips for errors'
+      type: 'boolean'
+      default: true
+    underlineIssues:
+      title: 'Underline Issues'
       type: 'boolean'
       default: true
 

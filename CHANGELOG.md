@@ -4,6 +4,7 @@
 * Rename the `Current File` tab to just `File`
 * Move the `No Issues` badge to the right side of the bottom bar
 * Fix a bug where a message containing HTMLElement would do weird things
+* Allow Issue underlining to be configured from settings
 
 # 1.0.6
 
