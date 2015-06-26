@@ -76,10 +76,12 @@ class Linter
   setProjectMessages: (linter, messages) ->
     @_messagesProject.set(linter, Helpers.validateResults(messages))
     @_emitter.emit 'did-change-project-messages', @_messagesProject
+    @views.render()
 
   deleteProjectMessages: (linter) ->
     @_messagesProject.delete(linter)
     @_emitter.emit 'did-change-project-messages', @_messagesProject
+    @views.render()
 
   getActiveEditorLinter: ->
     return @getEditorLinter atom.workspace.getActiveTextEditor()
