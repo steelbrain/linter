@@ -24,18 +24,21 @@ linter-multiline-message {
   }
   line:not(:first-child) {
     display: none;
+    margin-left: calc(1em+1ch);
   }
-  line:first-child:not(:nth-last-of-type(1))::after {
-    content: "…";
-    margin-left: 1ch;
+  line:first-child:not(:nth-last-of-type(1))::before {
+    font-family: 'Octicons Regular';
+    content: @triangle-right;
+    display: inline-block;
+    width: calc(1em+1ch);
     padding: 0.1em 0.5em;
     pointer-events: auto;
     border-radius: 2px;
-    background-color: rgba(255,255,255,0.2);
+    text-align: center;
   }
   &:focus, &.expanded {
-    line::after {
-      visibility: hidden;
+    line:first-child:not(:nth-last-of-type(1))::before {
+      content: @triangle-down;
     }
     line:not(:first-child) {
       display: block;
