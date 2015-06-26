@@ -1,6 +1,7 @@
 # Upcoming
 
-* Add some default keybindings
+* Add some default keybindings (Fixes #597)
+* UI is rendered when Project Messages are changed pragmatically (Fixes #639)
 
 # 1.0.8
 
