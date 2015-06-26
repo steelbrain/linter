@@ -37,6 +37,13 @@ class LinterViews
   getMessages: ->
     @_messages
 
+# consumed in views/panel
+  setPanelVisibility: (Status) ->
+    if Status
+      @_panelWorkspace.show() unless @_panelWorkspace.isVisible()
+    else
+      @_panelWorkspace.hide() if @_panelWorkspace.isVisible()
+
   # Called in config observer of linter-plus.coffee
   setShowPanel: (showPanel) ->
     atom.config.set('linter.showErrorPanel', showPanel)
@@ -104,13 +111,6 @@ class LinterViews
         }
       )
       throw null
-
-  # consumed in views/panel
-  setPanelVisibility: (Status) ->
-    if Status
-      @_panelWorkspace.show() unless @_panelWorkspace.isVisible()
-    else
-      @_panelWorkspace.hide() if @_panelWorkspace.isVisible()
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
