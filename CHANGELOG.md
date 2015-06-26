@@ -2,6 +2,7 @@
 
 * Rename the status line summary (from `Errors` to `Issues`)
 * Rename the `Current File` tab to just `File`
+* Move the `No Issues` status line contribution to the right side of the status line
 
 # 1.0.6
 
