@@ -2,6 +2,7 @@
 
 * Rename the status line summary (from `Errors` to `Issues`)
 * Rename the `Current File` tab to just `File`
+* Fix a bug where a message containing HTMLElement would do weird things
 
 # 1.0.6
 
