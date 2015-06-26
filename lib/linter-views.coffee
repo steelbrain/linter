@@ -6,6 +6,8 @@ class LinterViews
   constructor: (@linter) ->
     @_showPanel = true # Altered by config observer in linter-plus
     @_showBubble = true # Altered by the config observer in linter-plus
+    @_underlineIssues = true # Altered by config observer in linter-plus
+
     @_messages = new Set
     @_markers = []
     @_statusTiles = []
@@ -47,6 +49,9 @@ class LinterViews
   # Called in config observer of linter-plus.coffee
   setShowBubble: (showBubble) ->
     @_showBubble = showBubble
+
+  setUnderlineIssues: (underlineIssues) ->
+    @_underlineIssues = underlineIssues
 
   setBubbleOpaque: ->
     bubble = document.getElementById('linter-inline')
