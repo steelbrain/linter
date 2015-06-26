@@ -27,12 +27,14 @@ class LinterViews
 
     @_bottomErrorStatus = new BottomStatus()
     @_bottomWarningStatus = new BottomStatus()
+    @_bottomSuccessStatus = new BottomStatus()
 
     @_bottomTabFile.initialize 'Current File', => @_changeTab 'file'
     @_bottomTabProject.initialize 'Project', => @_changeTab 'project'
 
     @_bottomErrorStatus.initialize type: 'error'
     @_bottomWarningStatus.initialize type: 'warning'
+    @_bottomSuccessStatus.initialize type: 'success'
 
     @_bottomErrorStatus.addEventListener 'click', ->
       atom.commands.dispatch atom.views.getView(atom.workspace), 'linter:next-error'
@@ -103,11 +105,23 @@ class LinterViews
     @_bottomTabFile.count = counts.file.error + counts.project.warning
     @_bottomTabProject.count = counts.project.error + counts.project.warning
 
+    hasActiveEditor = typeof atom.workspace.getActiveTextEditor() isnt 'undefined'
+
     @_bottomErrorStatus.count = counts.project.error
     @_bottomWarningStatus.count = counts.project.warning
-    @updateBottomStatusClasses()
 
-    hasActiveEditor = typeof atom.workspace.getActiveTextEditor() isnt 'undefined'
+    if !counts.project.error and !counts.project.warning
+      @_bottomSuccessStatus.show()
+    else
+      @_bottomSuccessStatus.hide()
+
+    if hasActiveEditor
+      @updateBottomStatusClasses()
+    else
+      @_bottomErrorStatus.hide()
+      @_bottomWarningStatus.hide()
+      @_bottomSuccessStatus.hide()
+
     @_bottomTabFile.visibility = hasActiveEditor
     @_bottomTabProject.visibility = hasActiveEditor
 
@@ -165,6 +179,10 @@ class LinterViews
     @_statusTiles.push statusBar.addLeftTile
       item: @_bottomWarningStatus,
       priority: -998
+
+    @_statusTiles.push statusBar.addLeftTile
+      item: @_bottomSuccessStatus,
+      priority: -997
 
   # this method is called on package deactivate
   destroy: ->
