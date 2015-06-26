@@ -74,6 +74,9 @@ class LinterViews
     @_bottomTabFile.count = counts.file
     @_bottomTabProject.count = counts.project
     @_bottomStatus.count = counts.project
+    hasActiveEditor = typeof atom.workspace.getActiveTextEditor() isnt 'undefined'
+    @_bottomTabFile.visibility = hasActiveEditor
+    @_bottomTabProject.visibility = hasActiveEditor
 
   # consumed in editor-linter, _renderPanel
   updateBubble: (point) ->
