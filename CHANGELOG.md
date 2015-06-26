@@ -1,6 +1,6 @@
-# Upcoming
+# 1.0.8
 
-* Add some default keybindings
+* Fix a critical error in self service provider
 
 # 1.0.7
 
