@@ -4,6 +4,8 @@
 
 # 1.0.7
 
+* Split errors / warnings into status bar (Fixes #595)
+* Add documentation about keymaps / shortcuts (Fixes #597)
 * Rename the status line summary (from `Errors` to `Issues`)
 * Rename the `Current File` tab to just `File`
 * Move the `No Issues` badge to the right side of the bottom bar

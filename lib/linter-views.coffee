@@ -14,9 +14,9 @@ class LinterViews
 
     @_bottomTabFile = new BottomTab()
     @_bottomTabProject = new BottomTab()
+
     @_panel = document.createElement 'div'
     @_bubble = null
-    @_bottomStatus = new BottomStatus()
 
     @_bottomTabFile.initialize("File", =>
       @_changeTab('file')
@@ -24,9 +24,23 @@ class LinterViews
     @_bottomTabProject.initialize("Project", =>
       @_changeTab('project')
     )
-    @_bottomStatus.initialize()
-    @_bottomStatus.addEventListener 'click', ->
+
+    @_bottomErrorStatus = new BottomStatus()
+    @_bottomWarningStatus = new BottomStatus()
+    @_bottomSuccessStatus = new BottomStatus()
+
+    @_bottomTabFile.initialize 'Current File', => @_changeTab 'file'
+    @_bottomTabProject.initialize 'Project', => @_changeTab 'project'
+
+    @_bottomErrorStatus.initialize type: 'error'
+    @_bottomWarningStatus.initialize type: 'warning'
+    @_bottomSuccessStatus.initialize type: 'success'
+
+    @_bottomErrorStatus.addEventListener 'click', ->
       atom.commands.dispatch atom.views.getView(atom.workspace), 'linter:next-error'
+    @_bottomWarningStatus.addEventListener 'click', ->
+      atom.commands.dispatch atom.views.getView(atom.workspace), 'linter:next-warning'
+
     @_panelWorkspace = atom.workspace.addBottomPanel item: @_panel, visible: false
 
     # Set default tab to File
@@ -74,19 +88,57 @@ class LinterViews
 
   # This message is called in editor-linter.coffee
   render: ->
-    counts = {project: 0, file: 0}
+    counts =
+      project:
+        error: 0
+        warning: 0
+      file:
+        error: 0
+        warning: 0
+
     @_messages.clear()
     @linter.eachEditorLinter (editorLinter) =>
       @_extractMessages(editorLinter.getMessages(), counts)
     @._extractMessages(@linter.getProjectMessages(), counts)
 
     @_renderPanel()
-    @_bottomTabFile.count = counts.file
-    @_bottomTabProject.count = counts.project
-    @_bottomStatus.count = counts.project
+    @_bottomTabFile.count = counts.file.error + counts.project.warning
+    @_bottomTabProject.count = counts.project.error + counts.project.warning
+
     hasActiveEditor = typeof atom.workspace.getActiveTextEditor() isnt 'undefined'
+
+    @_bottomErrorStatus.count = counts.project.error
+    @_bottomWarningStatus.count = counts.project.warning
+
+    if !counts.project.error and !counts.project.warning
+      @_bottomSuccessStatus.show()
+    else
+      @_bottomSuccessStatus.hide()
+
+    if hasActiveEditor
+      @updateBottomStatusClasses()
+    else
+      @_bottomErrorStatus.hide()
+      @_bottomWarningStatus.hide()
+      @_bottomSuccessStatus.hide()
+
     @_bottomTabFile.visibility = hasActiveEditor
     @_bottomTabProject.visibility = hasActiveEditor
+
+  # Add border-radius and margin for bottom status
+  # since we only hide when there's no error I and
+  # CSS selector `:first-of-type:not(.hide)` works
+  # I must use JS to update specific styles
+  updateBottomStatusClasses: ->
+    notHidden = document
+      .querySelectorAll 'linter-bottom-status:not(.hide)'
+
+    for el in notHidden
+      el.classList.remove 'last'
+      el.classList.remove 'first'
+
+    notHidden[0]?.classList.add 'first'
+    notHidden[notHidden.length - 1]?.classList.add 'last'
 
   # consumed in editor-linter, _renderPanel
   updateBubble: (point) ->
@@ -115,12 +167,22 @@ class LinterViews
     @_statusTiles.push statusBar.addLeftTile
       item: @_bottomTabFile,
       priority: -1001
+
     @_statusTiles.push statusBar.addLeftTile
       item: @_bottomTabProject,
       priority: -1000
-    @_statusTiles.push statusBar.addRightTile
-      item: @_bottomStatus,
-      priority: 999
+
+    @_statusTiles.push statusBar.addLeftTile
+      item: @_bottomErrorStatus,
+      priority: -999
+
+    @_statusTiles.push statusBar.addLeftTile
+      item: @_bottomWarningStatus,
+      priority: -998
+
+    @_statusTiles.push statusBar.addLeftTile
+      item: @_bottomSuccessStatus,
+      priority: -997
 
   # this method is called on package deactivate
   destroy: ->
@@ -183,7 +245,6 @@ class LinterViews
       @_panel.appendChild Element
     @updateBubble()
 
-
   _removeMarkers: ->
     return unless @_markers.length
     for marker in @_markers
@@ -200,11 +261,12 @@ class LinterViews
       Entry.forEach (message) =>
         # If there's no file prop on message and the panel scope is file then count is as current
         if activeEditor and ((not message.filePath and not isProject) or message.filePath is activeFile)
-          counts.file++
-          counts.project++
+          counts.file[message.type]++
+          counts.project[message.type]++
           message.currentFile = true
         else
-          counts.project++
+          counts.project[message.type]++
           message.currentFile = false
         @_messages.add message
+
 module.exports = LinterViews

@@ -1,10 +1,11 @@
-@import "ui-variables";
+@import 'ui-variables';
 @import 'octicon-utf-codes';
 
 linter-message {
   display: block;
   padding: 2px;
   font-size: @font-size;
+
   span {
     padding: 0 6px;
   }
@@ -15,6 +16,7 @@ linter-message {
   overflow-y: scroll;
   max-height: 150px;
   padding: 4px 8px;
+
   &[hidden]{
     display: none;
   }
@@ -46,38 +48,71 @@ linter-message {
     border: 4px solid;
     border-color: transparent transparent @linter-inline-bg @linter-inline-bg;
   }
+
   a {
     color: @linter-inline-link;
     margin-right: 4px;
   }
+
   .badge {
     margin-top: -2px;
   }
 }
 
-linter-bottom-tab {
+linter-bottom-tab,
+linter-bottom-status {
+  color: #FFF !important;
   display: inline-block;
-  margin-right: -1px; // hide left border
   padding: 0 .6em;
-  line-height: 1.8em;
   vertical-align: middle;
-  color: @text-color-subtle;
-  border: 1px solid @button-border-color;
-  background: fade(@button-background-color, 33%);
-  cursor: pointer;
-  &:first-of-type {
+  line-height: 1.8em;
+
+  &:first-of-type,
+  &.first {
     border-top-left-radius: @component-border-radius;
     border-bottom-left-radius: @component-border-radius;
   }
-  &:last-of-type {
+
+  &:last-of-type,
+  &.last {
     margin-right: .6em;
     border-top-right-radius: @component-border-radius;
     border-bottom-right-radius: @component-border-radius;
   }
+}
+
+linter-bottom-status {
+  cursor: pointer;
+
+  &.status-error {
+    background: @background-color-error;
+  }
+
+  &.status-warning {
+    background: @background-color-warning;
+  }
+
+  &.status-success {
+    background: @background-color-success;
+    border-radius: 50%;
+    cursor: default;
+    height: .8em;
+    width: .8em;
+    padding: 0;
+  }
+}
+
+linter-bottom-tab {
+  margin-right: -1px; // hide left border
+  color: @text-color-subtle;
+  border: 1px solid @button-border-color;
+  background: fade(@button-background-color, 33%);
+  cursor: pointer;
 
   &:active {
     background: transparent;
   }
+
   &.active {
     color: @text-color-highlight;
     background: @button-background-color;
@@ -90,6 +125,7 @@ linter-bottom-tab {
 
 atom-text-editor::shadow .linter-highlight .icon-right{
   visibility: visible;
+
   &::before{
     content: @primitive-dot;
     font-size: 1.1em;
@@ -100,48 +136,49 @@ atom-text-editor::shadow .linter-highlight, .linter-highlight{
   &.badge {
     border-radius: @component-border-radius;
   }
+
   &.error {
     &:not(.line-number){
       background-color: @background-color-error;
       color: white;
     }
+
     .icon-right::before{
       color: @background-color-error;
     }
+
     .region {
       border-bottom: 1px dashed @background-color-error;
     }
   }
+
   &.warning {
     &:not(.line-number){
       background-color: @background-color-warning;
       color: white;
     }
+
     .icon-right::before{
       color: @background-color-warning;
     }
+
     .region {
       border-bottom: 1px dashed @background-color-warning;
     }
   }
+
   &.trace {
     &:not(.line-number){
       background-color: @background-color-info;
       color: white;
     }
+
     .icon-right::before{
       color: @background-color-info;
     }
+
     .region {
       border-bottom: 1px dashed @background-color-info;
     }
-  }
-
-  // Used by bottom status icon
-  &.status-error {
-    color: @background-color-error;
-  }
-  &.status-success{
-    color: @background-color-success;
   }
 }
