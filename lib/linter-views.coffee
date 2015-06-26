@@ -109,15 +109,15 @@ class LinterViews
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
-    @_statusTiles.push statusBar.addLeftTile
+    @_statusTiles.push statusBar.addRightTile
       item: @_bottomTabFile,
-      priority: -1001
-    @_statusTiles.push statusBar.addLeftTile
+      priority: 1001
+    @_statusTiles.push statusBar.addRightTile
       item: @_bottomTabProject,
-      priority: -1000
-    @_statusTiles.push statusBar.addLeftTile
+      priority: 1000
+    @_statusTiles.push statusBar.addRightTile
       item: @_bottomStatus,
-      priority: -999
+      priority: 999
 
   # this method is called on package deactivate
   destroy: ->
