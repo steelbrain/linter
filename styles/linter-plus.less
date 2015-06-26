@@ -59,27 +59,46 @@ linter-message {
   }
 }
 
-linter-bottom-tab {
+linter-bottom-tab,
+linter-bottom-status {
+  color: #FFF !important;
   display: inline-block;
-  margin-right: -1px; // hide left border
   padding: 0 .6em;
-  line-height: 1.8em;
   vertical-align: middle;
-  color: @text-color-subtle;
-  border: 1px solid @button-border-color;
-  background: fade(@button-background-color, 33%);
-  cursor: pointer;
+  line-height: 1.8em;
 
-  &:first-of-type {
+  &:first-of-type,
+  &.first {
     border-top-left-radius: @component-border-radius;
     border-bottom-left-radius: @component-border-radius;
   }
 
-  &:last-of-type {
+  &:last-of-type,
+  &.last {
     margin-right: .6em;
     border-top-right-radius: @component-border-radius;
     border-bottom-right-radius: @component-border-radius;
   }
+}
+
+linter-bottom-status {
+  cursor: pointer;
+
+  &.status-error {
+    background: @background-color-error;
+  }
+
+  &.status-warning {
+    background: @background-color-warning;
+  }
+}
+
+linter-bottom-tab {
+  margin-right: -1px; // hide left border
+  color: @text-color-subtle;
+  border: 1px solid @button-border-color;
+  background: fade(@button-background-color, 33%);
+  cursor: pointer;
 
   &:active {
     background: transparent;
@@ -152,20 +171,5 @@ atom-text-editor::shadow .linter-highlight, .linter-highlight{
     .region {
       border-bottom: 1px dashed @background-color-info;
     }
-  }
-
-  // Used by bottom status icon
-  &.status-error {
-    cursor: pointer;
-    color: @background-color-error;
-  }
-
-  &.status-success {
-    color: @background-color-success;
-  }
-
-  &.status-warning {
-    cursor: pointer;
-    color: @background-color-warning;
   }
 }

@@ -105,10 +105,26 @@ class LinterViews
 
     @_bottomErrorStatus.count = counts.project.error
     @_bottomWarningStatus.count = counts.project.warning
+    @updateBottomStatusClasses()
 
     hasActiveEditor = typeof atom.workspace.getActiveTextEditor() isnt 'undefined'
     @_bottomTabFile.visibility = hasActiveEditor
     @_bottomTabProject.visibility = hasActiveEditor
+
+  # Add border-radius and margin for bottom status
+  # since we only hide when there's no error I and
+  # CSS selector `:first-of-type:not(.hide)` works
+  # I must use JS to update specific styles
+  updateBottomStatusClasses: ->
+    notHidden = document
+      .querySelectorAll 'linter-bottom-status:not(.hide)'
+
+    for el in notHidden
+      el.classList.remove 'last'
+      el.classList.remove 'first'
+
+    notHidden[0]?.classList.add 'first'
+    notHidden[notHidden.length - 1]?.classList.add 'last'
 
   # consumed in editor-linter, _renderPanel
   updateBubble: (point) ->
@@ -210,7 +226,6 @@ class LinterViews
       Element = Message.fromMessage(message, addPath: @_scope is 'project', cloneNode: true)
       @_panel.appendChild Element
     @updateBubble()
-
 
   _removeMarkers: ->
     return unless @_markers.length
