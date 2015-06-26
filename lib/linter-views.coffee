@@ -16,7 +16,7 @@ class LinterViews
     @_bubble = null
     @_bottomStatus = new BottomStatus()
 
-    @_bottomTabFile.initialize("Current File", =>
+    @_bottomTabFile.initialize("File", =>
       @_changeTab('file')
     )
     @_bottomTabProject.initialize("Project", =>
