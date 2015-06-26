@@ -8,7 +8,8 @@ class EditorLinter
     @_inProgress = false
     @_inProgressFly = false
 
-    @linter.views.updateCurrentLine @editor.getCursorBufferPosition()?.row
+    if @editor is atom.workspace.getActiveTextEditor()
+      @linter.views.updateCurrentLine @editor.getCursorBufferPosition()?.row
 
     @_emitter = new Emitter
     @_subscriptions = new CompositeDisposable

@@ -39,10 +39,6 @@ class LinterViews
     @_bottomTabFile.active = true
     @_panel.id = 'linter-panel'
 
-  setLineMessages: (@_lineMessages) ->
-    @_bottomTabLine.count = @_lineMessages.length
-    @_renderPanel()
-
   getMessages: ->
     @_messages
 
@@ -83,11 +79,14 @@ class LinterViews
 
   # This message is called in editor-linter.coffee
   render: ->
+    console.log 'render'
     counts = {project: 0, file: 0}
     @_messages.clear()
     @linter.eachEditorLinter (editorLinter) =>
       @_extractMessages(editorLinter.getMessages(), counts)
     @._extractMessages(@linter.getProjectMessages(), counts)
+
+    @_updateLineMessages()
 
     @_renderPanel()
     @_bottomTabFile.count = counts.file
@@ -122,17 +121,22 @@ class LinterViews
   updateCurrentLine: (line) ->
     if @_currentLine isnt line
       @_currentLine = line
+      @_updateLineMessages()
 
-      activeEditor = atom.workspace.getActiveTextEditor()
-      @linter.eachEditorLinter (editorLinter) =>
-        return unless editorLinter.editor is activeEditor
 
-        messages = []
-        editorLinter.getMessages().forEach (Gen) =>
-          Gen.forEach (message) =>
-            messages.push message if message.range?.intersectsRow @_currentLine
+  _updateLineMessages: ->
 
-        @setLineMessages messages
+    activeEditor = atom.workspace.getActiveTextEditor()
+    @linter.eachEditorLinter (editorLinter) =>
+      return unless editorLinter.editor is activeEditor
+
+      @_lineMessages = []
+      editorLinter.getMessages().forEach (Gen) =>
+        Gen.forEach (message) =>
+          @_lineMessages.push message if message.range?.intersectsRow @_currentLine
+
+      @_bottomTabLine.count = @_lineMessages.length
+      @_renderPanel()
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
@@ -243,4 +247,5 @@ class LinterViews
           counts.project++
           message.currentFile = false
         @_messages.add message
+
 module.exports = LinterViews
