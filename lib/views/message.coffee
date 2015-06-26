@@ -1,7 +1,7 @@
 # This file is imported in views/panel
 
 class Message extends HTMLElement
-  initialize: (@message, @addPath) ->
+  initialize: (@message, @addPath, @cloneNode) ->
 
   attachedCallback: ->
     @appendChild Message.renderRibbon(@message)
@@ -37,7 +37,10 @@ class Message extends HTMLElement
       if typeof message.html is 'string'
         el.innerHTML = message.html
       else
-        el.appendChild message.html.cloneNode(true)
+        if @cloneNode
+          el.appendChild message.html.cloneNode(true)
+        else
+          el.appendChild message.html
     else
       el.textContent = message.text
     el
@@ -47,9 +50,9 @@ class Message extends HTMLElement
       return unless range
       atom.workspace.getActiveTextEditor().setCursorBufferPosition(range.start)
 
-  @fromMessage: (message, showPaths) ->
+  @fromMessage: (message, showPaths, cloneNode) ->
     MessageLine = new MessageElement()
-    MessageLine.initialize(message, showPaths)
+    MessageLine.initialize(message, showPaths, cloneNode)
     MessageLine
 
 module.exports = MessageElement = document.registerElement('linter-message', {prototype: Message.prototype})
