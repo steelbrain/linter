@@ -54,11 +54,9 @@ class LinterViews
       @_panel.setAttribute('hidden', true)
 
   # Called in config observer of linter-plus.coffee
-  setShowBubble: (showBubble) ->
-    @_showBubble = showBubble
+  setShowBubble: (@_showBubble) ->
 
-  setUnderlineIssues: (underlineIssues) ->
-    @_underlineIssues = underlineIssues
+  setUnderlineIssues: (@_underlineIssues) ->
 
   setBubbleOpaque: ->
     bubble = document.getElementById('linter-inline')
