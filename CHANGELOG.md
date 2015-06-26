@@ -1,4 +1,4 @@
-# Upcoming
+# 1.0.6
 
 * Hide Status Bar buttons when Active Pane is not an editor
 
