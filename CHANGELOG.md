@@ -1,4 +1,4 @@
-# Upcoming
+# 1.0.7
 
 * Rename the status line summary (from `Errors` to `Issues`)
 * Rename the `Current File` tab to just `File`
