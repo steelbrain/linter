@@ -8,6 +8,8 @@ class EditorLinter
     @_inProgress = false
     @_inProgressFly = false
 
+    @linter.views.updateCurrentLine @editor.getCursorBufferPosition()?.row
+
     @_emitter = new Emitter
     @_subscriptions = new CompositeDisposable
 
@@ -16,6 +18,7 @@ class EditorLinter
     )
     @_subscriptions.add(
       @editor.onDidChangeCursorPosition ({newBufferPosition}) =>
+        @linter.views.updateCurrentLine(newBufferPosition.row)
         @linter.views.updateBubble(newBufferPosition)
     )
     @_subscriptions.add(

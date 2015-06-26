@@ -12,13 +12,18 @@ class LinterViews
     @_markers = []
     @_statusTiles = []
 
+    @_bottomTabLine = new BottomTab()
     @_bottomTabFile = new BottomTab()
     @_bottomTabProject = new BottomTab()
     @_panel = document.createElement 'div'
     @_bubble = null
     @_bottomStatus = new BottomStatus()
 
+    @_bottomTabLine.initialize("Line", =>
+      @_changeTab('line')
+    )
     @_bottomTabFile.initialize("File", =>
+
       @_changeTab('file')
     )
     @_bottomTabProject.initialize("Project", =>
@@ -33,6 +38,10 @@ class LinterViews
     @_scope = 'file'
     @_bottomTabFile.active = true
     @_panel.id = 'linter-panel'
+
+  setLineMessages: (@_lineMessages) ->
+    @_bottomTabLine.count = @_lineMessages.length
+    @_renderPanel()
 
   getMessages: ->
     @_messages
@@ -110,8 +119,26 @@ class LinterViews
       )
       throw null
 
+  updateCurrentLine: (line) ->
+    if @_currentLine isnt line
+      @_currentLine = line
+
+      activeEditor = atom.workspace.getActiveTextEditor()
+      @linter.eachEditorLinter (editorLinter) =>
+        return unless editorLinter.editor is activeEditor
+
+        messages = []
+        editorLinter.getMessages().forEach (Gen) =>
+          Gen.forEach (message) =>
+            messages.push message if message.range?.intersectsRow @_currentLine
+
+        @setLineMessages messages
+
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
+    @_statusTiles.push statusBar.addLeftTile
+      item: @_bottomTabLine,
+      priority: -1002
     @_statusTiles.push statusBar.addLeftTile
       item: @_bottomTabFile,
       priority: -1001
@@ -136,6 +163,8 @@ class LinterViews
       @_showPanel = not @_showPanel
     else if @_bottomTabProject.active and Tab is 'project'
       @_showPanel = not @_showPanel
+    else if @_bottomTabLine.active and Tab is 'line'
+      @_showPanel = not @_showPanel
     else
       @_showPanel = true
     @setShowPanel(@_showPanel)
@@ -143,10 +172,12 @@ class LinterViews
       @_scope = Tab
       @_bottomTabProject.active = Tab is 'project'
       @_bottomTabFile.active = Tab is 'file'
+      @_bottomTabLine.active = Tab is 'line'
       @_renderPanel()
     else
       @_bottomTabProject.active = no
       @_bottomTabFile.active = no
+      @_bottomTabLine.active = no
 
   _removeBubble: ->
     return unless @_bubble
@@ -179,7 +210,12 @@ class LinterViews
         activeEditor.decorateMarker(
           marker, type: 'highlight', class: "linter-highlight #{message.class}"
         )
+
+      if @_scope is 'line'
+        return if @_lineMessages.indexOf(message) is -1
+
       Element = Message.fromMessage(message, addPath: @_scope is 'project', cloneNode: true)
+
       @_panel.appendChild Element
     @updateBubble()
 
