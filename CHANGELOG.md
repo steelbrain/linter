@@ -1,3 +1,7 @@
+# Upcoming
+
+* Hide Status Bar buttons when Active Pane is not an editor
+
 # 1.0.5
 
 * Fix message render for non TextEditor panes (Fixes #610)
@@ -6,7 +10,6 @@
 * Add set-bubble-transparent command to set the bubble transparent until the key is released (Fixes #608)
 * Deselect bottom tab when error panel is hidden
 * Add linter:lint command (Fixes #624)
-* Hide Status Bar buttons when Active Pane is not an editor
 
 # 1.0.4
 
