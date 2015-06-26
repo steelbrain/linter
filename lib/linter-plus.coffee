@@ -23,6 +23,8 @@ class Linter
       @views.setShowBubble(showBubble)
     @_subscriptions.add atom.config.observe 'linter.showErrorPanel', (showPanel) =>
       @views.setShowPanel(showPanel)
+    @_subscriptions.add atom.config.observe 'linter.underlineIssues', (underlineIssues) =>
+      @views.setUnderlineIssues(underlineIssues)
     @_subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
     @_subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
