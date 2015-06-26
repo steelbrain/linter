@@ -1,4 +1,4 @@
-# Upcoming
+# 1.0.5
 
 * Fix message render for non TextEditor panes (Fixes #610)
 * Make the bubble follow cursor
