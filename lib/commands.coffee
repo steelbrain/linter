@@ -27,20 +27,11 @@ class Commands
     catch error
       atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
 
-  # Recursive find until it matches type
+  # Recursive find until it matches correct type
   getNextMessage: (messages, type) ->
     next = messages.next()
-
-    # Message is done return it,
-    # avoid infinite loop through existing `@_messages`
-    #
-    # (when called from line #36)
     return next if next.done
-
-    # Message type is correct return it
     return next if next.value.type is type
-
-    # Let's try with the next one
     return @getNextMessage messages, type
 
   nextMessage: (type) ->
