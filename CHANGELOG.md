@@ -1,3 +1,8 @@
+# Upcoming
+
+* Rename the status line summary (from `Errors` to `Issues`)
+* Rename the `Current File` tab to just `File`
+
 # 1.0.6
 
 * Hide Status Bar buttons when Active Pane is not an editor
