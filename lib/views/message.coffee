@@ -37,7 +37,7 @@ class Message extends HTMLElement
       if typeof message.html is 'string'
         el.innerHTML = message.html
       else
-        el.appendChild message.html
+        el.appendChild message.html.cloneNode(true)
     else
       el.textContent = message.text
     el
