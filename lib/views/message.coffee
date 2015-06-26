@@ -50,7 +50,7 @@ class Message extends HTMLElement
       return unless range
       atom.workspace.getActiveTextEditor().setCursorBufferPosition(range.start)
 
-  @fromMessage: (message, options) ->
+  @fromMessage: (message, options = {}) ->
     MessageLine = new MessageElement()
     MessageLine.initialize(message, options)
     MessageLine

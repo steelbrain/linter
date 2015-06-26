@@ -153,9 +153,9 @@ class LinterViews
   _renderBubble: (message) ->
     bubble = document.createElement 'div'
     bubble.id = 'linter-inline'
-    bubble.appendChild Message.fromMessage(message, addPath: false, cloneNode: false)
+    bubble.appendChild Message.fromMessage(message)
     if message.trace then message.trace.forEach (trace) ->
-      bubble.appendChild Message.fromMessage(trace, addPath: true, cloneNode: false)
+      bubble.appendChild Message.fromMessage(trace, addPath: true)
     bubble
 
   _renderPanel: ->
