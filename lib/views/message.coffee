@@ -1,14 +1,14 @@
 # This file is imported in views/panel
 
 class Message extends HTMLElement
-  initialize: (@message, @addPath, @cloneNode) ->
+  initialize: (@message, @options) ->
 
   attachedCallback: ->
     @appendChild Message.renderRibbon(@message)
-    @appendChild Message.renderMessage(@message)
-    @appendChild Message.renderLink(@message, @addPath) if @message.filePath
+    @appendChild Message.renderMessage(@message, @options)
+    @appendChild Message.renderLink(@message, @options) if @message.filePath
 
-  @renderLink: (message, addPath) ->
+  @renderLink: (message, {addPath}) ->
     displayFile = message.filePath
     atom.project.getPaths().forEach (path) ->
       return if message.filePath.indexOf(path) isnt 0 or displayFile isnt message.filePath # Avoid double replacing
@@ -31,13 +31,13 @@ class Message extends HTMLElement
     el.textContent = message.type
     el
 
-  @renderMessage: (message) ->
+  @renderMessage: (message, {cloneNode}) ->
     el = document.createElement 'span'
     if message.html
       if typeof message.html is 'string'
         el.innerHTML = message.html
       else
-        if @cloneNode
+        if cloneNode
           el.appendChild message.html.cloneNode(true)
         else
           el.appendChild message.html
@@ -50,9 +50,9 @@ class Message extends HTMLElement
       return unless range
       atom.workspace.getActiveTextEditor().setCursorBufferPosition(range.start)
 
-  @fromMessage: (message, showPaths, cloneNode) ->
+  @fromMessage: (message, options) ->
     MessageLine = new MessageElement()
-    MessageLine.initialize(message, showPaths, cloneNode)
+    MessageLine.initialize(message, options)
     MessageLine
 
 module.exports = MessageElement = document.registerElement('linter-message', {prototype: Message.prototype})
