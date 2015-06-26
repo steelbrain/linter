@@ -1,11 +1,2 @@
 'atom-text-editor:not(.mini)':
   'alt': 'linter:set-bubble-transparent'
-
-'.platform-darwin atom-text-editor:not(.mini)':
-  'cmd-l': 'linter:lint'
-
-'.platform-linux atom-text-editor:not(.mini)':
-  'ctrl-l': 'linter:lint'
-
-'.platform-windows atom-text-editor:not(.mini)':
-  'ctrl-l': 'linter:lint'
