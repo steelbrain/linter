@@ -1,3 +1,7 @@
+# Upcoming
+
+* Rename the status line summary (from `Errors` to `Issues`)
+
 # 1.0.6
 
 * Hide Status Bar buttons when Active Pane is not an editor
