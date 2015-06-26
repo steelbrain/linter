@@ -39,9 +39,11 @@ class EditorLinter
 
   deleteMessages: (linter) ->
     @_messages.delete(linter)
+    @linter.views.render() if @editor is atom.workspace.getActiveTextEditor()
 
   setMessages: (linter, messages) ->
     @_messages.set(linter, Helpers.validateResults(messages))
+    @linter.views.render() if @editor is atom.workspace.getActiveTextEditor()
 
   # Called on package deactivate
   destroy: ->
@@ -82,7 +84,6 @@ class EditorLinter
           @linter.setProjectMessages(linter, results)
         else
           @setMessages(linter, results)
-          @linter.views.render() if @editor is atom.workspace.getActiveTextEditor()
           @_emitter.emit 'did-update'
       ).catch (error) ->
         atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
