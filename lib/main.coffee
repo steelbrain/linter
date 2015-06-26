@@ -11,6 +11,14 @@ module.exports =
       title: 'Show Error Panel at the bottom'
       type: 'boolean'
       default: true
+    showErrorLineTab:
+      title: 'Show line tab in error panel'
+      type: 'boolean'
+      default: false
+    defaultErrorTab:
+      type: 'string'
+      default: 'file'
+      enum: ['line', 'file', 'project']
     showErrorInline:
       title: 'Show Inline Tooltips'
       descriptions: 'Show inline tooltips for errors'

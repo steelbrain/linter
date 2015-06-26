@@ -12,6 +12,7 @@ class LinterViews
     @_markers = []
     @_statusTiles = []
 
+
     @_bottomTabLine = new BottomTab()
     @_bottomTabFile = new BottomTab()
     @_bottomTabProject = new BottomTab()
@@ -23,7 +24,6 @@ class LinterViews
       @_changeTab('line')
     )
     @_bottomTabFile.initialize("File", =>
-
       @_changeTab('file')
     )
     @_bottomTabProject.initialize("Project", =>
@@ -34,9 +34,15 @@ class LinterViews
       atom.commands.dispatch atom.views.getView(atom.workspace), 'linter:next-error'
     @_panelWorkspace = atom.workspace.addBottomPanel item: @_panel, visible: false
 
-    # Set default tab to File
-    @_scope = 'file'
-    @_bottomTabFile.active = true
+    # Set default tab
+    @_scope = atom.config.get('linter.defaultErrorTab')
+    if @_scope is 'line' and not atom.config.get('linter.showErrorLineTab')
+      @_scope = 'file'
+
+    @_bottomTabLine.active = @_scope is 'line'
+    @_bottomTabFile.active = @_scope is 'file'
+    @_bottomTabProject.active = @_scope is 'project'
+
     @_panel.id = 'linter-panel'
 
   getMessages: ->
@@ -79,7 +85,6 @@ class LinterViews
 
   # This message is called in editor-linter.coffee
   render: ->
-    console.log 'render'
     counts = {project: 0, file: 0}
     @_messages.clear()
     @linter.eachEditorLinter (editorLinter) =>
@@ -93,6 +98,7 @@ class LinterViews
     @_bottomTabProject.count = counts.project
     @_bottomStatus.count = counts.project
     hasActiveEditor = typeof atom.workspace.getActiveTextEditor() isnt 'undefined'
+    @_bottomTabLine.visibility = hasActiveEditor and atom.config.get('linter.showErrorLineTab')
     @_bottomTabFile.visibility = hasActiveEditor
     @_bottomTabProject.visibility = hasActiveEditor
 
