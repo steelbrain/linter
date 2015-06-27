@@ -65,11 +65,11 @@ class EditorLinter
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
     scopes.push '*' # To allow global linters
 
-    Promise.all(@lint(wasTriggeredOnChange, scopes)).then =>
+    Promise.all(@triggerLinters(wasTriggeredOnChange, scopes)).then =>
       @lock(wasTriggeredOnChange, false)
 
   # This method returns an array of promises to be used in lint
-  _lint: (wasTriggeredOnChange, scopes) ->
+  triggerLinters: (wasTriggeredOnChange, scopes) ->
     Promises = []
     @linter.getLinters().forEach (linter) =>
       if @linter.lintOnFly
