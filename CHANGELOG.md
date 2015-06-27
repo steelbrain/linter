@@ -1,3 +1,7 @@
+# Upcoming
+
+* Add support for collapsible messages
+
 # 1.0.9
 
 * Add some default keybindings (Fixes #597)
