@@ -160,7 +160,8 @@ class LinterViews
     @statusTiles.push statusBar.addLeftTile
       item: @tabs.get('project'),
       priority: -1000
-    @statusTiles.push statusBar.addRightTile
+    statusIconPosition = atom.config.get('linter.statusIconPosition')
+    @statusTiles.push statusBar["add#{statusIconPosition}Tile"]
       item: @bottomStatus,
       priority: 999
 
