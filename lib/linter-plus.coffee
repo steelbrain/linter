@@ -13,37 +13,38 @@ class Linter
     @commands = new Commands this
 
     # Private Stuff
-    @_subscriptions = new CompositeDisposable
-    @_emitter = new Emitter
-    @_editorLinters = new Map
-    @_messagesProject = new Map # Values set in editor-linter and consumed in views.render
-    @_linters = new Set # Values are pushed here from Main::consumeLinter
+    @subscriptions = new CompositeDisposable
+    @emitter = new Emitter
+    @editorLinters = new Map
+    @messagesProject = new Map # Values set in editor-linter and consumed in views.render
+    @linters = new Set # Values are pushed here from Main::consumeLinter
 
-    @_subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
+    @subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
       @views.setShowBubble(showBubble)
-    @_subscriptions.add atom.config.observe 'linter.showErrorPanel', (showPanel) =>
+    @subscriptions.add atom.config.observe 'linter.showErrorPanel', (showPanel) =>
       @views.setShowPanel(showPanel)
-    @_subscriptions.add atom.config.observe 'linter.underlineIssues', (underlineIssues) =>
+    @subscriptions.add atom.config.observe 'linter.underlineIssues', (underlineIssues) =>
       @views.setUnderlineIssues(underlineIssues)
-    @_subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
+    @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
-    @_subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
-      # Exceptions thrown here prevent switching tabs
+    @subscriptions.add atom.project.onDidChangePaths =>
+      @commands.lint()
+    @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
       @commands.lint()
 
-    @_subscriptions.add atom.workspace.observeTextEditors (editor) =>
+    @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       currentEditorLinter = new EditorLinter @, editor
-      @_editorLinters.set editor, currentEditorLinter
-      @_emitter.emit 'observe-editor-linters', currentEditorLinter
+      @editorLinters.set editor, currentEditorLinter
+      @emitter.emit 'observe-editor-linters', currentEditorLinter
       currentEditorLinter.lint false
       editor.onDidDestroy =>
         currentEditorLinter.destroy()
-        @_editorLinters.delete editor
+        @editorLinters.delete editor
 
   addLinter: (linter) ->
     try
       if(Helpers.validateLinter(linter))
-        @_linters.add(linter)
+        @linters.add(linter)
     catch err
       atom.notifications.addError("Invalid Linter: #{err.message}", {
         detail: err.stack,
@@ -52,7 +53,7 @@ class Linter
 
   deleteLinter: (linter) ->
     return unless @hasLinter(linter)
-    @_linters.delete(linter)
+    @linters.delete(linter)
     if linter.scope is 'project'
       @deleteProjectMessages(linter)
     else
@@ -62,42 +63,42 @@ class Linter
     @views.render()
 
   hasLinter: (linter) ->
-    @_linters.has(linter)
+    @linters.has(linter)
 
   getLinters: ->
-    @_linters
+    @linters
 
   onDidChangeProjectMessages: (callback)->
-    @_emitter.on 'did-change-project-messages', callback
+    @emitter.on 'did-change-project-messages', callback
 
   getProjectMessages: ->
-    @_messagesProject
+    @messagesProject
 
   setProjectMessages: (linter, messages) ->
-    @_messagesProject.set(linter, Helpers.validateResults(messages))
-    @_emitter.emit 'did-change-project-messages', @_messagesProject
+    @messagesProject.set(linter, Helpers.validateResults(messages))
+    @emitter.emit 'did-change-project-messages', @messagesProject
     @views.render()
 
   deleteProjectMessages: (linter) ->
-    @_messagesProject.delete(linter)
-    @_emitter.emit 'did-change-project-messages', @_messagesProject
+    @messagesProject.delete(linter)
+    @emitter.emit 'did-change-project-messages', @messagesProject
     @views.render()
 
   getActiveEditorLinter: ->
     return @getEditorLinter atom.workspace.getActiveTextEditor()
 
   getEditorLinter: (editor) ->
-    return @_editorLinters.get editor
+    return @editorLinters.get editor
 
   eachEditorLinter: (callback) ->
-    @_editorLinters.forEach(callback)
+    @editorLinters.forEach(callback)
 
   observeEditorLinters: (callback) ->
     @eachEditorLinter callback
-    @_emitter.on 'observe-editor-linters', callback
+    @emitter.on 'observe-editor-linters', callback
 
   deactivate: ->
-    @_subscriptions.dispose()
+    @subscriptions.dispose()
     @eachEditorLinter (linter) ->
       linter.destroy()
     @views.destroy()

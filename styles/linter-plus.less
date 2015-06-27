@@ -2,11 +2,45 @@
 @import 'octicon-utf-codes';
 
 linter-message {
-  display: block;
+  display: flex;
+  align-items: flex-end;
   padding: 2px;
   font-size: @font-size;
   span {
     padding: 0 6px;
+  }
+  & > .badge {
+    align-self: flex-start;
+  }
+}
+
+linter-multiline-message {
+  display: block;
+  pointer-events: auto;
+  linter-message-line {
+    display: block;
+    white-space: pre;
+  }
+  linter-message-line:not(:first-child) {
+    display: none;
+    margin-left: 1.1em;
+  }
+  linter-message-line:first-child:not(:nth-last-of-type(1))::before {
+    font-family: 'Octicons Regular';
+    content: @triangle-right;
+    display: inline-block;
+    width: 1em;
+    margin-right: 0.1em;
+    text-align: center;
+    height: 1em;
+  }
+  &:focus, &.expanded {
+    linter-message-line:first-child:not(:nth-last-of-type(1))::before {
+      content: @triangle-down;
+    }
+    linter-message-line:not(:first-child) {
+      display: block;
+    }
   }
 }
 
@@ -49,9 +83,6 @@ linter-message {
   a {
     color: @linter-inline-link;
     margin-right: 4px;
-  }
-  .badge {
-    margin-top: -2px;
   }
 }
 

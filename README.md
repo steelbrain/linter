@@ -18,7 +18,7 @@ Install package through Atom or use CLI:
 
 * `$ apm install linter`
 
-## Availables linters
+## Available linters
 
 [Full linters list](http://atomlinter.github.io/)
 
