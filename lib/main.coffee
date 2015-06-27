@@ -11,10 +11,18 @@ module.exports =
       title: 'Show Error Panel at the bottom'
       type: 'boolean'
       default: true
-    showErrorLineTab:
+    showErrorTabLine:
       title: 'Show line tab in error panel'
       type: 'boolean'
       default: false
+    showErrorTabFile:
+      title: 'Show file tab in error panel'
+      type: 'boolean'
+      default: true
+    showErrorTabProject:
+      title: 'Show project tab in error panel'
+      type: 'boolean'
+      default: true
     defaultErrorTab:
       type: 'string'
       default: 'file'

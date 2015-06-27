@@ -2,7 +2,8 @@
 
 * Add some default keybindings (Fixes #597)
 * UI is rendered when Messages are changed pragmatically (Fixes #639)
-* Add optional tab `Line` to show only errors of the current line.
+* Add tab `Line` to show only errors of the current line.
+* Add config options to hide individual tabs (`Line`, `File`, `Project`).
 
 # 1.0.8
 
