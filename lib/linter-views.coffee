@@ -172,12 +172,12 @@ class LinterViews
     activeEditor = atom.workspace.getActiveTextEditor()
     @messages.forEach (message) =>
       if @scope is 'file' then return unless message.currentFile
-      if @underlineIssues and message.currentFile and message.range #Add the decorations to the current TextEditor
+      if message.currentFile and message.range #Add the decorations to the current TextEditor
         @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
         activeEditor.decorateMarker(
           marker, type: 'line-number', class: "linter-highlight #{message.class}"
         )
-        activeEditor.decorateMarker(
+        if @underlineIssues then activeEditor.decorateMarker(
           marker, type: 'highlight', class: "linter-highlight #{message.class}"
         )
       Element = Message.fromMessage(message, addPath: @scope is 'project', cloneNode: true)
