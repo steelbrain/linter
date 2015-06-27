@@ -4,59 +4,59 @@ Message = require './views/message'
 
 class LinterViews
   constructor: (@linter) ->
-    @_showPanel = true # Altered by config observer in linter-plus
-    @_showBubble = true # Altered by the config observer in linter-plus
-    @_underlineIssues = true # Altered by config observer in linter-plus
+    @showPanel = true # Altered by config observer in linter-plus
+    @showBubble = true # Altered by the config observer in linter-plus
+    @underlineIssues = true # Altered by config observer in linter-plus
 
-    @_messages = new Set
-    @_markers = []
-    @_statusTiles = []
+    @messages = new Set
+    @markers = []
+    @statusTiles = []
 
-    @_bottomTabFile = new BottomTab()
-    @_bottomTabProject = new BottomTab()
-    @_panel = document.createElement 'div'
-    @_bubble = null
-    @_bottomStatus = new BottomStatus()
+    @bottomTabFile = new BottomTab()
+    @bottomTabProject = new BottomTab()
+    @panel = document.createElement 'div'
+    @bubble = null
+    @bottomStatus = new BottomStatus()
 
-    @_bottomTabFile.initialize("File", =>
-      @_changeTab('file')
+    @bottomTabFile.initialize("File", =>
+      @changeTab('file')
     )
-    @_bottomTabProject.initialize("Project", =>
-      @_changeTab('project')
+    @bottomTabProject.initialize("Project", =>
+      @changeTab('project')
     )
-    @_bottomStatus.initialize()
-    @_bottomStatus.addEventListener 'click', ->
+    @bottomStatus.initialize()
+    @bottomStatus.addEventListener 'click', ->
       atom.commands.dispatch atom.views.getView(atom.workspace), 'linter:next-error'
-    @_panelWorkspace = atom.workspace.addBottomPanel item: @_panel, visible: false
+    @panelWorkspace = atom.workspace.addBottomPanel item: @panel, visible: false
 
     # Set default tab to File
-    @_scope = 'file'
-    @_bottomTabFile.active = true
-    @_panel.id = 'linter-panel'
+    @scope = 'file'
+    @bottomTabFile.active = true
+    @panel.id = 'linter-panel'
 
   getMessages: ->
-    @_messages
+    @messages
 
 # consumed in views/panel
   setPanelVisibility: (Status) ->
     if Status
-      @_panelWorkspace.show() unless @_panelWorkspace.isVisible()
+      @panelWorkspace.show() unless @panelWorkspace.isVisible()
     else
-      @_panelWorkspace.hide() if @_panelWorkspace.isVisible()
+      @panelWorkspace.hide() if @panelWorkspace.isVisible()
 
   # Called in config observer of linter-plus.coffee
   setShowPanel: (showPanel) ->
     atom.config.set('linter.showErrorPanel', showPanel)
-    @_showPanel = showPanel
+    @showPanel = showPanel
     if showPanel
-      @_panel.removeAttribute('hidden')
+      @panel.removeAttribute('hidden')
     else
-      @_panel.setAttribute('hidden', true)
+      @panel.setAttribute('hidden', true)
 
   # Called in config observer of linter-plus.coffee
-  setShowBubble: (@_showBubble) ->
+  setShowBubble: (@showBubble) ->
 
-  setUnderlineIssues: (@_underlineIssues) ->
+  setUnderlineIssues: (@underlineIssues) ->
 
   setBubbleOpaque: ->
     bubble = document.getElementById('linter-inline')
@@ -75,84 +75,84 @@ class LinterViews
   # This message is called in editor-linter.coffee
   render: ->
     counts = {project: 0, file: 0}
-    @_messages.clear()
+    @messages.clear()
     @linter.eachEditorLinter (editorLinter) =>
-      @_extractMessages(editorLinter.getMessages(), counts)
+      @extractMessages(editorLinter.getMessages(), counts)
     @._extractMessages(@linter.getProjectMessages(), counts)
 
-    @_renderPanel()
-    @_bottomTabFile.count = counts.file
-    @_bottomTabProject.count = counts.project
-    @_bottomStatus.count = counts.project
+    @renderPanel()
+    @bottomTabFile.count = counts.file
+    @bottomTabProject.count = counts.project
+    @bottomStatus.count = counts.project
     hasActiveEditor = typeof atom.workspace.getActiveTextEditor() isnt 'undefined'
-    @_bottomTabFile.visibility = hasActiveEditor
-    @_bottomTabProject.visibility = hasActiveEditor
+    @bottomTabFile.visibility = hasActiveEditor
+    @bottomTabProject.visibility = hasActiveEditor
 
   # consumed in editor-linter, _renderPanel
   updateBubble: (point) ->
-    @_removeBubble()
-    return unless @_showBubble
-    return unless @_messages.size
+    @removeBubble()
+    return unless @showBubble
+    return unless @messages.size
     activeEditor = atom.workspace.getActiveTextEditor()
     return unless activeEditor?.getPath()
     point = point || activeEditor.getCursorBufferPosition()
-    try @_messages.forEach (message) =>
+    try @messages.forEach (message) =>
       return unless message.currentFile
       return unless message.range?.containsPoint point
-      @_bubble = activeEditor.markBufferRange([point, point], {invalidate: 'never'})
+      @bubble = activeEditor.markBufferRange([point, point], {invalidate: 'never'})
       activeEditor.decorateMarker(
-        @_bubble
+        @bubble
         {
           type: 'overlay',
           position: 'tail',
-          item: @_renderBubble(message)
+          item: @renderBubble(message)
         }
       )
       throw null
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
-    @_statusTiles.push statusBar.addLeftTile
-      item: @_bottomTabFile,
+    @statusTiles.push statusBar.addLeftTile
+      item: @bottomTabFile,
       priority: -1001
-    @_statusTiles.push statusBar.addLeftTile
-      item: @_bottomTabProject,
+    @statusTiles.push statusBar.addLeftTile
+      item: @bottomTabProject,
       priority: -1000
     statusIconPosition = atom.config.get('linter.statusIconPosition')
-    @_statusTiles.push statusBar["add#{statusIconPosition}Tile"]
-      item: @_bottomStatus,
+    @statusTiles.push statusBar["add#{statusIconPosition}Tile"]
+      item: @bottomStatus,
       priority: 999
 
   # this method is called on package deactivate
   destroy: ->
-    @_messages.clear()
-    @_removeMarkers()
-    @_panelWorkspace.destroy()
-    @_removeBubble()
-    for statusTile in @_statusTiles
+    @messages.clear()
+    @removeMarkers()
+    @panelWorkspace.destroy()
+    @removeBubble()
+    for statusTile in @statusTiles
       statusTile.destroy()
 
   _changeTab: (Tab) ->
-    if @_bottomTabFile.active and Tab is 'file'
-      @_showPanel = not @_showPanel
-    else if @_bottomTabProject.active and Tab is 'project'
-      @_showPanel = not @_showPanel
+    if @bottomTabFile.active and Tab is 'file'
+      @showPanel = not @showPanel
+    else if @bottomTabProject.active and Tab is 'project'
+      @showPanel = not @showPanel
     else
-      @_showPanel = true
-    @setShowPanel(@_showPanel)
-    if @_showPanel
-      @_scope = Tab
-      @_bottomTabProject.active = Tab is 'project'
-      @_bottomTabFile.active = Tab is 'file'
-      @_renderPanel()
+      @showPanel = true
+    @setShowPanel(@showPanel)
+    if @showPanel
+      @scope = Tab
+      @bottomTabProject.active = Tab is 'project'
+      @bottomTabFile.active = Tab is 'file'
+      @renderPanel()
     else
-      @_bottomTabProject.active = no
-      @_bottomTabFile.active = no
+      @bottomTabProject.active = no
+      @bottomTabFile.active = no
 
   _removeBubble: ->
-    return unless @_bubble
-    @_bubble.destroy()
-    @_bubble = null
+    return unless @bubble
+    @bubble.destroy()
+    @bubble = null
 
   _renderBubble: (message) ->
     bubble = document.createElement 'div'
@@ -163,37 +163,37 @@ class LinterViews
     bubble
 
   _renderPanel: ->
-    @_panel.innerHTML = ''
-    @_removeMarkers()
-    @_removeBubble()
-    if not @_messages.size
+    @panel.innerHTML = ''
+    @removeMarkers()
+    @removeBubble()
+    if not @messages.size
       return @setPanelVisibility(false)
     @setPanelVisibility(true)
     activeEditor = atom.workspace.getActiveTextEditor()
-    @_messages.forEach (message) =>
-      if @_scope is 'file' then return unless message.currentFile
-      if @_underlineIssues and message.currentFile and message.range #Add the decorations to the current TextEditor
-        @_markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
+    @messages.forEach (message) =>
+      if @scope is 'file' then return unless message.currentFile
+      if @underlineIssues and message.currentFile and message.range #Add the decorations to the current TextEditor
+        @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
         activeEditor.decorateMarker(
           marker, type: 'line-number', class: "linter-highlight #{message.class}"
         )
         activeEditor.decorateMarker(
           marker, type: 'highlight', class: "linter-highlight #{message.class}"
         )
-      Element = Message.fromMessage(message, addPath: @_scope is 'project', cloneNode: true)
-      @_panel.appendChild Element
+      Element = Message.fromMessage(message, addPath: @scope is 'project', cloneNode: true)
+      @panel.appendChild Element
     @updateBubble()
 
 
   _removeMarkers: ->
-    return unless @_markers.length
-    for marker in @_markers
+    return unless @markers.length
+    for marker in @markers
       try marker.destroy()
-    @_markers = []
+    @markers = []
 
   # This method is called in render, and classifies the messages according to scope
   _extractMessages: (Gen, counts) ->
-    isProject = @_scope is 'project'
+    isProject = @scope is 'project'
     activeEditor = atom.workspace.getActiveTextEditor()
     activeFile = activeEditor?.getPath()
     Gen.forEach (Entry) =>
@@ -207,5 +207,5 @@ class LinterViews
         else
           counts.project++
           message.currentFile = false
-        @_messages.add message
+        @messages.add message
 module.exports = LinterViews
