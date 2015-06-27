@@ -78,7 +78,7 @@ class LinterViews
     @messages.clear()
     @linter.eachEditorLinter (editorLinter) =>
       @extractMessages(editorLinter.getMessages(), counts)
-    @._extractMessages(@linter.getProjectMessages(), counts)
+    @extractMessages(@linter.getProjectMessages(), counts)
 
     @renderPanel()
     @bottomTabFile.count = counts.file
