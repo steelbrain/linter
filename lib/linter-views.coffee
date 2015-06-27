@@ -135,6 +135,7 @@ class LinterViews
     if @_currentLine isnt line
       @_currentLine = line
       @_updateLineMessages()
+      @_renderPanel()
 
 
   _updateLineMessages: ->
@@ -143,12 +144,10 @@ class LinterViews
       return unless editorLinter.editor is activeEditor
 
       @_lineMessages = []
-      editorLinter.getMessages().forEach (Gen) =>
-        Gen.forEach (message) =>
-          @_lineMessages.push message if message.range?.intersectsRow @_currentLine
-
+      @_messages.forEach (message) =>
+        if message.currentFile and message.range?.intersectsRow @_currentLine
+          @_lineMessages.push message
       @_tabs.get('line').count = @_lineMessages.length
-      @_renderPanel()
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
