@@ -1,4 +1,5 @@
 # This file is imported in views/panel
+MultilineElement = require './multiline'
 
 class Message extends HTMLElement
   initialize: (@message, @options) ->
@@ -41,6 +42,8 @@ class Message extends HTMLElement
           el.appendChild message.html.cloneNode(true)
         else
           el.appendChild message.html
+    else if message.multiline
+      el.appendChild MultilineElement.fromText message.text
     else
       el.textContent = message.text
     el
