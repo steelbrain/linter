@@ -25,8 +25,8 @@ module.exports =
       default: true
     defaultErrorTab:
       type: 'string'
-      default: 'file'
-      enum: ['line', 'file', 'project']
+      default: 'File'
+      enum: ['Line', 'File', 'Project']
     showErrorInline:
       title: 'Show Inline Tooltips'
       descriptions: 'Show inline tooltips for errors'

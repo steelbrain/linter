@@ -33,7 +33,7 @@ class LinterViews
     # Set default tab
     visibleTabs = @getVisibleTabKeys()
 
-    @scope = atom.config.get('linter.defaultErrorTab', 'file')
+    @scope = atom.config.get('linter.defaultErrorTab', 'File')?.toLowerCase()
     if visibleTabs.indexOf(@scope) is -1
       @scope = visibleTabs[0]
 
