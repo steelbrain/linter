@@ -27,8 +27,9 @@ class Linter
       @views.setUnderlineIssues(underlineIssues)
     @_subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
+    @_subscriptions.add atom.project.onDidChangePaths =>
+      @commands.lint()
     @_subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
-      # Exceptions thrown here prevent switching tabs
       @commands.lint()
 
     @_subscriptions.add atom.workspace.observeTextEditors (editor) =>
