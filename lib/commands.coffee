@@ -2,15 +2,15 @@
 
 class Commands
   constructor: (@linter) ->
-    @_subscriptions = new CompositeDisposable
-    @_subscriptions.add atom.commands.add 'atom-workspace',
+    @subscriptions = new CompositeDisposable
+    @subscriptions.add atom.commands.add 'atom-workspace',
       'linter:next-error': => @nextError()
       'linter:toggle': => @toggleLinter()
       'linter:set-bubble-transparent': => @setBubbleTransparent()
       'linter:lint': => @lint()
 
     # Default values
-    @_messages = null
+    @messages = null
 
   toggleLinter: ->
     @linter.getActiveEditorLinter()?.toggleStatus()
@@ -27,8 +27,8 @@ class Commands
       atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
 
   nextError: ->
-    if not @_messages or (next = @_messages.next()).done
-      next = (@_messages = @linter.views.getMessages().values()).next()
+    if not @messages or (next = @messages.next()).done
+      next = (@messages = @linter.views.getMessages().values()).next()
     return if next.done # There's no errors
     message = next.value
     return unless message.filePath
@@ -37,7 +37,7 @@ class Commands
       atom.workspace.getActiveTextEditor().setCursorBufferPosition(message.range.start)
 
   destroy: ->
-    @_messages = null
-    @_subscriptions.dispose()
+    @messages = null
+    @subscriptions.dispose()
 
 module.exports = Commands
