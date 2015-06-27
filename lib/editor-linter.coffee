@@ -3,71 +3,73 @@ Helpers = require './helpers'
 
 class EditorLinter
   constructor: (@linter, @editor) ->
-    @_messages = new Map # Consumed by LinterViews::render
-    @_status = true
-    @_inProgress = false
-    @_inProgressFly = false
+    @messages = new Map
+    @status = true
+    @inProgress = false
+    @inProgressFly = false
 
-    @_emitter = new Emitter
-    @_subscriptions = new CompositeDisposable
+    @emitter = new Emitter
+    @subscriptions = new CompositeDisposable
 
-    @_subscriptions.add(
+    @subscriptions.add(
       @editor.onDidSave => @lint(false)
     )
-    @_subscriptions.add(
+    @subscriptions.add(
       @editor.onDidChangeCursorPosition ({newBufferPosition}) =>
         @linter.views.updateBubble(newBufferPosition)
     )
-    @_subscriptions.add(
+    @subscriptions.add(
       @editor.onDidStopChanging => @lint(true) if @linter.lintOnFly
     )
 
   toggleStatus: ->
-    @setStatus !@_status
+    @setStatus !@status
 
   getStatus: ->
-    @_status
+    @status
 
   setStatus: (status) ->
-    @_status = status
+    @status = status
     if not status
-      @_messages.clear()
+      @messages.clear()
       @linter.views.render()
 
   getMessages: ->
-    @_messages
+    @messages
 
   deleteMessages: (linter) ->
-    @_messages.delete(linter)
+    @messages.delete(linter)
+    @linter.views.render() if @editor is atom.workspace.getActiveTextEditor()
 
   setMessages: (linter, messages) ->
-    @_messages.set(linter, Helpers.validateResults(messages))
+    @messages.set(linter, Helpers.validateResults(messages))
+    @linter.views.render() if @editor is atom.workspace.getActiveTextEditor()
 
   # Called on package deactivate
   destroy: ->
-    @_emitter.emit 'did-destroy'
-    @_subscriptions.dispose()
+    @emitter.emit 'did-destroy'
+    @subscriptions.dispose()
 
   onDidUpdate: (callback) ->
-    @_emitter.on 'did-update', callback
+    @emitter.on 'did-update', callback
 
   onDidDestroy: (callback) ->
-    @_emitter.on 'did-destroy', callback
+    @emitter.on 'did-destroy', callback
 
   lint: (wasTriggeredOnChange) ->
-    return unless @_status
+    return unless @status
     return unless @editor is atom.workspace.getActiveTextEditor()
     return unless @editor.getPath()
-    return if @_lock(wasTriggeredOnChange)
+    return if @lock(wasTriggeredOnChange)
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
     scopes.push '*' # To allow global linters
 
-    Promise.all(@_lint(wasTriggeredOnChange, scopes)).then =>
-      @_lock(wasTriggeredOnChange, false)
+    Promise.all(@triggerLinters(wasTriggeredOnChange, scopes)).then =>
+      @lock(wasTriggeredOnChange, false)
 
   # This method returns an array of promises to be used in lint
-  _lint: (wasTriggeredOnChange, scopes) ->
+  triggerLinters: (wasTriggeredOnChange, scopes) ->
     Promises = []
     @linter.getLinters().forEach (linter) =>
       if @linter.lintOnFly
@@ -82,20 +84,19 @@ class EditorLinter
           @linter.setProjectMessages(linter, results)
         else
           @setMessages(linter, results)
-        @_emitter.emit 'did-update'
-        @linter.views.render() if @editor is atom.workspace.getActiveTextEditor()
+          @emitter.emit 'did-update'
       ).catch (error) ->
         atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
 
     Promises
 
   # This method sets or gets the lock status of given type
-  _lock: (wasTriggeredOnChange, value) ->
+  lock: (wasTriggeredOnChange, value) ->
     key =
       if wasTriggeredOnChange
-        '_inProgressFly'
+        'inProgressFly'
       else
-        '_inProgress'
+        'inProgress'
     if typeof value is 'undefined'
       @[key]
     else
