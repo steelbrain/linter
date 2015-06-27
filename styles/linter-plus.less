@@ -17,15 +17,15 @@ linter-message {
 linter-multiline-message {
   display: block;
   pointer-events: auto;
-  message-line {
+  linter-message-line {
     display: block;
     white-space: pre;
   }
-  message-line:not(:first-child) {
+  linter-message-line:not(:first-child) {
     display: none;
     margin-left: 1.1em;
   }
-  message-line:first-child:not(:nth-last-of-type(1))::before {
+  linter-message-line:first-child:not(:nth-last-of-type(1))::before {
     font-family: 'Octicons Regular';
     content: @triangle-right;
     display: inline-block;
@@ -35,10 +35,10 @@ linter-multiline-message {
     height: 1em;
   }
   &:focus, &.expanded {
-    message-line:first-child:not(:nth-last-of-type(1))::before {
+    linter-message-line:first-child:not(:nth-last-of-type(1))::before {
       content: @triangle-down;
     }
-    message-line:not(:first-child) {
+    linter-message-line:not(:first-child) {
       display: block;
     }
   }
