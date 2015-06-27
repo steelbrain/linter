@@ -3,44 +3,42 @@
 
 linter-message {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   padding: 2px;
   font-size: @font-size;
   span {
     padding: 0 6px;
   }
-  & > a {
-    align-self: flex-end;
+  & > .badge {
+    align-self: flex-start;
   }
 }
 
 linter-multiline-message {
   display: block;
-  pointer-events: none;
-  -webkit-nav-index: 0;
-  line {
+  pointer-events: auto;
+  message-line {
     display: block;
     white-space: pre;
   }
-  line:not(:first-child) {
+  message-line:not(:first-child) {
     display: none;
-    margin-left: calc(1em+1ch);
+    margin-left: 1.1em;
   }
-  line:first-child:not(:nth-last-of-type(1))::before {
+  message-line:first-child:not(:nth-last-of-type(1))::before {
     font-family: 'Octicons Regular';
     content: @triangle-right;
     display: inline-block;
-    width: calc(1em+1ch);
-    padding: 0.1em 0.5em;
-    pointer-events: auto;
-    border-radius: 2px;
+    width: 1em;
+    margin-right: 0.1em;
     text-align: center;
+    height: 1em;
   }
   &:focus, &.expanded {
-    line:first-child:not(:nth-last-of-type(1))::before {
+    message-line:first-child:not(:nth-last-of-type(1))::before {
       content: @triangle-down;
     }
-    line:not(:first-child) {
+    message-line:not(:first-child) {
       display: block;
     }
   }
@@ -85,9 +83,6 @@ linter-multiline-message {
   a {
     color: @linter-inline-link;
     margin-right: 4px;
-  }
-  .badge {
-    margin-top: -2px;
   }
 }
 
