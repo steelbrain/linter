@@ -7,6 +7,7 @@ class Commands
       'linter:next-error': => @nextError()
       'linter:toggle': => @toggleLinter()
       'linter:set-bubble-transparent': => @setBubbleTransparent()
+      'linter:expand-multiline-messages': => @expandMultilineMessages()
       'linter:lint': => @lint()
 
     # Default values
@@ -17,6 +18,18 @@ class Commands
 
   setBubbleTransparent: ->
     @linter.views.setBubbleTransparent()
+
+  expandMultilineMessages: ->
+    for elem in document.getElementsByTagName 'linter-multiline-message'
+      elem.classList.add 'expanded'
+    document.addEventListener 'keyup', @collapseMultilineMessages
+    window.addEventListener 'blur', @collapseMultilineMessages
+
+  collapseMultilineMessages: ->
+    for elem in document.getElementsByTagName 'linter-multiline-message'
+      elem.classList.remove 'expanded'
+    document.removeEventListener 'keyup', @collapseMultilineMessages
+    window.removeEventListener 'blur', @collapseMultilineMessages
 
   lint: ->
     try
