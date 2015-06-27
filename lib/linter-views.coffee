@@ -121,7 +121,7 @@ class LinterViews
     statusIconPosition = atom.config.get('linter.statusIconPosition')
     @statusTiles.push statusBar["add#{statusIconPosition}Tile"]
       item: @bottomStatus,
-      priority: 999
+      priority: -999
 
   # this method is called on package deactivate
   destroy: ->
