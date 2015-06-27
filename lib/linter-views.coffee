@@ -132,7 +132,7 @@ class LinterViews
     for statusTile in @statusTiles
       statusTile.destroy()
 
-  _changeTab: (Tab) ->
+  changeTab: (Tab) ->
     if @bottomTabFile.active and Tab is 'file'
       @showPanel = not @showPanel
     else if @bottomTabProject.active and Tab is 'project'
@@ -149,12 +149,12 @@ class LinterViews
       @bottomTabProject.active = no
       @bottomTabFile.active = no
 
-  _removeBubble: ->
+  removeBubble: ->
     return unless @bubble
     @bubble.destroy()
     @bubble = null
 
-  _renderBubble: (message) ->
+  renderBubble: (message) ->
     bubble = document.createElement 'div'
     bubble.id = 'linter-inline'
     bubble.appendChild Message.fromMessage(message)
@@ -162,7 +162,7 @@ class LinterViews
       bubble.appendChild Message.fromMessage(trace, addPath: true)
     bubble
 
-  _renderPanel: ->
+  renderPanel: ->
     @panel.innerHTML = ''
     @removeMarkers()
     @removeBubble()
@@ -185,14 +185,14 @@ class LinterViews
     @updateBubble()
 
 
-  _removeMarkers: ->
+  removeMarkers: ->
     return unless @markers.length
     for marker in @markers
       try marker.destroy()
     @markers = []
 
   # This method is called in render, and classifies the messages according to scope
-  _extractMessages: (Gen, counts) ->
+  extractMessages: (Gen, counts) ->
     isProject = @scope is 'project'
     activeEditor = atom.workspace.getActiveTextEditor()
     activeFile = activeEditor?.getPath()

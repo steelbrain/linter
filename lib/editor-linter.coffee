@@ -60,13 +60,13 @@ class EditorLinter
     return unless @status
     return unless @editor is atom.workspace.getActiveTextEditor()
     return unless @editor.getPath()
-    return if @_lock(wasTriggeredOnChange)
+    return if @lock(wasTriggeredOnChange)
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
     scopes.push '*' # To allow global linters
 
-    Promise.all(@_lint(wasTriggeredOnChange, scopes)).then =>
-      @_lock(wasTriggeredOnChange, false)
+    Promise.all(@lint(wasTriggeredOnChange, scopes)).then =>
+      @lock(wasTriggeredOnChange, false)
 
   # This method returns an array of promises to be used in lint
   _lint: (wasTriggeredOnChange, scopes) ->
@@ -91,7 +91,7 @@ class EditorLinter
     Promises
 
   # This method sets or gets the lock status of given type
-  _lock: (wasTriggeredOnChange, value) ->
+  lock: (wasTriggeredOnChange, value) ->
     key =
       if wasTriggeredOnChange
         'inProgressFly'
