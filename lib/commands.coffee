@@ -2,8 +2,8 @@
 
 class Commands
   constructor: (@linter) ->
-    @_subscriptions = new CompositeDisposable
-    @_subscriptions.add atom.commands.add 'atom-workspace',
+    @subscriptions = new CompositeDisposable
+    @subscriptions.add atom.commands.add 'atom-workspace',
       'linter:next-error': => @nextError()
       'linter:toggle': => @toggleLinter()
       'linter:set-bubble-transparent': => @setBubbleTransparent()
@@ -38,6 +38,6 @@ class Commands
 
   destroy: ->
     @_messages = null
-    @_subscriptions.dispose()
+    @subscriptions.dispose()
 
 module.exports = Commands
