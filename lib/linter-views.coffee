@@ -84,7 +84,6 @@ class LinterViews
     @extractMessages(@linter.getProjectMessages(), counts)
 
     @updateLineMessages()
-
     @renderPanel()
     @tabs['File'].count = counts.file
     @tabs['Project'].count = counts.project
@@ -125,19 +124,17 @@ class LinterViews
       )
       throw null
 
-  updateLineMessages: (line) ->
+  updateLineMessages: (line, shouldRender = false) ->
     return if @currentLine is line
     @currentLine = line
-    activeEditor = atom.workspace.getActiveTextEditor()
-    @linter.eachEditorLinter (editorLinter) =>
-      return unless editorLinter.editor is activeEditor
-
-      @lineMessages = []
+    @lineMessages = []
+    activeEditorLinter = @linter.getActiveEditorLinter()
+    if activeEditorLinter
       @messages.forEach (message) =>
         if message.currentFile and message.range?.intersectsRow @currentLine
           @lineMessages.push message
       @tabs['Line'].count = @lineMessages.length
-    @renderPanel()
+    if shouldRender then @renderPanel()
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->

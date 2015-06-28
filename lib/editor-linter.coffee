@@ -9,7 +9,7 @@ class EditorLinter
     @inProgressFly = false
 
     if @editor is atom.workspace.getActiveTextEditor()
-      @linter.views.updateLineMessages @editor.getCursorBufferPosition()?.row
+      @linter.views.updateLineMessages(@editor.getCursorBufferPosition()?.row, true)
 
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
@@ -19,7 +19,7 @@ class EditorLinter
     )
     @subscriptions.add(
       @editor.onDidChangeCursorPosition ({newBufferPosition}) =>
-        @linter.views.updateLineMessages(newBufferPosition.row)
+        @linter.views.updateLineMessages(newBufferPosition.row, true)
         @linter.views.updateBubble(newBufferPosition)
     )
     @subscriptions.add(
