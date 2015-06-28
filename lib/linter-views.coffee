@@ -151,15 +151,6 @@ class LinterViews
       item: @bottomStatus,
       priority: -999
 
-  # this method is called on package deactivate
-  destroy: ->
-    @messages.clear()
-    @removeMarkers()
-    @panelWorkspace.destroy()
-    @removeBubble()
-    for statusTile in @statusTiles
-      statusTile.destroy()
-
   changeTab: (Tab) ->
     @showPanel = @scope isnt Tab
     if not @showPanel
@@ -235,5 +226,14 @@ class LinterViews
           counts.project++
           message.currentFile = false
         @messages.add message
+
+  # this method is called on package deactivate
+  destroy: ->
+    @messages.clear()
+    @removeMarkers()
+    @panelWorkspace.destroy()
+    @removeBubble()
+    for statusTile in @statusTiles
+      statusTile.destroy()
 
 module.exports = LinterViews
