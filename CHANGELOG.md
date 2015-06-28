@@ -1,6 +1,8 @@
 # Upcoming
 
 * Add support for collapsible messages
+* Add tab `Line` to show only errors of the current line.
+* Add config options to hide individual tabs (`Line`, `File`, `Project`).
 
 # 1.0.9
 
