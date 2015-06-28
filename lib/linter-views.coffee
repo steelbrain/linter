@@ -31,7 +31,7 @@ class LinterViews
     @panelWorkspace = atom.workspace.addBottomPanel item: @panel, visible: false
 
     # Set default tab
-    visibleTabs = @getVisibleTabKeys()
+    visibleTabs = @getVisibleTabs()
 
     @scope = atom.config.get('linter.defaultErrorTab', 'File')?.toLowerCase()
     if not visibleTabs.has(@scope)
@@ -181,7 +181,7 @@ class LinterViews
   getActiveTab: ->
     @tabs.entries().find (tab) -> tab.active
 
-  getVisibleTabKeys: ->
+  getVisibleTabs: ->
     toReturn = new Set
     toReturn.add 'line' if atom.config.get('linter.showErrorTabLine')
     toReturn.add 'file' if atom.config.get('linter.showErrorTabFile')
