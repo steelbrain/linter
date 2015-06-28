@@ -211,6 +211,11 @@ class LinterViews
     else
       messages = @messages
     return @setPanelVisibility(false) unless messages.size
+    @panel.innerHTML = ''
+    messages.forEach (message) =>
+      return if @scope isnt 'Project' and not message.currentFile
+      Element = Message.fromMessage(message, addPath: @scope is 'Project', cloneNode: true)
+      @panel.appendChild Element
 
   removeMarkers: ->
     return unless @markers.length
