@@ -156,6 +156,7 @@ class LinterViews
       priority: -999
 
   changeTab: (Tab) ->
+    atom.config.set('linter.defaultErrorTab', Tab)
     @showPanel = @scope isnt Tab
     if not @showPanel
       for key, tab of @tabs
