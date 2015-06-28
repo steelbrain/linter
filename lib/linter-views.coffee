@@ -142,7 +142,7 @@ class LinterViews
       @messages.forEach (message) =>
         if message.currentFile and message.range?.intersectsRow @currentLine
           @lineMessages.add message
-      @tabs['Line'].count = @lineMessages.length
+      @tabs['Line'].count = @lineMessages.size
     if shouldRender then @renderPanelMessages()
 
   # This method is called when we get the status-bar service
