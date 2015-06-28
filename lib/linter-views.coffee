@@ -100,6 +100,8 @@ class LinterViews
   updateTabs: ->
     visible = @getVisibleTabs()
     @tabs.forEach (tab, key) ->
+      tab.classList.remove('first')
+      tab.classList.remove('last')
       tab.visibility = visible.has(key)
 
   # consumed in editor-linter, _renderPanel
