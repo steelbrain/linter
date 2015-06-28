@@ -134,14 +134,14 @@ class LinterViews
       )
       throw null
 
-  updateLineMessages: (line, shouldRender = false) ->
-    return if @currentLine is line
+  updateLineMessages: (shouldRender = false) ->
     return unless @tabs['Line'].visibility
-    @currentLine = line
     @lineMessages.clear()
-    if @linter.getActiveEditorLinter()
+    activeTextEditor = atom.workspace.getActiveTextEditor()
+    if activeTextEditor
+      currentLine = activeTextEditor.getCursorBufferPosition()?.row
       @messages.forEach (message) =>
-        if message.currentFile and message.range?.intersectsRow @currentLine
+        if message.currentFile and message.range?.intersectsRow currentLine
           @lineMessages.add message
       @tabs['Line'].count = @lineMessages.size
     if shouldRender then @renderPanelMessages()
