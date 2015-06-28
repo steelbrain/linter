@@ -86,6 +86,7 @@ class LinterViews
 
     @updateLineMessages()
     @renderPanel()
+    @renderPanelMessages()
     @tabs['File'].count = counts.file
     @tabs['Project'].count = counts.project
     @bottomStatus.count = counts.project
@@ -135,7 +136,7 @@ class LinterViews
         if message.currentFile and message.range?.intersectsRow @currentLine
           @lineMessages.add message
       @tabs['Line'].count = @lineMessages.length
-    if shouldRender then @renderPanel()
+    if shouldRender then @renderPanelMessages()
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
@@ -162,7 +163,7 @@ class LinterViews
       @scope = Tab
       for key, tab of @tabs
         tab.active = Tab is key
-      @renderPanel()
+      @renderPanelMessages()
     @setShowPanel @showPanel
 
   removeBubble: ->
