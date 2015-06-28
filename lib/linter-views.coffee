@@ -174,12 +174,6 @@ class LinterViews
     @setShowPanel @showPanel
 
   # TODO: Remove me and use @scope instead
-  getActiveTabKey: ->
-    activeKey = null
-    @tabs.forEach (tab, key) -> activeKey = key if tab.active
-    return activeKey
-
-  # TODO: Remove me and use @scope instead
   getActiveTab: ->
     @tabs.find (tab) -> tab.active
 
