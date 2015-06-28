@@ -12,7 +12,7 @@ class LinterViews
     @markers = []
     @statusTiles = []
 
-    @tabs = [] # Array has methods that we need to perform certain operations, map won't be a good fit
+    @tabs = {} # Object has methods that we need to perform certain operations, map won't be a good fit
     @tabs['line'] = new BottomTab()
     @tabs['file'] = new BottomTab()
     @tabs['project'] = new BottomTab()
@@ -31,7 +31,7 @@ class LinterViews
     @panelWorkspace = atom.workspace.addBottomPanel item: @panel, visible: false
 
     @scope = atom.config.get('linter.defaultErrorTab').toLowerCase()
-    @tabs.forEach (tab, key) =>
+    for key, tab of @tabs
       tab.active = @scope is key
 
     @panel.id = 'linter-panel'
@@ -92,7 +92,7 @@ class LinterViews
 
   updateTabs: ->
     visible = @getVisibleTabs()
-    @tabs.forEach (tab, key) ->
+    for key, tab of @tabs # for...of (key, value)
       tab.classList.remove('first')
       tab.classList.remove('last')
       tab.visibility = visible.has(key)
