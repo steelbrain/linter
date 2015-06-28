@@ -135,9 +135,8 @@ class LinterViews
   updateLineMessages: (shouldRender = false) ->
     return unless @tabs['Line'].visibility
     @lineMessages.clear()
-    activeTextEditor = atom.workspace.getActiveTextEditor()
-    if activeTextEditor
-      currentLine = activeTextEditor.getCursorBufferPosition()?.row
+    currentLine = atom.workspace.getActiveTextEditor()?.getCursorBufferPosition()?.row
+    if currentLine
       @messages.forEach (message) =>
         if message.currentFile and message.range?.intersectsRow currentLine
           @lineMessages.add message
