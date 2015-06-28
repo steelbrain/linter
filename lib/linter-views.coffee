@@ -30,7 +30,7 @@ class LinterViews
       atom.commands.dispatch atom.views.getView(atom.workspace), 'linter:next-error'
     @panelWorkspace = atom.workspace.addBottomPanel item: @panel, visible: false
 
-    @scope = atom.config.get('linter.defaultErrorTab').toLowerCase()
+    @scope = atom.config.get('linter.defaultErrorTab')
     for key, tab of @tabs
       tab.active = @scope is key
 
@@ -161,12 +161,14 @@ class LinterViews
       statusTile.destroy()
 
   changeTab: (Tab) ->
-    @showPanel = @scope is Tab
-    if @showPanel
-      @tabs.forEach (tab)-> tab.active = false
+    @showPanel = @scope isnt Tab
+    if not @showPanel
+      for key, tab of @tabs
+        tab.active = false
     else
       @scope = Tab
-      @tabs.forEach (tab, key) -> tab.active = Tab is key
+      for key, tab of @tabs
+        tab.active = Tab is key
       @renderPanel()
     @setShowPanel @showPanel
 
