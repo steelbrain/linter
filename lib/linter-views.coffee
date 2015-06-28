@@ -97,6 +97,11 @@ class LinterViews
     @tabs.get('project').count = counts.project
     @bottomStatus.count = counts.project
 
+  updateTabs: ->
+    visible = @getVisibleTabs()
+    @tabs.forEach (tab, key) ->
+      tab.visibility = visible.has(key)
+
   # consumed in editor-linter, _renderPanel
   updateBubble: (point) ->
     @removeBubble()
