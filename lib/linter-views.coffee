@@ -125,14 +125,9 @@ class LinterViews
       )
       throw null
 
-  updateCurrentLine: (line) ->
-    if @currentLine isnt line
-      @currentLine = line
-      @updateLineMessages()
-      @renderPanel()
-
-
-  updateLineMessages: ->
+  updateLineMessages: (line) ->
+    return if @currentLine is line
+    @currentLine = line
     activeEditor = atom.workspace.getActiveTextEditor()
     @linter.eachEditorLinter (editorLinter) =>
       return unless editorLinter.editor is activeEditor
@@ -142,6 +137,7 @@ class LinterViews
         if message.currentFile and message.range?.intersectsRow @currentLine
           @lineMessages.push message
       @tabs['Line'].count = @lineMessages.length
+    @renderPanel()
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
