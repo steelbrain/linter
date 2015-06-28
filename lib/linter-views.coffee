@@ -179,15 +179,11 @@ class LinterViews
     bubble
 
   renderPanel: ->
-    @panel.innerHTML = ''
     @removeMarkers()
     @removeBubble()
-    if not @messages.size
-      return @setPanelVisibility(false)
-    @setPanelVisibility(true)
     activeEditor = atom.workspace.getActiveTextEditor()
     @messages.forEach (message) =>
-      if @scope is 'File' then return unless message.currentFile
+      return if @scope isnt 'Project' and not message.currentFile
       if message.currentFile and message.range #Add the decorations to the current TextEditor
         @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
         activeEditor.decorateMarker(
@@ -196,12 +192,6 @@ class LinterViews
         if @underlineIssues then activeEditor.decorateMarker(
           marker, type: 'highlight', class: "linter-highlight #{message.class}"
         )
-
-      if @scope is 'Line'
-        return if @lineMessages.has(message)
-
-      Element = Message.fromMessage(message, addPath: @scope is 'Project', cloneNode: true)
-      @panel.appendChild Element
     @updateBubble()
 
   renderPanelMessages: ->
@@ -211,6 +201,7 @@ class LinterViews
     else
       messages = @messages
     return @setPanelVisibility(false) unless messages.size
+    @setPanelVisibility(true)
     @panel.innerHTML = ''
     messages.forEach (message) =>
       return if @scope isnt 'Project' and not message.currentFile
