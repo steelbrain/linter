@@ -96,18 +96,6 @@ class LinterViews
     @tabs.get('file').count = counts.file
     @tabs.get('project').count = counts.project
     @bottomStatus.count = counts.project
-    hasActiveEditor = typeof atom.workspace.getActiveTextEditor() isnt 'undefined'
-
-    visibleTabs = @getVisibleTabKeys()
-
-    @tabs.forEach (tab, key) ->
-      tab.visibility = hasActiveEditor and visibleTabs.indexOf(key) isnt -1
-      tab.classList.remove 'first-tab'
-      tab.classList.remove 'last-tab'
-
-    if visibleTabs.length > 0
-      @tabs.get(visibleTabs[0]).classList.add 'first-tab'
-      @tabs.get(visibleTabs[visibleTabs.length - 1]).classList.add 'last-tab'
 
   # consumed in editor-linter, _renderPanel
   updateBubble: (point) ->
