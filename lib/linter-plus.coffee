@@ -32,14 +32,12 @@ class Linter
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
       @commands.lint()
 
-    ignoreTabUpdates = true
-    @subscriptions.add atom.config.observe 'linter.showErrorTabLine', =>
-      @views.updateTabs() unless ignoreTabUpdates
-    @subscriptions.add atom.config.observe 'linter.showErrorTabFile', =>
-      @views.updateTabs() unless ignoreTabUpdates
-    @subscriptions.add atom.config.observe 'linter.showErrorTabProject', =>
-      @views.updateTabs() unless ignoreTabUpdates
-    ignoreTabUpdates = false
+    @subscriptions.add atom.config.onDidChange 'linter.showErrorTabLine', =>
+      @views.updateTabs()
+    @subscriptions.add atom.config.onDidChange 'linter.showErrorTabFile', =>
+      @views.updateTabs()
+    @subscriptions.add atom.config.onDidChange 'linter.showErrorTabProject', =>
+      @views.updateTabs()
 
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       currentEditorLinter = new EditorLinter @, editor
