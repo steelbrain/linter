@@ -95,7 +95,7 @@ class LinterViews
     for key, tab of @tabs # for...of (key, value)
       tab.classList.remove('first')
       tab.classList.remove('last')
-      tab.visibility = visible.has(key)
+      tab.visibility = visible.indexOf(key) isnt -1
 
   # consumed in editor-linter, _renderPanel
   updateBubble: (point) ->
@@ -174,10 +174,10 @@ class LinterViews
     @setShowPanel @showPanel
 
   getVisibleTabs: ->
-    toReturn = new Set
-    toReturn.add 'line' if atom.config.get('linter.showErrorTabLine')
-    toReturn.add 'file' if atom.config.get('linter.showErrorTabFile')
-    toReturn.add 'project' if atom.config.get('linter.showErrorTabProject')
+    toReturn = []
+    toReturn.push 'line' if atom.config.get('linter.showErrorTabLine')
+    toReturn.push 'file' if atom.config.get('linter.showErrorTabFile')
+    toReturn.push 'project' if atom.config.get('linter.showErrorTabProject')
     toReturn
 
   removeBubble: ->
