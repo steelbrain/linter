@@ -1,4 +1,4 @@
-# Upcoming
+# 1.1.0
 
 * Add support for collapsible messages
 * Add tab `Line` to show only errors of the current line.
