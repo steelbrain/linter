@@ -23,10 +23,6 @@ module.exports =
       title: 'Show Project tab in Bottom Panel'
       type: 'boolean'
       default: true
-    defaultErrorTab:
-      type: 'string'
-      default: 'File'
-      enum: ['Line', 'File', 'Project']
     showErrorInline:
       title: 'Show Inline Tooltips'
       descriptions: 'Show inline tooltips for errors'
@@ -43,9 +39,9 @@ module.exports =
       type: 'string'
       default: 'Left'
 
-  activate: ->
+  activate: (state) ->
     LinterPlus = require('./linter-plus.coffee')
-    @instance = new LinterPlus()
+    @instance = new LinterPlus state
 
     legacy = require('./legacy.coffee')
     for atomPackage in atom.packages.getLoadedPackages()
@@ -53,6 +49,9 @@ module.exports =
         implementation = atomPackage.metadata['linter-implementation'] ? atomPackage.name
         linter = legacy(require("#{atomPackage.path}/lib/#{implementation}"))
         @consumeLinter(linter)
+
+  serialize: ->
+    @instance.serialize()
 
   consumeLinter: (linters) ->
     unless linters instanceof Array
