@@ -13,17 +13,17 @@ class LinterViews
     @statusTiles = []
 
     @tabs = {} # Object has methods that we need to perform certain operations, map won't be a good fit
-    @tabs['line'] = new BottomTab()
-    @tabs['file'] = new BottomTab()
-    @tabs['project'] = new BottomTab()
+    @tabs['Line'] = new BottomTab()
+    @tabs['File'] = new BottomTab()
+    @tabs['Project'] = new BottomTab()
 
     @panel = document.createElement 'div'
     @bubble = null
     @bottomStatus = new BottomStatus()
 
-    @tabs['line'].initialize 'Line', => @changeTab('line')
-    @tabs['file'].initialize 'File', => @changeTab('file')
-    @tabs['project'].initialize 'Project', => @changeTab('project')
+    @tabs['Line'].initialize 'Line', => @changeTab('line')
+    @tabs['File'].initialize 'File', => @changeTab('file')
+    @tabs['Project'].initialize 'Project', => @changeTab('project')
 
     @bottomStatus.initialize()
     @bottomStatus.addEventListener 'click', ->
@@ -86,16 +86,15 @@ class LinterViews
     @updateLineMessages()
 
     @renderPanel()
-    @tabs['file'].count = counts.file
-    @tabs['project'].count = counts.project
+    @tabs['File'].count = counts.file
+    @tabs['Project'].count = counts.project
     @bottomStatus.count = counts.project
 
   updateTabs: ->
-    visible = @getVisibleTabs()
     for key, tab of @tabs # for...of (key, value)
       tab.classList.remove('first')
       tab.classList.remove('last')
-      tab.visibility = visible.indexOf(key) isnt -1
+      tab.visibility = atom.config.get("linter.showErrorTab#{key}")
 
   # consumed in editor-linter, _renderPanel
   updateBubble: (point) ->
@@ -135,18 +134,18 @@ class LinterViews
       @messages.forEach (message) =>
         if message.currentFile and message.range?.intersectsRow @currentLine
           @lineMessages.push message
-      @tabs['line'].count = @lineMessages.length
+      @tabs['Line'].count = @lineMessages.length
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
     @statusTiles.push statusBar.addLeftTile
-      item: @tabs['line'],
+      item: @tabs['Line'],
       priority: -1002
     @statusTiles.push statusBar.addLeftTile
-      item: @tabs['file'],
+      item: @tabs['File'],
       priority: -1001
     @statusTiles.push statusBar.addLeftTile
-      item: @tabs['project'],
+      item: @tabs['Project'],
       priority: -1000
     statusIconPosition = atom.config.get('linter.statusIconPosition')
     @statusTiles.push statusBar["add#{statusIconPosition}Tile"]
@@ -172,13 +171,6 @@ class LinterViews
       @tabs.forEach (tab, key) -> tab.active = Tab is key
       @renderPanel()
     @setShowPanel @showPanel
-
-  getVisibleTabs: ->
-    toReturn = []
-    toReturn.push 'line' if atom.config.get('linter.showErrorTabLine')
-    toReturn.push 'file' if atom.config.get('linter.showErrorTabFile')
-    toReturn.push 'project' if atom.config.get('linter.showErrorTabProject')
-    toReturn
 
   removeBubble: ->
     return unless @bubble
