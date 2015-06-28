@@ -12,33 +12,26 @@ class LinterViews
     @markers = []
     @statusTiles = []
 
-    @tabs = new Map
-    @tabs.set 'line', new BottomTab()
-    @tabs.set 'file', new BottomTab()
-    @tabs.set 'project', new BottomTab()
+    @tabs = [] # Array has methods that we need to perform certain operations, map won't be a good fit
+    @tabs['line'] = new BottomTab()
+    @tabs['file'] = new BottomTab()
+    @tabs['project'] = new BottomTab()
 
     @panel = document.createElement 'div'
     @bubble = null
     @bottomStatus = new BottomStatus()
 
-    @tabs.get('line').initialize 'Line', => @changeTab('line')
-    @tabs.get('file').initialize 'File', => @changeTab('file')
-    @tabs.get('project').initialize 'Project', => @changeTab('project')
+    @tabs['line'].initialize 'Line', => @changeTab('line')
+    @tabs['file'].initialize 'File', => @changeTab('file')
+    @tabs['project'].initialize 'Project', => @changeTab('project')
 
     @bottomStatus.initialize()
     @bottomStatus.addEventListener 'click', ->
       atom.commands.dispatch atom.views.getView(atom.workspace), 'linter:next-error'
     @panelWorkspace = atom.workspace.addBottomPanel item: @panel, visible: false
 
-    # Set default tab
-    visibleTabs = @getVisibleTabs()
-
-    @scope = atom.config.get('linter.defaultErrorTab', 'File')?.toLowerCase()
-    if not visibleTabs.has(@scope)
-      @scope = visibleTabs[0]
-
+    @scope = atom.config.get('linter.defaultErrorTab').toLowerCase()
     @tabs.forEach (tab, key) =>
-      tab.visible = false
       tab.active = @scope is key
 
     @panel.id = 'linter-panel'
@@ -93,8 +86,8 @@ class LinterViews
     @updateLineMessages()
 
     @renderPanel()
-    @tabs.get('file').count = counts.file
-    @tabs.get('project').count = counts.project
+    @tabs['file'].count = counts.file
+    @tabs['project'].count = counts.project
     @bottomStatus.count = counts.project
 
   updateTabs: ->
@@ -142,18 +135,18 @@ class LinterViews
       @messages.forEach (message) =>
         if message.currentFile and message.range?.intersectsRow @currentLine
           @lineMessages.push message
-      @tabs.get('line').count = @lineMessages.length
+      @tabs['line'].count = @lineMessages.length
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
     @statusTiles.push statusBar.addLeftTile
-      item: @tabs.get('line'),
+      item: @tabs['line'],
       priority: -1002
     @statusTiles.push statusBar.addLeftTile
-      item: @tabs.get('file'),
+      item: @tabs['file'],
       priority: -1001
     @statusTiles.push statusBar.addLeftTile
-      item: @tabs.get('project'),
+      item: @tabs['project'],
       priority: -1000
     statusIconPosition = atom.config.get('linter.statusIconPosition')
     @statusTiles.push statusBar["add#{statusIconPosition}Tile"]
@@ -170,9 +163,9 @@ class LinterViews
       statusTile.destroy()
 
   changeTab: (Tab) ->
-    if @getActiveTabKey() is Tab
+    if @scope is Tab.toLowerCase()
       @showPanel = not @showPanel
-      @tabs.forEach (tab, key) -> tab.active = false
+      @tabs.forEach (tab)-> tab.active = false
     else
       @showPanel = true
       @scope = Tab
@@ -180,13 +173,15 @@ class LinterViews
       @renderPanel()
     @setShowPanel @showPanel
 
+  # TODO: Remove me and use @scope instead
   getActiveTabKey: ->
     activeKey = null
     @tabs.forEach (tab, key) -> activeKey = key if tab.active
     return activeKey
 
+  # TODO: Remove me and use @scope instead
   getActiveTab: ->
-    @tabs.entries().find (tab) -> tab.active
+    @tabs.find (tab) -> tab.active
 
   getVisibleTabs: ->
     toReturn = new Set
