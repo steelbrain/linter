@@ -91,10 +91,17 @@ class LinterViews
     @bottomStatus.count = counts.project
 
   updateTabs: ->
+    first = null
+    last = null
     for key, tab of @tabs # for...of (key, value)
       tab.classList.remove('first')
       tab.classList.remove('last')
       tab.visibility = atom.config.get("linter.showErrorTab#{key}")
+      if tab.visibility
+        if first then last = tab
+        else first = tab
+    first.classList.add('first') if first
+    last.classList.add('last') if last
 
   # consumed in editor-linter, _renderPanel
   updateBubble: (point) ->
