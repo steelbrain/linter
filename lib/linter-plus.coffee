@@ -6,10 +6,12 @@ Helpers = require './helpers'
 Commands = require './commands'
 
 class Linter
-  constructor: ->
+  constructor:(@state)  ->
+    @state ?= {}
+
     # Public Stuff
     @lintOnFly = true # A default art value, to be immediately replaced by the observe config below
-    @views = new LinterViews this # Used by editor-linter to trigger views.render
+    @views = new LinterViews @state, this # Used by editor-linter to trigger views.render
     @commands = new Commands this
 
     # Private Stuff
@@ -48,6 +50,8 @@ class Linter
         currentEditorLinter.destroy()
         @editorLinters.delete editor
 
+  serialize: -> @state
+
   addLinter: (linter) ->
     try
       if(Helpers.validateLinter(linter))
@@ -75,7 +79,7 @@ class Linter
   getLinters: ->
     @linters
 
-  onDidChangeProjectMessages: (callback)->
+  onDidChangeProjectMessages: (callback) ->
     @emitter.on 'did-change-project-messages', callback
 
   getProjectMessages: ->
