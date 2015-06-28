@@ -194,7 +194,7 @@ class LinterViews
     @setPanelVisibility(true)
     activeEditor = atom.workspace.getActiveTextEditor()
     @messages.forEach (message) =>
-      if @scope is 'file' then return unless message.currentFile
+      if @scope is 'File' then return unless message.currentFile
       if message.currentFile and message.range #Add the decorations to the current TextEditor
         @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
         activeEditor.decorateMarker(
@@ -204,10 +204,10 @@ class LinterViews
           marker, type: 'highlight', class: "linter-highlight #{message.class}"
         )
 
-      if @scope is 'line'
+      if @scope is 'Line'
         return if @lineMessages.indexOf(message) is -1
 
-      Element = Message.fromMessage(message, addPath: @scope is 'project', cloneNode: true)
+      Element = Message.fromMessage(message, addPath: @scope is 'Project', cloneNode: true)
 
       @panel.appendChild Element
     @updateBubble()
@@ -221,7 +221,7 @@ class LinterViews
 
   # This method is called in render, and classifies the messages according to scope
   extractMessages: (Gen, counts) ->
-    isProject = @scope is 'project'
+    isProject = @scope is 'Project'
     activeEditor = atom.workspace.getActiveTextEditor()
     activeFile = activeEditor?.getPath()
     Gen.forEach (Entry) =>
