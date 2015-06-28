@@ -1,5 +1,4 @@
-
-describe 'legacy.coffee', ->
+describe 'Pre-Linter v1.0 API Compatibility', ->
   legacyAdapter = require('../lib/legacy.coffee')
 
   it 'Adapts plain string `syntax` property', ->
