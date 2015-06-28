@@ -34,7 +34,7 @@ class Linter
 
     ignoreUpdateTabs = true
     @subscriptions.add atom.config.observe 'linter.showErrorTabLine', =>
-      @views.updateTabs() unles ignoreUpdateTabs
+      @views.updateTabs() unless ignoreUpdateTabs
     @subscriptions.add atom.config.observe 'linter.showErrorTabFile', =>
       @views.updateTabs() unless ignoreUpdateTabs
     @subscriptions.add atom.config.observe 'linter.showErrorTabProject', =>
