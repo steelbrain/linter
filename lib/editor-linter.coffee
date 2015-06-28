@@ -8,10 +8,7 @@ class EditorLinter
     @inProgress = false
     @inProgressFly = false
 
-    @lineForMessages = 0 # It's used to compare if the user has changed line so we can updateLineMessages
-
     if @editor is atom.workspace.getActiveTextEditor()
-      @lineForMessages = @editor.getCursorBufferPosition()?.row
       @linter.views.updateLineMessages(true)
 
     @emitter = new Emitter
@@ -21,11 +18,9 @@ class EditorLinter
       @editor.onDidSave => @lint(false)
     )
     @subscriptions.add(
-      @editor.onDidChangeCursorPosition ({newBufferPosition}) =>
-        lineForMessages = newBufferPosition.row
-        if lineForMessages isnt @lineForMessages
+      @editor.onDidChangeCursorPosition ({oldBufferPosition, newBufferPosition}) =>
+        if newBufferPosition.row isnt oldBufferPosition.row
           @linter.views.updateLineMessages(true)
-          @lineForMessages = lineForMessages
         @linter.views.updateBubble(newBufferPosition)
     )
     @subscriptions.add(
