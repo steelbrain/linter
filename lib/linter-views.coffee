@@ -85,7 +85,8 @@ class LinterViews
     @extractMessages(@linter.getProjectMessages(), counts)
 
     @updateLineMessages()
-    @renderPanel()
+    @updateBubble()
+    @renderPanelMarkers()
     @renderPanelMessages()
     @tabs['File'].count = counts.file
     @tabs['Project'].count = counts.project
@@ -179,9 +180,8 @@ class LinterViews
       bubble.appendChild Message.fromMessage(trace, addPath: true)
     bubble
 
-  renderPanel: ->
+  renderPanelMarkers: ->
     @removeMarkers()
-    @removeBubble()
     activeEditor = atom.workspace.getActiveTextEditor()
     @messages.forEach (message) =>
       return if @scope isnt 'Project' and not message.currentFile
@@ -193,7 +193,6 @@ class LinterViews
         if @underlineIssues then activeEditor.decorateMarker(
           marker, type: 'highlight', class: "linter-highlight #{message.class}"
         )
-    @updateBubble()
 
   renderPanelMessages: ->
     messages = null
