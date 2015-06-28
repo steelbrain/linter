@@ -108,7 +108,7 @@ class LinterViews
     unless @tabs[@state.scope]?.visibility
       @state.scope = @tabPriority.filter((key) => @tabs[key].visibility)[0]
 
-    @changeTab(@state.scope)
+    @changeTab(@state.scope, false)
 
   # consumed in editor-linter, renderPanel
   updateBubble: (point) ->
@@ -159,7 +159,7 @@ class LinterViews
       item: @bottomStatus,
       priority: -999
 
-  changeTab: (tabName) ->
+  changeTab: (tabName, render = true) ->
     @showPanel = not @tabs[tabName]?.active
     if not @showPanel
       for key, tab of @tabs
@@ -168,7 +168,7 @@ class LinterViews
       @state.scope = tabName
       for key, tab of @tabs
         tab.active = tabName is key
-      @renderPanelMessages()
+      @renderPanelMessages() if render
     @setShowPanel @showPanel
 
   removeBubble: ->
