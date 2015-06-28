@@ -1,3 +1,8 @@
+# Upcoming
+
+* Fix a bug when Error Panel won't collapse even when there's no errors with File as Active Tab
+* Speed Improvements
+
 # 1.1.0
 
 * Add support for collapsible messages

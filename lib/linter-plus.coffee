@@ -32,6 +32,13 @@ class Linter
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
       @commands.lint()
 
+    @subscriptions.add atom.config.onDidChange 'linter.showErrorTabLine', =>
+      @views.updateTabs()
+    @subscriptions.add atom.config.onDidChange 'linter.showErrorTabFile', =>
+      @views.updateTabs()
+    @subscriptions.add atom.config.onDidChange 'linter.showErrorTabProject', =>
+      @views.updateTabs()
+
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       currentEditorLinter = new EditorLinter @, editor
       @editorLinters.set editor, currentEditorLinter
