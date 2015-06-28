@@ -9,8 +9,8 @@ class LinterViews
     @underlineIssues = true # Altered by config observer in linter-plus
 
     @messages = new Set
+    @lineMessages = new Set
     @markers = []
-    @lineMessages = []
     @statusTiles = []
 
     @tabs = {} # Object has methods that we need to perform certain operations, map won't be a good fit
@@ -129,11 +129,11 @@ class LinterViews
     return if @currentLine is line
     return unless @tabs['Line'].visibility
     @currentLine = line
-    @lineMessages = []
+    @lineMessages.clear()
     if @linter.getActiveEditorLinter()
       @messages.forEach (message) =>
         if message.currentFile and message.range?.intersectsRow @currentLine
-          @lineMessages.push message
+          @lineMessages.add message
       @tabs['Line'].count = @lineMessages.length
     if shouldRender then @renderPanel()
 
@@ -198,7 +198,7 @@ class LinterViews
         )
 
       if @scope is 'Line'
-        return if @lineMessages.indexOf(message) is -1
+        return if @lineMessages.has(message)
 
       Element = Message.fromMessage(message, addPath: @scope is 'Project', cloneNode: true)
       @panel.appendChild Element
