@@ -126,6 +126,7 @@ class LinterViews
 
   updateLineMessages: (line, shouldRender = false) ->
     return if @currentLine is line
+    return unless @tabs['Line'].visibility
     @currentLine = line
     @lineMessages = []
     if @linter.getActiveEditorLinter()
