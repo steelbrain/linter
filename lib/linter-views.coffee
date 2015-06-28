@@ -13,10 +13,10 @@ class LinterViews
     @markers = []
     @statusTiles = []
 
-    @tabs = {}
-    @tabs['Line'] = new BottomTab()
-    @tabs['File'] = new BottomTab()
-    @tabs['Project'] = new BottomTab()
+    @tabs =
+      Line: new BottomTab()
+      File: new BottomTab()
+      Project: new BottomTab()
 
     @panel = document.createElement 'div'
     @bubble = null
