@@ -161,16 +161,16 @@ class LinterViews
       item: @bottomStatus,
       priority: -999
 
-  changeTab: (Tab) ->
-    atom.config.set('linter.defaultErrorTab', Tab)
-    @showPanel = @scope isnt Tab
+  changeTab: (tab) ->
+    atom.config.set('linter.defaultErrorTab', tab)
+    @showPanel = @scope isnt tab
     if not @showPanel
       for key, tab of @tabs
         tab.active = false
     else
-      @scope = Tab
+      @scope = tab
       for key, tab of @tabs
-        tab.active = Tab is key
+        tab.active = tab is key
       @renderPanelMessages()
     @setShowPanel @showPanel
 
