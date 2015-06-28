@@ -21,9 +21,9 @@ class LinterViews
     @bubble = null
     @bottomStatus = new BottomStatus()
 
-    @tabs['Line'].initialize 'Line', => @changeTab('line')
-    @tabs['File'].initialize 'File', => @changeTab('file')
-    @tabs['Project'].initialize 'Project', => @changeTab('project')
+    @tabs['Line'].initialize 'Line', => @changeTab('Line')
+    @tabs['File'].initialize 'File', => @changeTab('File')
+    @tabs['Project'].initialize 'Project', => @changeTab('Project')
 
     @bottomStatus.initialize()
     @bottomStatus.addEventListener 'click', ->
@@ -161,11 +161,10 @@ class LinterViews
       statusTile.destroy()
 
   changeTab: (Tab) ->
-    if @scope is Tab.toLowerCase()
-      @showPanel = not @showPanel
+    @showPanel = @scope is Tab
+    if @showPanel
       @tabs.forEach (tab)-> tab.active = false
     else
-      @showPanel = true
       @scope = Tab
       @tabs.forEach (tab, key) -> tab.active = Tab is key
       @renderPanel()
