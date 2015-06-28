@@ -10,6 +10,7 @@ class LinterViews
 
     @messages = new Set
     @markers = []
+    @lineMessages = []
     @statusTiles = []
 
     @tabs = {} # Object has methods that we need to perform certain operations, map won't be a good fit
@@ -102,7 +103,7 @@ class LinterViews
     first.classList.add('first') if first
     last.classList.add('last') if last
 
-  # consumed in editor-linter, _renderPanel
+  # consumed in editor-linter, renderPanel
   updateBubble: (point) ->
     @removeBubble()
     return unless @showBubble
@@ -202,7 +203,6 @@ class LinterViews
       Element = Message.fromMessage(message, addPath: @scope is 'Project', cloneNode: true)
       @panel.appendChild Element
     @updateBubble()
-
 
   removeMarkers: ->
     return unless @markers.length
