@@ -204,6 +204,14 @@ class LinterViews
       @panel.appendChild Element
     @updateBubble()
 
+  renderPanelMessages: ->
+    messages = null
+    if @tabs['Line'].active
+      messages = @lineMessages
+    else
+      messages = @messages
+    return @setPanelVisibility(false) unless messages.size
+
   removeMarkers: ->
     return unless @markers.length
     for marker in @markers
