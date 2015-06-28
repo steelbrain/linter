@@ -149,7 +149,7 @@ class LinterViews
     statusIconPosition = atom.config.get('linter.statusIconPosition')
     @statusTiles.push statusBar["add#{statusIconPosition}Tile"]
       item: @bottomStatus,
-      priority: 999
+      priority: -999
 
   # this method is called on package deactivate
   destroy: ->
@@ -208,7 +208,6 @@ class LinterViews
         return if @lineMessages.indexOf(message) is -1
 
       Element = Message.fromMessage(message, addPath: @scope is 'Project', cloneNode: true)
-
       @panel.appendChild Element
     @updateBubble()
 
