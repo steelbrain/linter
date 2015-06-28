@@ -95,13 +95,19 @@ class LinterViews
   updateTabs: ->
     first = null
     last = null
+    foundActive = false
+    firstLabel = null
     for key, tab of @tabs # for...of (key, value)
       tab.classList.remove('first')
       tab.classList.remove('last')
       tab.visibility = atom.config.get("linter.showErrorTab#{key}")
       if tab.visibility
+        foundActive = foundActive || tab.active
         if first then last = tab
-        else first = tab
+        else
+          first = tab
+          firstLabel = key
+    @changeTab(firstLabel) if first and not foundActive
     first.classList.add('first') if first
     last.classList.add('last') if last
 
