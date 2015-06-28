@@ -8,7 +8,7 @@ class EditorLinter
     @inProgress = false
     @inProgressFly = false
 
-    @lineForMessages = 0 # Used to tell if the user has changed line so we can updateLineMessages
+    @lineForMessages = 0 # It's used to compare if the user has changed line so we can updateLineMessages
 
     if @editor is atom.workspace.getActiveTextEditor()
       @lineForMessages = @editor.getCursorBufferPosition()?.row
