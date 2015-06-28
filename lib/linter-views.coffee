@@ -101,9 +101,9 @@ class LinterViews
       tab.classList.remove('last')
       tab.visibility = atom.config.get("linter.showErrorTab#{key}")
       if tab.visibility
+        last = tab
         foundActive = foundActive || tab.active
-        if first then last = tab
-        else
+        unless first
           first = tab
           firstLabel = key
     @changeTab(firstLabel) if first and not foundActive
