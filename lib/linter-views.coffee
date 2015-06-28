@@ -4,16 +4,16 @@ Message = require './views/message'
 
 class LinterViews
   constructor: (@linter) ->
-    @showPanel = true # Altered by config observer in linter-plus
-    @showBubble = true # Altered by the config observer in linter-plus
-    @underlineIssues = true # Altered by config observer in linter-plus
+    @showPanel = true
+    @showBubble = true
+    @underlineIssues = true
 
     @messages = new Set
     @lineMessages = new Set
     @markers = []
     @statusTiles = []
 
-    @tabs = {} # Object has methods that we need to perform certain operations, map won't be a good fit
+    @tabs = {}
     @tabs['Line'] = new BottomTab()
     @tabs['File'] = new BottomTab()
     @tabs['Project'] = new BottomTab()
