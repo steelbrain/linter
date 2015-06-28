@@ -173,10 +173,6 @@ class LinterViews
       @renderPanel()
     @setShowPanel @showPanel
 
-  # TODO: Remove me and use @scope instead
-  getActiveTab: ->
-    @tabs.find (tab) -> tab.active
-
   getVisibleTabs: ->
     toReturn = new Set
     toReturn.add 'line' if atom.config.get('linter.showErrorTabLine')
