@@ -36,6 +36,7 @@ class LinterViews
       tab.active = @scope is key
 
     @panel.id = 'linter-panel'
+    @updateTabs()
 
   getMessages: ->
     @messages

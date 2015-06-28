@@ -25,19 +25,21 @@ class Linter
       @views.setShowPanel(showPanel)
     @subscriptions.add atom.config.observe 'linter.underlineIssues', (underlineIssues) =>
       @views.setUnderlineIssues(underlineIssues)
-    # Todo: When observing that showErrorTabLine updateTabs() is called thrice, resulting in redundant updates
-    @subscriptions.add atom.config.observe 'linter.showErrorTabLine', =>
-      @views.updateTabs()
-    @subscriptions.add atom.config.observe 'linter.showErrorTabFile', =>
-      @views.updateTabs()
-    @subscriptions.add atom.config.observe 'linter.showErrorTabProject', =>
-      @views.updateTabs()
     @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
     @subscriptions.add atom.project.onDidChangePaths =>
       @commands.lint()
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
       @commands.lint()
+
+    ignoreUpdateTabs = true
+    @subscriptions.add atom.config.observe 'linter.showErrorTabLine', =>
+      @views.updateTabs() unles ignoreUpdateTabs
+    @subscriptions.add atom.config.observe 'linter.showErrorTabFile', =>
+      @views.updateTabs() unless ignoreUpdateTabs
+    @subscriptions.add atom.config.observe 'linter.showErrorTabProject', =>
+      @views.updateTabs() unless ignoreUpdateTabs
+    ignoreUpdateTabs = false
 
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       currentEditorLinter = new EditorLinter @, editor
