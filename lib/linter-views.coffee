@@ -128,8 +128,7 @@ class LinterViews
     return if @currentLine is line
     @currentLine = line
     @lineMessages = []
-    activeEditorLinter = @linter.getActiveEditorLinter()
-    if activeEditorLinter
+    if @linter.getActiveEditorLinter()
       @messages.forEach (message) =>
         if message.currentFile and message.range?.intersectsRow @currentLine
           @lineMessages.push message
