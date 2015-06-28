@@ -107,6 +107,7 @@ class LinterViews
 
     unless @tabs[@state.scope]?.visibility
       @state.scope = @tabPriority.filter((key) => @tabs[key].visibility)[0]
+      @state.scope ?= 'File'
 
     @changeTab(@state.scope, false)
 
