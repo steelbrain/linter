@@ -25,6 +25,12 @@ class Linter
       @views.setShowPanel(showPanel)
     @subscriptions.add atom.config.observe 'linter.underlineIssues', (underlineIssues) =>
       @views.setUnderlineIssues(underlineIssues)
+    @subscriptions.add atom.config.observe 'linter.showErrorTabLine', =>
+      @views.updateTabs()
+    @subscriptions.add atom.config.observe 'linter.showErrorTabFile', =>
+      @views.updateTabs()
+    @subscriptions.add atom.config.observe 'linter.showErrorTabProject', =>
+      @views.updateTabs()
     @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
     @subscriptions.add atom.project.onDidChangePaths =>
