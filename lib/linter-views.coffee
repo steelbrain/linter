@@ -22,10 +22,6 @@ class LinterViews
     @bubble = null
     @bottomStatus = new BottomStatus()
 
-    @tabs['Line'].initialize 'Line', => @changeTab('Line')
-    @tabs['File'].initialize 'File', => @changeTab('File')
-    @tabs['Project'].initialize 'Project', => @changeTab('Project')
-
     @bottomStatus.initialize()
     @bottomStatus.addEventListener 'click', ->
       atom.commands.dispatch atom.views.getView(atom.workspace), 'linter:next-error'
@@ -33,6 +29,8 @@ class LinterViews
 
     @scope = atom.config.get('linter.defaultErrorTab')
     for key, tab of @tabs
+      do (key, tab) =>
+        tab.initialize key, => @changeTab(key)
       tab.active = @scope is key
 
     @panel.id = 'linter-panel'
