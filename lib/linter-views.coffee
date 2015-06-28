@@ -34,7 +34,7 @@ class LinterViews
     visibleTabs = @getVisibleTabKeys()
 
     @scope = atom.config.get('linter.defaultErrorTab', 'File')?.toLowerCase()
-    if visibleTabs.indexOf(@scope) is -1
+    if not visibleTabs.has(@scope)
       @scope = visibleTabs[0]
 
     @tabs.forEach (tab, key) =>
@@ -46,7 +46,7 @@ class LinterViews
   getMessages: ->
     @messages
 
-# consumed in views/panel
+  # consumed in views/panel
   setPanelVisibility: (Status) ->
     if Status
       @panelWorkspace.show() unless @panelWorkspace.isVisible()
@@ -194,11 +194,11 @@ class LinterViews
     @tabs.entries().find (tab) -> tab.active
 
   getVisibleTabKeys: ->
-    return [
-      'line'    if atom.config.get('linter.showErrorTabLine')
-      'file'    if atom.config.get('linter.showErrorTabFile')
-      'project' if atom.config.get('linter.showErrorTabProject')
-    ].filter (key) -> key
+    toReturn = new Set
+    toReturn.add 'line' if atom.config.get('linter.showErrorTabLine')
+    toReturn.add 'file' if atom.config.get('linter.showErrorTabFile')
+    toReturn.add 'project' if atom.config.get('linter.showErrorTabProject')
+    toReturn
 
   removeBubble: ->
     return unless @bubble
