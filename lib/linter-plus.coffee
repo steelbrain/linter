@@ -11,8 +11,6 @@ class Linter
 
     # Public Stuff
     @lintOnFly = true # A default art value, to be immediately replaced by the observe config below
-    @views = new LinterViews @state, this
-    @commands = new Commands this
 
     # Private Stuff
     @subscriptions = new CompositeDisposable
@@ -20,6 +18,9 @@ class Linter
     @editorLinters = new Map
     @messages = new Map # Values set in editor-linter and consumed in views.render
     @linters = new Set # Values are pushed here from Main::consumeLinter
+
+    @views = new LinterViews @state, this
+    @commands = new Commands this
 
     @subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
       @views.setShowBubble(showBubble)
@@ -84,7 +85,8 @@ class Linter
   getMessages: ->
     return @messages
 
-  onDidChangeMessages: ->
+  onDidChangeMessages: (callback)->
+    console.log(@)
     return @emitter.on 'did-change-messages', callback
 
   onDidChangeProjectMessages: (callback) ->
