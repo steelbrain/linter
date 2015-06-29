@@ -11,7 +11,7 @@ class Linter
 
     # Public Stuff
     @lintOnFly = true # A default art value, to be immediately replaced by the observe config below
-    @views = new LinterViews @state, this # Used by editor-linter to trigger views.render
+    @views = new LinterViews @state, this
     @commands = new Commands this
 
     # Private Stuff
@@ -76,12 +76,10 @@ class Linter
   setMessages: (linter, messages) ->
     @messages.set(linter, Helpers.validateResults(messages))
     @emitter.emit 'did-change-messages', @messages
-    @views.render()
 
   deleteMessages: (linter, messages) ->
     @messages.delete(linter)
     @emitter.emit 'did-change-messages', @messages
-    @views.render()
 
   getMessages: ->
     return @messages

@@ -8,6 +8,7 @@ class LinterViews
     @showBubble = true
     @underlineIssues = true
 
+    @messages = new Set # Snapshot of linter's messages when it was last updated
     @lineMessages = new Set
     @markers = []
     @statusTiles = []
@@ -33,6 +34,8 @@ class LinterViews
 
     @panel.id = 'linter-panel'
     @updateTabs()
+    @linter.onDidChangeMessages (messages)=>
+      @classifyMessages(messages)
 
   # consumed in views/panel
   setPanelVisibility: (Status) ->
@@ -107,11 +110,11 @@ class LinterViews
   updateBubble: (point) ->
     @removeBubble()
     return unless @showBubble
-    return unless @linter.messages.size
+    return unless @messages.size
     activeEditor = atom.workspace.getActiveTextEditor()
     return unless activeEditor?.getPath()
     point = point || activeEditor.getCursorBufferPosition()
-    try @linter.messages.forEach (message) =>
+    try @messages.forEach (message) =>
       return unless message.currentFile
       return unless message.range?.containsPoint point
       @bubble = activeEditor.markBufferRange([point, point], {invalidate: 'never'})
@@ -130,10 +133,9 @@ class LinterViews
     @lineMessages.clear()
     currentLine = atom.workspace.getActiveTextEditor()?.getCursorBufferPosition()?.row
     if currentLine
-      @linter.messages.forEach (messages) =>
-        messages.forEach (message) =>
-          if message.currentFile and message.range?.intersectsRow currentLine
-            @lineMessages.add message
+      @messages.forEach (message) =>
+        if message.currentFile and message.range?.intersectsRow currentLine
+          @lineMessages.add message
       @tabs['Line'].count = @lineMessages.size
     if shouldRender then @renderPanelMessages()
 
@@ -181,7 +183,7 @@ class LinterViews
   renderPanelMarkers: ->
     @removeMarkers()
     activeEditor = atom.workspace.getActiveTextEditor()
-    @linter.messages.forEach (message) =>
+    @messages.forEach (message) =>
       return if @state.scope isnt 'Project' and not message.currentFile
       if message.currentFile and message.range #Add the decorations to the current TextEditor
         @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
@@ -193,7 +195,7 @@ class LinterViews
         )
 
   renderPanelMessages: ->
-    return @setPanelVisibility(false) if (@tabs['Line'].active and not @lineMessages.size) or not @linter.messages.size
+    return @setPanelVisibility(false) if (@tabs['Line'].active and not @lineMessages.size) or not @messages.size
     @setPanelVisibility(true)
     @panel.innerHTML = ''
     if @tabs['Line'].active
@@ -202,11 +204,10 @@ class LinterViews
         Element = Message.fromMessage(message, addPath: @state.scope is 'Project', cloneNode: true)
         @panel.appendChild Element
     else
-      @linter.messages.forEach (messages) =>
-        messages.forEach (message) =>
-          return if @state.scope isnt 'Project' and not message.currentFile
-          Element = Message.fromMessage(message, addPath: @state.scope is 'Project', cloneNode: true)
-          @panel.appendChild Element
+      @messages.forEach (message) =>
+        return if @state.scope isnt 'Project' and not message.currentFile
+        Element = Message.fromMessage(message, addPath: @state.scope is 'Project', cloneNode: true)
+        @panel.appendChild Element
 
   removeMarkers: ->
     return unless @markers.length
@@ -230,6 +231,7 @@ class LinterViews
         else
           counts.project++
           message.currentFile = false
+        @messages.add message
 
   # this method is called on package deactivate
   destroy: ->
