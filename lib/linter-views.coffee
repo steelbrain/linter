@@ -8,7 +8,7 @@ class LinterViews
     @showBubble = true
     @underlineIssues = true
 
-    @messages = new Set # Snapshot of linter's messages when it was last updated
+    @messages = new Set # Classified snapshot of linter's messages when it was last updated
     @lineMessages = new Set
     @markers = []
     @statusTiles = []
@@ -190,19 +190,18 @@ class LinterViews
         )
 
   renderPanelMessages: ->
-    return @setPanelVisibility(false) if (@tabs['Line'].active and not @lineMessages.size) or not @messages.size
+    messages =
+      if @tabs['Line'].active
+        @lineMessages
+      else
+        @messages
+    return @setPanelVisibility(false) unless messages.size
     @setPanelVisibility(true)
     @panel.innerHTML = ''
-    if @tabs['Line'].active
-      @lineMessages.forEach (message) =>
-        return if @state.scope isnt 'Project' and not message.currentFile
-        Element = Message.fromMessage(message, addPath: @state.scope is 'Project', cloneNode: true)
-        @panel.appendChild Element
-    else
-      @messages.forEach (message) =>
-        return if @state.scope isnt 'Project' and not message.currentFile
-        Element = Message.fromMessage(message, addPath: @state.scope is 'Project', cloneNode: true)
-        @panel.appendChild Element
+    messages.forEach (message) =>
+      return if @state.scope isnt 'Project' and not message.currentFile
+      Element = Message.fromMessage(message, addPath: @state.scope is 'Project', cloneNode: true)
+      @panel.appendChild Element
 
   removeMarkers: ->
     return unless @markers.length
