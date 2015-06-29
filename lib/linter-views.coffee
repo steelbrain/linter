@@ -74,16 +74,11 @@ class LinterViews
 
   # This message is called in editor-linter.coffee
   render: ->
-    counts = {project: 0, file: 0}
-    @classifyMessages(@linter.getMessages(), counts)
-
+    @classifyMessages(@linter.getMessages())
     @updateLineMessages()
     @updateBubble()
     @renderPanelMarkers()
     @renderPanelMessages()
-    @tabs['File'].count = counts.file
-    @tabs['Project'].count = counts.project
-    @bottomStatus.count = counts.project
 
   updateTabs: ->
     first = null
@@ -216,7 +211,8 @@ class LinterViews
     @markers = []
 
   # This method is called in render, and classifies the messages according to scope
-  classifyMessages: (Gen, counts) ->
+  classifyMessages: (Gen) ->
+    counts = {File: 0, Project: 0}
     isProject = @state.scope is 'Project'
     activeEditor = atom.workspace.getActiveTextEditor()
     activeFile = activeEditor?.getPath()
@@ -225,13 +221,16 @@ class LinterViews
       Entry.forEach (message) =>
         # If there's no file prop on message and the panel scope is file then count is as current
         if activeEditor and ((not message.filePath and not isProject) or message.filePath is activeFile)
-          counts.file++
-          counts.project++
+          counts.File++
+          counts.Project++
           message.currentFile = true
         else
-          counts.project++
+          counts.Project++
           message.currentFile = false
         @messages.add message
+    @tabs['File'].count = counts.File
+    @tabs['Project'].count = counts.Project
+    @bottomStatus.count = counts.Project
 
   # this method is called on package deactivate
   destroy: ->
