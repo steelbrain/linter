@@ -51,7 +51,7 @@ module.exports =
           linter = legacy(require("#{atomPackage.path}/lib/#{implementation}"))
           @consumeLinter(linter)
         catch error
-          atom.notifications.addError "Failed to activate the #{atomPackage.metadata['name']} package", {detail: error.message + "\n" + error.stack, dismissable: true}
+          atom.notifications.addError "Failed to activate '#{atomPackage.metadata['name']}' package", {detail: error.message + "\n" + error.stack, dismissable: true}
 
   serialize: ->
     @instance.serialize()
