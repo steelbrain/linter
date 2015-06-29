@@ -216,6 +216,7 @@ class LinterViews
     isProject = @state.scope is 'Project'
     activeEditor = atom.workspace.getActiveTextEditor()
     activeFile = activeEditor?.getPath()
+    @messages.clear()
     Gen.forEach (Entry) =>
       # Entry === Array<Messages>
       Entry.forEach (message) =>
