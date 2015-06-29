@@ -113,8 +113,9 @@ linter-bottom-tab {
     background: @button-background-color;
   }
 
-  .count {
-    margin-left: .2em;
+  &::before {
+    content: attr(title) " ";
+    margin-right: .2em;
   }
 }
 
