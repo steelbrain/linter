@@ -123,5 +123,6 @@ class Linter
       linter.destroy()
     @views.destroy()
     @commands.destroy()
+    @messages.destroy()
 
 module.exports = Linter
