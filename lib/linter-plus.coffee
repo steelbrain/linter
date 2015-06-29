@@ -4,6 +4,7 @@ LinterViews = require './linter-views'
 EditorLinter = require './editor-linter'
 Helpers = require './helpers'
 Commands = require './commands'
+Messages = require './messages'
 
 class Linter
   constructor:(@state)  ->
@@ -16,9 +17,9 @@ class Linter
     @subscriptions = new CompositeDisposable
     @emitter = new Emitter
     @editorLinters = new Map
-    @messages = new Map # Values set in editor-linter and consumed in views.render
     @linters = new Set # Values are pushed here from Main::consumeLinter
 
+    @messages = new Messages(this)
     @views = new LinterViews @state, this
     @commands = new Commands this
 
@@ -75,18 +76,16 @@ class Linter
     @linters
 
   setMessages: (linter, messages) ->
-    @messages.set(linter, Helpers.validateResults(messages))
-    @emitter.emit 'did-change-messages', @messages
+    @messages.set(linter, messages)
 
   deleteMessages: (linter, messages) ->
     @messages.delete(linter)
-    @emitter.emit 'did-change-messages', @messages
 
   getMessages: ->
-    return @messages
+    return @messages.get()
 
   onDidChangeMessages: (callback)->
-    return @emitter.on 'did-change-messages', callback
+    return @messages.onDidChange(callback)
 
   onDidChangeProjectMessages: (callback) ->
     console.warn("Linter::onDidChangeProjectMessages is deprecated, use Linter::onDidChangeMessages instead")
