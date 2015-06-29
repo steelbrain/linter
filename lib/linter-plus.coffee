@@ -87,6 +87,10 @@ class Linter
   onDidChangeMessages: (callback)->
     return @messages.onDidChange(callback)
 
+  # Classify as in sort
+  onDidClassifyMessages: (callback)->
+    return @messages.onDidClassify(callback)
+
   onDidChangeProjectMessages: (callback) ->
     console.warn("Linter::onDidChangeProjectMessages is deprecated, use Linter::onDidChangeMessages instead")
     return @onDidChangeMessages(callback)
