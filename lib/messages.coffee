@@ -1,15 +1,26 @@
 Helpers = require('./helpers')
-{Emitter} = require 'atom'
+{CompositeDisposable, Emitter} = require 'atom'
+
+###
+  Note: We are reclassifying the messages on on Pane Item Change,
+  even though we are relinting on that same event, 'cause linters could take time
+  and we have to refresh the views immediately
+###
 
 class MessageRegistry
   constructor: (@linter)->
     @messages = new Map()
     @emitter = new Emitter
+    @subscriptions = new CompositeDisposable
+    @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
+      @messages.forEach (messages) => @classifyMessages(messages)
+      @emitter.emit 'did-classify'
 
   set: (linter, messages) ->
     Helpers.validateMessages(messages)
     @classifyMessages(messages)
     @messages.set(linter, messages)
+    @emitter.emit 'did-classify'
     @emitter.emit 'did-change', @messages
 
   delete: (linter) ->
@@ -22,6 +33,9 @@ class MessageRegistry
   onDidChange: (callback) ->
     return @emitter.on 'did-change', callback
 
+  onDidClassify: (callback) ->
+    return @emitter.on 'did-classify', callback
+
   classifyMessages: (messages)->
     isProject = @linter.state.scope is 'Project'
     activeFile = atom.workspace.getActiveTextEditor()?.getPath()
@@ -33,6 +47,7 @@ class MessageRegistry
 
   destroy: ->
     @messages.clear()
+    @subscriptions.dispose()
     @emitter.dispose()
 
 
