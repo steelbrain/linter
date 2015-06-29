@@ -124,26 +124,26 @@ class LinterViews
       throw null
 
   updateLineMessages: (shouldRender = false) ->
-    return unless @tabs['Line'].visibility
+    return unless @tabs.Line.visibility
     @lineMessages.clear()
     currentLine = atom.workspace.getActiveTextEditor()?.getCursorBufferPosition()?.row
     if currentLine
       @messages.forEach (message) =>
         if message.currentFile and message.range?.intersectsRow currentLine
           @lineMessages.add message
-      @tabs['Line'].count = @lineMessages.size
+      @tabs.Line.count = @lineMessages.size
     if shouldRender then @renderPanelMessages()
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
     @statusTiles.push statusBar.addLeftTile
-      item: @tabs['Line'],
+      item: @tabs.Line,
       priority: -1002
     @statusTiles.push statusBar.addLeftTile
-      item: @tabs['File'],
+      item: @tabs.File,
       priority: -1001
     @statusTiles.push statusBar.addLeftTile
-      item: @tabs['Project'],
+      item: @tabs.Project,
       priority: -1000
     statusIconPosition = atom.config.get('linter.statusIconPosition')
     @statusTiles.push statusBar["add#{statusIconPosition}Tile"]
@@ -213,14 +213,13 @@ class LinterViews
   classifyMessages: (Gen) ->
     counts = {File: 0, Project: 0}
     isProject = @state.scope is 'Project'
-    activeEditor = atom.workspace.getActiveTextEditor()
-    activeFile = activeEditor?.getPath()
+    activeFile = atom.workspace.getActiveTextEditor()?.getPath()
     @messages.clear()
     Gen.forEach (Entry) =>
       # Entry === Array<Messages>
       Entry.forEach (message) =>
         # If there's no file prop on message and the panel scope is file then count is as current
-        if activeEditor and ((not message.filePath and not isProject) or message.filePath is activeFile)
+        if (not message.filePath and not isProject) or message.filePath is activeFile
           counts.File++
           counts.Project++
           message.currentFile = true
@@ -228,8 +227,8 @@ class LinterViews
           counts.Project++
           message.currentFile = false
         @messages.add message
-    @tabs['File'].count = counts.File
-    @tabs['Project'].count = counts.Project
+    @tabs.File.count = counts.File
+    @tabs.Project.count = counts.Project
     @bottomStatus.count = counts.Project
 
   # this method is called on package deactivate
