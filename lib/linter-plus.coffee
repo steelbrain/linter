@@ -65,13 +65,7 @@ class Linter
   deleteLinter: (linter) ->
     return unless @hasLinter(linter)
     @linters.delete(linter)
-    if linter.scope is 'project'
-      @deleteProjectMessages(linter)
-    else
-      @eachEditorLinter((editorLinter) ->
-        editorLinter.deleteMessages(linter)
-      )
-    @views.render()
+    @deleteMessages(linter)
 
   hasLinter: (linter) ->
     @linters.has(linter)
