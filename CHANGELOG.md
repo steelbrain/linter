@@ -2,7 +2,8 @@
 
 * Fix a bug when Error Panel won't collapse even when there's no errors with File as Active Tab
 * Speed Improvements
-* Remove the "Default Error Tab" config option in favor of storing the currently selected tab in the package state. 
+* Remove the "Default Error Tab" config option in favor of storing the currently selected tab in the package state.
+* Fix a bug where require time errors of legacy API providers would be shown as linter errors
 
 # 1.1.0
 
