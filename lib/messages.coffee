@@ -1,18 +1,26 @@
-
+Helpers = require('./helpers')
+{Emitter} = require 'atom'
 
 class MessageRegistry
   constructor: (@linter)->
     @messages = new Map()
+    @emitter = new Emitter
 
   set: (linter, messages) ->
+    Helpers.validateResults(messages)
     @classifyMessages(messages)
     @messages.set(linter, messages)
+    @emitter.emit 'did-change', @messages
 
   delete: (linter) ->
     @messages.delete(linter)
+    @emitter.emit 'did-change', @messages
 
   get: ->
-    @messages
+    return @messages
+
+  onDidChange: (callback)->
+    return @emitter.on 'did-change', callback
 
   classifyMessages: (messages)->
     isProject = @linter.state.scope is 'Project'
