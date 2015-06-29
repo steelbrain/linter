@@ -7,7 +7,7 @@ class MessageRegistry
     @emitter = new Emitter
 
   set: (linter, messages) ->
-    Helpers.validateResults(messages)
+    Helpers.validateMessages(messages)
     @classifyMessages(messages)
     @messages.set(linter, messages)
     @emitter.emit 'did-change', @messages
