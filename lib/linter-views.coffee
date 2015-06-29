@@ -1,9 +1,9 @@
-BottomTab = require './views/bottom-tab'
+TabContainer = require './views/tab-container'
 BottomStatus = require './views/bottom-status'
 Message = require './views/message'
 
 class LinterViews
-  constructor: (@state, @linter) ->
+  constructor: (state = {}, @linter) ->
     @showPanel = true
     @showBubble = true
     @underlineIssues = true
@@ -12,12 +12,9 @@ class LinterViews
     @lineMessages = new Set
     @markers = []
     @statusTiles = []
-    @tabPriority = ['File', 'Project', 'Line']
 
-    @tabs =
-      Line: new BottomTab()
-      File: new BottomTab()
-      Project: new BottomTab()
+    @tabs = new TabContainer()
+    @tabs.initialize state.tabs
 
     @panel = document.createElement 'div'
     @bubble = null
@@ -28,12 +25,15 @@ class LinterViews
       atom.commands.dispatch atom.views.getView(atom.workspace), 'linter:next-error'
     @panelWorkspace = atom.workspace.addBottomPanel item: @panel, visible: false
 
-    for key, tab of @tabs
-      do (key, tab) =>
-        tab.initialize key, => @changeTab(key)
+    @tabs.onDidChangeTab ({title, showPanel}) =>
+      if showPanel
+        @renderPanelMessages()
+      @setShowPanel showPanel
 
     @panel.id = 'linter-panel'
-    @updateTabs()
+
+  serialize: ->
+    {tabs: @tabs.serialize()}
 
   getMessages: ->
     @messages
@@ -86,30 +86,16 @@ class LinterViews
     @updateBubble()
     @renderPanelMarkers()
     @renderPanelMessages()
-    @tabs['File'].count = counts.file
-    @tabs['Project'].count = counts.project
+    @tabs.getTab('File')?.count = counts.file
+    @tabs.getTab('Project')?.count = counts.project
     @bottomStatus.count = counts.project
 
-  updateTabs: ->
-    first = null
-    last = null
-
-    for key, tab of @tabs
-      tab.classList.remove('first')
-      tab.classList.remove('last')
-      tab.visibility = atom.config.get("linter.showErrorTab#{key}")
-      if tab.visibility
-        last = tab
-        first = tab unless first
-
-    first.classList.add('first') if first
-    last.classList.add('last') if last
-
-    unless @tabs[@state.scope]?.visibility
-      @state.scope = @tabPriority.filter((key) => @tabs[key].visibility)[0]
-      @state.scope ?= 'File'
-
-    @changeTab(@state.scope, false)
+  updateTabs: (tabName, enabled) ->
+    if enabled
+      @tabs.insertTab tabName
+      @render()
+    else
+      @tabs.removeTab tabName
 
   # consumed in editor-linter, renderPanel
   updateBubble: (point) ->
@@ -134,43 +120,25 @@ class LinterViews
       throw null
 
   updateLineMessages: (shouldRender = false) ->
-    return unless @tabs['Line'].visibility
+    return unless (lineTab = @tabs.getTab 'Line')?
     @lineMessages.clear()
     currentLine = atom.workspace.getActiveTextEditor()?.getCursorBufferPosition()?.row
     if currentLine
       @messages.forEach (message) =>
         if message.currentFile and message.range?.intersectsRow currentLine
           @lineMessages.add message
-      @tabs['Line'].count = @lineMessages.size
+      lineTab.count = @lineMessages.size
     if shouldRender then @renderPanelMessages()
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
     @statusTiles.push statusBar.addLeftTile
-      item: @tabs['Line'],
-      priority: -1002
-    @statusTiles.push statusBar.addLeftTile
-      item: @tabs['File'],
-      priority: -1001
-    @statusTiles.push statusBar.addLeftTile
-      item: @tabs['Project'],
+      item: @tabs,
       priority: -1000
     statusIconPosition = atom.config.get('linter.statusIconPosition')
     @statusTiles.push statusBar["add#{statusIconPosition}Tile"]
       item: @bottomStatus,
       priority: -999
-
-  changeTab: (tabName, render = true) ->
-    @showPanel = not @tabs[tabName]?.active
-    if not @showPanel
-      for key, tab of @tabs
-        tab.active = false
-    else
-      @state.scope = tabName
-      for key, tab of @tabs
-        tab.active = tabName is key
-      @renderPanelMessages() if render
-    @setShowPanel @showPanel
 
   removeBubble: ->
     return unless @bubble
@@ -189,7 +157,7 @@ class LinterViews
     @removeMarkers()
     activeEditor = atom.workspace.getActiveTextEditor()
     @messages.forEach (message) =>
-      return if @state.scope isnt 'Project' and not message.currentFile
+      return if @tabs.activeTab isnt 'Project' and not message.currentFile
       if message.currentFile and message.range #Add the decorations to the current TextEditor
         @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
         activeEditor.decorateMarker(
@@ -201,7 +169,7 @@ class LinterViews
 
   renderPanelMessages: ->
     messages = null
-    if @tabs['Line'].active
+    if @tabs.getTab('Line')?.active
       messages = @lineMessages
     else
       messages = @messages
@@ -209,8 +177,8 @@ class LinterViews
     @setPanelVisibility(true)
     @panel.innerHTML = ''
     messages.forEach (message) =>
-      return if @state.scope isnt 'Project' and not message.currentFile
-      Element = Message.fromMessage(message, addPath: @state.scope is 'Project', cloneNode: true)
+      return if @tabs.activeTab isnt 'Project' and not message.currentFile
+      Element = Message.fromMessage(message, addPath: @tabs.activeTab is 'Project', cloneNode: true)
       @panel.appendChild Element
 
   removeMarkers: ->
@@ -221,7 +189,7 @@ class LinterViews
 
   # This method is called in render, and classifies the messages according to scope
   extractMessages: (Gen, counts) ->
-    isProject = @state.scope is 'Project'
+    isProject = @tabs.activeTab is 'Project'
     activeEditor = atom.workspace.getActiveTextEditor()
     activeFile = activeEditor?.getPath()
     Gen.forEach (Entry) =>
@@ -245,5 +213,6 @@ class LinterViews
     @removeBubble()
     for statusTile in @statusTiles
       statusTile.destroy()
+    @tabs.destroy()
 
 module.exports = LinterViews
