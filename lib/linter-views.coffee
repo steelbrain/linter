@@ -34,7 +34,7 @@ class LinterViews
 
     @panel.id = 'linter-panel'
     @updateTabs()
-    @linter.subscriptions.add @linter.onDidChangeMessages =>
+    @linter.subscriptions.add @linter.onDidClassifyMessages =>
       @render()
 
   # consumed in views/panel
@@ -74,7 +74,7 @@ class LinterViews
 
   # This message is called in editor-linter.coffee
   render: ->
-    @classifyMessages(@linter.getMessages())
+    @updateMessages()
     @updateLineMessages()
     @updateBubble()
     @renderPanelMarkers()
@@ -210,22 +210,17 @@ class LinterViews
     @markers = []
 
   # This method is called in render, and classifies the messages according to scope
-  classifyMessages: (Gen) ->
+  updateMessages: ->
     counts = {File: 0, Project: 0}
-    isProject = @state.scope is 'Project'
-    activeFile = atom.workspace.getActiveTextEditor()?.getPath()
     @messages.clear()
-    Gen.forEach (Entry) =>
-      # Entry === Array<Messages>
+    @linter.getMessages().forEach (Entry) =>
       Entry.forEach (message) =>
         # If there's no file prop on message and the panel scope is file then count is as current
-        if (not message.filePath and not isProject) or message.filePath is activeFile
+        if message.currentFile
           counts.File++
           counts.Project++
-          message.currentFile = true
         else
           counts.Project++
-          message.currentFile = false
         @messages.add message
     @tabs.File.count = counts.File
     @tabs.Project.count = counts.Project
