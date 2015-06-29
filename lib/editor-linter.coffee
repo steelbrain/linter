@@ -3,7 +3,6 @@ Helpers = require './helpers'
 
 class EditorLinter
   constructor: (@linter, @editor) ->
-    @messages = new Map
     @status = true
     @inProgress = false
     @inProgressFly = false
@@ -38,17 +37,6 @@ class EditorLinter
     if not status
       @messages.clear()
       @linter.views.render()
-
-  getMessages: ->
-    @messages
-
-  deleteMessages: (linter) ->
-    @messages.delete(linter)
-    @linter.views.render() if @editor is atom.workspace.getActiveTextEditor()
-
-  setMessages: (linter, messages) ->
-    @messages.set(linter, Helpers.validateResults(messages))
-    @linter.views.render() if @editor is atom.workspace.getActiveTextEditor()
 
   # Called on package deactivate
   destroy: ->
@@ -85,11 +73,7 @@ class EditorLinter
       Promises.push new Promise((resolve) =>
         resolve(linter.lint(@editor))
       ).then((results) =>
-        if linter.scope is 'project'
-          @linter.setProjectMessages(linter, results)
-        else
-          @setMessages(linter, results)
-          @emitter.emit 'did-update'
+        @linter.setMessages(linter, results)
       ).catch (error) ->
         atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
 

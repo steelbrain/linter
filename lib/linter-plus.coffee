@@ -18,7 +18,7 @@ class Linter
     @subscriptions = new CompositeDisposable
     @emitter = new Emitter
     @editorLinters = new Map
-    @messagesProject = new Map # Values set in editor-linter and consumed in views.render
+    @messages = new Map # Values set in editor-linter and consumed in views.render
     @linters = new Set # Values are pushed here from Main::consumeLinter
 
     @subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
@@ -79,21 +79,37 @@ class Linter
   getLinters: ->
     @linters
 
+  setMessages: (linter, messages) ->
+    @messages.set(linter, Helpers.validateResults(messages))
+    @emitter.emit 'did-change-messages', @messages
+    @views.render()
+
+  deleteMessages: (linter, messages) ->
+    @messages.delete(linter)
+    @emitter.emit 'did-change-messages', @messages
+    @views.render()
+
+  getMessages: ->
+    return @messages
+
+  onDidChangeMessages: ->
+    return @emitter.on 'did-change-messages', callback
+
   onDidChangeProjectMessages: (callback) ->
-    @emitter.on 'did-change-project-messages', callback
+    console.warn("Linter::onDidChangeProjectMessages is deprecated, use Linter::onDidChangeMessages instead")
+    return @onDidChangeMessages(callback)
 
   getProjectMessages: ->
-    @messagesProject
+    console.warn("Linter::getProjectMessages is deprecated, use Linter::getMessages instead")
+    return @getMessages()
 
   setProjectMessages: (linter, messages) ->
-    @messagesProject.set(linter, Helpers.validateResults(messages))
-    @emitter.emit 'did-change-project-messages', @messagesProject
-    @views.render()
+    console.warn("Linter::setProjectMessages is deprecated, use Linter::setMessages instead")
+    return @setMessages(linter, messages)
 
   deleteProjectMessages: (linter) ->
-    @messagesProject.delete(linter)
-    @emitter.emit 'did-change-project-messages', @messagesProject
-    @views.render()
+    console.warn("Linter::deleteProjectMessages is deprecated, use Linter::deleteMessages instead")
+    return @setMessages(linter, messages)
 
   getActiveEditorLinter: ->
     return @getEditorLinter atom.workspace.getActiveTextEditor()
@@ -109,6 +125,7 @@ class Linter
     @emitter.on 'observe-editor-linters', callback
 
   deactivate: ->
+    @messages.clear()
     @subscriptions.dispose()
     @eachEditorLinter (linter) ->
       linter.destroy()

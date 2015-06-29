@@ -8,7 +8,6 @@ class LinterViews
     @showBubble = true
     @underlineIssues = true
 
-    @messages = new Set
     @lineMessages = new Set
     @markers = []
     @statusTiles = []
@@ -34,9 +33,6 @@ class LinterViews
 
     @panel.id = 'linter-panel'
     @updateTabs()
-
-  getMessages: ->
-    @messages
 
   # consumed in views/panel
   setPanelVisibility: (Status) ->
@@ -76,11 +72,7 @@ class LinterViews
   # This message is called in editor-linter.coffee
   render: ->
     counts = {project: 0, file: 0}
-    @messages.clear()
-    @linter.eachEditorLinter (editorLinter) =>
-      @extractMessages(editorLinter.getMessages(), counts)
-
-    @extractMessages(@linter.getProjectMessages(), counts)
+    @classifyMessages(@linter.getMessages(), counts)
 
     @updateLineMessages()
     @updateBubble()
@@ -115,11 +107,11 @@ class LinterViews
   updateBubble: (point) ->
     @removeBubble()
     return unless @showBubble
-    return unless @messages.size
+    return unless @linter.messages.size
     activeEditor = atom.workspace.getActiveTextEditor()
     return unless activeEditor?.getPath()
     point = point || activeEditor.getCursorBufferPosition()
-    try @messages.forEach (message) =>
+    try @linter.messages.forEach (message) =>
       return unless message.currentFile
       return unless message.range?.containsPoint point
       @bubble = activeEditor.markBufferRange([point, point], {invalidate: 'never'})
@@ -138,7 +130,7 @@ class LinterViews
     @lineMessages.clear()
     currentLine = atom.workspace.getActiveTextEditor()?.getCursorBufferPosition()?.row
     if currentLine
-      @messages.forEach (message) =>
+      @linter.messages.forEach (message) =>
         if message.currentFile and message.range?.intersectsRow currentLine
           @lineMessages.add message
       @tabs['Line'].count = @lineMessages.size
@@ -188,7 +180,7 @@ class LinterViews
   renderPanelMarkers: ->
     @removeMarkers()
     activeEditor = atom.workspace.getActiveTextEditor()
-    @messages.forEach (message) =>
+    @linter.messages.forEach (message) =>
       return if @state.scope isnt 'Project' and not message.currentFile
       if message.currentFile and message.range #Add the decorations to the current TextEditor
         @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
@@ -204,7 +196,7 @@ class LinterViews
     if @tabs['Line'].active
       messages = @lineMessages
     else
-      messages = @messages
+      messages = @linter.messages
     return @setPanelVisibility(false) unless messages.size
     @setPanelVisibility(true)
     @panel.innerHTML = ''
@@ -220,7 +212,7 @@ class LinterViews
     @markers = []
 
   # This method is called in render, and classifies the messages according to scope
-  extractMessages: (Gen, counts) ->
+  classifyMessages: (Gen, counts) ->
     isProject = @state.scope is 'Project'
     activeEditor = atom.workspace.getActiveTextEditor()
     activeFile = activeEditor?.getPath()
@@ -235,11 +227,9 @@ class LinterViews
         else
           counts.project++
           message.currentFile = false
-        @messages.add message
 
   # this method is called on package deactivate
   destroy: ->
-    @messages.clear()
     @removeMarkers()
     @panelWorkspace.destroy()
     @removeBubble()
