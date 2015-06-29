@@ -34,8 +34,8 @@ class LinterViews
 
     @panel.id = 'linter-panel'
     @updateTabs()
-    @linter.onDidChangeMessages (messages)=>
-      @classifyMessages(messages)
+    @linter.subscriptions.add @linter.onDidChangeMessages =>
+      @render()
 
   # consumed in views/panel
   setPanelVisibility: (Status) ->

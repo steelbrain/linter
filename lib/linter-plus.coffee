@@ -86,7 +86,6 @@ class Linter
     return @messages
 
   onDidChangeMessages: (callback)->
-    console.log(@)
     return @emitter.on 'did-change-messages', callback
 
   onDidChangeProjectMessages: (callback) ->
