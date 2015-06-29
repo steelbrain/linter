@@ -130,9 +130,10 @@ class LinterViews
     @lineMessages.clear()
     currentLine = atom.workspace.getActiveTextEditor()?.getCursorBufferPosition()?.row
     if currentLine
-      @linter.messages.forEach (message) =>
-        if message.currentFile and message.range?.intersectsRow currentLine
-          @lineMessages.add message
+      @linter.messages.forEach (messages) =>
+        messages.forEach (message) =>
+          if message.currentFile and message.range?.intersectsRow currentLine
+            @lineMessages.add message
       @tabs['Line'].count = @lineMessages.size
     if shouldRender then @renderPanelMessages()
 
@@ -192,18 +193,20 @@ class LinterViews
         )
 
   renderPanelMessages: ->
-    messages = null
-    if @tabs['Line'].active
-      messages = @lineMessages
-    else
-      messages = @linter.messages
-    return @setPanelVisibility(false) unless messages.size
+    return @setPanelVisibility(false) if (@tabs['Line'].active and not @lineMessages.size) or not @linter.messages.size
     @setPanelVisibility(true)
     @panel.innerHTML = ''
-    messages.forEach (message) =>
-      return if @state.scope isnt 'Project' and not message.currentFile
-      Element = Message.fromMessage(message, addPath: @state.scope is 'Project', cloneNode: true)
-      @panel.appendChild Element
+    if @tabs['Line'].active
+      @lineMessages.forEach (message) =>
+        return if @state.scope isnt 'Project' and not message.currentFile
+        Element = Message.fromMessage(message, addPath: @state.scope is 'Project', cloneNode: true)
+        @panel.appendChild Element
+    else
+      @linter.messages.forEach (messages) =>
+        messages.forEach (message) =>
+          return if @state.scope isnt 'Project' and not message.currentFile
+          Element = Message.fromMessage(message, addPath: @state.scope is 'Project', cloneNode: true)
+          @panel.appendChild Element
 
   removeMarkers: ->
     return unless @markers.length
