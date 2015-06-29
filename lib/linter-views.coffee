@@ -1,3 +1,4 @@
+{CompositeDisposable} = require 'atom'
 BottomTab = require './views/bottom-tab'
 BottomStatus = require './views/bottom-status'
 Message = require './views/message'
@@ -8,10 +9,12 @@ class LinterViews
     @showBubble = true
     @underlineIssues = true
 
+    @subscriptions = new CompositeDisposable
     @messages = new Set # Classified snapshot of linter's messages when it was last updated
     @lineMessages = new Set
     @markers = []
     @statusTiles = []
+
     @tabPriority = ['File', 'Project', 'Line']
 
     @tabs =
@@ -34,7 +37,7 @@ class LinterViews
 
     @panel.id = 'linter-panel'
     @updateTabs()
-    @linter.subscriptions.add @linter.onDidClassifyMessages =>
+    @subscriptions.add @linter.onDidClassifyMessages =>
       @render()
 
   # consumed in views/panel
@@ -231,6 +234,7 @@ class LinterViews
     @removeMarkers()
     @panelWorkspace.destroy()
     @removeBubble()
+    @subscriptions.dispose()
     for statusTile in @statusTiles
       statusTile.destroy()
 
