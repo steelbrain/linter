@@ -66,7 +66,7 @@ class Linter
   setMessages: (linter, messages) ->
     @messages.set(linter, messages)
 
-  deleteMessages: (linter, messages) ->
+  deleteMessages: (linter) ->
     @messages.delete(linter)
 
   getMessages: ->
