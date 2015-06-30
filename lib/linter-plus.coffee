@@ -1,6 +1,6 @@
 Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
-LinterViews = require './linter-views-new'
+LinterViews = require './linter-views'
 EditorLinter = require './editor-linter'
 Helpers = require './helpers'
 Commands = require './commands'
