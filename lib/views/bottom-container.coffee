@@ -34,6 +34,9 @@ class BottomContainer extends HTMLElement
     @subscriptions.dispose()
     @emitter.dispose()
 
+  getTab: (name) ->
+    return @tabs[name]
+
   onDidChangeTab: (callback) ->
     return @emitter.on 'did-change-tab', callback
 
