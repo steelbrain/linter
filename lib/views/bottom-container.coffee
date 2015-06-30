@@ -22,6 +22,11 @@ class BottomContainer extends HTMLElement
       tab.addEventListener 'click', ->
         emitter.emit 'did-change-tab', @name
 
+    @onDidChangeTab (activeName) =>
+      @state.scope = activeName
+      for name, tab of @tabs
+        tab.active = name is activeName
+
   attachedCallback: ->
     @updateTabs()
 
