@@ -71,7 +71,7 @@ class EditorLinter
       Promises.push new Promise((resolve) =>
         resolve(linter.lint(@editor))
       ).then((results) =>
-        @linter.setMessages(linter, results)
+        @linter.setMessages(linter, results, if linter.scope is 'project' then null else @editor)
       ).catch (error) ->
         atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
 
