@@ -82,7 +82,7 @@ class Linter
     @messages.delete(linter)
 
   getMessages: ->
-    return @messages
+    return @messages.getAll()
 
   onDidChangeMessages: (callback)->
     return @messages.onDidChange(callback)
