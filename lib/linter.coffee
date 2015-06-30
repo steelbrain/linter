@@ -2,7 +2,7 @@ fs = require 'fs'
 path = require 'path'
 {CompositeDisposable, Range, Point, BufferedProcess} = require 'atom'
 XRegExp = null
-Grim = require('grim')
+{deprecate} = require('grim')
 
 # These are NOOPs in linter-plus
 log = -> undefined
@@ -57,7 +57,7 @@ class Linter
 
   # Public: Construct a linter passing it's base editor
   constructor: (@editor) ->
-    Grim.deprecate('AtomLinter v0.X.Y API has been deprecated.
+    deprecate('AtomLinter v0.X.Y API has been deprecated.
       Please refer to the Linter docs to update and the latest API:
       https://github.com/AtomLinter/Linter/wiki/Migrating-to-the-new-API')
 
