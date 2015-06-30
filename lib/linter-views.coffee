@@ -26,7 +26,6 @@ class LinterViews
     @bubble = null
     @bottomStatus = new BottomStatus()
 
-    @bottomStatus.initialize()
     @bottomStatus.addEventListener 'click', ->
       atom.commands.dispatch atom.views.getView(atom.workspace), 'linter:next-error'
     @panelWorkspace = atom.workspace.addBottomPanel item: @panel, visible: false
