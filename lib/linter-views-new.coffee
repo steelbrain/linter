@@ -7,11 +7,12 @@ BottomStatus = require('./views/bottom-status')
 
 class LinterViews
   constructor: (@linter) ->
+    @state = @linter.state
     @subscriptions = new CompositeDisposable
     @messages = []
     @lineMessages = []
     @markers = []
-    @panel = new BottomPanel
+    @panel = new BottomPanel().prepare()
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
 
@@ -21,14 +22,28 @@ class LinterViews
   render: ->
     @messages = @linter.messages.getAllMessages()
     @updateLineMessages()
+    @renderPanelMessages()
 
   renderCount: ->
     count = @linter.messages.getCount()
     count.Line = @lineMessages.length
     @bottomContainer.setCount(count)
 
+  renderPanelMessages: ->
+    messages = null
+    if @state.scope is 'Project'
+      messages = @messages
+    else if @state.scope is 'File'
+      messages = @messages.filter (message) -> message.currentFile
+    else if @state.scope is 'Line'
+      messages = @lineMessages
+    @panel.updateMessages messages, @state.scope is 'Project'
+
   updateLineMessages: ->
-    @lineMessages = if @bottomContainer.getTab('File').attached then @linter.messages.getActiveFileMessagesForActiveRow() else []
+    @lineMessages =
+      if @bottomContainer.getTab('File').attached
+        @linter.messages.getActiveFileMessagesForActiveRow()
+      else []
     @renderCount()
 
   attachBottom: (statusBar) ->
@@ -39,5 +54,6 @@ class LinterViews
   destroy: ->
     @subscriptions.dispose()
     @bottomBar.destroy()
+    @panel.destroy()
 
 module.exports = LinterViews
