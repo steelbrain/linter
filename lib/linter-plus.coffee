@@ -5,6 +5,7 @@ EditorLinter = require './editor-linter'
 Helpers = require './helpers'
 Commands = require './commands'
 Messages = require './messages'
+{deprecate} = require 'grim'
 
 class Linter
   constructor:(@state)  ->
@@ -79,19 +80,19 @@ class Linter
     return @messages.onDidClassify(callback)
 
   onDidChangeProjectMessages: (callback) ->
-    console.warn("Linter::onDidChangeProjectMessages is deprecated, use Linter::onDidChangeMessages instead")
+    deprecate("Linter::onDidChangeProjectMessages is deprecated, use Linter::onDidChangeMessages instead")
     return @onDidChangeMessages(callback)
 
   getProjectMessages: ->
-    console.warn("Linter::getProjectMessages is deprecated, use Linter::getMessages instead")
+    deprecate("Linter::getProjectMessages is deprecated, use Linter::getMessages instead")
     return @getMessages()
 
   setProjectMessages: (linter, messages) ->
-    console.warn("Linter::setProjectMessages is deprecated, use Linter::setMessages instead")
+    deprecate("Linter::setProjectMessages is deprecated, use Linter::setMessages instead")
     return @setMessages(linter, messages)
 
   deleteProjectMessages: (linter) ->
-    console.warn("Linter::deleteProjectMessages is deprecated, use Linter::deleteMessages instead")
+    deprecate("Linter::deleteProjectMessages is deprecated, use Linter::deleteMessages instead")
     return @setMessages(linter, messages)
 
   getActiveEditorLinter: ->
