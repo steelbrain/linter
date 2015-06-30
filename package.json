@@ -32,6 +32,7 @@
     }
   },
   "dependencies": {
+    "double-ended-queue": "^2.1.0-0",
     "temp": "^0.8.3",
     "xregexp": "^2.0.0"
   }
