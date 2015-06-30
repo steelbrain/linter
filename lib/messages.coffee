@@ -10,7 +10,7 @@ Helpers = require('./helpers')
 class MessageRegistry
   constructor: (@linter)->
     @count = File: 0, Project: 0
-    @messages = new Map()
+    @messages = new Map() # Messages = Map<Linter, Array<messages>>
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
@@ -28,8 +28,17 @@ class MessageRegistry
     @messages.delete(linter)
     @emitter.emit 'did-change', @messages
 
-  get: ->
-    return @messages
+  getAllMessages: ->
+    toReturn = []
+    @messages.forEach (messages) =>
+      toReturn = toReturn.concat(messages)
+    return toReturn
+
+  getActiveFileMessages: ->
+    toReturn = []
+    @messages.forEach (messages) =>
+      toReturn = toReturn.concat(messages.filter((entry) -> entry.currentFile))
+    return toReturn
 
   onDidChange: (callback) ->
     return @emitter.on 'did-change', callback
