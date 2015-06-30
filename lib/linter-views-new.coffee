@@ -16,6 +16,9 @@ class LinterViews
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
 
+    @subscriptions.add atom.config.observe('linter.underlineIssues', (underlineIssues) =>
+      @underlineIssues = underlineIssues
+    )
     @subscriptions.add @linter.onDidClassifyMessages =>
       @render()
 
@@ -23,6 +26,7 @@ class LinterViews
     @messages = @linter.messages.getAllMessages()
     @updateLineMessages()
     @renderPanelMessages()
+    @renderPanelMarkers()
 
   renderCount: ->
     count = @linter.messages.getCount()
@@ -39,6 +43,20 @@ class LinterViews
       messages = @lineMessages
     @panel.updateMessages messages, @state.scope is 'Project'
 
+  renderPanelMarkers: ->
+    @removeMarkers()
+    activeEditor = atom.workspace.getActiveTextEditor()
+    return unless activeEditor
+    @messages.forEach (message) =>
+      return unless message.currentFile
+      @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
+      activeEditor.decorateMarker(
+        marker, type: 'line-number', class: "linter-highlight #{message.class}"
+      )
+      if @underlineIssues then activeEditor.decorateMarker(
+        marker, type: 'highlight', class: "linter-highlight #{message.class}"
+      )
+
   updateLineMessages: ->
     @lineMessages =
       if @bottomContainer.getTab('File').attached
@@ -51,7 +69,12 @@ class LinterViews
       item: @bottomContainer,
       priority: -100
 
+  removeMarkers: ->
+    @markers.forEach (marker) -> try marker.destroy()
+    @markers = []
+
   destroy: ->
+    @removeMarkers()
     @subscriptions.dispose()
     @bottomBar.destroy()
     @panel.destroy()
