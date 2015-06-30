@@ -1,6 +1,6 @@
 Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
-LinterViews = require './linter-views'
+LinterViews = require './linter-views-new'
 EditorLinter = require './editor-linter'
 Helpers = require './helpers'
 Commands = require './commands'
@@ -8,7 +8,7 @@ Messages = require './messages'
 
 class Linter
   constructor:(@state)  ->
-    @state ?= {}
+    @state ?= {scope: 'File'}
 
     # Public Stuff
     @lintOnFly = true # A default art value, to be immediately replaced by the observe config below
@@ -20,28 +20,15 @@ class Linter
     @linters = new Set # Values are pushed here from Main::consumeLinter
 
     @messages = new Messages(this)
-    @views = new LinterViews @state, this
+    @views = new LinterViews this
     @commands = new Commands this
 
-    @subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
-      @views.setShowBubble(showBubble)
-    @subscriptions.add atom.config.observe 'linter.showErrorPanel', (showPanel) =>
-      @views.setShowPanel(showPanel)
-    @subscriptions.add atom.config.observe 'linter.underlineIssues', (underlineIssues) =>
-      @views.setUnderlineIssues(underlineIssues)
     @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
     @subscriptions.add atom.project.onDidChangePaths =>
       @commands.lint()
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
       @commands.lint()
-
-    @subscriptions.add atom.config.onDidChange 'linter.showErrorTabLine', =>
-      @views.updateTabs()
-    @subscriptions.add atom.config.onDidChange 'linter.showErrorTabFile', =>
-      @views.updateTabs()
-    @subscriptions.add atom.config.onDidChange 'linter.showErrorTabProject', =>
-      @views.updateTabs()
 
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       currentEditorLinter = new EditorLinter @, editor
@@ -84,11 +71,11 @@ class Linter
   getMessages: ->
     return @messages.getAll()
 
-  onDidChangeMessages: (callback)->
+  onDidChangeMessages: (callback) ->
     return @messages.onDidChange(callback)
 
   # Classify as in sort
-  onDidClassifyMessages: (callback)->
+  onDidClassifyMessages: (callback) ->
     return @messages.onDidClassify(callback)
 
   onDidChangeProjectMessages: (callback) ->
