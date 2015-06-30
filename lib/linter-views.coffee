@@ -129,13 +129,9 @@ class LinterViews
 
   updateLineMessages: (shouldRender = false) ->
     return unless @tabs.Line.visibility
-    @lineMessages.clear()
-    currentLine = atom.workspace.getActiveTextEditor()?.getCursorBufferPosition()?.row
-    if currentLine
-      @messages.forEach (message) =>
-        if message.currentFile and message.range?.intersectsRow currentLine
-          @lineMessages.add message
-      @tabs.Line.count = @lineMessages.size
+    row = atom.workspace.getActiveTextEditor()?.getCursorBufferPosition()?.row
+    @lineMessages = @linter.messages.getActiveFileMessagesForRow(row)
+    @tabs.Line.count = @lineMessages.length
     if shouldRender then @renderPanelMessages()
 
   # This method is called when we get the status-bar service
