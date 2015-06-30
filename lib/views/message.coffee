@@ -46,12 +46,10 @@ class Message extends HTMLElement
     el
 
   @processMultiLine: (text)->
-    container = document.createElement 'div'
-    container.classList.add 'linter-multiline-message'
+    container = document.createElement 'linter-multiline-message'
     for line in @text.split(/\n/)
       if line
-        el = document.createElement 'div'
-        el.classList.add('linter-message-line')
+        el = document.createElement 'linter-message-line'
         el.textContent = line
         container.appendChild el
     container

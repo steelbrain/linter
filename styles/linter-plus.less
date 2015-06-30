@@ -14,18 +14,18 @@ linter-message {
   }
 }
 
-.linter-multiline-message {
+linter-multiline-message {
   display: block;
   pointer-events: auto;
-  .linter-message-line {
+  linter-message-line {
     display: block;
     white-space: pre;
   }
-  .linter-message-line:not(:first-child) {
+  linter-message-line:not(:first-child) {
     display: none;
     margin-left: 1.1em;
   }
-  .linter-message-line:first-child:not(:nth-last-of-type(1))::before {
+  linter-message-line:first-child:not(:nth-last-of-type(1))::before {
     font-family: 'Octicons Regular';
     content: @triangle-right;
     display: inline-block;
@@ -35,10 +35,10 @@ linter-message {
     height: 1em;
   }
   &:focus, &.expanded {
-    .linter-message-line:first-child:not(:nth-last-of-type(1))::before {
+    linter-message-line:first-child:not(:nth-last-of-type(1))::before {
       content: @triangle-down;
     }
-    .linter-message-line:not(:first-child) {
+    linter-message-line:not(:first-child) {
       display: block;
     }
   }
