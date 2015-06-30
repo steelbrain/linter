@@ -1,5 +1,5 @@
 Helpers = require('./helpers')
-{CompositeDisposable, Emitter} = require 'atom'
+{CompositeDisposable, Emitter} = require('atom')
 
 ###
   Note: We are reclassifying the messages on on Pane Item Change,
@@ -42,6 +42,9 @@ class MessageRegistry
     @messages.forEach (messages) =>
       toReturn = toReturn.concat(messages.filter((message) -> message.currentFile))
     return toReturn
+
+  getActiveFileMessagesForActiveRow: ->
+    return @getActiveFileMessagesForRow(atom.workspace.getActiveTextEditor()?.getCursorBufferPosition()?.row)
 
   getActiveFileMessagesForRow: (row)->
     toReturn = []
