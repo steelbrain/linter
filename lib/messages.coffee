@@ -28,6 +28,9 @@ class MessageRegistry
     @messages.delete(linter)
     @emitter.emit 'did-change', @messages
 
+  getCount: ->
+    return File: @count.File, Project: @count.Project
+
   getAllMessages: ->
     toReturn = []
     @messages.forEach (messages) =>
