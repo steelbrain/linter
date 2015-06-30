@@ -32,6 +32,7 @@
     }
   },
   "dependencies": {
+    "grim": "^1.4.1",
     "temp": "^0.8.3",
     "xregexp": "^2.0.0"
   }
