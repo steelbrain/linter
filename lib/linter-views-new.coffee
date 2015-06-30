@@ -19,6 +19,9 @@ class LinterViews
     @subscriptions.add atom.config.observe('linter.underlineIssues', (underlineIssues) =>
       @underlineIssues = underlineIssues
     )
+    @subscriptions.add atom.config.observe('linter.showErrorPanel', (showPanel) =>
+      @panel.panelVisibility = showPanel
+    )
     @subscriptions.add @linter.onDidClassifyMessages =>
       @render()
     @subscriptions.add @bottomContainer.onDidChangeTab =>
