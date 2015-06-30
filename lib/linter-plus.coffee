@@ -20,9 +20,9 @@ class Linter
     @editorLinters = new Map
     @linters = new Set # Values are pushed here from Main::consumeLinter
 
-    @messages = new Messages(this)
-    @views = new LinterViews this
-    @commands = new Commands this
+    @messages = new Messages @
+    @views = new LinterViews @
+    @commands = new Commands @
 
     @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
