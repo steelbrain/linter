@@ -17,7 +17,18 @@ class Commands
     @linter.getActiveEditorLinter()?.toggleStatus()
 
   setBubbleTransparent: ->
-    @linter.views.setBubbleTransparent()
+    bubble = document.getElementById('linter-inline')
+    if bubble
+      bubble.classList.add 'transparent'
+      document.addEventListener 'keyup', @setBubbleOpaque
+      window.addEventListener 'blur', @setBubbleOpaque
+
+  setBubbleOpaque: ->
+    bubble = document.getElementById('linter-inline')
+    if bubble
+      bubble.classList.remove 'transparent'
+    document.removeEventListener 'keyup', @setBubbleOpaque
+    window.removeEventListener 'blur', @setBubbleOpaque
 
   expandMultilineMessages: ->
     for elem in document.getElementsByTagName 'linter-multiline-message'
