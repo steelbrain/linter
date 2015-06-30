@@ -1,6 +1,7 @@
 BottomTab = require './views/bottom-tab'
 BottomStatus = require './views/bottom-status'
 Message = require './views/message'
+Deque = require 'double-ended-queue'
 
 class LinterViews
   constructor: (@state, @linter) ->
@@ -8,7 +9,7 @@ class LinterViews
     @showBubble = true
     @underlineIssues = true
 
-    @messages = new Set
+    @messages = new Deque
     @lineMessages = new Set
     @markers = []
     @statusTiles = []
@@ -115,11 +116,11 @@ class LinterViews
   updateBubble: (point) ->
     @removeBubble()
     return unless @showBubble
-    return unless @messages.size
+    return unless @messages.length
     activeEditor = atom.workspace.getActiveTextEditor()
     return unless activeEditor?.getPath()
     point = point || activeEditor.getCursorBufferPosition()
-    try @messages.forEach (message) =>
+    try @messages.toArray().forEach (message) =>
       return unless message.currentFile
       return unless message.range?.containsPoint point
       @bubble = activeEditor.markBufferRange([point, point], {invalidate: 'never'})
@@ -138,7 +139,7 @@ class LinterViews
     @lineMessages.clear()
     currentLine = atom.workspace.getActiveTextEditor()?.getCursorBufferPosition()?.row
     if currentLine
-      @messages.forEach (message) =>
+      @messages.toArray.forEach (message) =>
         if message.currentFile and message.range?.intersectsRow currentLine
           @lineMessages.add message
       @tabs['Line'].count = @lineMessages.size
@@ -188,7 +189,7 @@ class LinterViews
   renderPanelMarkers: ->
     @removeMarkers()
     activeEditor = atom.workspace.getActiveTextEditor()
-    @messages.forEach (message) =>
+    @messages.toArray().forEach (message) =>
       return if @state.scope isnt 'Project' and not message.currentFile
       if message.currentFile and message.range #Add the decorations to the current TextEditor
         @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
@@ -208,7 +209,7 @@ class LinterViews
     return @setPanelVisibility(false) unless messages.size
     @setPanelVisibility(true)
     @panel.innerHTML = ''
-    messages.forEach (message) =>
+    messages.toArray.forEach (message) =>
       return if @state.scope isnt 'Project' and not message.currentFile
       Element = Message.fromMessage(message, addPath: @state.scope is 'Project', cloneNode: true)
       @panel.appendChild Element
@@ -235,7 +236,7 @@ class LinterViews
         else
           counts.project++
           message.currentFile = false
-        @messages.add message
+        @messages.push message
 
   # this method is called on package deactivate
   destroy: ->
