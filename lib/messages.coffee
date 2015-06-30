@@ -9,6 +9,7 @@ Helpers = require('./helpers')
 
 class MessageRegistry
   constructor: (@linter)->
+    @count = File: 0, Project: 0
     @messages = new Map()
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
@@ -37,11 +38,14 @@ class MessageRegistry
     return @emitter.on 'did-classify', callback
 
   classifyMessages: (messages)->
+    @count = File: 0, Project: 0
     isProject = @linter.state.scope is 'Project'
     activeFile = atom.workspace.getActiveTextEditor()?.getPath()
     messages.forEach (message) =>
+      @count.Project++
       if (not message.filePath and not isProject) or message.filePath is activeFile
         message.currentFile = true
+        @count.File++
       else
         message.currentFile = false
 

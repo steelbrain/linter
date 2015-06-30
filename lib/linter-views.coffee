@@ -214,20 +214,14 @@ class LinterViews
 
   # This method is called in render, and classifies the messages according to scope
   updateMessages: ->
-    counts = {File: 0, Project: 0}
     @messages.clear()
-    @linter.getMessages().forEach (Entry) =>
+    linterMessages = @linter.getMessages()
+    linterMessages.get().forEach (Entry) =>
       Entry.forEach (message) =>
-        # If there's no file prop on message and the panel scope is file then count is as current
-        if message.currentFile
-          counts.File++
-          counts.Project++
-        else
-          counts.Project++
         @messages.add message
-    @tabs.File.count = counts.File
-    @tabs.Project.count = counts.Project
-    @bottomStatus.count = counts.Project
+    @tabs.File.count = linterMessages.count.File
+    @tabs.Project.count = linterMessages.count.Project
+    @bottomStatus.count = linterMessages.count.Project
 
   # this method is called on package deactivate
   destroy: ->
