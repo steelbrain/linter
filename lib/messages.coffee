@@ -37,7 +37,15 @@ class MessageRegistry
   getActiveFileMessages: ->
     toReturn = []
     @messages.forEach (messages) =>
-      toReturn = toReturn.concat(messages.filter((entry) -> entry.currentFile))
+      toReturn = toReturn.concat(messages.filter((message) -> message.currentFile))
+    return toReturn
+
+  getActiveFileMessagesForRow: (row)->
+    toReturn = []
+    @messages.forEach (messages) =>
+      toReturn = toReturn.concat messages.filter((message) ->
+        message.currentFile and message.range?.intersectsRow row
+      )
     return toReturn
 
   onDidChange: (callback) ->
