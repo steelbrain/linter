@@ -26,7 +26,7 @@ class LinterViews
     @bottomStatus.initialize()
     @bottomStatus.addEventListener 'click', ->
       atom.commands.dispatch atom.views.getView(atom.workspace), 'linter:next-error'
-    @panelWorkspace = atom.workspace.addBottomPanel item: @panel, visible: false
+    @panelWorkspace = atom.workspace.addBottomPanel item: @panel, visible: false, priority: 500 # priority increased because of https://github.com/AtomLinter/Linter/issues/668 
 
     for key, tab of @tabs
       do (key, tab) =>
