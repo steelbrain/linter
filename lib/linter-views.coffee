@@ -23,6 +23,7 @@ class LinterViews
       Project: new BottomTab()
 
     @panel = document.createElement 'div'
+    @panel.id = 'linter-panel'
     @bubble = null
     @bottomStatus = new BottomStatus()
 
@@ -33,14 +34,12 @@ class LinterViews
     for key, tab of @tabs
       do (key, tab) =>
         tab.initialize key, => @changeTab(key)
-
-    @panel.id = 'linter-panel'
     @updateTabs()
     @subscriptions.add @linter.onDidClassifyMessages =>
       @render()
 
   # consumed in views/panel
-  setPanelVisibility: (Status) ->
+  setPanelWorkspaceVisibility: (Status) ->
     if Status
       @panelWorkspace.show() unless @panelWorkspace.isVisible()
     else
@@ -194,8 +193,8 @@ class LinterViews
         @lineMessages
       else
         @messages
-    return @setPanelVisibility(false) unless messages.length
-    @setPanelVisibility(true)
+    return @setPanelWorkspaceVisibility(false) unless messages.length
+    @setPanelWorkspaceVisibility(true)
     @panel.innerHTML = ''
     messages.forEach (message) =>
       return if @state.scope isnt 'Project' and not message.currentFile
