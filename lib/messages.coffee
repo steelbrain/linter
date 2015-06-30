@@ -3,8 +3,8 @@ Helpers = require('./helpers')
 
 ###
   Note: We are reclassifying the messages on on Pane Item Change,
-  even though we are relinting on that same event, 'cause linters could take time
-  and we have to refresh the views immediately
+  even though we are relinting on that same event, 'cause linters
+  could take time and we have to refresh the views immediately
 ###
 
 class MessageRegistry
