@@ -4,20 +4,25 @@
 BottomPanel = require('./views/bottom-panel')
 BottomContainer = require('./views/bottom-container')
 BottomStatus = require('./views/bottom-status')
+Message = require('./views/message')
 
 class LinterViews
   constructor: (@linter) ->
     @state = @linter.state
     @subscriptions = new CompositeDisposable
     @messages = []
-    @lineMessages = []
+    @messagesLine = []
     @markers = []
     @panel = new BottomPanel().prepare()
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
+    @bubble = null
 
     @subscriptions.add atom.config.observe('linter.underlineIssues', (underlineIssues) =>
       @underlineIssues = underlineIssues
+    )
+    @subscriptions.add atom.config.observe('linter.showErrorInline', (showBubble) =>
+      @showBubble = showBubble
     )
     @subscriptions.add atom.config.observe('linter.showErrorPanel', (showPanel) =>
       @panel.panelVisibility = showPanel
@@ -32,10 +37,38 @@ class LinterViews
     @updateLineMessages()
     @renderPanelMessages()
     @renderPanelMarkers()
+    @renderBubble()
+
+  renderBubble: (point) ->
+    @removeBubble()
+    return unless @messagesLine.length
+    return unless @showBubble
+    activeEditor = atom.workspace.getActiveTextEditor()
+    return unless activeEditor?.getPath?()
+    point = point || activeEditor.getCursorBufferPosition()
+    for message in @messagesLine
+      continue unless message.range?.containsPoint point
+      @bubble = activeEditor.decorateMarker(
+        activeEditor.markBufferRange([point, point], {invalidate: 'never'})
+        {
+          type: 'overlay',
+          position: 'tail',
+          item: @renderBubbleContent(message)
+        }
+      )
+      break
+
+  renderBubbleContent: (message) ->
+    bubble = document.createElement 'div'
+    bubble.id = 'linter-inline'
+    bubble.appendChild Message.fromMessage(message)
+    if message.trace then message.trace.forEach (trace) ->
+      bubble.appendChild Message.fromMessage(trace, addPath: true)
+    bubble
 
   renderCount: ->
     count = @linter.messages.getCount()
-    count.Line = @lineMessages.length
+    count.Line = @messagesLine.length
     @bottomContainer.setCount(count)
 
   renderPanelMessages: ->
@@ -45,7 +78,7 @@ class LinterViews
     else if @state.scope is 'File'
       messages = @messages.filter (message) -> message.currentFile
     else if @state.scope is 'Line'
-      messages = @lineMessages
+      messages = @messagesLine
     @panel.updateMessages messages, @state.scope is 'Project'
 
   renderPanelMarkers: ->
@@ -62,10 +95,10 @@ class LinterViews
         marker, type: 'highlight', class: "linter-highlight #{message.class}"
       )
 
-  updateLineMessages: (renderMessages = false) ->
-    @lineMessages = @linter.messages.getActiveFileMessagesForActiveRow()
+  updateLineMessages: (render = false) ->
+    @messagesLine = @linter.messages.getActiveFileMessagesForActiveRow()
     @renderCount()
-    @renderPanelMessages() if renderMessages
+    @renderPanelMessages() if render
 
   attachBottom: (statusBar) ->
     @bottomBar = statusBar.addLeftTile
@@ -76,8 +109,13 @@ class LinterViews
     @markers.forEach (marker) -> try marker.destroy()
     @markers = []
 
+  removeBubble: ->
+    @bubble?.destroy()
+    @bubble = null
+
   destroy: ->
     @removeMarkers()
+    @removeBubble()
     @subscriptions.dispose()
     @bottomBar.destroy()
     @panel.destroy()
