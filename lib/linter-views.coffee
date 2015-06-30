@@ -77,33 +77,16 @@ class LinterViews
   render: ->
     @messages = @linter.messages.getAllMessages()
     @updateTabCounts()
-    @updateLineMessages()
     @updateBubble()
     @renderPanelMarkers()
+    @updateLineMessages()
     @renderPanelMessages()
 
-  updateTabs: ->
-    first = null
-    last = null
+  updateTabCounts: ->
+    @tabs.File.count = @linter.messages.count.File
+    @tabs.Project.count = @linter.messages.count.Project
+    @bottomStatus.count = @linter.messages.count.Project
 
-    for key, tab of @tabs
-      tab.classList.remove('first')
-      tab.classList.remove('last')
-      tab.visibility = atom.config.get("linter.showErrorTab#{key}")
-      if tab.visibility
-        last = tab
-        first = tab unless first
-
-    first.classList.add('first') if first
-    last.classList.add('last') if last
-
-    unless @tabs[@state.scope]?.visibility
-      @state.scope = @tabPriority.filter((key) => @tabs[key].visibility)[0]
-      @state.scope ?= 'File'
-
-    @changeTab(@state.scope, false)
-
-  # consumed in editor-linter, renderPanel
   updateBubble: (point) ->
     @removeBubble()
     return unless @showBubble
@@ -125,12 +108,61 @@ class LinterViews
       )
       throw null
 
+  renderPanelMarkers: ->
+    @removeMarkers()
+    activeEditor = atom.workspace.getActiveTextEditor()
+    @messages.forEach (message) =>
+      return if @state.scope isnt 'Project' and not message.currentFile
+      if message.currentFile and message.range #Add the decorations to the current TextEditor
+        @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
+        activeEditor.decorateMarker(
+          marker, type: 'line-number', class: "linter-highlight #{message.class}"
+        )
+        if @underlineIssues then activeEditor.decorateMarker(
+          marker, type: 'highlight', class: "linter-highlight #{message.class}"
+        )
+
   updateLineMessages: (shouldRender = false) ->
     return unless @tabs.Line.visibility
     row = atom.workspace.getActiveTextEditor()?.getCursorBufferPosition()?.row
     @lineMessages = @linter.messages.getActiveFileMessagesForRow(row)
     @tabs.Line.count = @lineMessages.length
     if shouldRender then @renderPanelMessages()
+
+  renderPanelMessages: ->
+    messages =
+      if @tabs['Line'].active
+        @lineMessages
+      else
+        @messages
+    return @setPanelWorkspaceVisibility(false) unless messages.length
+    @setPanelWorkspaceVisibility(true)
+    @panel.innerHTML = ''
+    messages.forEach (message) =>
+      return if @state.scope isnt 'Project' and not message.currentFile
+      Element = Message.fromMessage(message, addPath: @state.scope is 'Project', cloneNode: true)
+      @panel.appendChild Element
+
+  updateTabs: ->
+    first = null
+    last = null
+
+    for key, tab of @tabs
+      tab.classList.remove('first')
+      tab.classList.remove('last')
+      tab.visibility = atom.config.get("linter.showErrorTab#{key}")
+      if tab.visibility
+        last = tab
+        first = tab unless first
+
+    first.classList.add('first') if first
+    last.classList.add('last') if last
+
+    unless @tabs[@state.scope]?.visibility
+      @state.scope = @tabPriority.filter((key) => @tabs[key].visibility)[0]
+      @state.scope ?= 'File'
+
+    @changeTab(@state.scope, false)
 
   # This method is called when we get the status-bar service
   attachBottom: (statusBar) ->
@@ -173,44 +205,11 @@ class LinterViews
       bubble.appendChild Message.fromMessage(trace, addPath: true)
     bubble
 
-  renderPanelMarkers: ->
-    @removeMarkers()
-    activeEditor = atom.workspace.getActiveTextEditor()
-    @messages.forEach (message) =>
-      return if @state.scope isnt 'Project' and not message.currentFile
-      if message.currentFile and message.range #Add the decorations to the current TextEditor
-        @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
-        activeEditor.decorateMarker(
-          marker, type: 'line-number', class: "linter-highlight #{message.class}"
-        )
-        if @underlineIssues then activeEditor.decorateMarker(
-          marker, type: 'highlight', class: "linter-highlight #{message.class}"
-        )
-
-  renderPanelMessages: ->
-    messages =
-      if @tabs['Line'].active
-        @lineMessages
-      else
-        @messages
-    return @setPanelWorkspaceVisibility(false) unless messages.length
-    @setPanelWorkspaceVisibility(true)
-    @panel.innerHTML = ''
-    messages.forEach (message) =>
-      return if @state.scope isnt 'Project' and not message.currentFile
-      Element = Message.fromMessage(message, addPath: @state.scope is 'Project', cloneNode: true)
-      @panel.appendChild Element
-
   removeMarkers: ->
     return unless @markers.length
     for marker in @markers
       try marker.destroy()
     @markers = []
-
-  updateTabCounts: ->
-    @tabs.File.count = @linter.messages.count.File
-    @tabs.Project.count = @linter.messages.count.Project
-    @bottomStatus.count = @linter.messages.count.Project
 
   # this method is called on package deactivate
   destroy: ->
