@@ -52,7 +52,6 @@ module.exports =
           Please refer to the Linter docs to update and the latest API:
           https://github.com/AtomLinter/Linter/wiki/Migrating-to-the-new-API', {
           packageName: atomPackage.name
-          originName: 'Legacy Linter API'
         })
         try
           linter = legacy(require("#{atomPackage.path}/lib/#{implementation}"))
