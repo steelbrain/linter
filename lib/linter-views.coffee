@@ -111,6 +111,7 @@ class LinterViews
   renderPanelMarkers: ->
     @removeMarkers()
     activeEditor = atom.workspace.getActiveTextEditor()
+    return unless activeEditor.getPath?
     @messages.forEach (message) =>
       return if @state.scope isnt 'Project' and not message.currentFile
       if message.currentFile and message.range #Add the decorations to the current TextEditor
