@@ -37,6 +37,11 @@ class BottomContainer extends HTMLElement
   onDidChangeTab: (callback) ->
     return @emitter.on 'did-change-tab', callback
 
+  setCount: ({Project, File, Line}) ->
+    @tabs.File.count = File
+    @tabs.Project.count = Project
+    @tabs.Line.count = Line
+
   updateTabs: ->
     active = @state.scope
     for name, tab of @tabs
