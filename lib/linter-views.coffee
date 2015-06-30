@@ -10,8 +10,8 @@ class LinterViews
     @underlineIssues = true
 
     @subscriptions = new CompositeDisposable
-    @messages = new Set # Classified snapshot of linter's messages when it was last updated
-    @lineMessages = new Set
+    @messages = [] # Value returned by MessageRegistry::getAll
+    @lineMessages = []
     @markers = []
     @statusTiles = []
 
@@ -77,7 +77,8 @@ class LinterViews
 
   # This message is called in editor-linter.coffee
   render: ->
-    @updateMessages()
+    @messages = @linter.messages.getAllMessages()
+    @updateTabCounts()
     @updateLineMessages()
     @updateBubble()
     @renderPanelMarkers()
@@ -108,7 +109,7 @@ class LinterViews
   updateBubble: (point) ->
     @removeBubble()
     return unless @showBubble
-    return unless @messages.size
+    return unless @messages.length
     activeEditor = atom.workspace.getActiveTextEditor()
     return unless activeEditor?.getPath()
     point = point || activeEditor.getCursorBufferPosition()
@@ -198,7 +199,7 @@ class LinterViews
         @lineMessages
       else
         @messages
-    return @setPanelVisibility(false) unless messages.size
+    return @setPanelVisibility(false) unless messages.length
     @setPanelVisibility(true)
     @panel.innerHTML = ''
     messages.forEach (message) =>
@@ -212,16 +213,10 @@ class LinterViews
       try marker.destroy()
     @markers = []
 
-  # This method is called in render, and classifies the messages according to scope
-  updateMessages: ->
-    @messages.clear()
-    linterMessages = @linter.getMessages()
-    linterMessages.get().forEach (Entry) =>
-      Entry.forEach (message) =>
-        @messages.add message
-    @tabs.File.count = linterMessages.count.File
-    @tabs.Project.count = linterMessages.count.Project
-    @bottomStatus.count = linterMessages.count.Project
+  updateTabCounts: ->
+    @tabs.File.count = @linter.messages.count.File
+    @tabs.Project.count = @linter.messages.count.Project
+    @bottomStatus.count = @linter.messages.count.Project
 
   # this method is called on package deactivate
   destroy: ->
