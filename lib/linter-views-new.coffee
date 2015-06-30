@@ -20,10 +20,16 @@ class LinterViews
 
   render: ->
     @messages = @linter.messages.getAllMessages()
-    @lineMessages = if @bottomContainer.getTab('File').attached then @linter.messages.getActiveFileMessagesForActiveRow() else []
+    @updateLineMessages()
+
+  renderCount: ->
     count = @linter.messages.getCount()
     count.Line = @lineMessages.length
     @bottomContainer.setCount(count)
+
+  updateLineMessages: ->
+    @lineMessages = if @bottomContainer.getTab('File').attached then @linter.messages.getActiveFileMessagesForActiveRow() else []
+    @renderCount()
 
   attachBottom: (statusBar) ->
     @bottomBar = statusBar.addLeftTile
