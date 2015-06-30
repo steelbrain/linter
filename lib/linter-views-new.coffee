@@ -21,6 +21,8 @@ class LinterViews
     )
     @subscriptions.add @linter.onDidClassifyMessages =>
       @render()
+    @subscriptions.add @bottomContainer.onDidChangeTab =>
+      @renderPanelMessages()
 
   render: ->
     @messages = @linter.messages.getAllMessages()
@@ -57,12 +59,13 @@ class LinterViews
         marker, type: 'highlight', class: "linter-highlight #{message.class}"
       )
 
-  updateLineMessages: ->
+  updateLineMessages: (renderMessages = false) ->
     @lineMessages =
       if @bottomContainer.getTab('File').attached
         @linter.messages.getActiveFileMessagesForActiveRow()
       else []
     @renderCount()
+    @renderPanelMessages() if renderMessages
 
   attachBottom: (statusBar) ->
     @bottomBar = statusBar.addLeftTile
