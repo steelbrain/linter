@@ -63,10 +63,7 @@ class LinterViews
       )
 
   updateLineMessages: (renderMessages = false) ->
-    @lineMessages =
-      if @bottomContainer.getTab('File').attached
-        @linter.messages.getActiveFileMessagesForActiveRow()
-      else []
+    @lineMessages = @linter.messages.getActiveFileMessagesForActiveRow()
     @renderCount()
     @renderPanelMessages() if renderMessages
 
