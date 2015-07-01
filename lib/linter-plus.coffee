@@ -28,8 +28,6 @@ class Linter
       @lintOnFly = value
     @subscriptions.add atom.project.onDidChangePaths =>
       @commands.lint()
-    @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
-      @commands.lint()
 
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       currentEditorLinter = new EditorLinter @, editor
