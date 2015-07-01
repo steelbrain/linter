@@ -6,12 +6,10 @@ Helpers = require './helpers'
 Commands = require './commands'
 
 class Linter
-  constructor:(@state)  ->
-    @state ?= {}
-
+  constructor:(state = {})  ->
     # Public Stuff
     @lintOnFly = true # A default art value, to be immediately replaced by the observe config below
-    @views = new LinterViews @state, this # Used by editor-linter to trigger views.render
+    @views = new LinterViews state.views, this # Used by editor-linter to trigger views.render
     @commands = new Commands this
 
     # Private Stuff
@@ -34,12 +32,10 @@ class Linter
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
       @commands.lint()
 
-    @subscriptions.add atom.config.onDidChange 'linter.showErrorTabLine', =>
-      @views.updateTabs()
-    @subscriptions.add atom.config.onDidChange 'linter.showErrorTabFile', =>
-      @views.updateTabs()
-    @subscriptions.add atom.config.onDidChange 'linter.showErrorTabProject', =>
-      @views.updateTabs()
+    for tabName of @views.tabs.tabPriorities
+      do (tabName) =>
+        @subscriptions.add atom.config.onDidChange "linter.showErrorTab#{tabName}", ({newValue}) =>
+          @views.updateTabs(tabName, newValue)
 
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       currentEditorLinter = new EditorLinter @, editor
@@ -50,7 +46,8 @@ class Linter
         currentEditorLinter.destroy()
         @editorLinters.delete editor
 
-  serialize: -> @state
+  serialize: ->
+    {views: @views.serialize()}
 
   addLinter: (linter) ->
     try
