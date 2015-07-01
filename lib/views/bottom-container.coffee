@@ -44,6 +44,7 @@ class BottomContainer extends HTMLElement
     @tabs.File.count = File
     @tabs.Project.count = Project
     @tabs.Line.count = Line
+    @status.count = Project
 
   updateTabs: ->
     active = @state.scope
