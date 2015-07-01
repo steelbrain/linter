@@ -1,6 +1,8 @@
 {Range} = require('atom')
 
-Helpers = module.exports =
+module.exports = Helpers =
+  # Validates that the results passed to Linter Base by a Provider contain the
+  #   information needed to display an issue.
   validateResults: (results) ->
     if (not results) or results.constructor.name isnt 'Array'
       throw new Error "Got invalid response from Linter, Type: #{typeof results}"
@@ -11,17 +13,14 @@ Helpers = module.exports =
       result.class = result.type.toLowerCase().replace(' ', '-')
       Helpers.validateResults(result.trace) if result.trace
     results
+
+  # Validates that a provider is capable of providing the Base Linter info
+  #   needed to be used at lint time.
   validateLinter: (linter) ->
     unless linter.grammarScopes instanceof Array
-      message = "grammarScopes is not an Array. (see console for more info)"
-      console.warn(message)
-      console.warn('grammarScopes', linter.grammarScopes)
-      throw new Error(message)
-
+      throw new Error("grammarScopes is not an Array. Got: #{linter.grammarScopes})")
     unless linter.lint?
       throw new Error("Missing linter.lint")
-
     if typeof linter.lint isnt 'function'
       throw new Error("linter.lint isn't a function")
-
     return true
