@@ -5,13 +5,15 @@ class Commands
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.commands.add 'atom-workspace',
       'linter:next-error': => @nextError()
+      'linter:previous-error': => @previousError()
       'linter:toggle': => @toggleLinter()
       'linter:set-bubble-transparent': => @setBubbleTransparent()
       'linter:expand-multiline-messages': => @expandMultilineMessages()
       'linter:lint': => @lint()
 
     # Default values
-    @messages = null
+    @firstRun = true
+    @index = 0
 
   toggleLinter: ->
     @linter.getActiveEditorLinter()?.toggleStatus()
@@ -51,10 +53,24 @@ class Commands
       atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
 
   nextError: ->
-    if not @messages or (next = @messages.next()).done
-      next = (@messages = @linter.views.getMessages().values()).next()
-    return if next.done # There's no errors
-    message = next.value
+    if @firstRun
+      @firstRun = false
+    else
+      @index++
+    messages = @linter.views.messages
+    message = messages[@index %% messages.length]
+    return unless message.filePath
+    return unless message.range
+    atom.workspace.open(message.filePath).then ->
+      atom.workspace.getActiveTextEditor().setCursorBufferPosition(message.range.start)
+
+  previousError: ->
+    if @firstRun
+      @firstRun = false
+    else
+      @index--
+    messages = @linter.views.messages
+    message = messages[@index %% messages.length]
     return unless message.filePath
     return unless message.range
     atom.workspace.open(message.filePath).then ->
