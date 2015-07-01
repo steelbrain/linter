@@ -13,12 +13,24 @@ class MessageRegistry
     @messages = new Map() # Messages = Map<Linter, Array<message>>
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
+    @subscriptions.add @linter.observeEditorLinters (EditorLinter) =>
+      EditorLinter.onShouldUpdate ({linter, results: messages}) =>
+        Helpers.validateMessages(messages)
+        if EditorLinter.messages.has(linter)
+          @countMessages(EditorLinter.messages.get(linter), false)
+        EditorLinter.messages.set(linter, messages)
+        @countMessages(messages)
+        @emitter.emit 'did-change'
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
-      @emitter.emit 'did-change'
       @count = File: 0, Project: 0
       @messages.forEach (messages) =>
         @classifyMessages(messages)
         @countMessages(messages)
+      @linter.eachEditorLinter (EditorLinter) =>
+        EditorLinter.messages.forEach (messages) =>
+          @classifyMessages(messages)
+          @countMessages(messages)
+      @emitter.emit 'did-change'
 
   set: (linter, messages) ->
     Helpers.validateMessages(messages)
@@ -42,12 +54,18 @@ class MessageRegistry
     toReturn = []
     @messages.forEach (messages) =>
       toReturn = toReturn.concat(messages)
+    @linter.eachEditorLinter (EditorLinter) =>
+      EditorLinter.messages.forEach (messages) =>
+        toReturn = toReturn.concat(messages)
     return toReturn
 
   getActiveFileMessages: ->
     toReturn = []
     @messages.forEach (messages) =>
       toReturn = toReturn.concat(messages.filter((message) -> message.currentFile))
+    @linter.eachEditorLinter (EditorLinter) =>
+      EditorLinter.messages.forEach (messages) =>
+        toReturn = toReturn.concat(messages.filter((message) -> message.currentFile))
     return toReturn
 
   getActiveFileMessagesForActiveRow: ->
@@ -59,6 +77,11 @@ class MessageRegistry
       toReturn = toReturn.concat messages.filter((message) ->
         message.currentFile and message.range?.intersectsRow row
       )
+    @linter.eachEditorLinter (EditorLinter) =>
+      EditorLinter.messages.forEach (messages) =>
+        toReturn = toReturn.concat messages.filter((message) ->
+          message.currentFile and message.range?.intersectsRow row
+        )
     return toReturn
 
   onDidChange: (callback) ->

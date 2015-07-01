@@ -4,6 +4,7 @@ Helpers = require './helpers'
 class EditorLinter
   constructor: (@linter, @editor) ->
     @status = true
+    @messages = new Map
     @inProgress = false
     @inProgressFly = false
 
@@ -38,13 +39,8 @@ class EditorLinter
       @messages.clear()
       @linter.views.render()
 
-  # Called on package deactivate
-  destroy: ->
-    @emitter.emit 'did-destroy'
-    @subscriptions.dispose()
-
-  onDidUpdate: (callback) ->
-    @emitter.on 'did-update', callback
+  onShouldUpdate: (callback) ->
+    @emitter.on 'should-update', callback
 
   onDidDestroy: (callback) ->
     @emitter.on 'did-destroy', callback
@@ -71,7 +67,12 @@ class EditorLinter
       Promises.push new Promise((resolve) =>
         resolve(linter.lint(@editor))
       ).then((results) =>
-        @linter.setMessages(linter, results)
+        if linter.scope is 'project'
+          @linter.setMessages(linter, results)
+        else
+          # Trigger event instead of updating on purpose, because
+          # we want to make MessageRegistry the central message repo
+          @emitter.emit('should-update', {linter, results})
       ).catch (error) ->
         atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
 
@@ -88,5 +89,11 @@ class EditorLinter
       @[key]
     else
       @[key] = value
+
+  # Called on package deactivate
+  destroy: ->
+    @emitter.emit 'did-destroy'
+    @emitter.dispose()
+    @subscriptions.dispose()
 
 module.exports = EditorLinter
