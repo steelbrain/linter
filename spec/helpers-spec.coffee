@@ -26,3 +26,10 @@ describe "The Linter Validation Helper", ->
       lint: 'not a function'
     }
     expect( -> Helpers.validateLinter(linter)).toThrow()
+
+  it "should return true when everything validates.", ->
+    linter = {
+      grammarScopes: []
+      lint: ->
+    }
+    expect(Helpers.validateLinter(linter)).toEqual(true)
