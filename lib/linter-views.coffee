@@ -27,7 +27,7 @@ class LinterViews
     @subscriptions.add atom.config.observe('linter.showErrorPanel', (showPanel) =>
       @panel.panelVisibility = showPanel
     )
-    @subscriptions.add @linter.onDidClassifyMessages =>
+    @subscriptions.add @linter.onDidChangeMessages =>
       @render()
     @subscriptions.add @bottomContainer.onDidChangeTab =>
       @renderPanelMessages()

@@ -63,9 +63,8 @@ class Linter
   getLinters: ->
     @linters
 
-  setMessages: (linter, messages, editor = null) ->
-    console.log editor
-    @messages.set(linter, messages, editor)
+  setMessages: (linter, messages) ->
+    @messages.set(linter, messages)
 
   deleteMessages: (linter) ->
     @messages.delete(linter)

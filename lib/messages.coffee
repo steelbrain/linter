@@ -10,32 +10,30 @@ Helpers = require('./helpers')
 class MessageRegistry
   constructor: (@linter)->
     @count = File: 0, Project: 0
-    @editorMessages = new Map() # Map<Editor, Map<Linter, Array<message>>
     @messages = new Map() # Messages = Map<Linter, Array<message>>
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
-      @messages.forEach (messages) => @classifyMessages(messages)
-      @editorMessages.forEach (singleEditorMessages) =>
-        singleEditorMessages.forEach (messages) => @classifyMessages(messages)
-      @emitter.emit 'did-classify'
+      @emitter.emit 'did-change'
+      @count = File: 0, Project: 0
+      @messages.forEach (messages) =>
+        @classifyMessages(messages)
+        @countMessages(messages)
 
-  set: (linter, messages, editor = null) ->
+  set: (linter, messages) ->
     Helpers.validateMessages(messages)
     @classifyMessages(messages)
-    if editor
-      @editorMessages.set(editor, new Map()) unless @editorMessages.has(editor)
-      @editorMessages.get(editor).set(linter, messages)
-    else
-      @messages.set(linter, messages)
-    @emitter.emit 'did-classify'
-    @emitter.emit 'did-change', @messages
+    if @messages.has(linter)
+      @countMessages(@messages.get(linter), false)
+    @messages.set(linter, messages)
+    @countMessages(messages)
+    @emitter.emit 'did-change'
 
   delete: (linter) ->
-    @messages.delete(linter)
-    @editorMessages.forEach (messages)->
-      messages.delete(linter)
-    @emitter.emit 'did-change', @messages
+    if @messages.has(linter)
+      @countMessages(@messages.get(linter))
+      @messages.delete(linter, false)
+      @emitter.emit 'did-change'
 
   getCount: ->
     return File: @count.File, Project: @count.Project
@@ -44,18 +42,12 @@ class MessageRegistry
     toReturn = []
     @messages.forEach (messages) =>
       toReturn = toReturn.concat(messages)
-    @editorMessages.forEach (singleEditorMessages) =>
-      singleEditorMessages.forEach (messages) =>
-        toReturn = toReturn.concat(messages)
     return toReturn
 
   getActiveFileMessages: ->
     toReturn = []
     @messages.forEach (messages) =>
       toReturn = toReturn.concat(messages.filter((message) -> message.currentFile))
-    @editorMessages.forEach (singleEditorMessages) =>
-      singleEditorMessages.forEach (messages) =>
-        toReturn = toReturn.concat(messages.filter((message) -> message.currentFile))
     return toReturn
 
   getActiveFileMessagesForActiveRow: ->
@@ -67,30 +59,30 @@ class MessageRegistry
       toReturn = toReturn.concat messages.filter((message) ->
         message.currentFile and message.range?.intersectsRow row
       )
-    @editorMessages.forEach (singleEditorMessages) =>
-      singleEditorMessages.forEach (messages) =>
-        toReturn = toReturn.concat messages.filter((message) ->
-          message.currentFile and message.range?.intersectsRow row
-        )
     return toReturn
 
   onDidChange: (callback) ->
     return @emitter.on 'did-change', callback
 
-  onDidClassify: (callback) ->
-    return @emitter.on 'did-classify', callback
-
   classifyMessages: (messages)->
-    @count = File: 0, Project: 0
     isProject = @linter.state.scope is 'Project'
     activeFile = atom.workspace.getActiveTextEditor()?.getPath()
     messages.forEach (message) =>
-      @count.Project++
       if (not message.filePath and not isProject) or message.filePath is activeFile
         message.currentFile = true
-        @count.File++
       else
         message.currentFile = false
+
+  countMessages: (messages, add = true)->
+    count = File: 0, Project: (messages.length || messages.size || 0 )
+    messages.forEach (message)->
+      count.File++ if message.currentFile
+    if add
+      @count.File += count.File
+      @count.Project += count.Project
+    else
+      @count.File -= count.File
+      @count.Project -= count.Project
 
   destroy: ->
     @messages.clear()
