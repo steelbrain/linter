@@ -51,13 +51,19 @@ class Commands
     catch error
       atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
 
+  getMessage: (index) ->
+    messages = @linter.views.messages
+    # Use the dividend independent modulo so that the index stays inside the
+    # array's bounds, even when negative.
+    # That way the index can be ++ an -- without caring about the array bounds.
+    messages[index %% messages.length]
+
   nextError: ->
     if @index?
       @index++
     else
       @index = 0
-    messages = @linter.views.messages
-    message = messages[@index %% messages.length]
+    message = @getMessage(@index)
     return unless message?.filePath
     return unless message?.range
     atom.workspace.open(message.filePath).then ->
@@ -68,8 +74,7 @@ class Commands
       @index--
     else
       @index = 0
-    messages = @linter.views.messages
-    message = messages[@index %% messages.length]
+    message = @getMessage(@index)
     return unless message?.filePath
     return unless message?.range
     atom.workspace.open(message.filePath).then ->
