@@ -12,8 +12,7 @@ class Commands
       'linter:lint': => @lint()
 
     # Default values
-    @firstRun = true
-    @index = 0
+    @index = null
 
   toggleLinter: ->
     @linter.getActiveEditorLinter()?.toggleStatus()
@@ -53,10 +52,10 @@ class Commands
       atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
 
   nextError: ->
-    if @firstRun
-      @firstRun = false
-    else
+    if @index?
       @index++
+    else
+      @index = 0
     messages = @linter.views.messages
     message = messages[@index %% messages.length]
     return unless message.filePath
@@ -65,10 +64,10 @@ class Commands
       atom.workspace.getActiveTextEditor().setCursorBufferPosition(message.range.start)
 
   previousError: ->
-    if @firstRun
-      @firstRun = false
-    else
+    if @index?
       @index--
+    else
+      @index = 0
     messages = @linter.views.messages
     message = messages[@index %% messages.length]
     return unless message.filePath
