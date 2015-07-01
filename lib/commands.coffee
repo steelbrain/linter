@@ -58,8 +58,8 @@ class Commands
       @index = 0
     messages = @linter.views.messages
     message = messages[@index %% messages.length]
-    return unless message.filePath
-    return unless message.range
+    return unless message?.filePath
+    return unless message?.range
     atom.workspace.open(message.filePath).then ->
       atom.workspace.getActiveTextEditor().setCursorBufferPosition(message.range.start)
 
@@ -70,8 +70,8 @@ class Commands
       @index = 0
     messages = @linter.views.messages
     message = messages[@index %% messages.length]
-    return unless message.filePath
-    return unless message.range
+    return unless message?.filePath
+    return unless message?.range
     atom.workspace.open(message.filePath).then ->
       atom.workspace.getActiveTextEditor().setCursorBufferPosition(message.range.start)
 
