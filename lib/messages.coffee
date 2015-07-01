@@ -22,6 +22,10 @@ class MessageRegistry
         EditorLinter.messages.set(linter, messages)
         @countMessages(messages)
         @emitter.emit 'did-change'
+      EditorLinter.onDidDestroy =>
+        EditorLinter.messages.forEach (messages) =>
+          @countMessages(messages, false)
+          @emitter.emit 'did-change'
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
       @count = File: 0, Project: 0
       @messages.forEach (messages) =>
