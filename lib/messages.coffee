@@ -16,6 +16,7 @@ class MessageRegistry
     @subscriptions.add @linter.observeEditorLinters (EditorLinter) =>
       EditorLinter.onShouldUpdate ({linter, results: messages}) =>
         Helpers.validateMessages(messages)
+        @classifyMessages(messages)
         if EditorLinter.messages.has(linter)
           @countMessages(EditorLinter.messages.get(linter), false)
         EditorLinter.messages.set(linter, messages)
