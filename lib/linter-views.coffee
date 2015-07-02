@@ -27,6 +27,9 @@ class LinterViews
     @subscriptions.add atom.config.observe('linter.showErrorPanel', (showPanel) =>
       @panel.panelVisibility = showPanel
     )
+    @subscriptions.add atom.workspace.onDidChangeActivePaneItem (paneItem) =>
+      @bottomContainer.setVisibility(paneItem.getPath)
+      @panel.visibility = paneItem.getPath
     @subscriptions.add @linter.onDidChangeMessages =>
       @render()
     @subscriptions.add @bottomContainer.onDidChangeTab =>

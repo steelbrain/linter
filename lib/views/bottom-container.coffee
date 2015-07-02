@@ -34,6 +34,12 @@ class BottomContainer extends HTMLElement
     @subscriptions.dispose()
     @emitter.dispose()
 
+  setVisibility: (value) ->
+    if value
+      this.removeAttribute('hidden')
+    else
+      this.setAttribute('hidden', true)
+
   getTab: (name) ->
     return @tabs[name]
 
