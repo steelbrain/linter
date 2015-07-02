@@ -27,11 +27,19 @@ module.exports = Helpers =
   # Everything past this point relates to CLI helpers as loosly demoed out in:
   #   https://gist.github.com/steelbrain/43d9c38208bf9f2964ab
 
-  exec: (command, options = {}) ->
+  exec: (command, options = {stream: 'stdout'}) ->
     throw new Error "Nothing to execute." if not arguments.length
     child_process = require 'child_process'
     return new Promise (resolve, reject) ->
-      resolve(child_process.exec(command, options))
+      process = child_process.exec(command, options)
+      data = []
+      if options.stream == 'stderr'
+        process.stderr.on 'data', (d) -> data.push(d.toString())
+      else
+        process.stdout.on 'data', (d) -> data.push(d.toString())
+      process.on 'close', ->
+        console.log data
+        resolve(data)
 
   # This should only be used if the linter is only working with files in their
   #   base directory. Else wise they should use `Helpers#exec`.
@@ -39,7 +47,48 @@ module.exports = Helpers =
     throw new Error "Nothing to execute." if not arguments.length
     throw new Error "No File Path to work with." if not filePath
     path = require 'path'
+    child_process = require 'child_process'
     return new Promise (resolve, reject) ->
       file = path.basename(filePath)
       options.cwd = path.dirname(filePath) if not options.cwd
-      resolve(Helpers.exec("#{command} #{file}"), options)
+      command = "#{command} #{filePath}"
+      process = child_process.exec(command, options)
+      data = []
+      if options.stream == 'stderr'
+        process.stderr.on 'data', (d) -> data.push(d.toString())
+      else
+        process.stdout.on 'data', (d) -> data.push(d.toString())
+      process.on 'close', ->
+        resolve(data)
+
+  # Due to what we are attempting to do, the only viable solution right now is
+  #   XRegExp.
+  #
+  # Follows the following format taken from 0.x.y API.
+  #
+  # file: the file where the issue Exists
+  # type: the type of issue occuring here
+  # message: the message to show in the linter views (required)
+  # line: the line number on which to mark error (required if not lineStart)
+  # lineStart: the line number to start the error mark (optional)
+  # lineEnd: the line number on end the error mark (optional)
+  # col: the column on which to mark, will utilize syntax scope to higlight the
+  #      closest matching syntax element based on your code syntax (optional)
+  # colStart: column to on which to start a higlight (optional)
+  # colEnd: column to end highlight (optional)
+  parse: (data, regex) ->
+    XRegExp = require('xregexp').XRegExp
+    new Promise (resolve, reject) ->
+      toReturn = []
+      regex = XRegExp(regex)
+      for line in data
+        match = XRegExp.exec(line, regex)
+        console.log match
+        if match
+          toReturn.push(
+            type: match.type,
+            text: match.message,
+            filePath: match.file
+            range: [[match.line - 1, 0], [match.line - 1, 0]]
+          )
+      resolve(toReturn)
