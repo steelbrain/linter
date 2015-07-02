@@ -76,19 +76,44 @@ module.exports = Helpers =
   #      closest matching syntax element based on your code syntax (optional)
   # colStart: column to on which to start a higlight (optional)
   # colEnd: column to end highlight (optional)
-  parse: (data, regex) ->
+  # We place priority on `lineStart` and `lineEnd` over `line.`
+  # We place priority on `colStart` and `colEnd` over `col.`
+  parse: (data, regex, options = {baseReduction: 1}) ->
     XRegExp = require('xregexp').XRegExp
     new Promise (resolve, reject) ->
       toReturn = []
       regex = XRegExp(regex)
       for line in data
         match = XRegExp.exec(line, regex)
-        console.log match
         if match
+          if match.lineStart
+            lineStart = match.lineStart - options.baseReduction
+          else if match.line
+            lineStart = match.line - options.baseReduction
+          else
+            lineStart = 0
+          if match.colStart
+            colStart = match.colStart - options.baseReduction
+          else if match.col
+            colStart = match.col - options.baseReduction
+          else
+            colStart = 0
+          if match.lineEnd
+            lineEnd = match.lineEnd - options.baseReduction
+          else if match.line
+            lineEnd = match.line - options.baseReduction
+          else
+            lineEnd = 0
+          if match.colEnd
+            colEnd = match.colEnd - options.baseReduction
+          else if match.col
+            colEnd = match.col - options.baseReduction
+          else
+            colEnd = 0
           toReturn.push(
             type: match.type,
             text: match.message,
             filePath: match.file
-            range: [[match.line - 1, 0], [match.line - 1, 0]]
+            range: [[lineStart, colStart], [lineEnd, colEnd]]
           )
       resolve(toReturn)
