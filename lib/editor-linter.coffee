@@ -82,8 +82,10 @@ class EditorLinter
 
       return unless scopes.some (entry) -> entry in linter.grammarScopes
 
+      helpers = require('./helpers')
+
       Promises.push new Promise((resolve) =>
-        resolve(linter.lint(@editor))
+        resolve(linter.lint(@editor, helpers))
       ).then((results) =>
         if linter.scope is 'project'
           @linter.setProjectMessages(linter, results)

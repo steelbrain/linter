@@ -40,6 +40,6 @@ module.exports = Helpers =
     throw new Error "No File Path to work with." if not filePath
     path = require 'path'
     return new Promise (resolve, reject) ->
-      file = path.baseName(filePath)
-      options.cwd = path.baseDir(filePath) if not options.cwd
-      resolve(exec("#{command} #{file}"), options)
+      file = path.basename(filePath)
+      options.cwd = path.dirname(filePath) if not options.cwd
+      resolve(Helpers.exec("#{command} #{file}"), options)
