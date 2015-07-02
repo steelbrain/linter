@@ -36,3 +36,16 @@ describe "The Linter Validation Helper", ->
       lint: ->
     }
     expect(Helpers.validateLinter(linter)).toEqual(true)
+
+describe "The Command Execution Helper", ->
+  beforeEach ->
+    waitsForPromise ->
+      @command = Helpers.exec('echo')
+  it "should throw when no parameters are passed.", ->
+    expect( -> Helpers.exec()).toThrow()
+
+describe "The Command and FilePath Helper", ->
+  it "should throw when no parametes are passed.", ->
+    expect( -> Helpers.execFilePath()).toThrow()
+  it "should throw when no File Path is passed.", ->
+    expect( -> Helpers.execFilePath('echo')).toThrow()
