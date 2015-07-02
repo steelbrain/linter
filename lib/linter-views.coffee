@@ -28,8 +28,9 @@ class LinterViews
       @panel.panelVisibility = showPanel
     )
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (paneItem) =>
-      @bottomContainer.setVisibility(paneItem.getPath)
-      @panel.visibility = paneItem.getPath
+      isTextEditor = paneItem?.getPath?
+      @bottomContainer.setVisibility(isTextEditor)
+      @panel.visibility = isTextEditor
     @subscriptions.add @linter.onDidChangeMessages =>
       @render()
     @subscriptions.add @bottomContainer.onDidChangeTab =>
