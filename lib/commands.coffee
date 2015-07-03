@@ -5,13 +5,14 @@ class Commands
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.commands.add 'atom-workspace',
       'linter:next-error': => @nextError()
+      'linter:previous-error': => @previousError()
       'linter:toggle': => @toggleLinter()
       'linter:set-bubble-transparent': => @setBubbleTransparent()
       'linter:expand-multiline-messages': => @expandMultilineMessages()
       'linter:lint': => @lint()
 
     # Default values
-    @messages = null
+    @index = null
 
   toggleLinter: ->
     @linter.getActiveEditorLinter()?.toggleStatus()
@@ -50,13 +51,32 @@ class Commands
     catch error
       atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
 
+  getMessage: (index) ->
+    messages = @linter.views.messages
+    # Use the dividend independent modulo so that the index stays inside the
+    # array's bounds, even when negative.
+    # That way the index can be ++ an -- without caring about the array bounds.
+    messages[index %% messages.length]
+
   nextError: ->
-    if not @messages or (next = @messages.next()).done
-      next = (@messages = @linter.views.getMessages().values()).next()
-    return if next.done # There's no errors
-    message = next.value
-    return unless message.filePath
-    return unless message.range
+    if @index?
+      @index++
+    else
+      @index = 0
+    message = @getMessage(@index)
+    return unless message?.filePath
+    return unless message?.range
+    atom.workspace.open(message.filePath).then ->
+      atom.workspace.getActiveTextEditor().setCursorBufferPosition(message.range.start)
+
+  previousError: ->
+    if @index?
+      @index--
+    else
+      @index = 0
+    message = @getMessage(@index)
+    return unless message?.filePath
+    return unless message?.range
     atom.workspace.open(message.filePath).then ->
       atom.workspace.getActiveTextEditor().setCursorBufferPosition(message.range.start)
 
