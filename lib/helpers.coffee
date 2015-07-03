@@ -35,11 +35,13 @@ module.exports = Helpers =
     throw new Error "Nothing to execute." if not arguments.length
     return new Promise (resolve, reject) ->
       process = child_process.exec(command, options)
+      options.stream = 'stdout' if not options.stream
       data = []
       if options.stream == 'stderr'
         process.stderr.on 'data', (d) -> data.push(d.toString())
       else
         process.stdout.on 'data', (d) -> data.push(d.toString())
+      process.stdin.write(options.stdin.toString()) if options.stdin
       process.on 'close', ->
         resolve(data)
 
@@ -75,36 +77,27 @@ module.exports = Helpers =
       toReturn = []
       regex = XRegExp(regex)
       for line in data
-        match = XRegExp.exec(line, regex)
-        if match
-          if match.lineStart
-            lineStart = match.lineStart - options.baseReduction
-          else if match.line
-            lineStart = match.line - options.baseReduction
-          else
-            lineStart = 0
-          if match.colStart
-            colStart = match.colStart - options.baseReduction
-          else if match.col
-            colStart = match.col - options.baseReduction
-          else
-            colStart = 0
-          if match.lineEnd
-            lineEnd = match.lineEnd - options.baseReduction
-          else if match.line
-            lineEnd = match.line - options.baseReduction
-          else
-            lineEnd = 0
-          if match.colEnd
-            colEnd = match.colEnd - options.baseReduction
-          else if match.col
-            colEnd = match.col - options.baseReduction
-          else
-            colEnd = 0
+        if regex.test line
+          match = XRegExp.exec(line, regex)
+          options.baseReduction = 1 if not options.baseReduction
+          lineStart = 0
+          lineStart = match.line - options.baseReduction if match.line
+          lineStart = match.lineStart - options.baseReduction if match.lineStart
+          colStart = 0
+          colStart = match.col - options.baseReduction if match.col
+          colStart = match.colStart - options.baseReduction if match.colStart
+          lineEnd = 0
+          lineEnd = match.line - options.baseReduction if match.line
+          lineEnd = match.lineEnd - options.baseReduction if match.lineEnd
+          colEnd = 0
+          colEnd = match.col - options.baseReduction if match.col
+          colEnd = match.colEnd - options.baseReduction if match.colEnd
+          filePath = match.file
+          filePath = options.filePath if options.filePath
           toReturn.push(
             type: match.type,
             text: match.message,
-            filePath: match.file
+            filePath: filePath,
             range: [[lineStart, colStart], [lineEnd, colEnd]]
           )
       resolve(toReturn)
