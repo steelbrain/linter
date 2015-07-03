@@ -41,7 +41,6 @@ module.exports = Helpers =
       else
         process.stdout.on 'data', (d) -> data.push(d.toString())
       process.on 'close', ->
-        console.log data
         resolve(data)
 
   # This should only be used if the linter is only working with files in their
@@ -50,17 +49,9 @@ module.exports = Helpers =
     throw new Error "Nothing to execute." if not arguments.length
     throw new Error "No File Path to work with." if not filePath
     return new Promise (resolve, reject) ->
-      file = path.basename(filePath)
       options.cwd = path.dirname(filePath) if not options.cwd
       command = "#{command} #{filePath}"
-      process = child_process.exec(command, options)
-      data = []
-      if options.stream == 'stderr'
-        process.stderr.on 'data', (d) -> data.push(d.toString())
-      else
-        process.stdout.on 'data', (d) -> data.push(d.toString())
-      process.on 'close', ->
-        resolve(data)
+      resolve(Helpers.exec(command, options))
 
   # Due to what we are attempting to do, the only viable solution right now is
   #   XRegExp.
