@@ -10,7 +10,7 @@ describe "The Results Validation Helper", ->
     expect( -> Helpers.validateMessages(results)).toThrow()
   it "should return the results when validated.", ->
     results = [{type: 'Type'}]
-    expect(Helpers.validateMessages(results)).toEqual(results)
+    expect(Helpers.validateMessages(results)).toBeUndefined()
 
 describe "The Linter Validation Helper", ->
   it "should throw an exception when grammarScopes is not an Array.", ->
