@@ -130,6 +130,8 @@ atom-text-editor::shadow .linter-highlight .icon-right{
 atom-text-editor::shadow .linter-highlight, .linter-highlight{
   &.badge {
     border-radius: @component-border-radius;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   &.error {
     &:not(.line-number){
