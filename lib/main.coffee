@@ -44,9 +44,15 @@ module.exports =
     @instance = new LinterPlus state
 
     legacy = require('./legacy.coffee')
+    {deprecate} = require('grim')
     for atomPackage in atom.packages.getLoadedPackages()
       if atomPackage.metadata['linter-package'] is true
         implementation = atomPackage.metadata['linter-implementation'] ? atomPackage.name
+        deprecate('AtomLinter v0.X.Y API has been deprecated.
+          Please refer to the Linter docs to update and the latest API:
+          https://github.com/AtomLinter/Linter/wiki/Migrating-to-the-new-API', {
+          packageName: atomPackage.name
+        })
         try
           linter = legacy(require("#{atomPackage.path}/lib/#{implementation}"))
           @consumeLinter(linter)

@@ -4,6 +4,7 @@
 * Speed Improvements
 * Remove the "Default Error Tab" config option in favor of storing the currently selected tab in the package state.
 * Fix a bug where require time errors of legacy API providers would be shown as linter errors
+* Tweak the status line item positioning
 * Added Helpers which aid the creation of Command Line Linters.
 
 # 1.1.0
