@@ -10,6 +10,7 @@ Helpers = module.exports =
       result.range = Range.fromObject result.range if result.range?
       result.class = result.type.toLowerCase().replace(' ', '-')
       Helpers.validateMessages(result.trace) if result.trace
+    return # Explicit return to return undefined
   validateLinter: (linter) ->
     unless linter.grammarScopes instanceof Array
       message = "grammarScopes is not an Array. (see console for more info)"
