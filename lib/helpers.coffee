@@ -36,7 +36,7 @@ module.exports = Helpers =
     return new Promise (resolve, reject) ->
       process = child_process.exec(command, options)
       options.stream = 'stdout' if not options.stream
-      data = ['']
+      data = []
       process.stdout.on 'data', (d) -> data.push(d.toString()) if options.stream == 'stdout'
       process.stderr.on 'data', (d) -> data.push(d.toString()) if options.stream == 'stderr'
       process.stdin.write(options.stdin.toString()) if options.stdin
