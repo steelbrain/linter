@@ -55,3 +55,16 @@ describe "The Command and FilePath Helper", ->
     atom.workspace.observeTextEditors (editor) ->
       Helpers.execFilePath('cat', [], editor.getPath()).then (output) ->
         expect(output).toEqual(['This is a test.\n'])
+
+  describe "The Regex Parsing Helper", ->
+    it "should return Linter results when successful.", ->
+      regex = 'type:(?<type>.+) message:(?<message>.+)'
+      input = ['type:type message:message']
+      output = [(
+        type: 'type'
+        text: 'message'
+        filePath: undefined
+        range: [[0, 0], [0, 0]]
+      )]
+      Helpers.parse(input, regex).then (results) ->
+        expect(results).toEqual(output)
