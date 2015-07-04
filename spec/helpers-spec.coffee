@@ -50,3 +50,8 @@ describe "The Command and FilePath Helper", ->
     expect( -> Helpers.execFilePath()).toThrow()
   it "should throw when no File Path is passed.", ->
     expect( -> Helpers.execFilePath('echo')).toThrow()
+  it "should return results when successful.", ->
+    waitsForPromise -> atom.workspace.open 'test.txt'
+    atom.workspace.observeTextEditors (editor) ->
+      Helpers.execFilePath('cat', [], editor.getPath()).then (output) ->
+        expect(output).toEqual(['This is a test.\n'])
