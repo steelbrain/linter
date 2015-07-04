@@ -36,12 +36,12 @@ module.exports = Helpers =
     return new Promise (resolve, reject) ->
       process = child_process.exec(command, options)
       options.stream = 'stdout' if not options.stream
-      data = []
-      if options.stream == 'stderr'
-        process.stderr.on 'data', (d) -> data.push(d.toString())
-      else
-        process.stdout.on 'data', (d) -> data.push(d.toString())
+      data = ['']
+      process.stdout.on 'data', (d) -> data.push(d.toString()) if options.stream == 'stdout'
+      process.stderr.on 'data', (d) -> data.push(d.toString()) if options.stream == 'stderr'
       process.stdin.write(options.stdin.toString()) if options.stdin
+      process.on 'error', (err) ->
+        reject(err)
       process.on 'close', ->
         resolve(data)
 
@@ -77,8 +77,8 @@ module.exports = Helpers =
       toReturn = []
       regex = XRegExp(regex)
       for line in data
-        if regex.test line
-          match = XRegExp.exec(line, regex)
+        match = XRegExp.exec(line, regex)
+        if match
           options.baseReduction = 1 if not options.baseReduction
           lineStart = 0
           lineStart = match.line - options.baseReduction if match.line
