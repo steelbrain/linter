@@ -31,10 +31,10 @@ module.exports = Helpers =
   # Everything past this point relates to CLI helpers as loosly demoed out in:
   #   https://gist.github.com/steelbrain/43d9c38208bf9f2964ab
 
-  exec: (command, options = {stream: 'stdout'}) ->
+  exec: (command, args = [], options = {stream: 'stdout'}) ->
     throw new Error "Nothing to execute." if not arguments.length
     return new Promise (resolve, reject) ->
-      process = child_process.exec(command, options)
+      process = child_process.spawn(command, args, options)
       options.stream = 'stdout' if not options.stream
       data = []
       process.stdout.on 'data', (d) -> data.push(d.toString()) if options.stream == 'stdout'
@@ -47,13 +47,13 @@ module.exports = Helpers =
 
   # This should only be used if the linter is only working with files in their
   #   base directory. Else wise they should use `Helpers#exec`.
-  execFilePath: (command, filePath, options = {}) ->
+  execFilePath: (command, args = [], filePath, options = {}) ->
     throw new Error "Nothing to execute." if not arguments.length
     throw new Error "No File Path to work with." if not filePath
     return new Promise (resolve, reject) ->
       options.cwd = path.dirname(filePath) if not options.cwd
-      command = "#{command} #{filePath}"
-      resolve(Helpers.exec(command, options))
+      args.push(filePath)
+      resolve(Helpers.exec(command, args, options))
 
   # Due to what we are attempting to do, the only viable solution right now is
   #   XRegExp.
