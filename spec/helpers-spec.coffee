@@ -36,3 +36,35 @@ describe "The Linter Validation Helper", ->
       lint: ->
     }
     expect(Helpers.validateLinter(linter)).toEqual(true)
+
+describe "The Command Execution Helper", ->
+  it "should throw when no parameters are passed.", ->
+    expect( -> Helpers.exec()).toThrow()
+  it "should return the results when successful.", ->
+    Helpers.exec("echo 'Test'").then (output) ->
+      expect(output).toEqual(['Test\n'])
+
+
+describe "The Command and FilePath Helper", ->
+  it "should throw when no parametes are passed.", ->
+    expect( -> Helpers.execFilePath()).toThrow()
+  it "should throw when no File Path is passed.", ->
+    expect( -> Helpers.execFilePath('echo')).toThrow()
+  it "should return results when successful.", ->
+    waitsForPromise -> atom.workspace.open 'test.txt'
+    atom.workspace.observeTextEditors (editor) ->
+      Helpers.execFilePath('cat', [], editor.getPath()).then (output) ->
+        expect(output).toEqual(['This is a test.\n'])
+
+  describe "The Regex Parsing Helper", ->
+    it "should return Linter results when successful.", ->
+      regex = 'type:(?<type>.+) message:(?<message>.+)'
+      input = ['type:type message:message']
+      output = [(
+        type: 'type'
+        text: 'message'
+        filePath: undefined
+        range: [[0, 0], [0, 0]]
+      )]
+      Helpers.parse(input, regex).then (results) ->
+        expect(results).toEqual(output)
