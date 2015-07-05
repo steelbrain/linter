@@ -66,7 +66,12 @@ class EditorLinter
       Promises.push new Promise((resolve) =>
         resolve(linter.lint(@editor, Helpers))
       ).then((results) =>
-        @gotLinterResults(linter, results)
+        if linter.scope is 'project'
+          @linter.setMessages(linter, results)
+        else
+          # Trigger event instead of updating on purpose, because
+          # we want to make MessageRegistry the central message repo
+          @emitter.emit('should-update', {linter, results})
       ).catch (error) ->
         atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
     Promises
