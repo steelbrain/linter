@@ -7,12 +7,16 @@ class Commands
       'linter:next-error': => @nextError()
       'linter:previous-error': => @previousError()
       'linter:toggle': => @toggleLinter()
+      'linter:togglePanel': => @togglePanel()
       'linter:set-bubble-transparent': => @setBubbleTransparent()
       'linter:expand-multiline-messages': => @expandMultilineMessages()
       'linter:lint': => @lint()
 
     # Default values
     @index = null
+
+  togglePanel: ->
+    @linter.views.panel.panelVisibility = !@linter.views.panel.panelVisibility
 
   toggleLinter: ->
     @linter.getActiveEditorLinter()?.toggleStatus()
