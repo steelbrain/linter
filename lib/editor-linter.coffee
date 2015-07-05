@@ -53,45 +53,22 @@ class EditorLinter
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
     scopes.push '*' # To allow global linters
-    @triggerBufferModifyingLinters.then( =>
-      return Promise.all(@triggerLinters(wasTriggeredOnChange, scopes))
+    @triggerLinters(true, wasTriggeredOnChange, scopes).then( =>
+      return Promise.all(@triggerLinters(false, wasTriggeredOnChange, scopes))
     ).then =>
       @lock(wasTriggeredOnChange, false)
 
-  triggerBufferModifyingLinters: (wasTriggeredOnChange, scopes)->
-    Sequence = Promise.resolve()
-    @linter.getLinters().forEach (linter) =>
-      return unless linter.modifiesBuffer
-      return unless Helpers.shouldTriggerLinter(linter, wasTriggeredOnChange, scopes)
-      Sequence = Sequence.then( =>
-        linter.lint(@editor)
-      ).then((results) =>
-        if linter.scope is 'project'
-          @linter.setMessages(linter, results)
-        else
-          # Trigger event instead of updating on purpose, because
-          # we want to make MessageRegistry the central message repo
-          @emitter.emit('should-update', {linter, results})
-      )
-    return Sequence
-
   # This method returns an array of promises to be used in lint
-  triggerLinters: (wasTriggeredOnChange, scopes) ->
+  triggerLinters: (bufferModifying, wasTriggeredOnChange, scopes) ->
     Promises = []
     @linter.getLinters().forEach (linter) =>
       return unless Helpers.shouldTriggerLinter(linter, wasTriggeredOnChange, scopes)
       Promises.push new Promise((resolve) =>
         resolve(linter.lint(@editor, Helpers))
       ).then((results) =>
-        if linter.scope is 'project'
-          @linter.setMessages(linter, results)
-        else
-          # Trigger event instead of updating on purpose, because
-          # we want to make MessageRegistry the central message repo
-          @emitter.emit('should-update', {linter, results})
+        @gotLinterResults(linter, results)
       ).catch (error) ->
         atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
-
     Promises
 
   # This method sets or gets the lock status of given type
