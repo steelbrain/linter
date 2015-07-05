@@ -60,11 +60,7 @@ class EditorLinter
 
   # This method returns an array of promises to be used in lint
   triggerLinters: (bufferModifying, wasTriggeredOnChange, scopes) ->
-    ToReturn =
-      if bufferModifying
-        Promise.resolve()
-      else
-        []
+    ToReturn = if bufferModifying then Promise.resolve() else []
     @linter.getLinters().forEach (linter) =>
       return if linter.modifiesBuffer isnt bufferModifying
       return unless Helpers.shouldTriggerLinter(linter, wasTriggeredOnChange, scopes)
