@@ -38,6 +38,12 @@ module.exports =
       enum: ['Left', 'Right']
       type: 'string'
       default: 'Left'
+    ignoredErrorTypes:
+      title: "Ignored Error Types"
+      type: 'array'
+      default: []
+      items:
+        type: 'string'
 
   activate: (state) ->
     LinterPlus = require('./linter-plus.coffee')
