@@ -27,6 +27,7 @@ Helpers = module.exports =
       throw new Error("Missing linter.lint")
     if typeof linter.lint isnt 'function'
       throw new Error("linter.lint isn't a function")
+    linter.modifiesBuffer = Boolean(linter.modifiesBuffer)
     return true
 
   # Everything past this point relates to CLI helpers as loosly demoed out in:
