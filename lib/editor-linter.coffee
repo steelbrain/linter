@@ -65,7 +65,7 @@ class EditorLinter
       return if wasTriggeredOnChange and not linter.lintOnFly
       return unless scopes.some (entry) -> entry in linter.grammarScopes
       Promises.push new Promise((resolve) =>
-        resolve(linter.lint(@editor))
+        resolve(linter.lint(@editor, Helpers))
       ).then((results) =>
         if linter.scope is 'project'
           @linter.setMessages(linter, results)
