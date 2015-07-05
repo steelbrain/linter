@@ -1,4 +1,3 @@
-
 {CompositeDisposable} = require('atom')
 
 BottomPanel = require('./views/bottom-panel')
@@ -78,7 +77,7 @@ class LinterViews
   renderCount: ->
     if @ignoredMessageTypes.length
       count = File: 0, Project: @messages.length
-      @messages.forEach (message)-> count.File++ if message.currentFile
+      @messages.forEach (message) -> count.File++ if message.currentFile
     else
       count = @linter.messages.getCount()
     count.Line = @messagesLine.length

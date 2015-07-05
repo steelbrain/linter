@@ -145,7 +145,9 @@ class Linter
     notFoundMessage = "Linting has been halted.
         Please install the linter binary or disable the linter plugin depending on it.
         Make sure to reload Atom to detect changes"
-    atom.notifications.addError("The linter binary '#{@linterName}' cannot be found.", {detail: notFoundMessage, dismissable: true})
+    atom.notifications.addError "
+      The linter binary '#{@linterName}' cannot be found.",
+      {detail: notFoundMessage, dismissable: true}
 
   # Public: Primary entry point for a linter, executes the linter then calls
   #         processMessage in order to handle standard output
@@ -172,7 +174,7 @@ class Linter
       warn 'stderr', output
       dataStderr.push output
 
-    exit = (exitCode)=>
+    exit = (exitCode) =>
       exited = true
       if exitCode is 8
         # Exit code of node when the file you execute doesn't exist
