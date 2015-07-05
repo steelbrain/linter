@@ -2,6 +2,7 @@ fs = require 'fs'
 path = require 'path'
 {CompositeDisposable, Range, Point, BufferedProcess} = require 'atom'
 XRegExp = null
+MessageRegexp = null
 {deprecate} = require('grim')
 
 # These are NOOPs in linter-plus
@@ -223,8 +224,8 @@ class Linter
   processMessage: (message, callback) ->
     messages = []
     XRegExp ?= require('xregexp').XRegExp
-    regex = XRegExp @regex, @regexFlags
-    XRegExp.forEach message, regex, (match, i) =>
+    MessageRegexp ?= XRegExp @regex, @regexFlags
+    XRegExp.forEach message, MessageRegexp, (match, i) =>
       msg = @createMessage match
       messages.push msg if msg.range?
     , this
