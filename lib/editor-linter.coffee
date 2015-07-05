@@ -61,9 +61,7 @@ class EditorLinter
   triggerLinters: (wasTriggeredOnChange, scopes) ->
     Promises = []
     @linter.getLinters().forEach (linter) =>
-      # Trigger fly linters on save, but not save linters on fly
-      return if wasTriggeredOnChange and not linter.lintOnFly
-      return unless scopes.some (entry) -> entry in linter.grammarScopes
+      return unless Helpers.shouldTriggerLinter(linter, wasTriggeredOnChange, scopes)
       Promises.push new Promise((resolve) =>
         resolve(linter.lint(@editor, Helpers))
       ).then((results) =>
