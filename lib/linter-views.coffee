@@ -18,8 +18,8 @@ class LinterViews
     @bottomBar = null
     @bubble = null
 
-    @subscriptions.add atom.config.observe('linter.ignoredErrorTypes', (ignoredErrorTypes) =>
-      @ignoredErrorTypes = ignoredErrorTypes
+    @subscriptions.add atom.config.observe('linter.ignoredMessageTypes', (ignoredMessageTypes) =>
+      @ignoredMessageTypes = ignoredMessageTypes
     )
     @subscriptions.add atom.config.observe('linter.underlineIssues', (underlineIssues) =>
       @underlineIssues = underlineIssues
@@ -41,8 +41,8 @@ class LinterViews
 
   render: ->
     @messages = @linter.messages.getAllMessages()
-    if @ignoredErrorTypes.length
-      @messages = @messages.filter (message) => @ignoredErrorTypes.indexOf(message.type) is -1
+    if @ignoredMessageTypes.length
+      @messages = @messages.filter (message) => @ignoredMessageTypes.indexOf(message.type) is -1
     @updateLineMessages()
     @renderPanelMessages()
     @renderPanelMarkers()
@@ -76,7 +76,7 @@ class LinterViews
     bubble
 
   renderCount: ->
-    if @ignoredErrorTypes.length
+    if @ignoredMessageTypes.length
       count = File: 0, Project: @messages.length
       @messages.forEach (message)-> count.File++ if message.currentFile
     else
@@ -110,8 +110,8 @@ class LinterViews
 
   updateLineMessages: (render = false) ->
     @messagesLine = @linter.messages.getActiveFileMessagesForActiveRow()
-    if @ignoredErrorTypes.length
-      @messagesLine = @messagesLine.filter (message) => @ignoredErrorTypes.indexOf(message.type) is -1
+    if @ignoredMessageTypes.length
+      @messagesLine = @messagesLine.filter (message) => @ignoredMessageTypes.indexOf(message.type) is -1
     @renderCount()
     @renderPanelMessages() if render
 

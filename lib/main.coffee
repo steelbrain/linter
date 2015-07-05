@@ -38,7 +38,7 @@ module.exports =
       enum: ['Left', 'Right']
       type: 'string'
       default: 'Left'
-    ignoredErrorTypes:
+    ignoredMessageTypes:
       title: "Ignored Error Types"
       type: 'array'
       default: []
