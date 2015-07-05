@@ -66,8 +66,9 @@ class EditorLinter
       else
         []
     @linter.getLinters().forEach (linter) =>
+      return if linter.modifiesBuffer isnt bufferModifying
       return unless Helpers.shouldTriggerLinter(linter, wasTriggeredOnChange, scopes)
-      currentLinter =>
+      currentLinter = =>
         return Promise.resolve().then( =>
           return linter.lint(@editor, Helpers)
         ).then((results) =>
@@ -83,7 +84,7 @@ class EditorLinter
         ToReturn.then -> currentLinter()
       else
         ToReturn.push(currentLinter())
-    Promises
+    ToReturn
 
   # This method sets or gets the lock status of given type
   lock: (wasTriggeredOnChange, value) ->
