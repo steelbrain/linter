@@ -53,9 +53,27 @@ class EditorLinter
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
     scopes.push '*' # To allow global linters
-
-    Promise.all(@triggerLinters(wasTriggeredOnChange, scopes)).then =>
+    @triggerBufferModifyingLinters.then( =>
+      return Promise.all(@triggerLinters(wasTriggeredOnChange, scopes))
+    ).then =>
       @lock(wasTriggeredOnChange, false)
+
+  triggerBufferModifyingLinters: (wasTriggeredOnChange, scopes)->
+    Sequence = Promise.resolve()
+    @linter.getLinters().forEach (linter) =>
+      return unless linter.modifiesBuffer
+      return unless Helpers.shouldTriggerLinter(linter, wasTriggeredOnChange, scopes)
+      Sequence = Sequence.then( =>
+        linter.lint(@editor)
+      ).then((results) =>
+        if linter.scope is 'project'
+          @linter.setMessages(linter, results)
+        else
+          # Trigger event instead of updating on purpose, because
+          # we want to make MessageRegistry the central message repo
+          @emitter.emit('should-update', {linter, results})
+      )
+    return Sequence
 
   # This method returns an array of promises to be used in lint
   triggerLinters: (wasTriggeredOnChange, scopes) ->
