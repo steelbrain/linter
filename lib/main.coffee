@@ -39,7 +39,7 @@ module.exports =
       type: 'string'
       default: 'Left'
     ignoredMessageTypes:
-      title: "Ignored Error Types"
+      title: "Ignored message Types"
       type: 'array'
       default: []
       items:
