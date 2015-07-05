@@ -60,20 +60,29 @@ class EditorLinter
 
   # This method returns an array of promises to be used in lint
   triggerLinters: (bufferModifying, wasTriggeredOnChange, scopes) ->
-    Promises = []
+    ToReturn =
+      if bufferModifying
+        Promise.resolve()
+      else
+        []
     @linter.getLinters().forEach (linter) =>
       return unless Helpers.shouldTriggerLinter(linter, wasTriggeredOnChange, scopes)
-      Promises.push new Promise((resolve) =>
-        resolve(linter.lint(@editor, Helpers))
-      ).then((results) =>
-        if linter.scope is 'project'
-          @linter.setMessages(linter, results)
-        else
-          # Trigger event instead of updating on purpose, because
-          # we want to make MessageRegistry the central message repo
-          @emitter.emit('should-update', {linter, results})
-      ).catch (error) ->
-        atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
+      currentLinter =>
+        return Promise.resolve().then( =>
+          return linter.lint(@editor, Helpers)
+        ).then((results) =>
+          if linter.scope is 'project'
+            @linter.setMessages(linter, results)
+          else
+            # Trigger event instead of updating on purpose, because
+            # we want to make MessageRegistry the central message repo
+            @emitter.emit('should-update', {linter, results})
+        ).catch (error) ->
+          atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
+      if bufferModifying
+        ToReturn.then -> currentLinter()
+      else
+        ToReturn.push(currentLinter())
     Promises
 
   # This method sets or gets the lock status of given type
