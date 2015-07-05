@@ -44,7 +44,7 @@ linter-multiline-message {
   }
 }
 
-#linter-panel {
+linter-panel {
   display: block;
   overflow-y: scroll;
   max-height: 150px;
@@ -96,11 +96,11 @@ linter-bottom-tab {
   background: fade(@button-background-color, 33%);
   cursor: pointer;
   vertical-align: middle;
-  &.first {
+  &:first-of-type {
     border-top-left-radius: @component-border-radius;
     border-bottom-left-radius: @component-border-radius;
   }
-  &.last {
+  &:last-of-type {
     margin-right: .6em;
     border-top-right-radius: @component-border-radius;
     border-bottom-right-radius: @component-border-radius;

@@ -1,6 +1,3 @@
-# This file is imported in views/panel
-MultilineElement = require './multiline'
-
 class Message extends HTMLElement
   initialize: (@message, @options) ->
 
@@ -43,10 +40,19 @@ class Message extends HTMLElement
         else
           el.appendChild message.html
     else if message.multiline
-      el.appendChild MultilineElement.fromText message.text
+      el.appendChild Message.processMultiLine message.text
     else
       el.textContent = message.text
     el
+
+  @processMultiLine: (text)->
+    container = document.createElement 'linter-multiline-message'
+    for line in @text.split(/\n/)
+      if line
+        el = document.createElement 'linter-message-line'
+        el.textContent = line
+        container.appendChild el
+    container
 
   @onClick: (file, range) ->
     atom.workspace.open(file).then ->

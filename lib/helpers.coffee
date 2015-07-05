@@ -3,10 +3,8 @@ XRegExp = require('xregexp').XRegExp
 path = require 'path'
 child_process = require 'child_process'
 
-module.exports = Helpers =
-  # Validates that the results passed to Linter Base by a Provider contain the
-  #   information needed to display an issue.
-  validateResults: (results) ->
+Helpers = module.exports =
+  validateMessages: (results) ->
     if (not results) or results.constructor.name isnt 'Array'
       throw new Error "Got invalid response from Linter, Type: #{typeof results}"
     for result in results
@@ -14,11 +12,8 @@ module.exports = Helpers =
         throw new Error "Missing type field on Linter Response, Got: #{Object.keys(result)}"
       result.range = Range.fromObject result.range if result.range?
       result.class = result.type.toLowerCase().replace(' ', '-')
-      Helpers.validateResults(result.trace) if result.trace
-    results
-
-  # Validates that a provider is capable of providing the Base Linter info
-  #   needed to be used at lint time.
+      Helpers.validateMessages(result.trace) if result.trace
+    return # Explicit return to return undefined
   validateLinter: (linter) ->
     unless linter.grammarScopes instanceof Array
       throw new Error("grammarScopes is not an Array. Got: #{linter.grammarScopes})")
