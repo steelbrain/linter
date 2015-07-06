@@ -29,16 +29,14 @@ describe 'buffer modifying linter', ->
       linter.getActiveEditorLinter().lint(false).then ->
         expect(last).toBe('normal')
   it 'runs in sequence', ->
-    activeEditor = atom.workspace.getActiveTextEditor()
-    wasTriggered = false
+    exeOrder = []
     first =
       grammarScopes: ['*']
       scope: 'file'
       lintOnFly: false
       modifiesBuffer: true
       lint: ->
-        wasTriggered = true
-        activeEditor.setText('first')
+        exeOrder.push('first')
         return []
     second =
       grammarScopes: ['*']
@@ -46,8 +44,7 @@ describe 'buffer modifying linter', ->
       lintOnFly: false
       modifiesBuffer: true
       lint: ->
-        expect(activeEditor.getText()).toBe('first')
-        activeEditor.setText('second')
+        exeOrder.push('second')
         return []
     third =
       grammarScopes: ['*']
@@ -55,8 +52,7 @@ describe 'buffer modifying linter', ->
       lintOnFly: false
       modifiesBuffer: true
       lint: ->
-        expect(activeEditor.getText()).toBe('second')
-        activeEditor.setText('third')
+        exeOrder.push('third')
         return []
     normalLinter =
       grammarScopes: ['*']
@@ -64,7 +60,7 @@ describe 'buffer modifying linter', ->
       lintOnFly: false
       modifiesBuffer: false
       lint: ->
-        expect(activeEditor.getText()).toBe('third')
+        exeOrder.push('forth')
         return []
     linter.addLinter(first)
     linter.addLinter(second)
@@ -72,4 +68,7 @@ describe 'buffer modifying linter', ->
     linter.addLinter(normalLinter)
     waitsForPromise ->
       linter.getActiveEditorLinter().lint(false).then ->
-        expect(wasTriggered).toBe(true)
+        expect(exeOrder[0]).toBe('first')
+        expect(exeOrder[1]).toBe('second')
+        expect(exeOrder[2]).toBe('third')
+        expect(exeOrder[3]).toBe('forth')
