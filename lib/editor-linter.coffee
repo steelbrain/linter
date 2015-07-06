@@ -65,8 +65,8 @@ class EditorLinter
       return if linter.modifiesBuffer isnt bufferModifying
       return unless Helpers.shouldTriggerLinter(linter, wasTriggeredOnChange, scopes)
       currentLinter = =>
-        return Promise.resolve().then( =>
-          return linter.lint(@editor, Helpers)
+        return new Promise((resolve) =>
+          resolve(linter.lint(@editor, Helpers))
         ).then((results) =>
           if linter.scope is 'project'
             @linter.setMessages(linter, results)
