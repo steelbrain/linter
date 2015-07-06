@@ -1,11 +1,11 @@
-describe 'buffer modifying linters', ->
+describe 'buffer modifying linter', ->
   getModuleMain = -> atom.packages.getActivePackage('linter').mainModule.instance
   beforeEach ->
     waitsForPromise ->
       atom.packages.activatePackage('linter')
     waitsForPromise ->
       atom.workspace.open('test.txt')
-  it 'are triggered before other linters', ->
+  it 'triggers before other linters', ->
     linter = getModuleMain()
     last = null
     bufferModifying =
@@ -29,7 +29,7 @@ describe 'buffer modifying linters', ->
     waitsForPromise ->
       linter.getActiveEditorLinter().lint(false).then ->
         expect(last).toBe('normal')
-  it 'run in sequence', ->
+  it 'runs in sequence', ->
     linter = getModuleMain()
     activeEditor = atom.workspace.getActiveTextEditor()
     wasTriggered = false
