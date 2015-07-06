@@ -8,7 +8,7 @@ describe 'buffer modifying linters', ->
     waitsForPromise ->
       atom.packages.activatePackage('linter')
     waitsForPromise ->
-      atom.workspace.open(__dirname + '/fixtures/test.txt')
+      atom.workspace.open('test.txt')
   it 'is triggered before other linters', ->
     linter = getModuleMain()
     last = null
