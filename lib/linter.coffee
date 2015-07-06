@@ -225,8 +225,8 @@ class Linter
   processMessage: (message, callback) ->
     messages = []
     XRegExp ?= require('xregexp').XRegExp
-    regex = XRegExp @regex, @regexFlags
-    XRegExp.forEach message, regex, (match, i) =>
+    @MessageRegexp ?= XRegExp @regex, @regexFlags
+    XRegExp.forEach message, @MessageRegexp, (match, i) =>
       msg = @createMessage match
       messages.push msg if msg.range?
     , this
