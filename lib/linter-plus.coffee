@@ -107,7 +107,6 @@ class Linter
     @emitter.on 'observe-editor-linters', callback
 
   deactivate: ->
-    @messages.clear()
     @subscriptions.dispose()
     @eachEditorLinter (linter) ->
       linter.destroy()

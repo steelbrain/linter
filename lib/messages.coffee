@@ -8,7 +8,7 @@ Helpers = require('./helpers')
 ###
 
 class MessageRegistry
-  constructor: (@linter)->
+  constructor: (@linter) ->
     @count = File: 0, Project: 0
     @messages = new Map() # Messages = Map<Linter, Array<message>>
     @emitter = new Emitter
@@ -57,33 +57,33 @@ class MessageRegistry
 
   getAllMessages: ->
     toReturn = []
-    @messages.forEach (messages) =>
+    @messages.forEach (messages) ->
       toReturn = toReturn.concat(messages)
-    @linter.eachEditorLinter (EditorLinter) =>
-      EditorLinter.messages.forEach (messages) =>
+    @linter.eachEditorLinter (EditorLinter) ->
+      EditorLinter.messages.forEach (messages) ->
         toReturn = toReturn.concat(messages)
     return toReturn
 
   getActiveFileMessages: ->
     toReturn = []
-    @messages.forEach (messages) =>
+    @messages.forEach (messages) ->
       toReturn = toReturn.concat(messages.filter((message) -> message.currentFile))
-    @linter.eachEditorLinter (EditorLinter) =>
-      EditorLinter.messages.forEach (messages) =>
+    @linter.eachEditorLinter (EditorLinter) ->
+      EditorLinter.messages.forEach (messages) ->
         toReturn = toReturn.concat(messages.filter((message) -> message.currentFile))
     return toReturn
 
   getActiveFileMessagesForActiveRow: ->
     return @getActiveFileMessagesForRow(atom.workspace.getActiveTextEditor()?.getCursorBufferPosition()?.row)
 
-  getActiveFileMessagesForRow: (row)->
+  getActiveFileMessagesForRow: (row) ->
     toReturn = []
-    @messages.forEach (messages) =>
+    @messages.forEach (messages) ->
       toReturn = toReturn.concat messages.filter((message) ->
         message.currentFile and message.range?.intersectsRow row
       )
-    @linter.eachEditorLinter (EditorLinter) =>
-      EditorLinter.messages.forEach (messages) =>
+    @linter.eachEditorLinter (EditorLinter) ->
+      EditorLinter.messages.forEach (messages) ->
         toReturn = toReturn.concat messages.filter((message) ->
           message.currentFile and message.range?.intersectsRow row
         )
@@ -92,18 +92,18 @@ class MessageRegistry
   onDidChange: (callback) ->
     return @emitter.on 'did-change', callback
 
-  classifyMessages: (messages)->
+  classifyMessages: (messages) ->
     isProject = @linter.state.scope is 'Project'
     activeFile = atom.workspace.getActiveTextEditor()?.getPath()
-    messages.forEach (message) =>
+    messages.forEach (message) ->
       if (not message.filePath and not isProject) or message.filePath is activeFile
         message.currentFile = true
       else
         message.currentFile = false
 
-  countMessages: (messages, add = true)->
+  countMessages: (messages, add = true) ->
     count = File: 0, Project: (messages.length || messages.size || 0 )
-    messages.forEach (message)->
+    messages.forEach (message) ->
       count.File++ if message.currentFile
     if add
       @count.File += count.File

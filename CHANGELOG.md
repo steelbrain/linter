@@ -7,6 +7,7 @@
 * Tweak the status line item positioning
 * Add Helpers which aid the creation of Command Line Linters.
 * Add `linter:togglePanel` command to toggle bottom panel
+* Add `linter.ignoredMessageTypes` config to ignore certain message types
 
 # 1.1.0
 
