@@ -2,10 +2,6 @@ describe 'buffer modifying linters', ->
   getModuleMain = -> atom.packages.getActivePackage('linter').mainModule.instance
   beforeEach ->
     waitsForPromise ->
-      atom.packages.activatePackage('status-bar')
-      .catch (err)->
-        console.log err
-    waitsForPromise ->
       atom.packages.activatePackage('linter')
     waitsForPromise ->
       atom.workspace.open('test.txt')
