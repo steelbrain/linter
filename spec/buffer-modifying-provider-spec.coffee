@@ -29,7 +29,7 @@ describe 'buffer modifying linters', ->
     waitsForPromise ->
       linter.getActiveEditorLinter().lint(false).then ->
         expect(last).toBe('normal')
-  it 'runs in parallel', ->
+  it 'runs in sequence', ->
     linter = getModuleMain()
     activeEditor = atom.workspace.getActiveTextEditor()
     wasTriggered = false
