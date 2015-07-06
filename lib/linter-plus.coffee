@@ -8,8 +8,9 @@ Messages = require './messages'
 {deprecate} = require 'grim'
 
 class Linter
+  # State is an object by default; never null or undefined
   constructor:(@state)  ->
-    @state ?= {scope: 'File'}
+    @state.scope ?= 'File'
 
     # Public Stuff
     @lintOnFly = true # A default art value, to be immediately replaced by the observe config below
