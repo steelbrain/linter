@@ -34,7 +34,7 @@ class Linter
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       currentEditorLinter = new EditorLinter @, editor
       currentEditorLinter.onLinting (linting) =>
-        @lintJobs += if linting then 1 else -1
+        if linting then @lintJobs++ else @lintJobs--
         @emitter.emit 'linting', @lintJobs > 0
       @editorLinters.set editor, currentEditorLinter
       @emitter.emit 'observe-editor-linters', currentEditorLinter
