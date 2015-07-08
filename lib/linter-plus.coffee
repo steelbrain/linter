@@ -20,6 +20,7 @@ class Linter
     @emitter = new Emitter
     @editorLinters = new Map
     @linters = new Set # Values are pushed here from Main::consumeLinter
+    @lintJobs = 0
 
     @messages = new Messages @
     @views = new LinterViews @
@@ -32,6 +33,9 @@ class Linter
 
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
       currentEditorLinter = new EditorLinter @, editor
+      currentEditorLinter.onLinting (linting) =>
+        @lintJobs += if linting then 1 else -1
+        @emitter.emit 'linting', @lintJobs > 0
       @editorLinters.set editor, currentEditorLinter
       @emitter.emit 'observe-editor-linters', currentEditorLinter
       currentEditorLinter.lint false
@@ -70,6 +74,9 @@ class Linter
 
   getMessages: ->
     return @messages.getAll()
+
+  onLinting: (callback) ->
+    @emitter.on 'linting', callback
 
   onDidChangeMessages: (callback) ->
     return @messages.onDidChange(callback)

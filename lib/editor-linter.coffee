@@ -39,6 +39,9 @@ class EditorLinter
       @messages.clear()
       @linter.views.render()
 
+  onLinting: (callback) ->
+    @emitter.on 'linting', callback
+
   onShouldUpdate: (callback) ->
     @emitter.on 'should-update', callback
 
@@ -53,10 +56,12 @@ class EditorLinter
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
     scopes.push '*' # To allow global linters
+    @emitter.emit 'linting', true
     @triggerLinters(true, wasTriggeredOnChange, scopes).then( =>
       return Promise.all(@triggerLinters(false, wasTriggeredOnChange, scopes))
     ).then =>
       @lock(wasTriggeredOnChange, false)
+      @emitter.emit 'linting', false
 
   # This method returns an array of promises to be used in lint
   triggerLinters: (bufferModifying, wasTriggeredOnChange, scopes) ->

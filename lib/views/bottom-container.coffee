@@ -1,4 +1,3 @@
-
 {CompositeDisposable, Emitter} = require('atom')
 
 BottomTab = require('./bottom-tab')
@@ -45,6 +44,9 @@ class BottomContainer extends HTMLElement
 
   onDidChangeTab: (callback) ->
     return @emitter.on 'did-change-tab', callback
+
+  setLinting: (linting) ->
+    @status.linting = linting
 
   setCount: ({Project, File, Line}) ->
     @tabs.File.count = File
