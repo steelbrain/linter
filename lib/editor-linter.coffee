@@ -53,30 +53,34 @@ class EditorLinter
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
     scopes.push '*' # To allow global linters
-
-    Promise.all(@triggerLinters(wasTriggeredOnChange, scopes)).then =>
+    @triggerLinters(true, wasTriggeredOnChange, scopes).then( =>
+      return Promise.all(@triggerLinters(false, wasTriggeredOnChange, scopes))
+    ).then =>
       @lock(wasTriggeredOnChange, false)
 
   # This method returns an array of promises to be used in lint
-  triggerLinters: (wasTriggeredOnChange, scopes) ->
-    Promises = []
+  triggerLinters: (bufferModifying, wasTriggeredOnChange, scopes) ->
+    ToReturn = if bufferModifying then Promise.resolve() else []
     @linter.getLinters().forEach (linter) =>
-      # Trigger fly linters on save, but not save linters on fly
-      return if wasTriggeredOnChange and not linter.lintOnFly
-      return unless scopes.some (entry) -> entry in linter.grammarScopes
-      Promises.push new Promise((resolve) =>
-        resolve(linter.lint(@editor, Helpers))
-      ).then((results) =>
-        if linter.scope is 'project'
-          @linter.setMessages(linter, results)
-        else
-          # Trigger event instead of updating on purpose, because
-          # we want to make MessageRegistry the central message repo
-          @emitter.emit('should-update', {linter, results})
-      ).catch (error) ->
-        atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
-
-    Promises
+      return if linter.modifiesBuffer isnt bufferModifying
+      return unless Helpers.shouldTriggerLinter(linter, wasTriggeredOnChange, scopes)
+      currentLinter = =>
+        return new Promise((resolve) =>
+          resolve(linter.lint(@editor, Helpers))
+        ).then((results) =>
+          if linter.scope is 'project'
+            @linter.setMessages(linter, results)
+          else
+            # Trigger event instead of updating on purpose, because
+            # we want to make MessageRegistry the central message repo
+            @emitter.emit('should-update', {linter, results})
+        ).catch (error) ->
+          atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
+      if bufferModifying
+        ToReturn.then -> currentLinter()
+      else
+        ToReturn.push(currentLinter())
+    ToReturn
 
   # This method sets or gets the lock status of given type
   lock: (wasTriggeredOnChange, value) ->
