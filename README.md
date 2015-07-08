@@ -18,7 +18,9 @@ It provides a top-level API to it's consumer that allow them to visualize errors
 
 Install package through Atom or use CLI:
 
-* `$ apm install linter`
+```
+$ apm install linter
+```
 
 #### Available linters
 
