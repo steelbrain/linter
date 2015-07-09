@@ -1,3 +1,7 @@
+# 1.2.3
+
+* Fix a bug where panel won't be hidden even with no errors.
+
 # 1.2.2
 
 * Fix a bug where count wont be updated on render.
