@@ -46,6 +46,7 @@ class LinterViews
     @renderPanelMessages()
     @renderPanelMarkers()
     @renderBubble()
+    @renderCount()
 
   renderBubble: (point) ->
     @removeBubble()
@@ -111,8 +112,9 @@ class LinterViews
     @messagesLine = @linter.messages.getActiveFileMessagesForActiveRow()
     if @ignoredMessageTypes.length
       @messagesLine = @messagesLine.filter (message) => @ignoredMessageTypes.indexOf(message.type) is -1
-    @renderCount()
-    @renderPanelMessages() if render
+    if render
+      @renderCount()
+      @renderPanelMessages()
 
   attachBottom: (statusBar) ->
     @bottomBar = statusBar.addLeftTile

@@ -1,4 +1,12 @@
-# Upcoming
+# 1.2.2
+
+* Fix a bug where count wont be updated on render.
+
+# 1.2.1
+
+* Fix a bug with legacy Linter API
+
+# 1.2.0
 
 * Fix a bug when Error Panel won't collapse even when there's no errors with File as Active Tab
 * Speed Improvements
