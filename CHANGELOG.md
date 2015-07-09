@@ -1,3 +1,7 @@
+# Upcoming
+
+* Remove an oudated config (`statusIconPosition`).
+
 # 1.2.3
 
 * Fix a bug where panel won't be hidden even with no errors.
