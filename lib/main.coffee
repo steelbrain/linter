@@ -32,12 +32,6 @@ module.exports =
       title: 'Underline Issues'
       type: 'boolean'
       default: true
-    statusIconPosition:
-      title: 'Position of Status Icon on Bottom Bar'
-      description: 'Requires a reload/restart to update'
-      enum: ['Left', 'Right']
-      type: 'string'
-      default: 'Left'
     ignoredMessageTypes:
       title: "Ignored message Types"
       type: 'array'
