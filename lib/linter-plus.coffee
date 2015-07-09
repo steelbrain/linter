@@ -92,7 +92,7 @@ class Linter
 
   deleteProjectMessages: (linter) ->
     deprecate("Linter::deleteProjectMessages is deprecated, use Linter::deleteMessages instead")
-    return @setMessages(linter, messages)
+    return @deleteMessages(linter)
 
   getActiveEditorLinter: ->
     return @getEditorLinter atom.workspace.getActiveTextEditor()
