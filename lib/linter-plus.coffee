@@ -44,6 +44,7 @@ class Linter
   addLinter: (linter) ->
     try
       if(Helpers.validateLinter(linter))
+        delete @linterArray
         @linters.add(linter)
     catch err
       atom.notifications.addError("Invalid Linter: #{err.message}", {
@@ -53,6 +54,7 @@ class Linter
 
   deleteLinter: (linter) ->
     return unless @hasLinter(linter)
+    delete @linterArray
     @linters.delete(linter)
     @deleteMessages(linter)
 
@@ -61,6 +63,14 @@ class Linter
 
   getLinters: ->
     @linters
+
+  getLinterArray: ->
+    unless @linterArray?
+      @linterArray = []
+      @getLinters().forEach (l) => @linterArray.push(l)
+
+    @linterArray
+
 
   setMessages: (linter, messages) ->
     @messages.set(linter, messages)
