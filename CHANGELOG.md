@@ -1,6 +1,7 @@
 # Upcoming
 
 * Remove an oudated config (`statusIconPosition`).
+* Invalidate Range when a range is removed from buffer.
 
 # 1.2.3
 
