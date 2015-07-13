@@ -59,19 +59,18 @@ class EditorLinter
     shouldTriggerLinter = (linter) ->
       Helpers.shouldTriggerLinter(linter, wasTriggeredOnChange, scopes)
 
-    toRun = @linter.getLinterArray().filter(shouldTriggerLinter)
+    toRun = @linter.getLinters().filter(shouldTriggerLinter)
     modifyingLinters = toRun.filter((linter) -> linter.modifiesBuffer)
     linters = toRun.filter((linter) -> !linter.modifiesBuffer)
 
     # modifying linters must run in sequence
-    modMessages = @runSequentialLinters(modifyingLinters)
-    messages = @runParalellLinters(linters)
-
-    Promise.all([modMessages, messages]).then(@storeMessages).then =>
+    @runSequentialLinters(modifyingLinters).then((messageMap) =>
+      return @runParalellLinters(messageMap, linters)
+    ).then(@storeMessages).then =>
       @lock(wasTriggeredOnChange, false)
 
-  storeMessages: ([modMessageMap, fileMessageMap]) =>
-    store = (results, linter) =>
+  storeMessages: (messageMap) =>
+    messageMap.forEach (results, linter) =>
       if linter.scope is 'project'
         @linter.setMessages(linter, results)
       else
@@ -79,14 +78,11 @@ class EditorLinter
         # we want to make MessageRegistry the central message repo
         @emitter.emit('should-update', {linter, results})
 
-    modMessageMap.forEach(store)
-    fileMessageMap.forEach(store)
-
   # Consumes an array of linters and returns a `Map` of litners to messages
   runSequentialLinters: (linters) ->
     return linters.reduce(((promise, linter) =>
       promise.then((messageMap) =>
-        @runLinter(linter).then((messages) =>
+        @runLinter(linter).then((messages) ->
           messageMap.set(linter, messages)
           return messageMap
         )
@@ -94,13 +90,12 @@ class EditorLinter
     ), Promise.resolve(new Map) )
 
   # Consumes an array of linters and returns a `Map` of litners to messages
-  runParalellLinters: (linters) ->
-    fileMessageMap = new Map()
+  runParalellLinters: (messageMap, linters) ->
     messages = Promise.all(linters.map((linter) =>
       @runLinter(linter).then((messages) ->
-        fileMessageMap.set(linter, messages)
+        messageMap.set(linter, messages)
       )
-    )).then(-> fileMessageMap)
+    )).then(-> messageMap)
 
   runLinter: (linter) ->
     return new Promise((resolve) =>
