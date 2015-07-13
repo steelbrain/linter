@@ -1,5 +1,6 @@
 # Upcoming
 
+* Fixed a marker leak with bubbles, which would make editor slower over time.
 * Remove an oudated config (`statusIconPosition`).
 
 # 1.2.3
