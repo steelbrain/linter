@@ -100,7 +100,7 @@ class LinterViews
     return unless activeEditor
     @messages.forEach (message) =>
       return unless message.currentFile
-      @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'never'}
+      @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'inside'}
       activeEditor.decorateMarker(
         marker, type: 'line-number', class: "linter-highlight #{message.class}"
       )
