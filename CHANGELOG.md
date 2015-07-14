@@ -1,5 +1,6 @@
 # Upcoming
 
+* Fixed a marker leak with bubbles, which would make editor slower over time.
 * Remove an oudated config (`statusIconPosition`).
 * Invalidate Range when a range is removed from buffer.
 

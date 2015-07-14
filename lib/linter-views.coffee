@@ -57,13 +57,11 @@ class LinterViews
     point = point || activeEditor.getCursorBufferPosition()
     for message in @messagesLine
       continue unless message.range?.containsPoint point
-      @bubble = activeEditor.decorateMarker(
-        activeEditor.markBufferRange([point, point], {invalidate: 'never'})
-        {
-          type: 'overlay',
-          position: 'tail',
-          item: @renderBubbleContent(message)
-        }
+      @bubble = activeEditor.markBufferRange([point, point], {invalidate: 'inside'})
+      activeEditor.decorateMarker(@bubble,
+        type: 'overlay',
+        position: 'tail',
+        item: @renderBubbleContent(message)
       )
       break
 
