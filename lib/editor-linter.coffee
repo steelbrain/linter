@@ -20,6 +20,10 @@ class EditorLinter
           cursorImmediate = setImmediate => @emitter.emit('should-update-line-messages')
         @emitter.emit('should-update-bubble')
 
+  lint: ->
+    # Only for legacy external or maybe internal APIs
+    @emitter.emit('should-lint')
+
   onShouldUpdateBubble: (callback) ->
     return @emitter.on('should-update-bubble', callback)
 
