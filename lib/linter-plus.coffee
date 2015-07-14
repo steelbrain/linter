@@ -31,12 +31,17 @@ class Linter
       @commands.lint()
 
     @subscriptions.add atom.workspace.observeTextEditors (editor) =>
-      currentEditorLinter = new EditorLinter @, editor
-      @editorLinters.set editor, currentEditorLinter
-      @emitter.emit 'observe-editor-linters', currentEditorLinter
-      currentEditorLinter.lint false
-      editor.onDidDestroy =>
-        currentEditorLinter.destroy()
+      editorLinter = new EditorLinter(editor)
+      @editorLinters.set editor, editorLinter
+      @emitter.emit 'observe-editor-linters', editorLinter
+      editorLinter.onShouldUpdateBubble =>
+        @linter.views.renderBubble()
+      editorLinter.onShouldUpdateLineMessages =>
+        @linter.views.updateLineMessages(true)
+      editorLinter.onShouldLint =>
+        editorLinter.lint(@)
+      editorLinter.onDidDestroy =>
+        editorLinter.deactivate()
         @editorLinters.delete editor
 
   serialize: -> @state
