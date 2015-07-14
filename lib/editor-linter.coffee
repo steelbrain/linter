@@ -22,7 +22,7 @@ class EditorLinter
 
   lint: ->
     # Only for legacy external or maybe internal APIs
-    @emitter.emit('should-lint')
+    console.log("I should lint something")
 
   onShouldUpdateBubble: (callback) ->
     return @emitter.on('should-update-bubble', callback)
