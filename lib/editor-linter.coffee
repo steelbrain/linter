@@ -21,7 +21,7 @@ class EditorLinter
         @emitter.emit('should-update-bubble')
 
   lint: ->
-    # Only for legacy external or maybe internal APIs
+    # Does nothing for now, I'll work again after a PR porting linter-registry from NG branch
     console.log("I should lint something")
 
   onShouldUpdateBubble: (callback) ->

@@ -39,7 +39,7 @@ class Linter
       editorLinter.onShouldUpdateLineMessages =>
         @linter.views.updateLineMessages(true)
       editorLinter.onShouldLint =>
-        editorLinter.lint(@)
+        editorLinter.lint()
       editorLinter.onDidDestroy =>
         editorLinter.deactivate()
         @editorLinters.delete editor
