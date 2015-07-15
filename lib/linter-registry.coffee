@@ -30,7 +30,6 @@ class LinterRegistry
     editor = editorLinter.editor
     lockKey = if onChange then 'Fly' else 'Regular'
     return if onChange and not atom.config.get('linter.lintOnFly')
-    return unless editorLinter.status
     return unless editor is atom.workspace.getActiveTextEditor()
     return unless editor.getPath()
     return if @locks[lockKey].has(editorLinter)
