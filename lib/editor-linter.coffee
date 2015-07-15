@@ -3,7 +3,6 @@
 class EditorLinter
   constructor: (@editor) ->
     throw new Error("Given editor isn't really an editor") unless @editor instanceof TextEditor
-    @status = true # Overall linting status
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
     @subscriptions.add @editor.onDidDestroy =>
