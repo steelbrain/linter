@@ -19,7 +19,14 @@ class Commands
     @linter.views.panel.panelVisibility = !@linter.views.panel.panelVisibility
 
   toggleLinter: ->
-    @linter.getActiveEditorLinter()?.toggleStatus()
+    activeEditor = atom.workspace.getActiveTextEditor()
+    return unless activeEditor
+    editorLinter = @linter.getEditorLinter(activeEditor)
+    if editorLinter
+      editorLinter.deactivate()
+    else
+      @linter.createEditorLinter(editorLinter)
+
 
   setBubbleTransparent: ->
     bubble = document.getElementById('linter-inline')

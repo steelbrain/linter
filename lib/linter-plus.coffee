@@ -33,19 +33,7 @@ class Linter
     @subscriptions.add atom.project.onDidChangePaths =>
       @commands.lint()
 
-    @subscriptions.add atom.workspace.observeTextEditors (editor) =>
-      editorLinter = new EditorLinter(editor)
-      @editorLinters.set editor, editorLinter
-      @emitter.emit 'observe-editor-linters', editorLinter
-      editorLinter.onShouldUpdateBubble =>
-        @views.renderBubble()
-      editorLinter.onShouldUpdateLineMessages =>
-        @views.renderLineMessages(true)
-      editorLinter.onShouldLint (onChange) =>
-        @linters.lint({onChange, editorLinter})
-      editorLinter.onDidDestroy =>
-        editorLinter.deactivate()
-        @editorLinters.delete editor
+    @subscriptions.add atom.workspace.observeTextEditors (editor) => @createEditorLinter(editor)
 
   serialize: -> @state
 
@@ -101,6 +89,20 @@ class Linter
   observeEditorLinters: (callback) ->
     @eachEditorLinter callback
     @emitter.on 'observe-editor-linters', callback
+
+  createEditorLinter: (editor) ->
+    editorLinter = new EditorLinter(editor)
+    @editorLinters.set editor, editorLinter
+    @emitter.emit 'observe-editor-linters', editorLinter
+    editorLinter.onShouldUpdateBubble =>
+      @views.renderBubble()
+    editorLinter.onShouldUpdateLineMessages =>
+      @views.renderLineMessages(true)
+    editorLinter.onShouldLint (onChange) =>
+      @linters.lint({onChange, editorLinter})
+    editorLinter.onDidDestroy =>
+      editorLinter.deactivate()
+      @editorLinters.delete editor
 
   deactivate: ->
     @subscriptions.dispose()
