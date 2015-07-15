@@ -20,9 +20,8 @@ class EditorLinter
           cursorImmediate = setImmediate => @emitter.emit('should-update-line-messages')
         @emitter.emit('should-update-bubble')
 
-  lint: ->
-    # Does nothing for now, I'll work again after a PR porting linter-registry from NG branch
-    console.log("I should lint something")
+  lint: (onChange = false) ->
+    @emitter.emit('should-lint', onChange)
 
   onShouldUpdateBubble: (callback) ->
     return @emitter.on('should-update-bubble', callback)
