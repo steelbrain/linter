@@ -1,4 +1,4 @@
-{Emitter} = require('atom')
+{Emitter, TextEditor} = require('atom')
 validate = require('./validate')
 helpers = require('./helpers')
 
@@ -18,6 +18,7 @@ class MessageRegistry
     if linter.scope is 'project'
       @messages.set(linter, messages)
     else
+      throw new Error("Given editor isn't really an editor") unless editor instanceof TextEditor
       if not @editorMessages.has(editor) then @editorMessages.set(editor, new Map())
       @editorMessages.get(editor).set(linter, messages)
     @updated = true
