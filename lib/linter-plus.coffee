@@ -4,7 +4,6 @@ LinterViews = require './linter-views'
 EditorLinter = require './editor-linter'
 Helpers = require './helpers'
 Commands = require './commands'
-Messages = require './messages'
 {deprecate} = require 'grim'
 
 class Linter
@@ -20,10 +19,12 @@ class Linter
     @emitter = new Emitter
     @editorLinters = new Map
     @linters = new (require('./linter-registry'))()
-
-    @messages = new Messages @
+    @messages = new (require('./messages'))()
     @views = new LinterViews @
     @commands = new Commands @
+
+    @subscriptions.add @linters.onDidUpdateMessages (info) =>
+      @messages.set(info)
 
     @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
@@ -59,20 +60,16 @@ class Linter
     @linters.getLinters()
 
   setMessages: (linter, messages) ->
-    @messages.set(linter, messages)
+    @messages.set({linter, messages})
 
   deleteMessages: (linter) ->
-    @messages.delete(linter)
+    @messages.deleteMessages(linter)
 
   getMessages: ->
-    return @messages.getAll()
+    return @messages.publicMessages
 
   onDidChangeMessages: (callback) ->
-    return @messages.onDidChange(callback)
-
-  # Classify as in sort
-  onDidClassifyMessages: (callback) ->
-    return @messages.onDidClassify(callback)
+    return @messages.onDidUpdateMessages(callback)
 
   onDidChangeProjectMessages: (callback) ->
     deprecate("Linter::onDidChangeProjectMessages is deprecated, use Linter::onDidChangeMessages instead")
