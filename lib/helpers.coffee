@@ -1,7 +1,7 @@
 {Range} = require('atom')
 XRegExp = require('xregexp').XRegExp
 path = require 'path'
-child_process = require 'child_process'
+child_process = require('child_process')
 
 Helpers = module.exports =
   error: (e) ->

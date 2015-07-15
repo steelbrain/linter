@@ -25,6 +25,8 @@ class Linter
 
     @subscriptions.add @linters.onDidUpdateMessages (info) =>
       @messages.set(info)
+    @subscriptions.add @messages.onDidUpdateMessages (messages) =>
+      @views.render(messages)
 
     @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value

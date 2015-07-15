@@ -16,6 +16,7 @@ class LinterViews
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
     @bubble = null
+    @count = File: 0, Line:0, Project: 0
 
     @subscriptions.add atom.config.observe('linter.ignoredMessageTypes', (ignoredMessageTypes) =>
       @ignoredMessageTypes = ignoredMessageTypes
@@ -33,13 +34,11 @@ class LinterViews
       isTextEditor = paneItem?.getPath?
       @bottomContainer.setVisibility(isTextEditor)
       @panel.panelVisibility = atom.config.get('linter.showErrorPanel') and isTextEditor
-    @subscriptions.add @linter.onDidChangeMessages =>
-      @render()
     @subscriptions.add @bottomContainer.onDidChangeTab =>
       @renderPanelMessages()
 
-  render: ->
-    @messages = @linter.messages.publicMessages
+  render: (messages) ->
+    @messages = @classifyMessagesByLine(@classifyMessages(messages))
     if @ignoredMessageTypes.length
       @messages = @messages.filter (message) => @ignoredMessageTypes.indexOf(message.type) is -1
     @updateLineMessages()
@@ -47,6 +46,24 @@ class LinterViews
     @renderPanelMarkers()
     @renderBubble()
     @renderCount()
+
+  classifyMessages: (messages) ->
+    filePath = atom.workspace.getActiveTextEditor()?.getPath()
+    @count.File = 0
+    @count.Project = 0
+    for key, message of messages
+      if message.currentFile = (filePath and message.filePath is filePath)
+        @count.File++
+      @count.Project++
+    return messages
+
+  classifyMessagesByLine: (messages) ->
+    row = atom.workspace.getActiveTextEditor()?.getCursorBufferPosition().row
+    @count.Line = 0
+    for key, message of messages
+      if message.currentLine = (message.currentFile and message.range and message.range.intersectsRow(row))
+        @count.Line++
+    return messages
 
   renderBubble: (point) ->
     @removeBubble()
