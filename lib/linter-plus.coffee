@@ -38,7 +38,7 @@ class Linter
         @views.renderBubble()
       editorLinter.onShouldUpdateLineMessages =>
         @views.updateLineMessages(true)
-      editorLinter.onShouldLint =>
+      editorLinter.onShouldLint (onChange) =>
         @linters.lint({onChange, editorLinter})
       editorLinter.onDidDestroy =>
         editorLinter.deactivate()
