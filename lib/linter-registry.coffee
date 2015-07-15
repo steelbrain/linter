@@ -10,6 +10,9 @@ class LinterRegistry
       Fly: new WeakSet
     @emitter = new Emitter
 
+  getLinters: ->
+    return @linters.slice() # Clone the array
+
   hasLinter: (linter) ->
     @linters.indexOf(linter) isnt -1
 
