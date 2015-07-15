@@ -108,6 +108,7 @@ class Linter
     @eachEditorLinter (linter) ->
       linter.deactivate()
     @views.destroy()
+    @linters.deactivate()
     @commands.destroy()
     @messages.destroy()
 
