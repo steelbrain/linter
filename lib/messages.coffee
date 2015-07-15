@@ -1,121 +1,54 @@
-Helpers = require('./helpers')
-{CompositeDisposable, Emitter} = require('atom')
-
-###
-  Note: We are reclassifying the messages on on Pane Item Change,
-  even though we are relinting on that same event, 'cause linters
-  could take time and we have to refresh the views immediately
-###
+{Emitter} = require('atom')
+validate = require('./validate')
+helpers = require('./helpers')
 
 class MessageRegistry
-  constructor: (@linter) ->
-    @count = File: 0, Project: 0
-    @messages = new Map() # Messages = Map<Linter, Array<message>>
+  constructor: ->
+    @updated = false
+    @publicMessages = []
     @emitter = new Emitter
-    @subscriptions = new CompositeDisposable
-    @subscriptions.add @linter.observeEditorLinters (EditorLinter) =>
-      EditorLinter.onShouldUpdate ({linter, results: messages}) =>
-        Helpers.validateMessages(messages)
-        @classifyMessages(messages)
-        if EditorLinter.messages.has(linter)
-          @countMessages(EditorLinter.messages.get(linter), false)
-        EditorLinter.messages.set(linter, messages)
-        @countMessages(messages)
-        @emitter.emit 'did-change'
-      EditorLinter.onDidDestroy =>
-        EditorLinter.messages.forEach (messages) =>
-          @countMessages(messages, false)
-          @emitter.emit 'did-change'
-    @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
-      @count = File: 0, Project: 0
-      @messages.forEach (messages) =>
-        @classifyMessages(messages)
-        @countMessages(messages)
-      @linter.eachEditorLinter (EditorLinter) =>
-        EditorLinter.messages.forEach (messages) =>
-          @classifyMessages(messages)
-          @countMessages(messages)
-      @emitter.emit 'did-change'
+    @messages = new Map()
+    @editorMessages = new Map()
 
-  set: (linter, messages) ->
-    Helpers.validateMessages(messages)
-    @classifyMessages(messages)
-    if @messages.has(linter)
-      @countMessages(@messages.get(linter), false)
-    @messages.set(linter, messages)
-    @countMessages(messages)
-    @emitter.emit 'did-change'
+    @shouldUpdatePublic = true
+    requestAnimationFrame => @updatePublic()
 
-  delete: (linter) ->
-    if @messages.has(linter)
-      @countMessages(@messages.get(linter))
-      @messages.delete(linter, false)
-      @emitter.emit 'did-change'
-
-  getCount: ->
-    return File: @count.File, Project: @count.Project
-
-  getAllMessages: ->
-    toReturn = []
-    @messages.forEach (messages) ->
-      toReturn = toReturn.concat(messages)
-    @linter.eachEditorLinter (EditorLinter) ->
-      EditorLinter.messages.forEach (messages) ->
-        toReturn = toReturn.concat(messages)
-    return toReturn
-
-  getActiveFileMessages: ->
-    toReturn = []
-    @messages.forEach (messages) ->
-      toReturn = toReturn.concat(messages.filter((message) -> message.currentFile))
-    @linter.eachEditorLinter (EditorLinter) ->
-      EditorLinter.messages.forEach (messages) ->
-        toReturn = toReturn.concat(messages.filter((message) -> message.currentFile))
-    return toReturn
-
-  getActiveFileMessagesForActiveRow: ->
-    return @getActiveFileMessagesForRow(atom.workspace.getActiveTextEditor()?.getCursorBufferPosition()?.row)
-
-  getActiveFileMessagesForRow: (row) ->
-    toReturn = []
-    @messages.forEach (messages) ->
-      toReturn = toReturn.concat messages.filter((message) ->
-        message.currentFile and message.range?.intersectsRow row
-      )
-    @linter.eachEditorLinter (EditorLinter) ->
-      EditorLinter.messages.forEach (messages) ->
-        toReturn = toReturn.concat messages.filter((message) ->
-          message.currentFile and message.range?.intersectsRow row
-        )
-    return toReturn
-
-  onDidChange: (callback) ->
-    return @emitter.on 'did-change', callback
-
-  classifyMessages: (messages) ->
-    isProject = @linter.state.scope is 'Project'
-    activeFile = atom.workspace.getActiveTextEditor()?.getPath()
-    messages.forEach (message) ->
-      if (not message.filePath and not isProject) or message.filePath is activeFile
-        message.currentFile = true
-      else
-        message.currentFile = false
-
-  countMessages: (messages, add = true) ->
-    count = File: 0, Project: (messages.length || messages.size || 0 )
-    messages.forEach (message) ->
-      count.File++ if message.currentFile
-    if add
-      @count.File += count.File
-      @count.Project += count.Project
+  set: ({linter, messages, editor}) ->
+    try validate.messages(messages) catch e then return helpers.error(e)
+    if linter.scope is 'project'
+      @messages.set(linter, messages)
     else
-      @count.File -= count.File
-      @count.Project -= count.Project
+      if not @editorMessages.has(editor) then @editorMessages.set(editor, new Map())
+      @editorMessages.get(editor).set(linter, messages)
+    @updated = true
 
-  destroy: ->
-    @messages.clear()
-    @subscriptions.dispose()
+  updatePublic: ->
+    return unless @shouldUpdatePublic
+    if @updated
+      @updated = false
+      publicMessages = []
+      @messages.forEach (messages) -> publicMessages = publicMessages.concat(messages)
+      @editorMessages.forEach (linters) -> linters.forEach (messages) ->
+        publicMessages = publicMessages.concat(messages)
+      @publicMessages = publicMessages.sort (a, b) ->
+        return -1 if a < b
+        return 1 if a > b
+        return 0
+      @emitter.emit 'did-update-messages', @publicMessages
+    requestAnimationFrame => @updatePublic()
+
+  onDidUpdateMessages: (callback) ->
+    return @emitter.on('did-update-messages', callback)
+
+  deleteEditorMessages: (editor) ->
+    if @editorMessages.has(editor)
+      @updated = true
+      @editorMessages.delete(editor)
+
+  deactivate: ->
+    @shouldUpdatePublic = false
     @emitter.dispose()
-
+    @messages.clear()
+    @editorMessages.clear()
 
 module.exports = MessageRegistry
