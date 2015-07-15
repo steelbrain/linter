@@ -12,11 +12,9 @@ class EditorLinter
     # The onDidStopChanging callbacks are invoked immediately, and we want to avoid it
     setImmediate =>
       @subscriptions.add @editor.onDidStopChanging => setImmediate => @emitter.emit('should-lint', true)
-      cursorImmediate = null
       @subscriptions.add @editor.onDidChangeCursorPosition ({oldBufferPosition, newBufferPosition}) =>
         if newBufferPosition.row isnt oldBufferPosition.row
-          clearImmediate(cursorImmediate)
-          cursorImmediate = setImmediate => @emitter.emit('should-update-line-messages')
+          @emitter.emit('should-update-line-messages')
         @emitter.emit('should-update-bubble')
 
   lint: ->
