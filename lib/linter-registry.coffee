@@ -20,6 +20,7 @@ class LinterRegistry
     catch e then helpers.error(e)
 
   deleteLinter: (linter) ->
+    return unless @hasLinter(linter)
     @linters.splice(@linters.indexOf(linter), 1)
 
   lint: ({onChange, editorLinter}) ->
