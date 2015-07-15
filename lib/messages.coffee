@@ -41,6 +41,11 @@ class MessageRegistry
   onDidUpdateMessages: (callback) ->
     return @emitter.on('did-update-messages', callback)
 
+  deleteMessages: (linter) ->
+    if @messages.has(linter)
+      @updated = true
+      @messages.delete(linter)
+
   deleteEditorMessages: (editor) ->
     if @editorMessages.has(editor)
       @updated = true
