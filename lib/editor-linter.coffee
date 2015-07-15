@@ -9,13 +9,14 @@ class EditorLinter
       @emitter.emit 'did-destroy'
 
     @subscriptions.add @editor.onDidSave => @emitter.emit('should-lint', false)
-    # The onDidStopChanging callbacks are invoked immediately, and we want to avoid it
+    @subscriptions.add @editor.onDidChangeCursorPosition ({oldBufferPosition, newBufferPosition}) =>
+      if newBufferPosition.row isnt oldBufferPosition.row
+        @emitter.emit('should-update-line-messages')
+      @emitter.emit('should-update-bubble')
+    # The onDidStopChanging callbacks are invoked immediately on creation, We are just
+    # gonna wait until a bit to get real events
     setImmediate =>
       @subscriptions.add @editor.onDidStopChanging => setImmediate => @emitter.emit('should-lint', true)
-      @subscriptions.add @editor.onDidChangeCursorPosition ({oldBufferPosition, newBufferPosition}) =>
-        if newBufferPosition.row isnt oldBufferPosition.row
-          @emitter.emit('should-update-line-messages')
-        @emitter.emit('should-update-bubble')
 
   lint: ->
     # Does nothing for now, I'll work again after a PR porting linter-registry from NG branch
