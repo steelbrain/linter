@@ -34,9 +34,7 @@ This project adheres to the [Open Code of Conduct][code-of-conduct]. By particip
 * We prefer small, focused, single-responsibility pull requests that include tests where possible. These can be contrasted with large pull requests, pull requests with multiple unrelated concerns, and pull requests which have no tests.
 * Include screenshots and animated GIFs in your pull request whenever possible.
 * **Please ensure that your pull request has no lint errors.** This is a project for linters after all,
-  so please ensure you have the [linter-coffeelint](https://atom.io/packages/linter-coffeelint)
-  (`[repo](https://github.com/AtomLinter/linter-coffeelint)`) and [linter-eslint](https://atom.io/packages/linter-eslint)
-  (`[repo](https://github.com/AtomLinter/linter-eslint)`) packages installed in
+  so please ensure you have the [linter-coffeelint](https://atom.io/packages/linter-coffeelint) and [linter-eslint](https://atom.io/packages/linter-eslint) packages installed in
   Atom.
 * Include thoughtfully-worded, well-structured
   [Jasmine](http://jasmine.github.io/) specs in the `./spec` folder. Run them using `apm test`. See
