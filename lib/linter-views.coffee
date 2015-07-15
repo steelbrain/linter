@@ -63,12 +63,12 @@ class LinterViews
         @count.Line++
     return messages
 
-  renderBubble: (point) ->
+  renderBubble: ->
     @removeBubble()
     return unless @showBubble
     activeEditor = atom.workspace.getActiveTextEditor()
     return unless activeEditor?.getPath?()
-    point = point || activeEditor.getCursorBufferPosition()
+    point = activeEditor.getCursorBufferPosition()
     for message in @messages
       continue unless message.currentLine
       continue unless message.range.containsPoint point
