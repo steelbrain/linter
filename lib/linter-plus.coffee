@@ -19,7 +19,7 @@ class Linter
     @subscriptions = new CompositeDisposable
     @emitter = new Emitter
     @editorLinters = new Map
-    @linters = new Set # Values are pushed here from Main::consumeLinter
+    @linters = new (require('./linter-registry'))()
 
     @messages = new Messages @
     @views = new LinterViews @
@@ -47,25 +47,16 @@ class Linter
   serialize: -> @state
 
   addLinter: (linter) ->
-    try
-      if(Helpers.validateLinter(linter))
-        @linters.add(linter)
-    catch err
-      atom.notifications.addError("Invalid Linter: #{err.message}", {
-        detail: err.stack,
-        dismissable: true
-      })
+    @linters.addLinter(linter)
 
   deleteLinter: (linter) ->
-    return unless @hasLinter(linter)
-    @linters.delete(linter)
-    @deleteMessages(linter)
+    @linters.deleteLinter(linter)
 
   hasLinter: (linter) ->
-    @linters.has(linter)
+    @linters.hasLinter(linter)
 
   getLinters: ->
-    @linters
+    @linters.getLinters()
 
   setMessages: (linter, messages) ->
     @messages.set(linter, messages)
