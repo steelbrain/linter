@@ -109,6 +109,6 @@ class Linter
     @views.destroy()
     @linters.deactivate()
     @commands.destroy()
-    @messages.destroy()
+    @messages.deactivate()
 
 module.exports = Linter
