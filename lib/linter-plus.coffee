@@ -115,7 +115,7 @@ class Linter
   deactivate: ->
     @subscriptions.dispose()
     @eachEditorLinter (linter) ->
-      linter.destroy()
+      linter.deactivate()
     @views.destroy()
     @commands.destroy()
     @messages.destroy()
