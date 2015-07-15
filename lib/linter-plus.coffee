@@ -40,7 +40,7 @@ class Linter
       editorLinter.onShouldUpdateBubble =>
         @views.renderBubble()
       editorLinter.onShouldUpdateLineMessages =>
-        @views.updateLineMessages(true)
+        @views.renderLineMessages(true)
       editorLinter.onShouldLint (onChange) =>
         @linters.lint({onChange, editorLinter})
       editorLinter.onDidDestroy =>

@@ -45,6 +45,12 @@ class LinterViews
     @renderBubble()
     @renderCount()
 
+  renderLineMessages: (render = false) ->
+    @classifyMessagesByLine(@messages)
+    if render
+      @renderCount()
+      @renderPanelMessages()
+
   classifyMessages: (messages) ->
     filePath = atom.workspace.getActiveTextEditor()?.getPath()
     @count.File = 0
@@ -114,12 +120,6 @@ class LinterViews
       if @underlineIssues then activeEditor.decorateMarker(
         marker, type: 'highlight', class: "linter-highlight #{message.class}"
       )
-
-  updateLineMessages: (render = false) ->
-    @classifyMessagesByLine(@messages)
-    if render
-      @renderCount()
-      @renderPanelMessages()
 
   attachBottom: (statusBar) ->
     @bottomBar = statusBar.addLeftTile
