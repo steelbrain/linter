@@ -44,20 +44,6 @@ describe 'linter-registry', ->
       expect(linterRegistry.hasLinter(linter)).toBe(false)
       linterRegistry.deactivate()
   describe '::lint', ->
-    it "doesn't lint if textEditor is deactivated", ->
-      linterRegistry = new LinterRegistry
-      editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
-      editorLinter.status = false
-      linter = {
-        grammarScopes: ['*']
-        lintOnFly: false
-        modifiesBuffer: false
-        scope: 'file'
-        lint: ->
-      }
-      linterRegistry.addLinter(linter)
-      expect(linterRegistry.lint({onChange: false, editorLinter})).toBeUndefined()
-      linterRegistry.deactivate()
     it "doesn't lint if textEditor isn't active one", ->
       linterRegistry = new LinterRegistry
       editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
