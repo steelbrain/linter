@@ -39,7 +39,7 @@ class LinterViews
       @renderPanelMessages()
 
   render: ->
-    @messages = @linter.messages.getAllMessages()
+    @messages = @linter.messages.publicMessages
     if @ignoredMessageTypes.length
       @messages = @messages.filter (message) => @ignoredMessageTypes.indexOf(message.type) is -1
     @updateLineMessages()
@@ -74,11 +74,8 @@ class LinterViews
     bubble
 
   renderCount: ->
-    if @ignoredMessageTypes.length
-      count = File: 0, Project: @messages.length
-      @messages.forEach (message) -> count.File++ if message.currentFile
-    else
-      count = @linter.messages.getCount()
+    count = File: 0, Project: @messages.length
+    @messages.forEach (message) -> count.File++ if message.currentFile
     count.Line = @messagesLine.length
     @bottomContainer.setCount(count)
 
@@ -107,7 +104,7 @@ class LinterViews
       )
 
   updateLineMessages: (render = false) ->
-    @messagesLine = @linter.messages.getActiveFileMessagesForActiveRow()
+    @messagesLine = []
     if @ignoredMessageTypes.length
       @messagesLine = @messagesLine.filter (message) => @ignoredMessageTypes.indexOf(message.type) is -1
     if render
