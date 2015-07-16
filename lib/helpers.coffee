@@ -4,7 +4,7 @@ path = require 'path'
 child_process = require 'child_process'
 
 Helpers = module.exports =
-  shouldTriggerLinter: (linter, wasTriggeredOnChange, scopes)->
+  shouldTriggerLinter: (linter, wasTriggeredOnChange, scopes) ->
     # Trigger fly linters on save, but not save linters on fly
     # Because we want to trigger onFly linters on save when the
     # user has disabled lintOnFly from config
