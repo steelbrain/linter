@@ -2,7 +2,6 @@
 
 BottomPanel = require('./views/bottom-panel')
 BottomContainer = require('./views/bottom-container')
-BottomStatus = require('./views/bottom-status')
 Message = require('./views/message')
 
 class LinterViews
@@ -16,6 +15,9 @@ class LinterViews
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
     @bubble = null
+
+    @linter.onLinting (linting) =>
+      @bottomContainer.setLinting linting
 
     @subscriptions.add atom.config.observe('linter.ignoredMessageTypes', (ignoredMessageTypes) =>
       @ignoredMessageTypes = ignoredMessageTypes
