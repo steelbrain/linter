@@ -91,11 +91,11 @@ This project adheres to the [Open Code of Conduct][code-of-conduct]. By particip
 
 ```coffee
 describe 'a dog', ->
- it 'barks', ->
- # spec here
- describe 'when the dog is happy', ->
+  it 'barks', ->
+    # spec here
+describe 'when the dog is happy', ->
   it 'wags its tail', ->
-  # spec here
+    # spec here
 ```
 
 ## Documentation Styleguide
