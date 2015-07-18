@@ -56,32 +56,32 @@ class Linter
     @messages.deleteMessages(linter)
 
   getMessages: ->
-    return @messages.publicMessages
+    @messages.publicMessages
 
   onDidChangeMessages: (callback) ->
-    return @messages.onDidUpdateMessages(callback)
+    @messages.onDidUpdateMessages(callback)
 
   onDidChangeProjectMessages: (callback) ->
     deprecate("Linter::onDidChangeProjectMessages is deprecated, use Linter::onDidChangeMessages instead")
-    return @onDidChangeMessages(callback)
+    @onDidChangeMessages(callback)
 
   getProjectMessages: ->
     deprecate("Linter::getProjectMessages is deprecated, use Linter::getMessages instead")
-    return @getMessages()
+    @getMessages()
 
   setProjectMessages: (linter, messages) ->
     deprecate("Linter::setProjectMessages is deprecated, use Linter::setMessages instead")
-    return @setMessages(linter, messages)
+    @setMessages(linter, messages)
 
   deleteProjectMessages: (linter) ->
     deprecate("Linter::deleteProjectMessages is deprecated, use Linter::deleteMessages instead")
-    return @deleteMessages(linter)
+    @deleteMessages(linter)
 
   getActiveEditorLinter: ->
-    return @getEditorLinter atom.workspace.getActiveTextEditor()
+    @getEditorLinter atom.workspace.getActiveTextEditor()
 
   getEditorLinter: (editor) ->
-    return @editorLinters.get editor
+    @editorLinters.get editor
 
   eachEditorLinter: (callback) ->
     @editorLinters.forEach(callback)
