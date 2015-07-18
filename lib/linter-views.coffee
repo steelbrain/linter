@@ -38,7 +38,7 @@ class LinterViews
       @renderPanelMessages()
 
   render: (messages) ->
-    @messages = @classifyMessagesByLine(@classifyMessages(messages))
+    @messages = @classifyMessages(messages)
     if @ignoredMessageTypes.length
       @messages = @messages.filter (message) => @ignoredMessageTypes.indexOf(message.type) is -1
     @renderPanelMessages()
@@ -60,7 +60,7 @@ class LinterViews
       if message.currentFile = (filePath and message.filePath is filePath)
         @count.File++
       @count.Project++
-    return messages
+    return @classifyMessagesByLine(messages)
 
   classifyMessagesByLine: (messages) ->
     row = atom.workspace.getActiveTextEditor()?.getCursorBufferPosition().row
