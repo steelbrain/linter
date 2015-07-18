@@ -57,8 +57,6 @@ class Commands
   lint: ->
     try
       @linter.getActiveEditorLinter()?.lint(false)
-      @linter.views.render(@linter.messages.publicMessages)
-
     catch error
       atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
 
