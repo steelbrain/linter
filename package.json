@@ -1,10 +1,10 @@
 {
   "name": "linter",
   "main": "./lib/main",
-  "author": "AtomLinter",
-  "version": "1.2.3",
+  "author": "atom-community",
+  "version": "1.2.4",
   "description": "A Base Linter with Cow Powers",
-  "repository": "https://github.com/AtomLinter/Linter",
+  "repository": "https://github.com/atom-community/linter",
   "license": "MIT",
   "scripts": {
     "lint": "coffeelint lib && eslint lib"

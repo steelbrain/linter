@@ -4,6 +4,9 @@
     "node": true,
     "browser": true
   },
+  "globals": {
+    "atom": true,
+  },
   "rules": {
     "no-underscore-dangle": 0,
     "quotes": [2, "single"],
@@ -95,7 +98,7 @@
     }],
     "comma-style": [2, "last"],
     "eol-last": 2,
-    "func-names": 1,
+    "func-names": 0,
     "key-spacing": [2, {
         "beforeColon": false,
         "afterColon": true

@@ -2,7 +2,7 @@ Linter
 ======
 
 [![Slack Badge](https://img.shields.io/badge/chat-atom.io%20slack-blue.svg?style=flat-square)](http://atom-slack.herokuapp.com/)
-[![Build Status](https://img.shields.io/travis/AtomLinter/Linter.svg?style=flat-square)](https://travis-ci.org/AtomLinter/Linter)
+[![Build Status](https://img.shields.io/travis/atom-community/linter.svg?style=flat-square)](https://travis-ci.org/atom-community/linter)
 [![Plugin installs!](https://img.shields.io/apm/dm/linter.svg?style=flat-square)](https://atom.io/packages/linter)
 [![Package version!](https://img.shields.io/apm/v/linter.svg?style=flat-square)](https://atom.io/packages/linter)
 [![Dependencies!](https://img.shields.io/david/AtomLinter/Linter.svg?style=flat-square)](https://david-dm.org/AtomLinter/linter)
@@ -28,7 +28,7 @@ $ apm install linter
 
 #### API Documentation
 
-[Linter API wiki](https://github.com/AtomLinter/Linter/wiki/Linter-API)
+[Linter API wiki](https://github.com/atom-community/linter/wiki/Linter-API)
 
 #### Contribute
 

@@ -50,7 +50,7 @@ module.exports =
         implementation = atomPackage.metadata['linter-implementation'] ? atomPackage.name
         deprecate('AtomLinter v0.X.Y API has been deprecated.
           Please refer to the Linter docs to update and the latest API:
-          https://github.com/AtomLinter/Linter/wiki/Migrating-to-the-new-API', {
+          https://github.com/atom-community/linter/wiki/Migrating-to-the-new-API', {
           packageName: atomPackage.name
         })
         try
