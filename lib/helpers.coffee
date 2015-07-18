@@ -11,7 +11,7 @@ Helpers = module.exports =
     toReturn = message.type + '-' + message.filePath + '-' + (message.range?.serialize?()) + '-' + text
     toReturn.toLowerCase()
   shouldTriggerLinter: (linter, bufferModifying, onChange, scopes) ->
-    # Trigger fly linters on save, but not save linters on fly
+    # Trigger lint-on-Fly linters on both events but on-save linters only on save
     # Because we want to trigger onFly linters on save when the
     # user has disabled lintOnFly from config
     return false if onChange and not linter.lintOnFly
