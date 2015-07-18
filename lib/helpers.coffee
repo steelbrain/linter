@@ -9,7 +9,7 @@ Helpers = module.exports =
   messageKey: (message) ->
     text = message.text || message.html
     toReturn = message.type + '-' + message.filePath + '-' + (message.range?.serialize?()) + '-' + text
-    return toReturn.toLowerCase()
+    toReturn.toLowerCase()
   shouldTriggerLinter: (linter, bufferModifying, onChange, scopes) ->
     # Trigger fly linters on save, but not save linters on fly
     # Because we want to trigger onFly linters on save when the
