@@ -5,7 +5,7 @@ Linter
 [![Build Status](https://img.shields.io/travis/atom-community/linter.svg?style=flat-square)](https://travis-ci.org/atom-community/linter)
 [![Plugin installs!](https://img.shields.io/apm/dm/linter.svg?style=flat-square)](https://atom.io/packages/linter)
 [![Package version!](https://img.shields.io/apm/v/linter.svg?style=flat-square)](https://atom.io/packages/linter)
-[![Dependencies!](https://img.shields.io/david/AtomLinter/Linter.svg?style=flat-square)](https://david-dm.org/AtomLinter/linter)
+[![Dependencies!](https://img.shields.io/david/atom-community/Linter.svg?style=flat-square)](https://david-dm.org/atom-community/linter)
 
 Linter is a base linter provider for the Hackable [Atom Editor](http://atom.io).
 
