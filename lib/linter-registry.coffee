@@ -53,7 +53,7 @@ class LinterRegistry
 
   triggerLinter: (linter, editor, scopes) ->
     return new Promise((resolve) =>
-      resolve(linter.lint(@editor))
+      resolve(linter.lint(editor))
     ).then((results) =>
       if results then @emitter.emit('did-update-messages', {linter, messages: results, editor})
     ).catch((e) -> helpers.error(e))
