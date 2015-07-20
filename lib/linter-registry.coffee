@@ -40,19 +40,18 @@ class LinterRegistry
 
     # Confusing code ahead, proceed with caution :P
     return @linters.reduce((promise, linter) =>
-      if helpers.shouldTriggerLinter(linter, true, onChange, scopes)
-        return promise.then(-> linter.lint(editor)).then((vals) =>
-          if vals then @emitter.emit('did-update-messages', {linter, messages: vals, editor})
-        ).catch (e) -> helpers.error(e)
-      else return promise
+      return promise unless helpers.shouldTriggerLinter(linter, true, onChange, scopes)
+      return promise.then(-> linter.lint(editor)).then((vals) =>
+        if vals then @emitter.emit('did-update-messages', {linter, messages: vals, editor})
+      ).catch (e) -> helpers.error(e)
     , Promise.resolve()).then( =>
       Promises = @linters.map (linter) =>
         return unless helpers.shouldTriggerLinter(linter, false, onChange, scopes)
-        try result = linter.lint(editor) catch e then return helpers.error(e)
-        unless result instanceof Promise
-          result = Promise.resolve(result)
-        result.then (vals) =>
-          if vals then @emitter.emit('did-update-messages', {linter, messages: vals, editor})
+        return new Promise((resolve) =>
+          resolve(linter.lint(@editor))
+        ).then((results) =>
+          if results then @emitter.emit('did-update-messages', {linter, messages: results, editor})
+        ).catch((e) -> helpers.error(e))
       return Promise.all(Promises)
     ).then =>
       @locks[lockKey].delete(editorLinter)
