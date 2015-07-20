@@ -56,7 +56,7 @@ class LinterViews
     return unless @messagesLine.length
     return unless @showBubble
     for msg in @messagesLine
-      @linter.messenger.message
+      @renderedMessages.push @linter.messenger.message
         severity: msg.class
         text: msg.text
         html: msg.html
