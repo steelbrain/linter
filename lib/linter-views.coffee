@@ -16,6 +16,8 @@ class LinterViews
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
     @bubble = null
+    @renderedMessages = []
+
 
     @subscriptions.add atom.config.observe('linter.ignoredMessageTypes', (ignoredMessageTypes) =>
       @ignoredMessageTypes = ignoredMessageTypes
@@ -48,22 +50,19 @@ class LinterViews
     @renderBubble()
     @renderCount()
 
+
   renderBubble: (point) ->
     @removeBubble()
     return unless @messagesLine.length
     return unless @showBubble
-    activeEditor = atom.workspace.getActiveTextEditor()
-    return unless activeEditor?.getPath?()
-    point = point || activeEditor.getCursorBufferPosition()
-    for message in @messagesLine
-      continue unless message.range?.containsPoint point
-      @bubble = activeEditor.markBufferRange([point, point], {invalidate: 'inside'})
-      activeEditor.decorateMarker(@bubble,
-        type: 'overlay',
-        position: 'tail',
-        item: @renderBubbleContent(message)
-      )
-      break
+    for msg in @messagesLine
+      @linter.messenger.message
+        severity: msg.class
+        text: msg.text
+        html: msg.html
+        range: msg.range
+        trace: msg.trace
+
 
   renderBubbleContent: (message) ->
     bubble = document.createElement 'div'
@@ -124,8 +123,9 @@ class LinterViews
     @markers = []
 
   removeBubble: ->
-    @bubble?.destroy()
-    @bubble = null
+    # @bubble?.destroy()
+    # @bubble = null
+    @renderedMessages.map (msg) -> msg.destroy()
 
   destroy: ->
     @removeMarkers()
