@@ -46,8 +46,7 @@ class LinterRegistry
         ).catch (e) -> helpers.error(e)
       else return promise
     , Promise.resolve()).then( =>
-      Promises = []
-      @linters.forEach (linter) =>
+      Promises = @linters.map (linter) =>
         return unless helpers.shouldTriggerLinter(linter, false, onChange, scopes)
         try result = linter.lint(editor) catch e then return helpers.error(e)
         unless result instanceof Promise
