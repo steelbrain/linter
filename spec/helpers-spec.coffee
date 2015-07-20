@@ -9,7 +9,7 @@ describe 'helpers', ->
   describe '::messageKey', ->
     it 'works', ->
       key = helpers.messageKey({type: 'error', text: ''})
-      expect(key.length).toBeTruthy()
+      expect(key.length).toBeGreaterThan(0)
     it 'generates a lowercase key', ->
       key = helpers.messageKey({type: 'error', text: ''})
       expect(key).toBe(key.toLowerCase())
