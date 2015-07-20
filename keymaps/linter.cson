@@ -1,3 +1,3 @@
 'atom-text-editor:not(.mini)':
-  'alt': 'linter:set-bubble-transparent'
+#  'alt': 'linter:set-bubble-transparent'
   'alt->': 'linter:next-error'
