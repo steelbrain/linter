@@ -16,7 +16,7 @@ class Commands
     @index = null
 
   togglePanel: ->
-    @linter.views.panel.panelVisibility = !@linter.views.panel.panelVisibility
+    @linter.views.panel.panelVisibility = not @linter.views.panel.panelVisibility
 
   toggleLinter: ->
     activeEditor = atom.workspace.getActiveTextEditor()

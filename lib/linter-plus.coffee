@@ -8,7 +8,7 @@ Commands = require './commands'
 
 class Linter
   # State is an object by default; never null or undefined
-  constructor:(@state)  ->
+  constructor: (@state)  ->
     @state.scope ?= 'File'
 
     # Public Stuff
@@ -20,8 +20,8 @@ class Linter
     @editorLinters = new Map
     @linters = new (require('./linter-registry'))()
     @messages = new (require('./messages'))()
-    @views = new LinterViews @
-    @commands = new Commands @
+    @views = new LinterViews(this)
+    @commands = new Commands(this)
 
     @subscriptions.add @linters.onDidUpdateMessages (info) =>
       @messages.set(info)

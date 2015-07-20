@@ -7,7 +7,7 @@ Helpers = module.exports =
   error: (e) ->
     atom.notifications.addError(e.message, {detail: e.stack, dismissible: true})
   messageKey: (message) ->
-    text = message.text || message.html
+    text = message.text or message.html
     toReturn = message.type + '-' + message.filePath + '-' + (message.range?.serialize?()) + '-' + text
     toReturn.toLowerCase()
   shouldTriggerLinter: (linter, bufferModifying, onChange, scopes) ->

@@ -15,7 +15,7 @@ class LinterViews
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
     @bubble = null
-    @count = File: 0, Line:0, Project: 0
+    @count = File: 0, Line: 0, Project: 0
 
     @subscriptions.add atom.config.observe('linter.ignoredMessageTypes', (ignoredMessageTypes) =>
       @ignoredMessageTypes = ignoredMessageTypes
