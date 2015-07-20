@@ -41,20 +41,22 @@ class LinterRegistry
     # Confusing code ahead, proceed with caution :P
     return @linters.reduce((promise, linter) =>
       return promise unless helpers.shouldTriggerLinter(linter, true, onChange, scopes)
-      return promise.then(-> linter.lint(editor)).then((vals) =>
-        if vals then @emitter.emit('did-update-messages', {linter, messages: vals, editor})
-      ).catch (e) -> helpers.error(e)
+      return promise.then =>
+        return @triggerLinter(linter, editor, scopes)
     , Promise.resolve()).then( =>
       Promises = @linters.map (linter) =>
         return unless helpers.shouldTriggerLinter(linter, false, onChange, scopes)
-        return new Promise((resolve) =>
-          resolve(linter.lint(@editor))
-        ).then((results) =>
-          if results then @emitter.emit('did-update-messages', {linter, messages: results, editor})
-        ).catch((e) -> helpers.error(e))
+        return @triggerLinter(linter, editor, scopes)
       return Promise.all(Promises)
     ).then =>
       @locks[lockKey].delete(editorLinter)
+
+  triggerLinter: (linter, editor, scopes) ->
+    return new Promise((resolve) =>
+      resolve(linter.lint(@editor))
+    ).then((results) =>
+      if results then @emitter.emit('did-update-messages', {linter, messages: results, editor})
+    ).catch((e) -> helpers.error(e))
 
   onDidUpdateMessages: (callback) ->
     return @emitter.on('did-update-messages', callback)
