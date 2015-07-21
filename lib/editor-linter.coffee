@@ -53,34 +53,58 @@ class EditorLinter
 
     scopes = @editor.scopeDescriptorForBufferPosition(@editor.getCursorBufferPosition()).scopes
     scopes.push '*' # To allow global linters
-    @triggerLinters(true, wasTriggeredOnChange, scopes).then( =>
-      return Promise.all(@triggerLinters(false, wasTriggeredOnChange, scopes))
-    ).then =>
+    messages = []
+
+    # Since I'm using filter I need a functional version of the helper.
+    shouldTriggerLinter = (linter) ->
+      Helpers.shouldTriggerLinter(linter, wasTriggeredOnChange, scopes)
+
+    toRun = @linter.getLinters().filter(shouldTriggerLinter)
+    modifyingLinters = toRun.filter((linter) -> linter.modifiesBuffer)
+    linters = toRun.filter((linter) -> !linter.modifiesBuffer)
+
+    # modifying linters must run in sequence
+    @runSequentialLinters(modifyingLinters).then((messageMap) =>
+      return @runParalellLinters(messageMap, linters)
+    ).then(@storeMessages).then =>
       @lock(wasTriggeredOnChange, false)
 
-  # This method returns an array of promises to be used in lint
-  triggerLinters: (bufferModifying, wasTriggeredOnChange, scopes) ->
-    ToReturn = if bufferModifying then Promise.resolve() else []
-    @linter.getLinters().forEach (linter) =>
-      return if linter.modifiesBuffer isnt bufferModifying
-      return unless Helpers.shouldTriggerLinter(linter, wasTriggeredOnChange, scopes)
-      currentLinter = =>
-        return new Promise((resolve) =>
-          resolve(linter.lint(@editor, Helpers))
-        ).then((results) =>
-          if linter.scope is 'project'
-            @linter.setMessages(linter, results)
-          else
-            # Trigger event instead of updating on purpose, because
-            # we want to make MessageRegistry the central message repo
-            @emitter.emit('should-update', {linter, results})
-        ).catch (error) ->
-          atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
-      if bufferModifying
-        ToReturn.then -> currentLinter()
+  storeMessages: (messageMap) =>
+    messageMap.forEach (results, linter) =>
+      if linter.scope is 'project'
+        @linter.setMessages(linter, results)
       else
-        ToReturn.push(currentLinter())
-    ToReturn
+        # Trigger event instead of updating on purpose, because
+        # we want to make MessageRegistry the central message repo
+        @emitter.emit('should-update', {linter, results})
+
+  # Consumes an array of linters and returns a `Map` of litners to messages
+  runSequentialLinters: (linters) ->
+    return linters.reduce(((promise, linter) =>
+      promise.then((messageMap) =>
+        @runLinter(linter).then((messages) ->
+          messageMap.set(linter, messages)
+          return messageMap
+        )
+      )
+    ), Promise.resolve(new Map) )
+
+  # Consumes an array of linters and returns a `Map` of litners to messages
+  runParalellLinters: (messageMap, linters) ->
+    messages = Promise.all(linters.map((linter) =>
+      @runLinter(linter).then((messages) ->
+        messageMap.set(linter, messages)
+      )
+    )).then(-> messageMap)
+
+  runLinter: (linter) ->
+    return new Promise((resolve) =>
+      resolve(linter.lint(@editor, Helpers))
+    ).catch (error) ->
+      atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
+      # fake a return value since the error has been handled by showing it to
+      # the user
+      return []
 
   # This method sets or gets the lock status of given type
   lock: (wasTriggeredOnChange, value) ->

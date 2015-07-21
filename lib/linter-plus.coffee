@@ -19,7 +19,7 @@ class Linter
     @subscriptions = new CompositeDisposable
     @emitter = new Emitter
     @editorLinters = new Map
-    @linters = new Set # Values are pushed here from Main::consumeLinter
+    @linters = []
 
     @messages = new Messages @
     @views = new LinterViews @
@@ -44,7 +44,7 @@ class Linter
   addLinter: (linter) ->
     try
       if(Helpers.validateLinter(linter))
-        @linters.add(linter)
+        @linters.push(linter)
     catch err
       atom.notifications.addError("Invalid Linter: #{err.message}", {
         detail: err.stack,
@@ -53,11 +53,11 @@ class Linter
 
   deleteLinter: (linter) ->
     return unless @hasLinter(linter)
-    @linters.delete(linter)
+    @linters = @linters.filter((l) -> l isnt linter)
     @deleteMessages(linter)
 
   hasLinter: (linter) ->
-    @linters.has(linter)
+    @linters.filter((l) -> l is linter).length > 0
 
   getLinters: ->
     @linters
