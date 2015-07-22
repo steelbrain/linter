@@ -1,38 +1,46 @@
-Helpers = require '../lib/helpers'
-
-describe "The Results Validation Helper", ->
-  it "should throw an exception when nothing is passed.", ->
-    expect( -> Helpers.validateMessages()).toThrow()
-  it "should throw an exception when a String is passed.", ->
-    expect( -> Helpers.validateMessages('String')).toThrow()
-  it "should throw an exception when a result's type is missing.", ->
-    results = [{}]
-    expect( -> Helpers.validateMessages(results)).toThrow()
-  it "should return the results when validated.", ->
-    results = [{type: 'Type'}]
-    expect(Helpers.validateMessages(results)).toBeUndefined()
-
-describe "The Linter Validation Helper", ->
-  it "should throw an exception when grammarScopes is not an Array.", ->
-    linter = {
-      grammarScopes: 'not an array'
+describe 'helpers', ->
+  helpers = require('../lib/helpers')
+  beforeEach ->
+    atom.notifications.clear()
+  describe '::error', ->
+    it 'adds an error notification', ->
+      helpers.error(new Error())
+      expect(atom.notifications.getNotifications().length).toBe(1)
+  describe '::messageKey', ->
+    it 'works', ->
+      key = helpers.messageKey({type: 'error', text: ''})
+      expect(key.length).toBeGreaterThan(0)
+    it 'generates a lowercase key', ->
+      key = helpers.messageKey({type: 'error', text: ''})
+      expect(key).toBe(key.toLowerCase())
+  describe '::shouldTriggerLinter', ->
+    normalLinter =
+      grammarScopes: ['*']
+      scope: 'file'
+      modifiesBuffer: false
+      lintOnFly: false
       lint: ->
-    }
-    expect( -> Helpers.validateLinter(linter)).toThrow()
-  it "should throw an exception when lint is missing.", ->
-    linter = {
-      grammarScopes: []
-    }
-    expect( -> Helpers.validateLinter(linter)).toThrow()
-  it "should throw an exception when a lint is not a function.", ->
-    linter = {
-      grammarScopes: []
-      lint: 'not a function'
-    }
-    expect( -> Helpers.validateLinter(linter)).toThrow()
-  it "should return true when everything validates.", ->
-    linter = {
-      grammarScopes: []
+    lintOnFly =
+      grammarScopes: ['*']
+      scope: 'file'
+      modifiesBuffer: false
+      lintOnFly: true
       lint: ->
-    }
-    expect(Helpers.validateLinter(linter)).toEqual(true)
+    bufferModifying =
+      grammarScopes: ['*']
+      scope: 'file'
+      modifiesBuffer: true
+      lintOnFly: false
+      lint: ->
+    it 'accepts a wildcard grammarScope', ->
+      expect(helpers.shouldTriggerLinter(normalLinter, false, false, ['*'])).toBe(true)
+    it 'runs lintOnFly ones on both save and lintOnFly', ->
+      expect(helpers.shouldTriggerLinter(lintOnFly, false, false, ['*'])).toBe(true)
+      expect(helpers.shouldTriggerLinter(lintOnFly, false, true, ['*'])).toBe(true)
+    it "doesn't run save ones on fly", ->
+      expect(helpers.shouldTriggerLinter(normalLinter, false, true, ['*'])).toBe(false)
+    it 'runs only if bufferModifying flag matches with linter', ->
+      expect(helpers.shouldTriggerLinter(normalLinter, false, false, ['*'])).toBe(true)
+      expect(helpers.shouldTriggerLinter(normalLinter, true, false, ['*'])).toBe(false)
+      expect(helpers.shouldTriggerLinter(bufferModifying, false, false, ['*'])).toBe(false)
+      expect(helpers.shouldTriggerLinter(bufferModifying, true, false, ['*'])).toBe(true)

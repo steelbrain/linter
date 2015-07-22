@@ -52,7 +52,7 @@ class LinterRegistry
       @locks[lockKey].delete(editorLinter)
 
   triggerLinter: (linter, editor, scopes) ->
-    return new Promise((resolve) =>
+    return new Promise((resolve) ->
       resolve(linter.lint(editor))
     ).then((results) =>
       if results then @emitter.emit('did-update-messages', {linter, messages: results, editor})
