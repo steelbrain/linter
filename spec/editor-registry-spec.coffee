@@ -43,6 +43,21 @@ describe 'editor-registry', ->
       editorRegistry.create(activeEditor)
       expect(editorRegistry.ofTextEditor(activeEditor)).toBeDefined()
 
+  describe '::observe', ->
+    it 'calls with the current editorLinters', ->
+      timesCalled = 0
+      editorRegistry.create(atom.workspace.getActiveTextEditor())
+      editorRegistry.observe -> ++timesCalled
+      expect(timesCalled).toBe(1)
+    it 'calls in the future with new editorLinters', ->
+      timesCalled = 0
+      editorRegistry.observe -> ++timesCalled
+      editorRegistry.create(atom.workspace.getActiveTextEditor())
+      waitsForPromise ->
+        atom.workspace.open('someNonExistingFile').then ->
+          editorRegistry.create(atom.workspace.getActiveTextEditor())
+          expect(timesCalled).toBe(2)
+
   describe '::ofActiveTextEditor', ->
     it 'returns undefined if active pane is not a text editor', ->
       expect(editorRegistry.ofActiveTextEditor()).toBeUndefined()
