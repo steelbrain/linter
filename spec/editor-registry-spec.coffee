@@ -24,6 +24,14 @@ describe 'editor-registry', ->
       atom.workspace.destroyActivePaneItem()
       expect(editorRegistry.editorLinters.size).toBe(0)
 
+  describe '::forEach', ->
+    it 'calls the callback once per editorLinter', ->
+      editorRegistry.create(atom.workspace.getActiveTextEditor())
+      timesCalled = 0
+      editorRegistry.forEach -> ++timesCalled
+      editorRegistry.forEach -> ++timesCalled
+      expect(timesCalled).toBe(2)
+
   describe '::ofTextEditor', ->
     it 'returns undefined when invalid key is provided', ->
       expect(editorRegistry.ofTextEditor(null)).toBeUndefined()
@@ -34,6 +42,7 @@ describe 'editor-registry', ->
       activeEditor = atom.workspace.getActiveTextEditor()
       editorRegistry.create(activeEditor)
       expect(editorRegistry.ofTextEditor(activeEditor)).toBeDefined()
+
   describe '::ofActiveTextEditor', ->
     it 'returns undefined if active pane is not a text editor', ->
       expect(editorRegistry.ofActiveTextEditor()).toBeUndefined()
