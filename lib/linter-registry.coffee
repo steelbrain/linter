@@ -38,7 +38,6 @@ class LinterRegistry
     scopes = editor.scopeDescriptorForBufferPosition(editor.getCursorBufferPosition()).scopes
     scopes.push('*') # To allow global linters
 
-    # Confusing code ahead, proceed with caution :P
     return @linters.reduce((promise, linter) =>
       return promise unless helpers.shouldTriggerLinter(linter, true, onChange, scopes)
       return promise.then =>
