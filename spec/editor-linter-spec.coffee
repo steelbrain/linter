@@ -1,9 +1,14 @@
 describe 'editor-linter', ->
   EditorLinter = require('../lib/editor-linter')
+  editorLinter = null
+  textEditor = null
   beforeEach ->
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
-      atom.workspace.open('test.txt')
+      atom.workspace.open('test.txt').then ->
+        editorLinter?.deactivate()
+        textEditor = atom.workspace.getActiveTextEditor()
+        editorLinter = new EditorLinter(textEditor)
 
   describe '::constructor', ->
     it "cries when provided argument isn't a TextEditor", ->
@@ -19,8 +24,6 @@ describe 'editor-linter', ->
 
   describe '::onShouldLint', ->
     it 'ignores instant save requests', ->
-      textEditor = atom.workspace.getActiveTextEditor()
-      editorLinter = new EditorLinter(textEditor)
       timesTriggered = 0
       editorLinter.onShouldLint ->
         timesTriggered++
@@ -30,15 +33,11 @@ describe 'editor-linter', ->
       textEditor.save()
       textEditor.save()
       expect(timesTriggered).toBe(5)
-      editorLinter.deactivate()
 
   describe '::onDidDestroy', ->
     it 'is called when TextEditor is destroyed', ->
-      textEditor = atom.workspace.getActiveTextEditor()
-      editorLinter = new EditorLinter(textEditor)
       didDestroy = false
       editorLinter.onDidDestroy ->
         didDestroy = true
       textEditor.destroy()
-      editorLinter.deactivate()
       expect(didDestroy).toBe(true)
