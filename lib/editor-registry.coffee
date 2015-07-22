@@ -12,6 +12,7 @@ class EditorRegistry
     editorLinter.onDidDestroy =>
       @editorLinters.delete(textEditor)
       editorLinter.deactivate()
+    @emitter.emit('observe', editorLinter)
     return editorLinter
 
   forEach: (callback) ->
@@ -22,6 +23,10 @@ class EditorRegistry
 
   ofActiveTextEditor: ->
     return @ofTextEditor(atom.workspace.getActiveTextEditor())
+
+  observe: (callback) ->
+    @forEach(callback)
+    @emitter.on('observe', callback)
 
   deactivate: ->
     @emitter.dispose()
