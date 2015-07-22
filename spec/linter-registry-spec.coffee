@@ -2,6 +2,8 @@ describe 'linter-registry', ->
   LinterRegistry = require('../lib/linter-registry')
   EditorLinter = require('../lib/editor-linter')
   linterRegistry = null
+  getLinter = ->
+    return {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'file', lint: -> }
   beforeEach ->
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
@@ -14,22 +16,22 @@ describe 'linter-registry', ->
       linterRegistry.addLinter({})
       expect(atom.notifications.getNotifications().length).toBe(1)
     it 'pushes linter into registry when valid', ->
-      linter = {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'file', lint: -> }
+      linter = getLinter()
       linterRegistry.addLinter(linter)
       expect(linterRegistry.linters.length).toBe(1)
 
   describe '::hasLinter', ->
     it 'returns true if present', ->
-      linter = {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'file', lint: -> }
+      linter = getLinter()
       linterRegistry.addLinter(linter)
       expect(linterRegistry.hasLinter(linter)).toBe(true)
     it 'returns false if not', ->
-      linter = {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'file', lint: -> }
+      linter = getLinter()
       expect(linterRegistry.hasLinter(linter)).toBe(false)
 
   describe '::deleteLinter', ->
     it 'deletes the linter from registry', ->
-      linter = {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'file', lint: -> }
+      linter = getLinter()
       linterRegistry.addLinter(linter)
       expect(linterRegistry.hasLinter(linter)).toBe(true)
       linterRegistry.deleteLinter(linter)
