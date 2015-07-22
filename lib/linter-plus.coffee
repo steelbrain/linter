@@ -87,12 +87,10 @@ class Linter
     @editors.forEach(callback)
 
   observeEditorLinters: (callback) ->
-    @eachEditorLinter callback
-    @emitter.on 'observe-editor-linters', callback
+    @editors.observe(callback)
 
   createEditorLinter: (editor) ->
     editorLinter = @editors.create(editor)
-    @emitter.emit 'observe-editor-linters', editorLinter
     editorLinter.onShouldUpdateBubble =>
       @views.renderBubble()
     editorLinter.onShouldUpdateLineMessages =>
