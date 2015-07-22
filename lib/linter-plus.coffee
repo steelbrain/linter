@@ -78,10 +78,10 @@ class Linter
     @deleteMessages(linter)
 
   getActiveEditorLinter: ->
-    return @editors.ofActiveTextEditor()
+    @editors.ofActiveTextEditor()
 
   getEditorLinter: (editor) ->
-    return @editors.ofTextEditor(editor)
+    @editors.ofTextEditor(editor)
 
   eachEditorLinter: (callback) ->
     @editors.forEach(callback)
