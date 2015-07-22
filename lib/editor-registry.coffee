@@ -14,6 +14,9 @@ class EditorRegistry
       editorLinter.deactivate()
     return editorLinter
 
+  forEach: (callback) ->
+    @editorLinters.forEach(callback)
+
   ofTextEditor: (editor) ->
     return @editorLinters.get(editor)
 
