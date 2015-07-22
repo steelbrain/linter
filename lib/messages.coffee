@@ -7,7 +7,7 @@ class MessageRegistry
     @updated = false
     @publicMessages = []
     @emitter = new Emitter
-    @messages = new Map()
+    @linterResponses = new Map()
     @editorMessages = new Map()
 
     @shouldUpdatePublic = true
@@ -16,7 +16,7 @@ class MessageRegistry
   set: ({linter, messages, editor}) ->
     try validate.messages(messages) catch e then return helpers.error(e)
     if linter.scope is 'project'
-      @messages.set(linter, messages)
+      @linterResponses.set(linter, messages)
     else
       throw new Error("Given editor isn't really an editor") unless editor instanceof TextEditor
       if not @editorMessages.has(editor) then @editorMessages.set(editor, new Map())
@@ -28,7 +28,7 @@ class MessageRegistry
     if @updated
       @updated = false
       publicMessages = []
-      @messages.forEach (messages) -> publicMessages = publicMessages.concat(messages)
+      @linterResponses.forEach (messages) -> publicMessages = publicMessages.concat(messages)
       @editorMessages.forEach (linters) -> linters.forEach (messages) ->
         publicMessages = publicMessages.concat(messages)
       @publicMessages = publicMessages.sort (a, b) ->
@@ -42,9 +42,9 @@ class MessageRegistry
     return @emitter.on('did-update-messages', callback)
 
   deleteMessages: (linter) ->
-    if @messages.has(linter)
+    if @linterResponses.has(linter)
       @updated = true
-      @messages.delete(linter)
+      @linterResponses.delete(linter)
 
   deleteEditorMessages: (editor) ->
     if @editorMessages.has(editor)
@@ -54,7 +54,7 @@ class MessageRegistry
   deactivate: ->
     @shouldUpdatePublic = false
     @emitter.dispose()
-    @messages.clear()
+    @linterResponses.clear()
     @editorMessages.clear()
 
 module.exports = MessageRegistry
