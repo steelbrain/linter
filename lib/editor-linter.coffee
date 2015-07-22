@@ -18,9 +18,8 @@ class EditorLinter
     setImmediate =>
       @subscriptions.add @editor.onDidStopChanging => setImmediate => @emitter.emit('should-lint', true)
 
-  lint: ->
-    # Does nothing for now, I'll work again after a PR porting linter-registry from NG branch
-    console.log("I should lint something")
+  lint: (onChange = false) ->
+    @emitter.emit('should-lint', onChange)
 
   onShouldUpdateBubble: (callback) ->
     return @emitter.on('should-update-bubble', callback)
@@ -33,6 +32,10 @@ class EditorLinter
 
   onDidDestroy: (callback) ->
     return @emitter.on('did-destroy', callback)
+
+  destroy: ->
+    @deactivate()
+    @emitter.emit('did-destroy')
 
   deactivate: ->
     @emitter.dispose()

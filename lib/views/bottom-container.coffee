@@ -18,7 +18,7 @@ class BottomContainer extends HTMLElement
     @status = new BottomStatus()
 
     for name, tab of @tabs
-      @subscriptions.add atom.config.onDidChange("linter.showErrorTab#{name}", @updateTabs.bind(@))
+      @subscriptions.add atom.config.onDidChange("linter.showErrorTab#{name}", @updateTabs.bind(this))
       tab.addEventListener 'click', ->
         emitter.emit 'did-change-tab', @name
 

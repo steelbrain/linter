@@ -4,6 +4,7 @@ describe 'editor-linter', ->
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
       atom.workspace.open('test.txt')
+
   describe '::constructor', ->
     it "cries when provided argument isn't a TextEditor", ->
       expect ->
@@ -15,6 +16,7 @@ describe 'editor-linter', ->
       expect ->
         new EditorLinter(55)
       .toThrow("Given editor isn't really an editor")
+
   describe '::onShouldLint', ->
     it 'ignores instant save requests', ->
       textEditor = atom.workspace.getActiveTextEditor()
@@ -29,6 +31,7 @@ describe 'editor-linter', ->
       textEditor.save()
       expect(timesTriggered).toBe(5)
       editorLinter.deactivate()
+
   describe '::onDidDestroy', ->
     it 'is called when TextEditor is destroyed', ->
       textEditor = atom.workspace.getActiveTextEditor()
