@@ -2,6 +2,7 @@
 helpers = require('./helpers')
 
 module.exports = Validate =
+
   linter: (linter) ->
     # set undefined to false for backward compatibility
     linter.modifiesBuffer = Boolean(linter.modifiesBuffer)
@@ -12,6 +13,7 @@ module.exports = Validate =
     if typeof linter.lint isnt 'function'
       throw new Error("linter.lint isn't a function")
     return true
+
   messages: (messages) ->
     unless messages instanceof Array
       throw new Error("Expected messages to be array, provided: #{typeof messages}")
