@@ -14,15 +14,18 @@ describe 'message-registry', ->
     }
     linterRegistry.addLinter(linter)
     return {linterRegistry, editorLinter}
+
   beforeEach ->
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
       atom.workspace.open('test.txt')
+
   describe '::constructor', ->
     it 'accepts not arguments', ->
       messageRegistry = new MessageRegistry()
       messageRegistry.deactivate()
       expect(true).toBe(true)
+
   describe '::set', ->
     it 'accepts info from LinterRegistry::lint', ->
       messageRegistry = new MessageRegistry()
@@ -37,6 +40,7 @@ describe 'message-registry', ->
           expect(wasUpdated).toBe(true)
           linterRegistry.deactivate()
           messageRegistry.deactivate()
+
   describe '::onDidUpdateMessages', ->
     it 'is triggered asyncly with results', ->
       messageRegistry = new MessageRegistry()
@@ -55,6 +59,7 @@ describe 'message-registry', ->
             linterRegistry.deactivate()
             messageRegistry.deactivate()
           , 1000
+
   describe '::deleteEditorMessages', ->
     it 'removes messages for that editor', ->
       messageRegistry = new MessageRegistry()

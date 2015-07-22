@@ -2,10 +2,12 @@ describe 'helpers', ->
   helpers = require('../lib/helpers')
   beforeEach ->
     atom.notifications.clear()
+
   describe '::error', ->
     it 'adds an error notification', ->
       helpers.error(new Error())
       expect(atom.notifications.getNotifications().length).toBe(1)
+
   describe '::messageKey', ->
     it 'works', ->
       key = helpers.messageKey({type: 'error', text: ''})
@@ -13,6 +15,7 @@ describe 'helpers', ->
     it 'generates a lowercase key', ->
       key = helpers.messageKey({type: 'error', text: ''})
       expect(key).toBe(key.toLowerCase())
+
   describe '::shouldTriggerLinter', ->
     normalLinter =
       grammarScopes: ['*']

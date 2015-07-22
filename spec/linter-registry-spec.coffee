@@ -5,11 +5,13 @@ describe 'linter-registry', ->
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
       atom.workspace.open('test.txt')
+
   describe '::construct', ->
     it 'expects no arguments', ->
       linterRegistry = new LinterRegistry
       expect(true).toBe(true)
       linterRegistry.deactivate()
+
   describe '::addLinter', ->
     it 'adds error notification if linter is invalid', ->
       linterRegistry = new LinterRegistry
@@ -22,6 +24,7 @@ describe 'linter-registry', ->
       linterRegistry.addLinter(linter)
       expect(linterRegistry.linters.length).toBe(1)
       linterRegistry.deactivate()
+
   describe '::hasLinter', ->
     it 'returns true if present', ->
       linter = {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'file', lint: -> }
@@ -34,6 +37,7 @@ describe 'linter-registry', ->
       linterRegistry = new LinterRegistry
       expect(linterRegistry.hasLinter(linter)).toBe(false)
       linterRegistry.deactivate()
+
   describe '::deleteLinter', ->
     it 'deletes the linter from registry', ->
       linter = {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'file', lint: -> }
@@ -43,6 +47,7 @@ describe 'linter-registry', ->
       linterRegistry.deleteLinter(linter)
       expect(linterRegistry.hasLinter(linter)).toBe(false)
       linterRegistry.deactivate()
+
   describe '::lint', ->
     it "doesn't lint if textEditor isn't active one", ->
       linterRegistry = new LinterRegistry
@@ -88,6 +93,7 @@ describe 'linter-registry', ->
       expect(linterRegistry.lint({onChange: false, editorLinter})).toBeDefined()
       expect(linterRegistry.lint({onChange: false, editorLinter})).toBeUndefined()
       linterRegistry.deactivate()
+
     describe 'buffer modifying linter', ->
       it 'triggers before other linters', ->
         last = null
@@ -147,6 +153,7 @@ describe 'linter-registry', ->
             expect(order[1]).toBe('second')
             expect(order[2]).toBe('third')
             linterRegistry.deactivate()
+
   describe '::onDidUpdateMessages', ->
     it 'is triggered whenever messages change', ->
       linterRegistry = new LinterRegistry

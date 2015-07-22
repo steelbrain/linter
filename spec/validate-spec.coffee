@@ -13,6 +13,7 @@ describe 'validate', ->
       expect ->
         validate.linter({grammarScopes: [], lint: true})
       .toThrow("linter.lint isn't a function")
+
   describe '::messages', ->
     it 'throws if messages is not an array', ->
       expect ->
