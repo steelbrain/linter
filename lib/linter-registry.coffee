@@ -63,6 +63,8 @@ class LinterRegistry
 
   deactivate: ->
     @emitter.dispose()
+    # Intentionally set it to empty array instead of null 'cause this would
+    # disallow further execution, while still not throwing in current one
     @linters = []
 
 module.exports = LinterRegistry
