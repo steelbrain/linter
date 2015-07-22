@@ -84,7 +84,7 @@ class Linter
     return @editors.ofTextEditor(editor)
 
   eachEditorLinter: (callback) ->
-    @editors.editorLinters.forEach(callback)
+    @editors.forEach(callback)
 
   observeEditorLinters: (callback) ->
     @eachEditorLinter callback
