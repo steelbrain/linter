@@ -1,5 +1,5 @@
 describe 'message-registry', ->
-  MessageRegistry = require('../lib/messages')
+  MessageRegistry = require('../lib/message-registry')
   EditorLinter = require('../lib/editor-linter')
   LinterRegistry = require('../lib/linter-registry')
   getLinterRegistry = ->

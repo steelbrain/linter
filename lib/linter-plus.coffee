@@ -19,7 +19,7 @@ class Linter
     @emitter = new Emitter
     @editorLinters = new Map
     @linters = new (require('./linter-registry'))()
-    @messages = new (require('./messages'))()
+    @messages = new (require('./message-registry'))()
     @views = new LinterViews(this)
     @commands = new Commands(this)
 
