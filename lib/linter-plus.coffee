@@ -18,8 +18,7 @@ class Linter
     @subscriptions = new CompositeDisposable
     @emitter = new Emitter
     @linters = new (require('./linter-registry'))()
-    @editors = new (require('./editor-registry'))()
-    @messages = new (require('./messages'))()
+    @messages = new (require('./message-registry'))()
     @views = new LinterViews(this)
     @commands = new Commands(this)
 
