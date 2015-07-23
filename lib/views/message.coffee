@@ -12,6 +12,7 @@ class Message extends HTMLElement
       return if message.filePath.indexOf(path) isnt 0 or displayFile isnt message.filePath # Avoid double replacing
       displayFile = message.filePath.substr( path.length + 1 ) # Remove the trailing slash as well
     el = document.createElement 'a'
+    el.classList.add 'linter-message-item'
     el.addEventListener 'click', ->
       Message.onClick message.filePath, message.range
     if message.range
@@ -22,6 +23,7 @@ class Message extends HTMLElement
 
   @renderRibbon: (message) ->
     el = document.createElement 'span'
+    el.classList.add 'linter-message-item'
     el.classList.add 'badge'
     el.classList.add 'badge-flexible'
     el.classList.add "linter-highlight"
@@ -31,6 +33,7 @@ class Message extends HTMLElement
 
   @renderMessage: (message, {cloneNode}) ->
     el = document.createElement 'span'
+    el.classList.add 'linter-message-item'
     if message.html
       if typeof message.html is 'string'
         el.innerHTML = message.html
