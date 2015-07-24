@@ -10,14 +10,13 @@ class LinterViews
     @state = @linter.state
     @subscriptions = new CompositeDisposable
     @messages = []
-    @messagesLine = []
     @markers = []
     @panel = new BottomPanel().prepare()
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
     @bubble = null
     @renderedMessages = []
-
+    @count = File: 0, Line: 0, Project: 0
 
     @subscriptions.add atom.config.observe('linter.ignoredMessageTypes', (ignoredMessageTypes) =>
       @ignoredMessageTypes = ignoredMessageTypes
@@ -35,43 +34,68 @@ class LinterViews
       isTextEditor = paneItem?.getPath?
       @bottomContainer.setVisibility(isTextEditor)
       @panel.panelVisibility = atom.config.get('linter.showErrorPanel') and isTextEditor
-    @subscriptions.add @linter.onDidChangeMessages =>
-      @render()
+      @render(@linter.messages.publicMessages)
     @subscriptions.add @bottomContainer.onDidChangeTab =>
       @renderPanelMessages()
 
-  render: ->
-    @messages = @linter.messages.getAllMessages()
+  render: (messages) ->
+    @messages = @classifyMessages(messages)
     if @ignoredMessageTypes.length
       @messages = @messages.filter (message) => @ignoredMessageTypes.indexOf(message.type) is -1
-    @updateLineMessages()
     @renderPanelMessages()
     @renderPanelMarkers()
     @renderBubble()
     @renderCount()
 
 
-  renderBubble: (point) ->
+  renderLineMessages: (render = false) ->
+    @classifyMessagesByLine(@messages)
+    if render
+      @renderCount()
+      @renderPanelMessages()
+
+  classifyMessages: (messages) ->
+    filePath = atom.workspace.getActiveTextEditor()?.getPath()
+    @count.File = 0
+    @count.Project = 0
+    for key, message of messages
+      if message.currentFile = (filePath and message.filePath is filePath)
+        @count.File++
+      @count.Project++
+    return @classifyMessagesByLine(messages)
+
+  classifyMessagesByLine: (messages) ->
+    row = atom.workspace.getActiveTextEditor()?.getCursorBufferPosition().row
+    @count.Line = 0
+    for key, message of messages
+      if message.currentLine = (message.currentFile and message.range and message.range.intersectsRow(row))
+        @count.Line++
+    return messages
+
+
+  renderBubble: ->
     @removeBubble()
-    return unless @messagesLine.length
     return unless @showBubble
-    for msg in @messagesLine
-      @renderedMessages.push @linter.messenger.message
-        severity: msg.class
-        text: msg.text
-        html: msg.html
-        range: msg.range
-        trace: msg.trace
+    prepared = @messagesLine.map (msg) ->
+                  severity: msg.class
+                  text: msg.text
+                  html: msg.html
+                  range: msg.range
+                  trace: msg.trace
+
+    @messages = @messenger.manyMessages prepared
+    # for msg in @messagesLine
+    #   @renderedMessages.push @linter.messenger.message
+    #     severity: msg.class
+    #     text: msg.text
+    #     html: msg.html
+    #     range: msg.range
+    #     trace: msg.trace
+   
 
 
   renderCount: ->
-    if @ignoredMessageTypes.length
-      count = File: 0, Project: @messages.length
-      @messages.forEach (message) -> count.File++ if message.currentFile
-    else
-      count = @linter.messages.getCount()
-    count.Line = @messagesLine.length
-    @bottomContainer.setCount(count)
+    @bottomContainer.setCount(@count)
 
   renderPanelMessages: ->
     messages = null
@@ -80,7 +104,7 @@ class LinterViews
     else if @state.scope is 'File'
       messages = @messages.filter (message) -> message.currentFile
     else if @state.scope is 'Line'
-      messages = @messagesLine
+      messages = @messages.filter (message) -> message.currentLine
     @panel.updateMessages messages, @state.scope is 'Project'
 
   renderPanelMarkers: ->
@@ -97,14 +121,6 @@ class LinterViews
         marker, type: 'highlight', class: "linter-highlight #{message.class}"
       )
 
-  updateLineMessages: (render = false) ->
-    @messagesLine = @linter.messages.getActiveFileMessagesForActiveRow()
-    if @ignoredMessageTypes.length
-      @messagesLine = @messagesLine.filter (message) => @ignoredMessageTypes.indexOf(message.type) is -1
-    if render
-      @renderCount()
-      @renderPanelMessages()
-
   attachBottom: (statusBar) ->
     @bottomBar = statusBar.addLeftTile
       item: @bottomContainer,
@@ -115,8 +131,6 @@ class LinterViews
     @markers = []
 
   removeBubble: ->
-    # @bubble?.destroy()
-    # @bubble = null
     @renderedMessages.map (msg) -> msg.destroy()
 
   destroy: ->
