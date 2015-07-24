@@ -82,6 +82,7 @@ class LinterViews
           html: msg.html
           range: msg.range
           trace: msg.trace
+          suggestion: msg.suggestion
       }
     @renderedMessages = @linter.messenger.manyMessages prepared
 
