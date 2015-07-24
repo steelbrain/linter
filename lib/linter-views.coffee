@@ -64,14 +64,6 @@ class LinterViews
         trace: msg.trace
 
 
-  renderBubbleContent: (message) ->
-    bubble = document.createElement 'div'
-    bubble.id = 'linter-inline'
-    bubble.appendChild Message.fromMessage(message)
-    if message.trace then message.trace.forEach (trace) ->
-      bubble.appendChild Message.fromMessage(trace, addPath: true)
-    bubble
-
   renderCount: ->
     if @ignoredMessageTypes.length
       count = File: 0, Project: @messages.length
