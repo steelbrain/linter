@@ -12,7 +12,6 @@ class EditorLinter
     @subscriptions.add @editor.onDidChangeCursorPosition ({oldBufferPosition, newBufferPosition}) =>
       if newBufferPosition.row isnt oldBufferPosition.row
         @emitter.emit('should-update-line-messages')
-      @emitter.emit('should-update-bubble')
     # The onDidStopChanging callbacks are invoked immediately on creation, We are just
     # gonna wait until a bit to get real events
     setImmediate =>
@@ -20,9 +19,6 @@ class EditorLinter
 
   lint: (onChange = false) ->
     @emitter.emit('should-lint', onChange)
-
-  onShouldUpdateBubble: (callback) ->
-    return @emitter.on('should-update-bubble', callback)
 
   onShouldUpdateLineMessages: (callback) ->
     return @emitter.on('should-update-line-messages', callback)

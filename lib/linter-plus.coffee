@@ -94,8 +94,6 @@ class Linter
     editorLinter = new EditorLinter(editor)
     @editorLinters.set editor, editorLinter
     @emitter.emit 'observe-editor-linters', editorLinter
-    editorLinter.onShouldUpdateBubble =>
-      @views.renderBubble()
     editorLinter.onShouldUpdateLineMessages =>
       @views.renderLineMessages(true)
     editorLinter.onShouldLint (onChange) =>

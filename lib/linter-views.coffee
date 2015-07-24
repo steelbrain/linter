@@ -43,10 +43,8 @@ class LinterViews
     if @ignoredMessageTypes.length
       @messages = @messages.filter (message) => @ignoredMessageTypes.indexOf(message.type) is -1
     @renderPanelMessages()
-    @renderPanelMarkers()
     @renderBubble()
     @renderCount()
-
 
   renderLineMessages: (render = false) ->
     @classifyMessagesByLine(@messages)
@@ -72,27 +70,20 @@ class LinterViews
         @count.Line++
     return messages
 
-
   renderBubble: ->
     @removeBubble()
     return unless @showBubble
-    prepared = @messagesLine.map (msg) ->
-                  severity: msg.class
-                  text: msg.text
-                  html: msg.html
-                  range: msg.range
-                  trace: msg.trace
-
-    @messages = @messenger.manyMessages prepared
-    # for msg in @messagesLine
-    #   @renderedMessages.push @linter.messenger.message
-    #     severity: msg.class
-    #     text: msg.text
-    #     html: msg.html
-    #     range: msg.range
-    #     trace: msg.trace
-   
-
+    prepared = []
+    for msg in @messages
+      continue unless msg.currentFile
+      prepared.push {
+          severity: msg.class
+          text: msg.text
+          html: msg.html
+          range: msg.range
+          trace: msg.trace
+      }
+    @renderedMessages = @linter.messenger.manyMessages prepared
 
   renderCount: ->
     @bottomContainer.setCount(@count)
@@ -106,29 +97,11 @@ class LinterViews
     else if @state.scope is 'Line'
       messages = @messages.filter (message) -> message.currentLine
     @panel.updateMessages messages, @state.scope is 'Project'
-
-  renderPanelMarkers: ->
-    @removeMarkers()
-    activeEditor = atom.workspace.getActiveTextEditor()
-    return unless activeEditor
-    @messages.forEach (message) =>
-      return unless message.currentFile
-      @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'inside'}
-      activeEditor.decorateMarker(
-        marker, type: 'line-number', class: "linter-highlight #{message.class}"
-      )
-      if @underlineIssues then activeEditor.decorateMarker(
-        marker, type: 'highlight', class: "linter-highlight #{message.class}"
-      )
-
+ 
   attachBottom: (statusBar) ->
     @bottomBar = statusBar.addLeftTile
       item: @bottomContainer,
       priority: -100
-
-  removeMarkers: ->
-    @markers.forEach (marker) -> try marker.destroy()
-    @markers = []
 
   removeBubble: ->
     @renderedMessages.map (msg) -> msg.destroy()
