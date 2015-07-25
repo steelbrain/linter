@@ -22,7 +22,7 @@ class BottomContainer extends HTMLElement
       @subscriptions.add atom.config.onDidChange("linter.showErrorTab#{name}", => @updateTabs())
       tab.addEventListener 'click', ->
         if Me.state.scope is @name
-          atom.commands.dispatch(atom.views.getView(atom.workspace), 'linter:togglePanel')
+          emitter.emit 'should-toggle-panel'
         else
          emitter.emit 'did-change-tab', @name
 
@@ -49,6 +49,9 @@ class BottomContainer extends HTMLElement
 
   onDidChangeTab: (callback) ->
     return @emitter.on 'did-change-tab', callback
+
+  onShouldTogglePanel: (callback) ->
+    return @emitter.on 'should-toggle-panel', callback
 
   setCount: ({Project, File, Line}) ->
     @tabs.File.count = File
