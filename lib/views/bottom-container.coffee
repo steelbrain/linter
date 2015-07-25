@@ -16,11 +16,15 @@ class BottomContainer extends HTMLElement
       File: new BottomTab().prepare('File')
       Project: new BottomTab().prepare('Project')
     @status = new BottomStatus()
+    Me = this
 
     for name, tab of @tabs
-      @subscriptions.add atom.config.onDidChange("linter.showErrorTab#{name}", @updateTabs.bind(this))
+      @subscriptions.add atom.config.onDidChange("linter.showErrorTab#{name}", => @updateTabs())
       tab.addEventListener 'click', ->
-        emitter.emit 'did-change-tab', @name
+        if Me.state.scope is @name
+          atom.commands.dispatch(atom.views.getView(atom.workspace), 'linter:togglePanel')
+        else
+         emitter.emit 'did-change-tab', @name
 
     @onDidChangeTab (activeName) =>
       @state.scope = activeName
