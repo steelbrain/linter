@@ -22,3 +22,10 @@ describe 'Linter Behavior', ->
     it 'changes tab on click', ->
       trigger(bottomContainer.getTab('Project'), 'click')
       expect(linterState.scope).toBe('Project')
+
+    it 'toggles panel visibility on click', ->
+      expect(linter.views.panel.panelVisibility).toBe(true)
+      trigger(bottomContainer.getTab('File'), 'click')
+      expect(linter.views.panel.panelVisibility).toBe(false)
+      trigger(bottomContainer.getTab('File'), 'click')
+      expect(linter.views.panel.panelVisibility).toBe(true)
