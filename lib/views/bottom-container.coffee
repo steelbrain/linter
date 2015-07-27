@@ -16,11 +16,15 @@ class BottomContainer extends HTMLElement
       File: new BottomTab().prepare('File')
       Project: new BottomTab().prepare('Project')
     @status = new BottomStatus()
+    Me = this
 
     for name, tab of @tabs
-      @subscriptions.add atom.config.onDidChange("linter.showErrorTab#{name}", @updateTabs.bind(this))
+      @subscriptions.add atom.config.onDidChange("linter.showErrorTab#{name}", => @updateTabs())
       tab.addEventListener 'click', ->
-        emitter.emit 'did-change-tab', @name
+        if Me.state.scope is @name
+          emitter.emit 'should-toggle-panel'
+        else
+         emitter.emit 'did-change-tab', @name
 
     @onDidChangeTab (activeName) =>
       @state.scope = activeName
@@ -45,6 +49,9 @@ class BottomContainer extends HTMLElement
 
   onDidChangeTab: (callback) ->
     return @emitter.on 'did-change-tab', callback
+
+  onShouldTogglePanel: (callback) ->
+    return @emitter.on 'should-toggle-panel', callback
 
   setCount: ({Project, File, Line}) ->
     @tabs.File.count = File
