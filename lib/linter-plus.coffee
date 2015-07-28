@@ -17,8 +17,8 @@ class Linter
     # Private Stuff
     @subscriptions = new CompositeDisposable
     @emitter = new Emitter
-    @editorLinters = new Map
     @linters = new (require('./linter-registry'))()
+    @editors = new (require('./editor-registry'))()
     @messages = new (require('./message-registry'))()
     @views = new LinterViews(this)
     @commands = new Commands(this)
@@ -78,22 +78,19 @@ class Linter
     @deleteMessages(linter)
 
   getActiveEditorLinter: ->
-    @getEditorLinter atom.workspace.getActiveTextEditor()
+    @editors.ofActiveTextEditor()
 
   getEditorLinter: (editor) ->
-    @editorLinters.get editor
+    @editors.ofTextEditor(editor)
 
   eachEditorLinter: (callback) ->
-    @editorLinters.forEach(callback)
+    @editors.forEach(callback)
 
   observeEditorLinters: (callback) ->
-    @eachEditorLinter callback
-    @emitter.on 'observe-editor-linters', callback
+    @editors.observe(callback)
 
   createEditorLinter: (editor) ->
-    editorLinter = new EditorLinter(editor)
-    @editorLinters.set editor, editorLinter
-    @emitter.emit 'observe-editor-linters', editorLinter
+    editorLinter = @editors.create(editor)
     editorLinter.onShouldUpdateBubble =>
       @views.renderBubble()
     editorLinter.onShouldUpdateLineMessages =>
@@ -102,14 +99,12 @@ class Linter
       @linters.lint({onChange, editorLinter})
     editorLinter.onDidDestroy =>
       editorLinter.deactivate()
-      @editorLinters.delete(editor)
       @messages.deleteEditorMessages(editor)
 
   deactivate: ->
     @subscriptions.dispose()
-    @eachEditorLinter (linter) ->
-      linter.deactivate()
     @views.destroy()
+    @editors.deactivate()
     @linters.deactivate()
     @commands.destroy()
     @messages.deactivate()
