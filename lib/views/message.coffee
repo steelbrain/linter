@@ -5,6 +5,7 @@ class Message extends HTMLElement
     @appendChild Message.renderRibbon(@message)
     @appendChild Message.renderMessage(@message, @options)
     @appendChild Message.renderLink(@message, @options) if @message.filePath
+    @appendChild Message.renderAcceptReplacement(@message) if @message.replacement
 
   @renderLink: (message, {addPath}) ->
     displayFile = message.filePath
@@ -19,6 +20,25 @@ class Message extends HTMLElement
       el.textContent = "at line #{message.range.start.row + 1} col #{message.range.start.column + 1} "
     if addPath
       el.textContent += "in #{displayFile}"
+    el
+
+  @renderAcceptReplacement: (message) ->
+    el = document.createElement 'span'
+    el.classList.add 'linter-message-item'
+
+    dash = document.createElement 'span'
+    dash.textContent = ' - '
+    el.appendChild dash
+
+    link = document.createElement 'a'
+    link.addEventListener 'click', ->
+      if message.range
+        atom.workspace.open(message.filePath).then ->
+          editor = atom.workspace.getActiveTextEditor()
+          editor.setTextInBufferRange(message.range, "")
+          editor.insertText(message.replacement)
+    link.textContent = 'Accept!'
+    el.appendChild link
     el
 
   @renderRibbon: (message) ->
