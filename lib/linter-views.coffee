@@ -15,6 +15,7 @@ class LinterViews
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
     @bubble = null
+    @renderedMessages = []
     @count = File: 0, Line: 0, Project: 0
 
     @subscriptions.add atom.config.observe('linter.ignoredMessageTypes', (ignoredMessageTypes) =>
@@ -45,7 +46,6 @@ class LinterViews
     if @ignoredMessageTypes.length
       @messages = @messages.filter (message) => @ignoredMessageTypes.indexOf(message.type) is -1
     @renderPanelMessages()
-    @renderPanelMarkers()
     @renderBubble()
     @renderCount()
 
@@ -76,27 +76,18 @@ class LinterViews
   renderBubble: ->
     @removeBubble()
     return unless @showBubble
-    activeEditor = atom.workspace.getActiveTextEditor()
-    return unless activeEditor?.getPath?()
-    point = activeEditor.getCursorBufferPosition()
-    for message in @messages
-      continue unless message.currentLine
-      continue unless message.range.containsPoint point
-      @bubble = activeEditor.markBufferRange([point, point], {invalidate: 'inside'})
-      activeEditor.decorateMarker(@bubble,
-        type: 'overlay',
-        position: 'tail',
-        item: @renderBubbleContent(message)
-      )
-      break
-
-  renderBubbleContent: (message) ->
-    bubble = document.createElement 'div'
-    bubble.id = 'linter-inline'
-    bubble.appendChild Message.fromMessage(message)
-    if message.trace then message.trace.forEach (trace) ->
-      bubble.appendChild Message.fromMessage(trace, addPath: true)
-    bubble
+    prepared = []
+    for msg in @messages
+      continue unless msg.currentFile
+      prepared.push {
+          severity: msg.class
+          text: msg.text
+          html: msg.html
+          range: msg.range
+          trace: msg.trace
+          suggestion: msg.suggestion
+      }
+    @renderedMessages = @linter.messenger.manyMessages prepared
 
   renderCount: ->
     @bottomContainer.setCount(@count)
@@ -110,33 +101,14 @@ class LinterViews
     else if @state.scope is 'Line'
       messages = @messages.filter (message) -> message.currentLine
     @panel.updateMessages messages, @state.scope is 'Project'
-
-  renderPanelMarkers: ->
-    @removeMarkers()
-    activeEditor = atom.workspace.getActiveTextEditor()
-    return unless activeEditor
-    @messages.forEach (message) =>
-      return unless message.currentFile
-      @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'inside'}
-      activeEditor.decorateMarker(
-        marker, type: 'line-number', class: "linter-highlight #{message.class}"
-      )
-      if @underlineIssues then activeEditor.decorateMarker(
-        marker, type: 'highlight', class: "linter-highlight #{message.class}"
-      )
-
+ 
   attachBottom: (statusBar) ->
     @bottomBar = statusBar.addLeftTile
       item: @bottomContainer,
       priority: -100
 
-  removeMarkers: ->
-    @markers.forEach (marker) -> try marker.destroy()
-    @markers = []
-
   removeBubble: ->
-    @bubble?.destroy()
-    @bubble = null
+    @renderedMessages.map (msg) -> msg.destroy()
 
   destroy: ->
     @removeMarkers()

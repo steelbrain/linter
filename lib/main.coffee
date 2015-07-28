@@ -78,6 +78,9 @@ module.exports =
   consumeStatusBar: (statusBar) ->
     @instance.views.attachBottom(statusBar)
 
+  consumeInlineMessenger: (messenger) ->
+    @instance.messenger = messenger
+
   provideLinter: ->
     @instance
 
