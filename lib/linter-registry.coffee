@@ -35,8 +35,9 @@ class LinterRegistry
     return if @locks[lockKey].has(editorLinter)
 
     @locks[lockKey].add(editorLinter)
-    scopes = editor.scopeDescriptorForBufferPosition(editor.getCursorBufferPosition()).scopes
-    scopes.push('*') # To allow global linters
+
+    # Add scope of currentFile and allow global linters
+    scopes = [editor.getGrammar().scopeName, '*']
 
     return @linters.reduce((promise, linter) =>
       return promise unless helpers.shouldTriggerLinter(linter, true, onChange, scopes)
