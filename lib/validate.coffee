@@ -23,7 +23,7 @@ module.exports = Validate =
       unless result.html or result.text
         throw new Error "Missing html/text field on Linter Response"
       result.range = Range.fromObject result.range if result.range?
+      result.key = JSON.stringify(result)
       result.class = result.type.toLowerCase().replace(' ', '-')
-      result.key = helpers.messageKey(result)
       Validate.messages(result.trace) if result.trace
     return undefined
