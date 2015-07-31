@@ -31,6 +31,7 @@ class MessageRegistry
       @linterResponses.forEach (messages) -> publicMessages = publicMessages.concat(messages)
       @editorMessages.forEach (linters) -> linters.forEach (messages) ->
         publicMessages = publicMessages.concat(messages)
+      @publicMessages = publicMessages
       @emitter.emit 'did-update-messages', @publicMessages
     requestAnimationFrame => @updatePublic()
 
