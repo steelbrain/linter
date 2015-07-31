@@ -8,14 +8,6 @@ describe 'helpers', ->
       helpers.error(new Error())
       expect(atom.notifications.getNotifications().length).toBe(1)
 
-  describe '::messageKey', ->
-    it 'works', ->
-      key = helpers.messageKey({type: 'error', text: ''})
-      expect(key.length).toBeGreaterThan(0)
-    it 'generates a lowercase key', ->
-      key = helpers.messageKey({type: 'error', text: ''})
-      expect(key).toBe(key.toLowerCase())
-
   describe '::shouldTriggerLinter', ->
     normalLinter =
       grammarScopes: ['*']
