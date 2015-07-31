@@ -1,4 +1,4 @@
-{Emitter, TextEditor} = require('atom')
+{Emitter, TextEditor, CompositeDisposable} = require('atom')
 validate = require('./validate')
 helpers = require('./helpers')
 
@@ -6,15 +6,21 @@ class MessageRegistry
   constructor: ->
     @updated = false
     @publicMessages = []
+    @subscriptions = new CompositeDisposable()
     @emitter = new Emitter
     @linterResponses = new Map()
     @editorMessages = new Map()
 
+    @subscriptions.add(@emitter)
+    @subscriptions.add atom.config.observe('linter.ignoredMessageTypes', (ignoredMessageTypes) =>
+      @ignoredMessageTypes = ignoredMessageTypes
+    )
     @shouldUpdatePublic = true
     requestAnimationFrame => @updatePublic()
 
   set: ({linter, messages, editor}) ->
     try validate.messages(messages) catch e then return helpers.error(e)
+    messages = messages.filter((entry) => @ignoredMessageTypes.indexOf(entry.type) is -1)
     if linter.scope is 'project'
       @linterResponses.set(linter, messages)
     else
@@ -50,7 +56,7 @@ class MessageRegistry
 
   deactivate: ->
     @shouldUpdatePublic = false
-    @emitter.dispose()
+    @subscriptions.dispose()
     @linterResponses.clear()
     @editorMessages.clear()
 
