@@ -17,9 +17,6 @@ class LinterViews
     @bubble = null
     @count = File: 0, Line: 0, Project: 0
 
-    @subscriptions.add atom.config.observe('linter.ignoredMessageTypes', (ignoredMessageTypes) =>
-      @ignoredMessageTypes = ignoredMessageTypes
-    )
     @subscriptions.add atom.config.observe('linter.underlineIssues', (underlineIssues) =>
       @underlineIssues = underlineIssues
     )
@@ -39,8 +36,6 @@ class LinterViews
 
   render: (messages) ->
     @messages = @classifyMessages(messages)
-    if @ignoredMessageTypes.length
-      @messages = @messages.filter (message) => @ignoredMessageTypes.indexOf(message.type) is -1
     @renderPanelMessages()
     @renderPanelMarkers()
     @renderBubble()
