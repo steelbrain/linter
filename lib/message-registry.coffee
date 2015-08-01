@@ -33,12 +33,26 @@ class MessageRegistry
     return unless @shouldUpdatePublic
     if @updated
       @updated = false
+
       publicMessages = []
+      added = []
+      removed = []
+
       @linterResponses.forEach (messages) -> publicMessages = publicMessages.concat(messages)
       @editorMessages.forEach (linters) -> linters.forEach (messages) ->
         publicMessages = publicMessages.concat(messages)
+
+      currentKeys = publicMessages.map (i) -> i.key
+      lastKeys = publicMessages.map (i) -> i.key
+
+      publicMessages.forEach (i) ->
+        added.push(i) if lastKeys.indexOf(i) is -1
+      @publicMessages.forEach (i) ->
+        removed.push(i) if currentKeys.indexOf(i) is -1
+
       @publicMessages = publicMessages
-      @emitter.emit 'did-update-messages', @publicMessages
+      @emitter.emit 'did-update-messages', {added, removed, messages: publicMessages}
+
     requestAnimationFrame => @updatePublic()
 
   onDidUpdateMessages: (callback) ->
