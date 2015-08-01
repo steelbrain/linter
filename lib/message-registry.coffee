@@ -51,7 +51,7 @@ class MessageRegistry
         removed.push(i) if currentKeys.indexOf(i) is -1
 
       @publicMessages = publicMessages
-      @emitter.emit 'did-update-messages', {added, removed}
+      @emitter.emit 'did-update-messages', {added, removed, messages: publicMessages}
 
     requestAnimationFrame => @updatePublic()
 
