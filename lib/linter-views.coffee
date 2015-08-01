@@ -139,6 +139,7 @@ class LinterViews
     @subscriptions.dispose()
     if @bottomBar
       @bottomBar.destroy()
+    @markers.clear()
     @panel.destroy()
 
 module.exports = LinterViews
