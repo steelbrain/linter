@@ -30,7 +30,7 @@ class LinterViews
       isTextEditor = paneItem?.getPath?
       @bottomContainer.setVisibility(isTextEditor)
       @panel.panelVisibility = atom.config.get('linter.showErrorPanel') and isTextEditor
-      @render(@linter.messages.publicMessages)
+      @render({added: [], removed: [], messages: @linter.messages.publicMessages})
     @subscriptions.add @bottomContainer.onDidChangeTab =>
       @renderPanelMessages()
 
