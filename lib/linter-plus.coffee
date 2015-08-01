@@ -58,8 +58,12 @@ class Linter
   getMessages: ->
     @messages.publicMessages
 
-  onDidChangeMessages: (callback) ->
+  onDidUpdateMessages: (callback) ->
     @messages.onDidUpdateMessages(callback)
+
+  onDidChangeMessages: (callback) ->
+    deprecate("Linter::onDidChangeMessages is deprecated, use Linter::onDidUpdateMessages instead")
+    @onDidUpdateMessages(callback)
 
   onDidChangeProjectMessages: (callback) ->
     deprecate("Linter::onDidChangeProjectMessages is deprecated, use Linter::onDidChangeMessages instead")
