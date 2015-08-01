@@ -2,6 +2,8 @@ describe 'message-registry', ->
   MessageRegistry = require('../lib/message-registry')
   EditorLinter = require('../lib/editor-linter')
   LinterRegistry = require('../lib/linter-registry')
+  nextAnimationFrame = ->
+    return new Promise (resolve) -> requestAnimationFrame(resolve)
   getLinterRegistry = ->
     linterRegistry = new LinterRegistry
     editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
@@ -53,12 +55,11 @@ describe 'message-registry', ->
         gotMessages = messages
       waitsForPromise ->
         linterRegistry.lint({onChange: false, editorLinter}).then ->
-          setTimeout ->
+          nextAnimationFrame().then() ->
             expect(gotMessages).toBeDefined()
             expect(gotMessages.length).toBe(1)
             linterRegistry.deactivate()
             messageRegistry.deactivate()
-          , 1000
 
   describe '::deleteEditorMessages', ->
     it 'removes messages for that editor', ->
@@ -74,9 +75,8 @@ describe 'message-registry', ->
         messageRegistry.deleteEditorMessages(editor)
       waitsForPromise ->
         linterRegistry.lint({onChange: false, editorLinter}).then ->
-          setTimeout ->
+          nextAnimationFrame().then ->
             expect(gotMessages).toBeDefined()
             expect(gotMessages.length).toBe(0)
             linterRegistry.deactivate()
             messageRegistry.deactivate()
-          , 1000
