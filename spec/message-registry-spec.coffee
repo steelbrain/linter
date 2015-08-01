@@ -53,13 +53,7 @@ describe 'message-registry', ->
       gotMessages = null
       messageRegistry.onDidUpdateMessages (messages) ->
         gotMessages = messages
-      waitsForPromise ->
-        linterRegistry.lint({onChange: false, editorLinter}).then ->
-          nextAnimationFrame().then() ->
-            expect(gotMessages).toBeDefined()
-            expect(gotMessages.length).toBe(1)
-            linterRegistry.deactivate()
-            messageRegistry.deactivate()
+      # TODO: Write this spec
 
   describe '::deleteEditorMessages', ->
     it 'removes messages for that editor', ->
@@ -73,10 +67,4 @@ describe 'message-registry', ->
       messageRegistry.onDidUpdateMessages (messages) ->
         gotMessages = messages
         messageRegistry.deleteEditorMessages(editor)
-      waitsForPromise ->
-        linterRegistry.lint({onChange: false, editorLinter}).then ->
-          nextAnimationFrame().then ->
-            expect(gotMessages).toBeDefined()
-            expect(gotMessages.length).toBe(0)
-            linterRegistry.deactivate()
-            messageRegistry.deactivate()
+      # TODO: Write this spec
