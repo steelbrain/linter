@@ -10,7 +10,7 @@ class LinterViews
     @state = @linter.state
     @subscriptions = new CompositeDisposable
     @messages = []
-    @markers = []
+    @markers = new Map()
     @panel = new BottomPanel().prepare()
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
@@ -34,10 +34,10 @@ class LinterViews
     @subscriptions.add @bottomContainer.onDidChangeTab =>
       @renderPanelMessages()
 
-  render: (messages) ->
+  render: ({added, removed, messages}) ->
     @messages = @classifyMessages(messages)
     @renderPanelMessages()
-    @renderPanelMarkers()
+    @renderPanelMarkers({added, removed})
     @renderBubble()
     @renderCount()
 
@@ -103,13 +103,13 @@ class LinterViews
       messages = @messages.filter (message) -> message.currentLine
     @panel.updateMessages messages, @state.scope is 'Project'
 
-  renderPanelMarkers: ->
-    @removeMarkers()
+  renderPanelMarkers: ({added, removed}) ->
+    @removeMarkers(removed)
     activeEditor = atom.workspace.getActiveTextEditor()
     return unless activeEditor
-    @messages.forEach (message) =>
+    added.forEach (message) =>
       return unless message.currentFile
-      @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'inside'}
+      @markers.set(message.key, marker = activeEditor.markBufferRange message.range, {invalidate: 'inside'})
       activeEditor.decorateMarker(
         marker, type: 'line-number', class: "linter-highlight #{message.class}"
       )
@@ -122,9 +122,12 @@ class LinterViews
       item: @bottomContainer,
       priority: -100
 
-  removeMarkers: ->
-    @markers.forEach (marker) -> try marker.destroy()
-    @markers = []
+  removeMarkers: (messages = @messages) ->
+    messages.forEach((message) =>
+      marker = @markers.get(message.key)
+      try marker.destroy()
+      @markers.delete(message.key)
+    )
 
   removeBubble: ->
     @bubble?.destroy()
