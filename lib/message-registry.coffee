@@ -19,12 +19,12 @@ class MessageRegistry
     requestAnimationFrame => @updatePublic()
 
   set: ({linter, messages, editor}) ->
-    return unless editor.alive
     try validate.messages(messages) catch e then return helpers.error(e)
     messages = messages.filter((entry) => @ignoredMessageTypes.indexOf(entry.type) is -1)
     if linter.scope is 'project'
       @linterResponses.set(linter, messages)
     else
+      return unless editor.alive
       throw new Error("Given editor isn't really an editor") unless editor instanceof TextEditor
       if not @editorMessages.has(editor) then @editorMessages.set(editor, new Map())
       @editorMessages.get(editor).set(linter, messages)
