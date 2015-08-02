@@ -18,6 +18,11 @@ class BottomContainer extends HTMLElement
     @status = new BottomStatus()
     Me = this
 
+    @subscriptions.add atom.config.observe('linter.statusIconScope', (statusIconScope) =>
+      @statusIconScope = statusIconScope
+      @status.count = @tabs[@statusIconScope].count
+    )
+
     for name, tab of @tabs
       @subscriptions.add atom.config.onDidChange("linter.showErrorTab#{name}", => @updateTabs())
       tab.addEventListener 'click', ->
@@ -57,7 +62,7 @@ class BottomContainer extends HTMLElement
     @tabs.File.count = File
     @tabs.Project.count = Project
     @tabs.Line.count = Line
-    @status.count = Project
+    @status.count = @tabs[@statusIconScope].count
 
   updateTabs: ->
     active = @state.scope

@@ -5,11 +5,7 @@ child_process = require('child_process')
 
 Helpers = module.exports =
   error: (e) ->
-    atom.notifications.addError(e.message, {detail: e.stack, dismissible: true})
-  messageKey: (message) ->
-    text = message.text or message.html
-    toReturn = message.type + '-' + message.filePath + '-' + (message.range?.serialize?()) + '-' + text
-    toReturn.toLowerCase()
+    atom.notifications.addError(e.toString(), {detail: e.stack or '', dismissable: true})
   shouldTriggerLinter: (linter, bufferModifying, onChange, scopes) ->
     # Trigger lint-on-Fly linters on both events but on-save linters only on save
     # Because we want to trigger onFly linters on save when the

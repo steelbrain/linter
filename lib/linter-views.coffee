@@ -10,16 +10,13 @@ class LinterViews
     @state = @linter.state
     @subscriptions = new CompositeDisposable
     @messages = []
-    @markers = []
+    @markers = new Map()
     @panel = new BottomPanel().prepare()
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
     @bubble = null
     @count = File: 0, Line: 0, Project: 0
 
-    @subscriptions.add atom.config.observe('linter.ignoredMessageTypes', (ignoredMessageTypes) =>
-      @ignoredMessageTypes = ignoredMessageTypes
-    )
     @subscriptions.add atom.config.observe('linter.underlineIssues', (underlineIssues) =>
       @underlineIssues = underlineIssues
     )
@@ -33,19 +30,17 @@ class LinterViews
       isTextEditor = paneItem?.getPath?
       @bottomContainer.setVisibility(isTextEditor)
       @panel.panelVisibility = atom.config.get('linter.showErrorPanel') and isTextEditor
-      @render(@linter.messages.publicMessages)
+      @render({added: [], removed: [], messages: @linter.messages.publicMessages})
     @subscriptions.add @bottomContainer.onDidChangeTab =>
       @renderPanelMessages()
     @subscriptions.add @bottomContainer.onShouldTogglePanel =>
       @panel.panelVisibility = !@panel.panelVisibility
       atom.config.set('linter.showErrorPanel', @panel.panelVisibility)
 
-  render: (messages) ->
+  render: ({added, removed, messages}) ->
     @messages = @classifyMessages(messages)
-    if @ignoredMessageTypes.length
-      @messages = @messages.filter (message) => @ignoredMessageTypes.indexOf(message.type) is -1
     @renderPanelMessages()
-    @renderPanelMarkers()
+    @renderPanelMarkers({added, removed})
     @renderBubble()
     @renderCount()
 
@@ -111,13 +106,13 @@ class LinterViews
       messages = @messages.filter (message) -> message.currentLine
     @panel.updateMessages messages, @state.scope is 'Project'
 
-  renderPanelMarkers: ->
-    @removeMarkers()
+  renderPanelMarkers: ({added, removed}) ->
+    @removeMarkers(removed)
     activeEditor = atom.workspace.getActiveTextEditor()
     return unless activeEditor
-    @messages.forEach (message) =>
+    added.forEach (message) =>
       return unless message.currentFile
-      @markers.push marker = activeEditor.markBufferRange message.range, {invalidate: 'inside'}
+      @markers.set(message.key, marker = activeEditor.markBufferRange message.range, {invalidate: 'inside'})
       activeEditor.decorateMarker(
         marker, type: 'line-number', class: "linter-highlight #{message.class}"
       )
@@ -130,9 +125,12 @@ class LinterViews
       item: @bottomContainer,
       priority: -100
 
-  removeMarkers: ->
-    @markers.forEach (marker) -> try marker.destroy()
-    @markers = []
+  removeMarkers: (messages = @messages) ->
+    messages.forEach((message) =>
+      marker = @markers.get(message.key)
+      try marker.destroy()
+      @markers.delete(message.key)
+    )
 
   removeBubble: ->
     @bubble?.destroy()
