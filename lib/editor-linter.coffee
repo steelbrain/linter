@@ -34,8 +34,8 @@ class EditorLinter
     return @emitter.on('did-destroy', callback)
 
   destroy: ->
-    @deactivate()
     @emitter.emit('did-destroy')
+    @deactivate()
 
   deactivate: ->
     @emitter.dispose()
