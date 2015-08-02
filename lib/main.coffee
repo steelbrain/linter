@@ -38,6 +38,11 @@ module.exports =
       default: []
       items:
         type: 'string'
+    statusIconScope:
+      title: "Scope of messages to show in status icon"
+      type: 'string'
+      enum: ['File', 'Line', 'Project']
+      default: 'Project'
 
   activate: (state) ->
     LinterPlus = require('./linter-plus.coffee')
