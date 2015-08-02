@@ -1,17 +1,21 @@
 @import "ui-variables";
 @import 'octicon-utf-codes';
 
+@spacing: 3px;
+
 linter-message {
   display: flex;
   align-items: flex-end;
-  padding: 2px;
+  flex-wrap: wrap;
   font-size: @font-size;
-  span {
-    padding: 0 6px;
-  }
+  line-height: 1.2;
   & > .badge {
     align-self: flex-start;
   }
+}
+
+.linter-message-item {
+  margin: @spacing;
 }
 
 linter-multiline-message {
@@ -48,7 +52,7 @@ linter-panel {
   display: block;
   overflow-y: scroll;
   max-height: 150px;
-  padding: 4px 8px;
+  padding: @spacing;
   &[hidden]{
     display: none;
   }
@@ -59,7 +63,7 @@ linter-panel {
   @linter-inline-fg: @base-background-color;
   @linter-inline-bg: @text-color;
   margin-top: 4px;
-  padding: 4px;
+  padding: @spacing;
   color: @linter-inline-fg;
   border-radius: @component-border-radius * 1.5;
   border-top-left-radius: 0;
@@ -82,7 +86,9 @@ linter-panel {
   }
   a {
     color: @linter-inline-link;
-    margin-right: 4px;
+    &:last-of-type {
+      padding-right: @spacing*1.5; // a bit extra space for visual pleasing
+    }
   }
 }
 
