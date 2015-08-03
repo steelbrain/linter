@@ -1,5 +1,19 @@
-# Upcoming
+# 1.3.0
 
+* Fix a bug where messages would be updated for a lazy linter after text editor has closed and there is no way to make them disappear
+* Fix a bug where linter:toggle won't clear errors
+* Fix a bug where linter:lint won't update the bottom status icon count
+* Add statusIconScope configuration
+* Fix a bug where panel won't be toggled if you click the bottom tab twice
+* Fix a bug where stringish errors from providers won't be handled properly
+* Fix several typos
+* Add efficient marker updates mechanism (:racehorse:)
+* Lots of cleanups and re-organization
+* Add a bunch of new Events for self-api consumers
+* :fire: Remove support for legacy providers completely!
+* :art: Fix wrapping of issue messages
+* Remove `alt` keybindings to avoid conflict with core's
+* Add contribution guidelines
 * Fixed a marker leak with bubbles, which would make editor slower over time.
 * Remove an oudated config (`statusIconPosition`).
 * Invalidate Range when a range is removed from buffer.
