@@ -60,14 +60,17 @@ class MessageRegistry
     return @emitter.on('did-update-messages', callback)
 
   deleteMessages: (linter) ->
-    if @linterResponses.has(linter)
+    if linter.scope is 'file'
+      @editorMessages.forEach (registry) -> registry.delete(linter)
       @updated = true
+    else if @linterResponses.has(linter)
       @linterResponses.delete(linter)
+      @updated = true
 
   deleteEditorMessages: (editor) ->
     if @editorMessages.has(editor)
-      @updated = true
       @editorMessages.delete(editor)
+      @updated = true
 
   deactivate: ->
     @shouldUpdatePublic = false
