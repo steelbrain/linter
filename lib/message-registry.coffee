@@ -19,6 +19,7 @@ class MessageRegistry
     requestAnimationFrame => @updatePublic()
 
   set: ({linter, messages, editor}) ->
+    return unless linter.status
     try validate.messages(messages) catch e then return helpers.error(e)
     messages = messages.filter((entry) => @ignoredMessageTypes.indexOf(entry.type) is -1)
     if linter.scope is 'project'
