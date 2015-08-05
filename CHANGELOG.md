@@ -1,3 +1,7 @@
+# 1.3.1
+
+* Fix a critical typo affecting multi line messages
+
 # 1.3.0
 
 * Fix a bug where messages would be updated for a lazy linter after text editor has closed and there is no way to make them disappear
