@@ -16,7 +16,7 @@ class MessageRegistry
       @ignoredMessageTypes = ignoredMessageTypes
     )
     @shouldUpdatePublic = true
-    requestAnimationFrame => @updatePublic()
+    helpers.requestUpdateFrame => @updatePublic()
 
   set: ({linter, messages, editor}) ->
     try validate.messages(messages) catch e then return helpers.error(e)
@@ -54,7 +54,7 @@ class MessageRegistry
       @publicMessages = publicMessages
       @emitter.emit 'did-update-messages', {added, removed, messages: publicMessages}
 
-    requestAnimationFrame => @updatePublic()
+    helpers.requestUpdateFrame => @updatePublic()
 
   onDidUpdateMessages: (callback) ->
     return @emitter.on('did-update-messages', callback)
