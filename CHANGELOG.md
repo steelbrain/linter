@@ -1,3 +1,7 @@
+# 1.3.2
+
+* Increase messages refresh interval, which should result in a cpu load decrease
+
 # 1.3.1
 
 * Fix a critical typo affecting multi line messages
