@@ -1,3 +1,7 @@
+# Upcoming
+
+* Fix linter-panel's `overflow-y` to only display the scrollbar when necessary.
+
 # 1.3.2
 
 * Increase messages refresh interval, which should result in a cpu load decrease
