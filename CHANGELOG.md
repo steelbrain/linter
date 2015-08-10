@@ -1,3 +1,7 @@
+# 1.3.4
+
+* Messages are now deleted when a linter provider is deleted/deactivated.
+
 # 1.3.3
 
 * Fix linter-panel's `overflow-y` to only display the scrollbar when necessary.
