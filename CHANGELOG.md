@@ -1,6 +1,7 @@
-# Upcoming
+# 1.3.3
 
 * Fix linter-panel's `overflow-y` to only display the scrollbar when necessary.
+* Fix some error cases where markers won't be destroyed properly.
 
 # 1.3.2
 
