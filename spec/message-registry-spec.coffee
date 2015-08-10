@@ -7,6 +7,8 @@ describe 'message-registry', ->
     size = 0
     size++ for value of obj
     return size
+  getMessage = (type, filePath) ->
+    return {type, text: "Some Message", filePath}
   getLinterRegistry = ->
     linterRegistry = new LinterRegistry
     editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
@@ -18,7 +20,7 @@ describe 'message-registry', ->
       lint: -> return [{type: "Error", text: "Something"}]
     }
     linterRegistry.addLinter(linter)
-    return {linterRegistry, editorLinter}
+    return {linterRegistry, editorLinter, linter}
 
   beforeEach ->
     waitsForPromise ->
@@ -39,6 +41,19 @@ describe 'message-registry', ->
         linterRegistry.lint({onChange: false, editorLinter}).then ->
           expect(wasUpdated).toBe(true)
           linterRegistry.deactivate()
+    it 'ignores deactivated linters', ->
+      {linterRegistry, editorLinter, linter} = getLinterRegistry()
+      messageRegistry.set({linter, messages: [getMessage('Error'), getMessage('Warning')]})
+      messageRegistry.updatePublic()
+      expect(messageRegistry.publicMessages.length).toBe(2)
+      linter.deactivated = true
+      messageRegistry.set({linter, messages: [getMessage('Error')]})
+      messageRegistry.updatePublic()
+      expect(messageRegistry.publicMessages.length).toBe(2)
+      linter.deactivated = false
+      messageRegistry.set({linter, messages: [getMessage('Error')]})
+      messageRegistry.updatePublic()
+      expect(messageRegistry.publicMessages.length).toBe(1)
 
   describe '::onDidUpdateMessages', ->
     it 'is triggered asyncly with results', ->
