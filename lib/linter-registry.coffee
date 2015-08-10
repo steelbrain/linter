@@ -19,11 +19,13 @@ class LinterRegistry
   addLinter: (linter) ->
     try
       validate.linter(linter)
+      linter.deactivated = false
       @linters.push(linter)
     catch e then helpers.error(e)
 
   deleteLinter: (linter) ->
     return unless @hasLinter(linter)
+    linter.deactivated = true
     @linters.splice(@linters.indexOf(linter), 1)
 
   lint: ({onChange, editorLinter}) ->

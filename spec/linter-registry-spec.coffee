@@ -19,6 +19,10 @@ describe 'linter-registry', ->
       linter = getLinter()
       linterRegistry.addLinter(linter)
       expect(linterRegistry.linters.length).toBe(1)
+    it 'set deactivated to false on linter', ->
+      linter = getLinter()
+      linterRegistry.addLinter(linter)
+      expect(linter.deactivated).toBe(false)
 
   describe '::hasLinter', ->
     it 'returns true if present', ->
@@ -36,6 +40,11 @@ describe 'linter-registry', ->
       expect(linterRegistry.hasLinter(linter)).toBe(true)
       linterRegistry.deleteLinter(linter)
       expect(linterRegistry.hasLinter(linter)).toBe(false)
+    it 'sets deactivated to true on linter', ->
+      linter = getLinter()
+      linterRegistry.addLinter(linter)
+      linterRegistry.deleteLinter(linter)
+      expect(linter.deactivated).toBe(true)
 
   describe '::lint', ->
     it "doesn't lint if textEditor isn't active one", ->
