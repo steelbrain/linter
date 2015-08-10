@@ -14,3 +14,5 @@ Helpers = module.exports =
     return false unless scopes.some (entry) -> entry in linter.grammarScopes
     return false if linter.modifiesBuffer isnt bufferModifying
     return true
+  requestUpdateFrame: (callback) ->
+    setTimeout(callback, 100)

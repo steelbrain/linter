@@ -1,3 +1,12 @@
+# 1.3.3
+
+* Fix linter-panel's `overflow-y` to only display the scrollbar when necessary.
+* Fix some error cases where markers won't be destroyed properly.
+
+# 1.3.2
+
+* Increase messages refresh interval, which should result in a cpu load decrease
+
 # 1.3.1
 
 * Fix a critical typo affecting multi line messages
