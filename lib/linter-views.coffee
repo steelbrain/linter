@@ -24,7 +24,7 @@ class LinterViews
     @subscriptions.add atom.config.observe('linter.showErrorInline', (showBubble) =>
       @showBubble = showBubble
     )
-    @subscriptions.add atom.workspace.onDidChangeActivePaneItem (paneItem) =>
+    @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
       @render({added: [], removed: [], messages: @linter.messages.publicMessages})
       @panel.refresh(@state.scope)
     @subscriptions.add @bottomContainer.onDidChangeTab =>
