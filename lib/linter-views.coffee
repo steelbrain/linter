@@ -11,7 +11,7 @@ class LinterViews
     @subscriptions = new CompositeDisposable
     @messages = []
     @markers = new Map()
-    @panel = new BottomPanel()
+    @panel = new BottomPanel(@state.scope)
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
     @bubble = null
@@ -27,7 +27,7 @@ class LinterViews
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (paneItem) =>
       @render({added: [], removed: [], messages: @linter.messages.publicMessages})
     @subscriptions.add @bottomContainer.onDidChangeTab =>
-      # @renderPanelMessages()
+      @panel.refresh(@state.scope)
     @subscriptions.add @bottomContainer.onShouldTogglePanel =>
       visibility = !@panel.getVisibility()
       @panel.setVisibility(visibility)
