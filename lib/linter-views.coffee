@@ -26,6 +26,7 @@ class LinterViews
     )
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (paneItem) =>
       @render({added: [], removed: [], messages: @linter.messages.publicMessages})
+      @panel.refresh(@state.scope)
     @subscriptions.add @bottomContainer.onDidChangeTab =>
       @panel.refresh(@state.scope)
     @subscriptions.add @bottomContainer.onShouldTogglePanel =>
