@@ -30,9 +30,7 @@ class LinterViews
     @subscriptions.add @bottomContainer.onDidChangeTab =>
       @panel.refresh(@state.scope)
     @subscriptions.add @bottomContainer.onShouldTogglePanel =>
-      visibility = !@panel.getVisibility()
-      @panel.setVisibility(visibility)
-      atom.config.set('linter.showErrorPanel', visibility)
+      atom.config.set('linter.showErrorPanel', !atom.config.get('linter.showErrorPanel'))
 
   render: ({added, removed, messages}) ->
     @messages = @classifyMessages(messages)
