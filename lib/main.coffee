@@ -44,7 +44,7 @@ module.exports =
       enum: ['File', 'Line', 'Project']
       default: 'Project'
 
-  activate: (state) ->
+  activate: (@state) ->
     LinterPlus = require('./linter.coffee')
     @instance = new LinterPlus state
     {deprecate} = require('grim')
@@ -57,7 +57,7 @@ module.exports =
 
 
   serialize: ->
-    @instance.serialize()
+    @state
 
   consumeLinter: (linters) ->
     unless linters instanceof Array
