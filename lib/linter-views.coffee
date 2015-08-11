@@ -116,9 +116,9 @@ class LinterViews
       activeEditor.decorateMarker(
         marker, type: 'line-number', class: "linter-highlight #{message.class}"
       )
-      if @underlineIssues then activeEditor.decorateMarker(
+      activeEditor.decorateMarker(
         marker, type: 'highlight', class: "linter-highlight #{message.class}"
-      )
+      ) if @underlineIssues
 
   attachBottom: (statusBar) ->
     @bottomBar = statusBar.addLeftTile
