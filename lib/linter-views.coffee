@@ -1,9 +1,9 @@
 {CompositeDisposable} = require('atom')
 
-BottomPanel = require('./views/bottom-panel')
-BottomContainer = require('./views/bottom-container')
-BottomStatus = require('./views/bottom-status')
-Message = require('./views/message')
+BottomPanel = require('./ui/bottom-panel')
+BottomContainer = require('./ui/bottom-container')
+BottomStatus = require('./ui/bottom-status')
+Message = require('./ui/message')
 
 class LinterViews
   constructor: (@linter) ->
