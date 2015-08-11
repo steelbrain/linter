@@ -45,7 +45,7 @@ module.exports =
       default: 'Project'
 
   activate: (state) ->
-    LinterPlus = require('./linter-plus.coffee')
+    LinterPlus = require('./linter.coffee')
     @instance = new LinterPlus state
     {deprecate} = require('grim')
     for atomPackage in atom.packages.getLoadedPackages()
