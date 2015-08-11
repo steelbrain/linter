@@ -1,6 +1,6 @@
 {CompositeDisposable} = require('atom')
 
-BottomPanel = require('./ui/bottom-panel')
+BottomPanel = require('./ui/bottom-panel-element')
 BottomContainer = require('./ui/bottom-container')
 BottomStatus = require('./ui/bottom-status')
 Message = require('./ui/message')
