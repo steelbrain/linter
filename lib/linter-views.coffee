@@ -127,8 +127,9 @@ class LinterViews
 
   removeMarkers: (messages = @messages) ->
     messages.forEach((message) =>
+      return unless @markers.has(message.key)
       marker = @markers.get(message.key)
-      try marker.destroy()
+      marker.destroy()
       @markers.delete(message.key)
     )
 
