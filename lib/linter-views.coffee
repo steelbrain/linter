@@ -44,7 +44,7 @@ class LinterViews
     @classifyMessagesByLine(@messages)
     if render
       @renderCount()
-      # @renderPanelMessages()
+      @panel.refresh(@state.scope)
 
   classifyMessages: (messages) ->
     filePath = atom.workspace.getActiveTextEditor()?.getPath()
@@ -91,17 +91,6 @@ class LinterViews
 
   renderCount: ->
     @bottomContainer.setCount(@count)
-
-  renderPanelMessages: ->
-    # TODO: Remove this method
-    messages = null
-    if @state.scope is 'Project'
-      messages = @messages
-    else if @state.scope is 'File'
-      messages = @messages.filter (message) -> message.currentFile
-    else if @state.scope is 'Line'
-      messages = @messages.filter (message) -> message.currentLine
-    @panel.updateMessages messages, @state.scope is 'Project'
 
   renderPanelMarkers: ({added, removed}) ->
     @removeMarkers(removed)
