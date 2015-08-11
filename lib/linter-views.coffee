@@ -3,7 +3,7 @@
 {BottomPanel} = require('./ui/bottom-panel')
 BottomContainer = require('./ui/bottom-container')
 BottomStatus = require('./ui/bottom-status')
-Message = require('./ui/message')
+Message = require('./ui/message-element')
 
 class LinterViews
   constructor: (@linter) ->
@@ -85,9 +85,9 @@ class LinterViews
   renderBubbleContent: (message) ->
     bubble = document.createElement 'div'
     bubble.id = 'linter-inline'
-    bubble.appendChild Message.fromMessage(message)
+    bubble.appendChild Message(message)
     if message.trace then message.trace.forEach (trace) ->
-      bubble.appendChild Message.fromMessage(trace, addPath: true)
+      bubble.appendChild Message(trace, 'Project')
     bubble
 
   renderCount: ->
