@@ -1,6 +1,6 @@
 {CompositeDisposable} = require('atom')
 
-BottomPanel = require('./ui/bottom-panel-element')
+{BottomPanel} = require('./ui/bottom-panel')
 BottomContainer = require('./ui/bottom-container')
 BottomStatus = require('./ui/bottom-status')
 Message = require('./ui/message')
@@ -11,35 +11,31 @@ class LinterViews
     @subscriptions = new CompositeDisposable
     @messages = []
     @markers = new Map()
-    @panel = new BottomPanel().prepare()
+    @panel = new BottomPanel()
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
     @bubble = null
     @count = File: 0, Line: 0, Project: 0
 
+    @subscriptions.add @panel
     @subscriptions.add atom.config.observe('linter.underlineIssues', (underlineIssues) =>
       @underlineIssues = underlineIssues
     )
     @subscriptions.add atom.config.observe('linter.showErrorInline', (showBubble) =>
       @showBubble = showBubble
     )
-    @subscriptions.add atom.config.observe('linter.showErrorPanel', (showPanel) =>
-      @panel.panelVisibility = showPanel
-    )
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem (paneItem) =>
-      isTextEditor = paneItem?.getPath?
-      @bottomContainer.setVisibility(isTextEditor)
-      @panel.panelVisibility = atom.config.get('linter.showErrorPanel') and isTextEditor
       @render({added: [], removed: [], messages: @linter.messages.publicMessages})
     @subscriptions.add @bottomContainer.onDidChangeTab =>
-      @renderPanelMessages()
+      # @renderPanelMessages()
     @subscriptions.add @bottomContainer.onShouldTogglePanel =>
-      @panel.panelVisibility = !@panel.panelVisibility
-      atom.config.set('linter.showErrorPanel', @panel.panelVisibility)
+      visibility = !@panel.getVisibility()
+      @panel.setVisibility(visibility)
+      atom.config.set('linter.showErrorPanel', visibility)
 
   render: ({added, removed, messages}) ->
     @messages = @classifyMessages(messages)
-    @renderPanelMessages()
+    @panel.setMessages({added, removed})
     @renderPanelMarkers({added, removed})
     @renderBubble()
     @renderCount()
@@ -48,7 +44,7 @@ class LinterViews
     @classifyMessagesByLine(@messages)
     if render
       @renderCount()
-      @renderPanelMessages()
+      # @renderPanelMessages()
 
   classifyMessages: (messages) ->
     filePath = atom.workspace.getActiveTextEditor()?.getPath()
@@ -97,6 +93,7 @@ class LinterViews
     @bottomContainer.setCount(@count)
 
   renderPanelMessages: ->
+    # TODO: Remove this method
     messages = null
     if @state.scope is 'Project'
       messages = @messages
@@ -143,6 +140,5 @@ class LinterViews
     @subscriptions.dispose()
     if @bottomBar
       @bottomBar.destroy()
-    @panel.destroy()
 
 module.exports = LinterViews
