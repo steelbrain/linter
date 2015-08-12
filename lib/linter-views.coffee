@@ -10,7 +10,7 @@ class LinterViews
     @state = @linter.state
     @subscriptions = new CompositeDisposable
     @messages = []
-    @markers = new Map()
+    @markers = new WeakMap()
     @panel = new BottomPanel(@state.scope)
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
@@ -97,7 +97,7 @@ class LinterViews
     return unless activeEditor
     added.forEach (message) =>
       return unless message.currentFile
-      @markers.set(message.key, marker = activeEditor.markBufferRange message.range, {invalidate: 'inside'})
+      @markers.set(message, marker = activeEditor.markBufferRange message.range, {invalidate: 'inside'})
       activeEditor.decorateMarker(
         marker, type: 'line-number', class: "linter-highlight #{message.class}"
       )
@@ -112,10 +112,10 @@ class LinterViews
 
   removeMarkers: (messages = @messages) ->
     messages.forEach((message) =>
-      return unless @markers.has(message.key)
-      marker = @markers.get(message.key)
+      return unless @markers.has(message)
+      marker = @markers.get(message)
       marker.destroy()
-      @markers.delete(message.key)
+      @markers.delete(message)
     )
 
   removeBubble: ->
