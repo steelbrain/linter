@@ -64,12 +64,13 @@ describe 'message-registry', ->
         expect(messageRegistry.hasChanged).toBe(true)
         messageRegistry.updatePublic()
       gotMessages = null
-      messageRegistry.onDidUpdateMessages (messages) ->
+      messageRegistry.onDidUpdateMessages ({added}) ->
         wasUpdated = true
-        gotMessages = messages
+        gotMessages = added
       waitsForPromise ->
         linterRegistry.lint({onChange: false, editorLinter}).then ->
           expect(wasUpdated).toBe(true)
+          expect(gotMessages.length).toBe(1)
           linterRegistry.deactivate()
 
   describe '::deleteEditorMessages', ->
