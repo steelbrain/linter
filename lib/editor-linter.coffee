@@ -16,7 +16,7 @@ class EditorLinter
     # The onDidStopChanging callbacks are invoked immediately on creation, We are just
     # gonna wait until a bit to get real events
     setImmediate =>
-      @subscriptions.add @editor.onDidStopChanging => setImmediate => @emitter.emit('should-lint', true)
+      @subscriptions.add @editor.onDidStopChanging => @lint(true)
 
   lint: (onChange = false) ->
     @emitter.emit('should-lint', onChange)
