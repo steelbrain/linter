@@ -56,21 +56,21 @@ describe 'message-registry', ->
       expect(messageRegistry.publicMessages.length).toBe(1)
 
   describe '::onDidUpdateMessages', ->
-    it 'is triggered asyncly with results', ->
+    it 'is triggered asyncly with results and provides a diff', ->
       wasUpdated = false
       {linterRegistry, editorLinter} = getLinterRegistry()
       linterRegistry.onDidUpdateMessages (linterInfo) ->
         messageRegistry.set(linterInfo)
         expect(messageRegistry.hasChanged).toBe(true)
         messageRegistry.updatePublic()
-      gotMessages = null
-      messageRegistry.onDidUpdateMessages ({added}) ->
+      messageRegistry.onDidUpdateMessages ({added, removed, messages}) ->
         wasUpdated = true
-        gotMessages = added
+        expect(added.length).toBe(1)
+        expect(removed.length).toBe(0)
+        expect(messages.length).toBe(1)
       waitsForPromise ->
         linterRegistry.lint({onChange: false, editorLinter}).then ->
           expect(wasUpdated).toBe(true)
-          expect(gotMessages.length).toBe(1)
           linterRegistry.deactivate()
 
   describe '::deleteEditorMessages', ->
