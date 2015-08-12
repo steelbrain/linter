@@ -12,3 +12,10 @@ describe 'BottomPanel', ->
 
   it 'remains visible when theres no active pane', ->
     expect(linter.views.panel.getVisibility()).toBe(true)
+
+  it 'hides on config change', ->
+    expect(linter.views.panel.getVisibility()).toBe(true)
+    atom.config.set('linter.showErrorPanel', false)
+    expect(linter.views.panel.getVisibility()).toBe(false)
+    atom.config.set('linter.showErrorPanel', true)
+    expect(linter.views.panel.getVisibility()).toBe(true)
