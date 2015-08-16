@@ -2,7 +2,7 @@
   "name": "linter",
   "main": "./lib/main",
   "author": "atom-community",
-  "version": "1.3.4",
+  "version": "1.4.0",
   "description": "A Base Linter with Cow Powers",
   "repository": "https://github.com/atom-community/linter",
   "license": "MIT",
