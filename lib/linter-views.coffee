@@ -1,45 +1,40 @@
 {CompositeDisposable} = require('atom')
 
-BottomPanel = require('./views/bottom-panel')
-BottomContainer = require('./views/bottom-container')
-BottomStatus = require('./views/bottom-status')
-Message = require('./views/message')
+{BottomPanel} = require('./ui/bottom-panel')
+BottomContainer = require('./ui/bottom-container')
+BottomStatus = require('./ui/bottom-status')
+{Message} = require('./ui/message-element')
 
 class LinterViews
   constructor: (@linter) ->
     @state = @linter.state
     @subscriptions = new CompositeDisposable
     @messages = []
-    @markers = new Map()
-    @panel = new BottomPanel().prepare()
+    @markers = new WeakMap()
+    @panel = new BottomPanel(@state.scope)
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
     @bubble = null
     @count = File: 0, Line: 0, Project: 0
 
+    @subscriptions.add @panel
     @subscriptions.add atom.config.observe('linter.underlineIssues', (underlineIssues) =>
       @underlineIssues = underlineIssues
     )
     @subscriptions.add atom.config.observe('linter.showErrorInline', (showBubble) =>
       @showBubble = showBubble
     )
-    @subscriptions.add atom.config.observe('linter.showErrorPanel', (showPanel) =>
-      @panel.panelVisibility = showPanel
-    )
-    @subscriptions.add atom.workspace.onDidChangeActivePaneItem (paneItem) =>
-      isTextEditor = paneItem?.getPath?
-      @bottomContainer.setVisibility(isTextEditor)
-      @panel.panelVisibility = atom.config.get('linter.showErrorPanel') and isTextEditor
+    @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
       @render({added: [], removed: [], messages: @linter.messages.publicMessages})
+      @panel.refresh(@state.scope)
     @subscriptions.add @bottomContainer.onDidChangeTab =>
-      @renderPanelMessages()
+      @panel.refresh(@state.scope)
     @subscriptions.add @bottomContainer.onShouldTogglePanel =>
-      @panel.panelVisibility = !@panel.panelVisibility
-      atom.config.set('linter.showErrorPanel', @panel.panelVisibility)
+      atom.config.set('linter.showErrorPanel', !atom.config.get('linter.showErrorPanel'))
 
   render: ({added, removed, messages}) ->
     @messages = @classifyMessages(messages)
-    @renderPanelMessages()
+    @panel.setMessages({added, removed})
     @renderPanelMarkers({added, removed})
     @renderBubble()
     @renderCount()
@@ -48,7 +43,7 @@ class LinterViews
     @classifyMessagesByLine(@messages)
     if render
       @renderCount()
-      @renderPanelMessages()
+      @panel.refresh(@state.scope)
 
   classifyMessages: (messages) ->
     filePath = atom.workspace.getActiveTextEditor()?.getPath()
@@ -90,21 +85,11 @@ class LinterViews
     bubble.id = 'linter-inline'
     bubble.appendChild Message.fromMessage(message)
     if message.trace then message.trace.forEach (trace) ->
-      bubble.appendChild Message.fromMessage(trace, addPath: true)
+      bubble.appendChild Message.fromMessage(trace, 'Project')
     bubble
 
   renderCount: ->
     @bottomContainer.setCount(@count)
-
-  renderPanelMessages: ->
-    messages = null
-    if @state.scope is 'Project'
-      messages = @messages
-    else if @state.scope is 'File'
-      messages = @messages.filter (message) -> message.currentFile
-    else if @state.scope is 'Line'
-      messages = @messages.filter (message) -> message.currentLine
-    @panel.updateMessages messages, @state.scope is 'Project'
 
   renderPanelMarkers: ({added, removed}) ->
     @removeMarkers(removed)
@@ -112,13 +97,13 @@ class LinterViews
     return unless activeEditor
     added.forEach (message) =>
       return unless message.currentFile
-      @markers.set(message.key, marker = activeEditor.markBufferRange message.range, {invalidate: 'inside'})
+      @markers.set(message, marker = activeEditor.markBufferRange message.range, {invalidate: 'inside'})
       activeEditor.decorateMarker(
         marker, type: 'line-number', class: "linter-highlight #{message.class}"
       )
-      if @underlineIssues then activeEditor.decorateMarker(
+      activeEditor.decorateMarker(
         marker, type: 'highlight', class: "linter-highlight #{message.class}"
-      )
+      ) if @underlineIssues
 
   attachBottom: (statusBar) ->
     @bottomBar = statusBar.addLeftTile
@@ -127,9 +112,10 @@ class LinterViews
 
   removeMarkers: (messages = @messages) ->
     messages.forEach((message) =>
-      marker = @markers.get(message.key)
-      try marker.destroy()
-      @markers.delete(message.key)
+      return unless @markers.has(message)
+      marker = @markers.get(message)
+      marker.destroy()
+      @markers.delete(message)
     )
 
   removeBubble: ->
@@ -142,6 +128,5 @@ class LinterViews
     @subscriptions.dispose()
     if @bottomBar
       @bottomBar.destroy()
-    @panel.destroy()
 
 module.exports = LinterViews

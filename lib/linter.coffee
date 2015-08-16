@@ -35,8 +35,6 @@ class Linter
 
     @subscriptions.add atom.workspace.observeTextEditors (editor) => @createEditorLinter(editor)
 
-  serialize: -> @state
-
   addLinter: (linter) ->
     @linters.addLinter(linter)
 
