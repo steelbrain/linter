@@ -7,6 +7,11 @@ describe 'Linter Behavior', ->
     event.initEvent(name, true, false);
     el.dispatchEvent(event);
 
+  getLinter = ->
+    return {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'project', lint: -> }
+  getMessage = (type, filePath) ->
+    return {type, text: "Some Message", filePath, range: [[0, 0], [1,1]]}
+
 
   beforeEach ->
     waitsForPromise ->
@@ -29,3 +34,13 @@ describe 'Linter Behavior', ->
       expect(linter.views.panel.getVisibility()).toBe(false)
       trigger(bottomContainer.getTab('File'), 'click')
       expect(linter.views.panel.getVisibility()).toBe(true)
+
+  describe 'Markers', ->
+    it 'automatically marks files when they are opened if they have any markers', ->
+      provider = getLinter()
+      messages = [getMessage('Error', '/etc/passwd')]
+      linter.setMessages(provider, messages)
+      waitsForPromise ->
+        atom.workspace.open('/etc/paswd').then ->
+          activeEditor = atom.workspace.getActiveTextEditor()
+          expect(activeEditor.getMarkers().length).toBe(1)
