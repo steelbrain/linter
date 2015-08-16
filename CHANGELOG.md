@@ -1,3 +1,7 @@
+## 1.4.1
+
+* Fix a critical typo
+
 ## 1.4.0
 
 * Fix a bug where clicking non-active bottom container tab wouldn't enable bottom panel (Fixes #830)
