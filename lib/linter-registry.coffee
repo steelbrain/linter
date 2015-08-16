@@ -62,7 +62,7 @@ class LinterRegistry
   onDidUpdateMessages: (callback) ->
     return @emitter.on('did-update-messages', callback)
 
-  deactivate: ->
+  dispose: ->
     @emitter.dispose()
     # Intentionally set it to empty array instead of null 'cause this would
     # disallow further execution, while still not throwing in current one

@@ -8,7 +8,7 @@ describe 'linter-registry', ->
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
       atom.workspace.open('test.txt')
-    linterRegistry?.deactivate()
+    linterRegistry?.dispose()
     linterRegistry = new LinterRegistry
 
   describe '::addLinter', ->
