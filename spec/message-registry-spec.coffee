@@ -26,7 +26,7 @@ describe 'message-registry', ->
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
       atom.workspace.open('test.txt').then ->
-        messageRegistry?.deactivate()
+        messageRegistry?.dispose()
         messageRegistry = new MessageRegistry()
 
   describe '::set', ->
