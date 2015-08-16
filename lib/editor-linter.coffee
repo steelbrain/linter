@@ -5,6 +5,7 @@ class EditorLinter
     throw new Error("Given editor isn't really an editor") unless @editor instanceof TextEditor
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
+    @subscriptions.add @emitter
     @subscriptions.add @editor.onDidDestroy =>
       @emitter.emit 'did-destroy'
 
@@ -37,8 +38,7 @@ class EditorLinter
     @emitter.emit('did-destroy')
     @deactivate()
 
-  deactivate: ->
-    @emitter.dispose()
+  dispose: ->
     @subscriptions.dispose()
 
 module.exports = EditorLinter

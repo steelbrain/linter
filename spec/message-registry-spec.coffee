@@ -26,7 +26,7 @@ describe 'message-registry', ->
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
       atom.workspace.open('test.txt').then ->
-        messageRegistry?.deactivate()
+        messageRegistry?.dispose()
         messageRegistry = new MessageRegistry()
 
   describe '::set', ->
@@ -40,7 +40,7 @@ describe 'message-registry', ->
       waitsForPromise ->
         linterRegistry.lint({onChange: false, editorLinter}).then ->
           expect(wasUpdated).toBe(true)
-          linterRegistry.deactivate()
+          linterRegistry.dispose()
     it 'ignores deactivated linters', ->
       {linterRegistry, editorLinter, linter} = getLinterRegistry()
       messageRegistry.set({linter, messages: [getMessage('Error'), getMessage('Warning')]})
@@ -71,7 +71,7 @@ describe 'message-registry', ->
       waitsForPromise ->
         linterRegistry.lint({onChange: false, editorLinter}).then ->
           expect(wasUpdated).toBe(true)
-          linterRegistry.deactivate()
+          linterRegistry.dispose()
     it 'provides the same objects when they dont change', ->
       wasUpdated = false
       {linterRegistry, editorLinter} = getLinterRegistry()
@@ -90,7 +90,7 @@ describe 'message-registry', ->
           return linterRegistry.lint({onChange: false, editorLinter})
         ).then ->
           expect(wasUpdated).toBe(true)
-          linterRegistry.deactivate()
+          linterRegistry.dispose()
 
   describe '::deleteEditorMessages', ->
     it 'removes messages for that editor', ->
@@ -108,4 +108,4 @@ describe 'message-registry', ->
       waitsForPromise ->
         linterRegistry.lint({onChange: false, editorLinter}).then ->
           expect(wasUpdated).toBe(1)
-          linterRegistry.deactivate()
+          linterRegistry.dispose()

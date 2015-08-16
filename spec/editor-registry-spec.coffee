@@ -5,7 +5,7 @@ describe 'editor-registry', ->
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
       atom.workspace.open('test.txt')
-    editorRegistry?.deactivate()
+    editorRegistry?.dispose()
     editorRegistry = new EditorRegistry
 
   describe '::create', ->
