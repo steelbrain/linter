@@ -23,6 +23,7 @@ class Linter
     @views = new LinterViews(this)
     @commands = new Commands(this)
 
+    @subscriptions.add @views
     @subscriptions.add @linters.onDidUpdateMessages (info) =>
       @messages.set(info)
     @subscriptions.add @messages.onDidUpdateMessages (messages) =>
@@ -107,7 +108,6 @@ class Linter
 
   deactivate: ->
     @subscriptions.dispose()
-    @views.destroy()
     @editors.deactivate()
     @linters.deactivate()
     @commands.destroy()

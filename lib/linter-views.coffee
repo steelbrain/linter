@@ -124,7 +124,7 @@ class LinterViews
     @bubble?.destroy()
     @bubble = null
 
-  destroy: ->
+  dispose: ->
     @removeMarkers()
     @removeBubble()
     @subscriptions.dispose()
