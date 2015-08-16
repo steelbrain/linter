@@ -1,3 +1,7 @@
+## 1.4.2
+
+* Re-add `statusIconPosition` config
+
 ## 1.4.1
 
 * Fix a critical typo
