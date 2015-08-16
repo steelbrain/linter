@@ -1,5 +1,6 @@
 ## 1.4
 
+* Fix a bug where clicking non-active bottom container tab wouldn't enable bottom panel (Fixes #830)
 * Fix a bug where markers from files not opened at linting time won't work (only applies to Project-scoped-linters)
 * Introduce an extremely efficient bottom panel (bubble is the only performance bottleneck now)
 
