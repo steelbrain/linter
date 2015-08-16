@@ -28,7 +28,7 @@ class EditorRegistry
     @forEach(callback)
     @emitter.on('observe', callback)
 
-  deactivate: ->
+  dispose: ->
     @emitter.dispose()
     @subscriptions.dispose()
     @editorLinters.forEach (editorLinter) ->
