@@ -6,7 +6,7 @@ describe 'editor-linter', ->
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
       atom.workspace.open('/tmp/test.txt').then ->
-        editorLinter?.deactivate()
+        editorLinter?.dispose()
         textEditor = atom.workspace.getActiveTextEditor()
         editorLinter = new EditorLinter(textEditor)
 

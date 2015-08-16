@@ -5,13 +5,14 @@ class EditorRegistry
   constructor: ->
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
+    @subscriptions.add @emitter
     @editorLinters = new Map()
 
   create: (textEditor) ->
     @editorLinters.set(textEditor, editorLinter = new EditorLinter(textEditor))
     editorLinter.onDidDestroy =>
       @editorLinters.delete(textEditor)
-      editorLinter.deactivate()
+      editorLinter.dispose()
     @emitter.emit('observe', editorLinter)
     return editorLinter
 
@@ -29,10 +30,9 @@ class EditorRegistry
     @emitter.on('observe', callback)
 
   dispose: ->
-    @emitter.dispose()
     @subscriptions.dispose()
     @editorLinters.forEach (editorLinter) ->
-      editorLinter.deactivate()
+      editorLinter.dispose()
     @editorLinters.clear()
 
 module.exports = EditorRegistry
