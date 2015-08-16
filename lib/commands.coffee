@@ -89,7 +89,7 @@ class Commands
     atom.workspace.open(message.filePath).then ->
       atom.workspace.getActiveTextEditor().setCursorBufferPosition(message.range.start)
 
-  destroy: ->
+  dispose: ->
     @messages = null
     @subscriptions.dispose()
 
