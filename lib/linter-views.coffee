@@ -109,9 +109,10 @@ class LinterViews
       ) if @underlineIssues
 
   attachBottom: (statusBar) ->
-    @bottomBar = statusBar.addLeftTile
+    statusIconPosition = atom.config.get('linter.statusIconPosition')
+    @bottomBar = statusBar["add#{statusIconPosition}Tile"]
       item: @bottomContainer,
-      priority: -100
+      priority: if statusIconPosition == 'Left' then -100 else 100
 
   removeMarkers: (messages = @messages) ->
     messages.forEach((message) =>

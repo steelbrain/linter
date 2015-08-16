@@ -43,6 +43,12 @@ module.exports =
       type: 'string'
       enum: ['File', 'Line', 'Project']
       default: 'Project'
+    statusIconPosition:
+      title: 'Position of Status Icon on Bottom Bar'
+      description: 'Requires a reload/restart to update'
+      enum: ['Left', 'Right']
+      type: 'string'
+      default: 'Left'
 
   activate: (@state) ->
     LinterPlus = require('./linter.coffee')
