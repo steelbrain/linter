@@ -15,7 +15,6 @@ class Linter
     @lintOnFly = true # A default art value, to be immediately replaced by the observe config below
 
     # Private Stuff
-    @subscriptions = new CompositeDisposable
     @emitter = new Emitter
     @linters = new (require('./linter-registry'))()
     @editors = new (require('./editor-registry'))()
@@ -23,11 +22,8 @@ class Linter
     @views = new LinterViews(this)
     @commands = new Commands(this)
 
-    @subscriptions.add @views
-    @subscriptions.add @editors
-    @subscriptions.add @linters
-    @subscriptions.add @messages
-    @subscriptions.add @commands
+    @subscriptions = new CompositeDisposable(@views, @editors, @linters, @messages, @commands)
+
     @subscriptions.add @linters.onDidUpdateMessages (info) =>
       @messages.set(info)
     @subscriptions.add @messages.onDidUpdateMessages (messages) =>
