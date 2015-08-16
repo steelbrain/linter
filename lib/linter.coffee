@@ -103,7 +103,6 @@ class Linter
     editorLinter.onShouldLint (onChange) =>
       @linters.lint({onChange, editorLinter})
     editorLinter.onDidDestroy =>
-      editorLinter.deactivate()
       @messages.deleteEditorMessages(editor)
 
   deactivate: ->
