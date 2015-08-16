@@ -35,6 +35,13 @@ describe 'Linter Behavior', ->
       trigger(bottomContainer.getTab('File'), 'click')
       expect(linter.views.panel.getVisibility()).toBe(true)
 
+    it 're-enables panel when another tab is clicked', ->
+      expect(linter.views.panel.getVisibility()).toBe(true)
+      trigger(bottomContainer.getTab('File'), 'click')
+      expect(linter.views.panel.getVisibility()).toBe(false)
+      trigger(bottomContainer.getTab('Project'), 'click')
+      expect(linter.views.panel.getVisibility()).toBe(true)
+
   describe 'Markers', ->
     it 'automatically marks files when they are opened if they have any markers', ->
       provider = getLinter()
