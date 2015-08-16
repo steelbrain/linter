@@ -25,7 +25,9 @@ class LinterViews
       @showBubble = showBubble
     )
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
-      @render({added: [], removed: [], messages: @linter.messages.publicMessages})
+      @classifyMessages(@messages)
+      @renderPanelMarkers({added: @messages, removed: @messages})
+      @renderBubble()
       @panel.refresh(@state.scope)
     @subscriptions.add @bottomContainer.onDidChangeTab =>
       @panel.refresh(@state.scope)
