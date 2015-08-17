@@ -1,6 +1,7 @@
 ## 1.4.2
 
 * Re-add `statusIconPosition` config
+* Fix a typo in Linter:toggle
 
 ## 1.4.1
 
