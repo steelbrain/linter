@@ -36,7 +36,7 @@ class EditorLinter
 
   destroy: ->
     @emitter.emit('did-destroy')
-    @deactivate()
+    @dispose()
 
   dispose: ->
     @subscriptions.dispose()
