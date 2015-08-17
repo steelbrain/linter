@@ -28,6 +28,7 @@ class LinterViews
       @classifyMessages(@messages)
       @renderPanelMarkers({added: @messages, removed: @messages})
       @renderBubble()
+      @renderCount()
       @panel.refresh(@state.scope)
     @subscriptions.add @bottomContainer.onDidChangeTab =>
       atom.config.set('linter.showErrorPanel', true)
