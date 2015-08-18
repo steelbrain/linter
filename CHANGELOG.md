@@ -1,6 +1,7 @@
 ## 1.4.3
 
 * Fix a bug where bottom tabs's count won't be updated on pane change unless lint is triggered.
+* Fix a bug where paths would be shown at first even when file tab is selected.
 
 ## 1.4.2
 
