@@ -45,11 +45,11 @@ describe 'Linter Behavior', ->
     it 'updates count on pane change', ->
       provider = getLinter()
       expect(bottomContainer.getTab('File').count).toBe(0)
-      messages = [getMessage('Error', '/etc/passwd')]
+      messages = [getMessage('Error', __dirname + '/fixtures/file.txt')]
       linter.setMessages(provider, messages)
       linter.messages.updatePublic()
       waitsForPromise ->
-        atom.workspace.open('/etc/passwd').then ->
+        atom.workspace.open('file.txt').then ->
           expect(bottomContainer.getTab('File').count).toBe(1)
           atom.workspace.open('/tmp/non-existing-file')
         .then ->
