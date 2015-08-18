@@ -1,3 +1,7 @@
+## 1.4.3
+
+* Fix a bug where bottom tabs's count won't be updated on pane change unless lint is triggered.
+
 ## 1.4.2
 
 * Re-add `statusIconPosition` config

@@ -42,12 +42,26 @@ describe 'Linter Behavior', ->
       trigger(bottomContainer.getTab('Project'), 'click')
       expect(linter.views.panel.getVisibility()).toBe(true)
 
+    it 'updates count on pane change', ->
+      provider = getLinter()
+      expect(bottomContainer.getTab('File').count).toBe(0)
+      messages = [getMessage('Error', __dirname + '/fixtures/file.txt')]
+      linter.setMessages(provider, messages)
+      linter.messages.updatePublic()
+      waitsForPromise ->
+        atom.workspace.open('file.txt').then ->
+          expect(bottomContainer.getTab('File').count).toBe(1)
+          atom.workspace.open('/tmp/non-existing-file')
+        .then ->
+          expect(bottomContainer.getTab('File').count).toBe(0)
+
   describe 'Markers', ->
     it 'automatically marks files when they are opened if they have any markers', ->
       provider = getLinter()
       messages = [getMessage('Error', '/etc/passwd')]
       linter.setMessages(provider, messages)
+      linter.messages.updatePublic()
       waitsForPromise ->
-        atom.workspace.open('/etc/paswd').then ->
+        atom.workspace.open('/etc/passwd').then ->
           activeEditor = atom.workspace.getActiveTextEditor()
-          expect(activeEditor.getMarkers().length).toBe(1)
+          expect(activeEditor.getMarkers().length > 0).toBe(true)
