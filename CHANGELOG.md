@@ -1,3 +1,7 @@
+## Upcoming
+
+* Fix baseline alignment of text on the bottom bar.
+
 ## 1.4.3
 
 * Fix a bug where bottom tabs's count won't be updated on pane change unless lint is triggered.
