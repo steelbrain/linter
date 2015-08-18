@@ -60,7 +60,8 @@ describe 'Linter Behavior', ->
       provider = getLinter()
       messages = [getMessage('Error', '/etc/passwd')]
       linter.setMessages(provider, messages)
+      linter.messages.updatePublic()
       waitsForPromise ->
         atom.workspace.open('/etc/passwd').then ->
           activeEditor = atom.workspace.getActiveTextEditor()
-          expect(activeEditor.getMarkers().length).toBe(1)
+          expect(activeEditor.getMarkers().length > 0).toBe(true)
