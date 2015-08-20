@@ -2,12 +2,12 @@ describe 'linter-registry', ->
   LinterRegistry = require('../lib/linter-registry')
   EditorLinter = require('../lib/editor-linter')
   linterRegistry = null
-  {getLinter} = require('./common')
+  {getLinter, getMessage} = require('./common')
 
   beforeEach ->
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
-      atom.workspace.open('test.txt')
+      atom.workspace.open('file.txt')
     linterRegistry?.dispose()
     linterRegistry = new LinterRegistry
 
@@ -85,6 +85,75 @@ describe 'linter-registry', ->
       linterRegistry.addLinter(linter)
       expect(linterRegistry.lint({onChange: false, editorLinter})).toBeDefined()
       expect(linterRegistry.lint({onChange: false, editorLinter})).toBeUndefined()
+
+    it 'respects batchUpdateMessages config', ->
+      remote = require('remote')
+      setTimeout = remote.getGlobal('setTimeout')
+      setInterval = remote.getGlobal('setInterval')
+      lastRun = null
+
+      bufferModifying = {
+        grammarScopes: ['*'],
+        lintOnFly: false,
+        modifiesBuffer: true,
+        scope: 'file',
+        lint: ->
+          expect(lastRun).toBe(null)
+          lastRun = 'bufferModifying'
+      }
+      normalLinter = {
+        grammarScopes: ['*'],
+        lintOnFly: false,
+        modifiesBuffer: false,
+        scope: 'file',
+        lint: ->
+          expect(lastRun).toBe('bufferModifying')
+          lastRun = 'normal'
+          [getMessage('Error', "#{__dirname}/fixtures/file.txt")]
+      }
+      lazyLinter = {
+        grammarScopes: ['*'],
+        lintOnFly: false,
+        modifiesBuffer: false,
+        scope: 'file',
+        lint: ->
+          expect(lastRun).toBe('normal')
+          lastRun = null
+          return new Promise (resolve) ->
+            setTimeout( ->
+              resolve([getMessage('Error', "#{__dirname}/fixtures/file.txt")])
+            , 1000)
+      }
+      batchUpdateMessages = false # It's false by default
+      linterRegistry.addLinter(normalLinter)
+      linterRegistry.addLinter(bufferModifying)
+      linterRegistry.addLinter(lazyLinter)
+
+      lastTimeNormal = null
+      lastTimeBatch = null
+      linterRegistry.onDidUpdateMessages ({linter}) ->
+        if batchUpdateMessages
+          return unless linter is lazyLinter
+          unless lastTimeBatch
+            return lastTimeBatch = new Date()
+          console.log((new Date()) - lastTimeBatch)
+          expect((new Date()) - lastTimeBatch >= 1000).toBe(true)
+          lastTimeBatch = new Date()
+        else
+          return unless linter is normalLinter
+          unless lastTimeNormal
+            return lastTimeNormal = new Date()
+          expect((new Date()) - lastTimeNormal < 10).toBe(true)
+          lastTimeNormal = new Date()
+
+      editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
+      waitsForPromise ->
+        linterRegistry.lint({onChange: false, editorLinter}).then ->
+          atom.config.set('linter.batchUpdateMessages', (batchUpdateMessages = !batchUpdateMessages))
+          linterRegistry.lint({onChange: false, editorLinter})
+        .then ->
+          expect(lastTimeNormal isnt null).toBe(true)
+          expect(lastTimeBatch isnt null).toBe(true)
 
     describe 'buffer modifying linter', ->
       it 'triggers before other linters', ->
