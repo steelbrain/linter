@@ -7,20 +7,7 @@ describe 'message-registry', ->
     size = 0
     size++ for value of obj
     return size
-  getMessage = (type, filePath) ->
-    return {type, text: "Some Message", filePath}
-  getLinterRegistry = ->
-    linterRegistry = new LinterRegistry
-    editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
-    linter = {
-      grammarScopes: ['*']
-      lintOnFly: false
-      modifiesBuffer: false
-      scope: 'project'
-      lint: -> return [{type: "Error", text: "Something"}]
-    }
-    linterRegistry.addLinter(linter)
-    return {linterRegistry, editorLinter, linter}
+  {getLinterRegistry, getMessage} = require('./common')
 
   beforeEach ->
     waitsForPromise ->
