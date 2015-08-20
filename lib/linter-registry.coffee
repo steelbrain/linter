@@ -53,7 +53,10 @@ class LinterRegistry
       Promises = @linters.map (linter) =>
         return unless helpers.shouldTriggerLinter(linter, false, onChange, scopes)
         return @triggerLinter(linter, editor, scopes)
-      return Promise.all(Promises)
+      return Promise.all(Promises).then (results) =>
+        return unless @batchUpdateMessages
+        results.forEach (result) =>
+          @emitter.emit('did-update-messages', result) if result
     ).then =>
       @locks[lockKey].delete(editorLinter)
 
@@ -61,7 +64,9 @@ class LinterRegistry
     return new Promise((resolve) ->
       resolve(linter.lint(editor))
     ).then((results) =>
-      if results then @emitter.emit('did-update-messages', {linter, messages: results, editor})
+      toReturn = {linter, messages: results, editor}
+      return toReturn if @batchUpdateMessages
+      @emitter.emit('did-update-messages', toReturn)
     ).catch((e) -> helpers.error(e))
 
   onDidUpdateMessages: (callback) ->
