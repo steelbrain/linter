@@ -2,8 +2,8 @@ describe 'linter-registry', ->
   LinterRegistry = require('../lib/linter-registry')
   EditorLinter = require('../lib/editor-linter')
   linterRegistry = null
-  getLinter = ->
-    return {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'file', lint: -> }
+  {getLinter} = require('./common')
+
   beforeEach ->
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
