@@ -1,14 +1,10 @@
 describe 'Linter Config', ->
   linter = null
+  {getLinter, getMessage} = require('./common')
   beforeEach ->
     waitsForPromise ->
       atom.packages.activatePackage('linter').then ->
         linter = atom.packages.getActivePackage('linter').mainModule.instance
-
-  getLinter = ->
-    return {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'project', lint: -> }
-  getMessage = (type, filePath) ->
-    return {type, text: "Some Message", filePath}
 
   describe 'ignoredMessageTypes', ->
     it 'ignores certain types of messages', ->
