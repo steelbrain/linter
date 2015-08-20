@@ -65,7 +65,7 @@ class LinterRegistry
       resolve(linter.lint(editor))
     ).then((results) =>
       toReturn = {linter, messages: results, editor}
-      return toReturn if @batchUpdateMessages
+      return toReturn if @batchUpdateMessages and not linter.modifiesBuffer
       @emitter.emit('did-update-messages', toReturn)
     ).catch((e) -> helpers.error(e))
 
