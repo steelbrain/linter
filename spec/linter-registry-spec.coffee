@@ -87,6 +87,7 @@ describe 'linter-registry', ->
       expect(linterRegistry.lint({onChange: false, editorLinter})).toBeUndefined()
 
     it 'respects batchUpdateMessages config', ->
+      # TODO(steelbrain): This spec doesn't really work. :facepalm:
       remote = require('remote')
       setTimeout = remote.getGlobal('setTimeout')
       setInterval = remote.getGlobal('setInterval')
@@ -136,7 +137,6 @@ describe 'linter-registry', ->
           return unless linter is lazyLinter
           unless lastTimeBatch
             return lastTimeBatch = new Date()
-          console.log((new Date()) - lastTimeBatch)
           expect((new Date()) - lastTimeBatch >= 1000).toBe(true)
           lastTimeBatch = new Date()
         else
