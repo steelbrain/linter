@@ -48,11 +48,6 @@ module.exports =
       enum: ['Left', 'Right']
       type: 'string'
       default: 'Left'
-    batchUpdateMessages:
-      title: 'Update messages when all providers are done'
-      description: 'It stops panel from jumping up and down'
-      type: 'boolean'
-      default: false
 
   activate: (@state) ->
     LinterPlus = require('./linter.coffee')

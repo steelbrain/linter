@@ -11,9 +11,6 @@ class LinterRegistry
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
     @subscriptions.add @emitter
-    @subscriptions.add atom.config.observe('linter.batchUpdateMessages', (value) =>
-      @batchUpdateMessages = value
-    )
 
   getLinters: ->
     return @linters.slice() # Clone the array
@@ -53,10 +50,7 @@ class LinterRegistry
       Promises = @linters.map (linter) =>
         return unless helpers.shouldTriggerLinter(linter, false, onChange, scopes)
         return @triggerLinter(linter, editor, scopes)
-      return Promise.all(Promises).then (results) =>
-        return unless @batchUpdateMessages
-        results.forEach (result) =>
-          @emitter.emit('did-update-messages', result) if result
+      return Promise.all(Promises)
     ).then =>
       @locks[lockKey].delete(editorLinter)
 
@@ -64,9 +58,8 @@ class LinterRegistry
     return new Promise((resolve) ->
       resolve(linter.lint(editor))
     ).then((results) =>
-      toReturn = {linter, messages: results, editor}
-      return toReturn if @batchUpdateMessages and not linter.modifiesBuffer
-      @emitter.emit('did-update-messages', toReturn)
+      if results
+        @emitter.emit('did-update-messages', {linter, messages: results, editor})
     ).catch((e) -> helpers.error(e))
 
   onDidUpdateMessages: (callback) ->
