@@ -2,6 +2,7 @@
 
 * Fix baseline alignment of text on the bottom bar
 * Fix a bug where linter:togglePanel won't work
+* Stricter message validation, helps catching provider bugs
 
 ## 1.4.3
 
