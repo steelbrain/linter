@@ -8,11 +8,11 @@ describe 'validate', ->
     it 'throws if lint is missing', ->
       expect ->
         validate.linter({grammarScopes: []})
-      .toThrow("Missing linter.lint")
+      .toThrow()
     it 'throws if lint is not a function', ->
       expect ->
         validate.linter({grammarScopes: [], lint: true})
-      .toThrow("linter.lint isn't a function")
+      .toThrow()
 
   describe '::messages', ->
     it 'throws if messages is not an array', ->
@@ -25,8 +25,31 @@ describe 'validate', ->
     it 'throws if type field is not present', ->
       expect ->
         validate.messages([{}])
-      .toThrow("Missing type field on Linter Response")
+      .toThrow()
+    it "throws if type field is invalid", ->
+      expect ->
+        validate.messages([{type: 1}])
+      .toThrow()
     it "throws if there's no html/text field on message", ->
       expect ->
         validate.messages([{type: 'Error'}])
-      .toThrow('Missing html/text field on Linter Response')
+      .toThrow()
+    it "throws if html/text is invalid", ->
+      expect ->
+        validate.messages([{type: 'Error', html: 1}])
+      .toThrow()
+      expect ->
+        validate.messages([{type: 'Error', text: 1}])
+      .toThrow()
+      expect ->
+        validate.messages([{type: 'Error', html: false}])
+      .toThrow()
+      expect ->
+        validate.messages([{type: 'Error', text: false}])
+      .toThrow()
+      expect ->
+        validate.messages([{type: 'Error', html: []}])
+      .toThrow()
+      expect ->
+        validate.messages([{type: 'Error', text: []}])
+      .toThrow()
