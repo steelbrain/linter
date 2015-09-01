@@ -1,4 +1,4 @@
-## Upcoming
+## 1.5.0
 
 * Fix baseline alignment of text on the bottom bar
 * Fix a bug where linter:togglePanel won't work
