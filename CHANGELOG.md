@@ -1,3 +1,9 @@
+## Upcoming
+
+* Messages are now tracked on a per-buffer basis rather than per-editor,
+  improving the multi-pane experience by eliminating the potential for stale
+  results.
+
 ## 1.5.0
 
 * Fix baseline alignment of text on the bottom bar
