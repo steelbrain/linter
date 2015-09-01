@@ -3,6 +3,9 @@
 * Fix baseline alignment of text on the bottom bar
 * Fix a bug where linter:togglePanel won't work
 * Stricter message validation, helps catching provider bugs
+* Messages are now tracked on a per-buffer basis rather than per-editor,
+  improving the multi-pane experience by eliminating the potential for stale
+  results.
 
 ## 1.4.3
 
