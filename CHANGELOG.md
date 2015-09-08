@@ -1,8 +1,9 @@
-## Upcoming
+## 1.5.1
 
 * Messages are now tracked on a per-buffer basis rather than per-editor,
   improving the multi-pane experience by eliminating the potential for stale
   results.
+* Fix extra padding in panel when there's no messages
 
 ## 1.5.0
 
