@@ -52,9 +52,16 @@ linter-panel {
   display: block;
   overflow-y: auto;
   max-height: 150px;
-  padding: @spacing;
   &[hidden]{
     display: none;
+  }
+  padding-left: @spacing;
+  padding-right: @spacing;
+  linter-message:first-child {
+    padding-top: @spacing;
+  }
+  linter-message:last-child {
+    padding-bottom: @spacing;
   }
 }
 
@@ -87,7 +94,7 @@ linter-panel {
   a {
     color: @linter-inline-link;
     &:last-of-type {
-      padding-right: @spacing*1.5; // a bit extra space for visual pleasing
+      padding-right: @spacing * 1.5; // a bit extra space for visual pleasing
     }
   }
 }
