@@ -112,12 +112,22 @@ class LinterViews
       ) if @underlineIssues
 
   attachBottom: (statusBar) ->
-    @subscriptions.add atom.config.observe('linter.statusIconPosition', (statusIconPosition) =>
-      @bottomBar?.destroy()
+    @subscriptions.add atom.config.observe('linter.displayLinterInfo', (_) =>
+      @updateStatusBar(statusBar)
+    )
+    @subscriptions.add atom.config.observe('linter.statusIconPosition', (_) =>
+      @updateStatusBar(statusBar)
+    )
+
+  updateStatusBar: (statusBar) ->
+    @bottomBar?.destroy()
+    @bottomBar = null
+
+    if atom.config.get('linter.displayLinterInfo')
+      statusIconPosition = atom.config.get('linter.statusIconPosition')
       @bottomBar = statusBar["add#{statusIconPosition}Tile"]
         item: @bottomContainer,
         priority: if statusIconPosition == 'Left' then -100 else 100
-    )
 
   removeMarkers: (messages = @messages) ->
     messages.forEach((message) =>
@@ -135,7 +145,6 @@ class LinterViews
     @removeMarkers()
     @removeBubble()
     @subscriptions.dispose()
-    if @bottomBar
-      @bottomBar.destroy()
+    @bottomBar?.destroy()
 
 module.exports = LinterViews

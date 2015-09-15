@@ -29,7 +29,7 @@ class BottomContainer extends HTMLElement
         if Me.state.scope is @name
           emitter.emit 'should-toggle-panel'
         else
-         emitter.emit 'did-change-tab', @name
+          emitter.emit 'did-change-tab', @name
 
     @onDidChangeTab (activeName) =>
       @state.scope = activeName
