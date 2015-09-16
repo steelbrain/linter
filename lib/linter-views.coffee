@@ -112,7 +112,7 @@ class LinterViews
       ) if @underlineIssues
 
   attachBottom: (statusBar) ->
-    @subscriptions.add atom.config.observe('linter.displayLinterInfo', (_) =>
+    @subscriptions.add atom.config.onDidChange('linter.displayLinterInfo', (_) =>
       @updateStatusBar(statusBar)
     )
     @subscriptions.add atom.config.observe('linter.statusIconPosition', (_) =>

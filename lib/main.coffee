@@ -31,7 +31,7 @@ module.exports =
 
     showErrorPanel:
       title: 'Show Error Panel at the Bottom'
-      description: 'Show a list of errors in a bottom panel'
+      description: 'Show the list of errors in a bottom panel'
       type: 'boolean'
       default: true
       order: 4
