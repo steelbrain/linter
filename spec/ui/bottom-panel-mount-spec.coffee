@@ -20,3 +20,14 @@ describe 'BottomPanelMount', ->
     atom.config.set('linter.statusIconPosition', 'Right')
     tile = statusBar.getRightTiles()[0]
     expect(tile.item.localName).toBe('linter-bottom-container')
+
+  it 'defaults to visible', ->
+    tile = statusBar.getLeftTiles()[0]
+    expect(tile.item.getVisibility()).toBe(true)
+
+  it 'toggles on config change', ->
+    tile = statusBar.getLeftTiles()[0]
+    atom.config.set('linter.displayLinterInfo', false)
+    expect(tile.item.getVisibility()).toBe(false)
+    atom.config.set('linter.displayLinterInfo', true)
+    expect(tile.item.getVisibility()).toBe(true)

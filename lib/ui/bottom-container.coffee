@@ -49,6 +49,9 @@ class BottomContainer extends HTMLElement
     else
       this.setAttribute('hidden', true)
 
+  getVisibility: ->
+    !@hasAttribute('hidden')
+
   getTab: (name) ->
     return @tabs[name]
 
