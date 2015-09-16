@@ -1,3 +1,7 @@
+## 1.5.2
+
+* Add `displayLinterInfo` config to toggle visibility of bottom panel
+
 ## 1.5.1
 
 * Messages are now tracked on a per-buffer basis rather than per-editor,
