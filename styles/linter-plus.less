@@ -16,6 +16,8 @@ linter-message {
 
 .linter-message-item {
   margin: @spacing;
+  height: 1.8em;
+  white-space: nowrap;
 }
 
 linter-multiline-message {
@@ -134,6 +136,12 @@ linter-bottom-tab {
   }
 }
 
+atom-text-editor::shadow .linter-highlight .icon-right{
+  visibility: visible;
+  &::before{
+    content: @primitive-dot;
+  }
+}
 // Styling Error Types
 atom-text-editor::shadow .linter-highlight, .linter-highlight{
   &.badge {
@@ -146,7 +154,9 @@ atom-text-editor::shadow .linter-highlight, .linter-highlight{
       background-color: @background-color-error;
       color: white;
     }
-    color: @background-color-error;
+    .icon-right::before{
+      color: @background-color-error;
+    }
     .region {
       border-bottom: 1px dashed @background-color-error;
     }
@@ -156,7 +166,9 @@ atom-text-editor::shadow .linter-highlight, .linter-highlight{
       background-color: @background-color-warning;
       color: white;
     }
-    color: @background-color-warning;
+    .icon-right::before{
+      color: @background-color-warning;
+    }
     .region {
       border-bottom: 1px dashed @background-color-warning;
     }
@@ -166,7 +178,9 @@ atom-text-editor::shadow .linter-highlight, .linter-highlight{
       background-color: @background-color-info;
       color: white;
     }
-    color: @background-color-info;
+    .icon-right::before{
+      color: @background-color-info;
+    }
     .region {
       border-bottom: 1px dashed @background-color-info;
     }
