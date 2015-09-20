@@ -1,6 +1,7 @@
 ## Upcoming
 
 * Fixed messages so that they line up and don't wrap in weird ways (Fixes #859)
+* Lint on toggle
 
 ## 1.5.2
 
