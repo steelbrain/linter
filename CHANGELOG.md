@@ -2,6 +2,10 @@
 
 * Fixed messages so that they line up and don't wrap in weird ways (Fixes #859)
 
+## 1.5.3
+
+* Lint on toggle
+
 ## 1.5.2
 
 * Add `displayLinterInfo` config to toggle visibility of bottom panel
