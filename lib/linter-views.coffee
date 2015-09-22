@@ -93,9 +93,9 @@ class LinterViews
     @bottomContainer.setCount(@count)
 
   renderPanelMarkers: ({added, removed}) ->
-    activeEditor = @linter.getActiveEditorLinter()
-    return unless activeEditor
-    activeEditor.updateMarkers({added, removed})
+    @linter.eachEditorLinter((editorLinter) =>
+        editorLinter.updateMarkers({added, removed})
+    )
 
   attachBottom: (statusBar) ->
     @subscriptions.add atom.config.observe('linter.statusIconPosition', (statusIconPosition) =>
