@@ -12,10 +12,10 @@ describe 'editor-registry', ->
     it 'cries when invalid TextEditor was provided', ->
       expect ->
         editorRegistry.create()
-      .toThrow("Given editor isn't really an editor")
+      .toThrow()
       expect ->
         editorRegistry.create(5)
-      .toThrow("Given editor isn't really an editor")
+      .toThrow()
     it "adds TextEditor to it's registry", ->
       editorRegistry.create(atom.workspace.getActiveTextEditor())
       expect(editorRegistry.editorLinters.size).toBe(1)
