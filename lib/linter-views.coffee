@@ -34,9 +34,11 @@ class LinterViews
   render: ({added, removed, messages}) ->
     @messages = @classifyMessages(messages)
     @panel.setMessages({added, removed})
-    @renderPanelMarkers({added, removed})
     @renderBubble()
     @renderCount()
+    @linter.eachEditorLinter((editorLinter) =>
+      editorLinter.updateMarkers({added, removed})
+    )
 
   renderLineMessages: (render = false) ->
     @classifyMessagesByLine(@messages)
@@ -91,11 +93,6 @@ class LinterViews
 
   renderCount: ->
     @bottomContainer.setCount(@count)
-
-  renderPanelMarkers: ({added, removed}) ->
-    @linter.eachEditorLinter((editorLinter) =>
-        editorLinter.updateMarkers({added, removed})
-    )
 
   attachBottom: (statusBar) ->
     @subscriptions.add atom.config.observe('linter.statusIconPosition', (statusIconPosition) =>
