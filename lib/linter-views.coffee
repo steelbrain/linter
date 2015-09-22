@@ -10,7 +10,6 @@ class LinterViews
     @state = @linter.state
     @subscriptions = new CompositeDisposable
     @messages = []
-    @markers = new WeakMap()
     @panel = new BottomPanel(@state.scope)
     @bottomContainer = new BottomContainer().prepare(@linter.state)
     @bottomBar = null
@@ -98,18 +97,7 @@ class LinterViews
     @bottomContainer.setCount(@count)
 
   renderPanelMarkers: ({added, removed}) ->
-    @removeMarkers(removed)
-    activeEditor = atom.workspace.getActiveTextEditor()
-    return unless activeEditor
-    added.forEach (message) =>
-      return unless message.currentFile
-      @markers.set(message, marker = activeEditor.markBufferRange message.range, {invalidate: 'inside'})
-      activeEditor.decorateMarker(
-        marker, type: 'line-number', class: "linter-highlight #{message.class}"
-      )
-      activeEditor.decorateMarker(
-        marker, type: 'highlight', class: "linter-highlight #{message.class}"
-      ) if @underlineIssues
+
 
   attachBottom: (statusBar) ->
     @subscriptions.add atom.config.observe('linter.statusIconPosition', (statusIconPosition) =>
@@ -122,20 +110,11 @@ class LinterViews
       @bottomContainer.setVisibility(displayLinterInfo)
     )
 
-  removeMarkers: (messages = @messages) ->
-    messages.forEach((message) =>
-      return unless @markers.has(message)
-      marker = @markers.get(message)
-      marker.destroy()
-      @markers.delete(message)
-    )
-
   removeBubble: ->
     @bubble?.destroy()
     @bubble = null
 
   dispose: ->
-    @removeMarkers()
     @removeBubble()
     @subscriptions.dispose()
     @bottomBar?.destroy()
