@@ -50,6 +50,12 @@ class LinterViews
         return
       editorLinter.addMessage(message)
 
+  notifyEditor: (editorLinter) ->
+    editorPath = editorLinter.editor.getPath()
+    @messages.forEach (message) ->
+      return unless message.filePath and message.range and message.filePath is editorPath
+      editorLinter.addMessage(message)
+
   renderLineMessages: (render = false) ->
     @classifyMessagesByLine(@messages)
     if render
