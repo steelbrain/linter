@@ -14,13 +14,13 @@ describe 'editor-linter', ->
     it "cries when provided argument isn't a TextEditor", ->
       expect ->
         new EditorLinter
-      .toThrow("Given editor isn't really an editor")
+      .toThrow()
       expect ->
         new EditorLinter(null)
-      .toThrow("Given editor isn't really an editor")
+      .toThrow()
       expect ->
         new EditorLinter(55)
-      .toThrow("Given editor isn't really an editor")
+      .toThrow()
 
   describe '::onShouldLint', ->
     it 'ignores instant save requests', ->
