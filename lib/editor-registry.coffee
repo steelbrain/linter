@@ -7,9 +7,17 @@ class EditorRegistry
     @subscriptions = new CompositeDisposable
     @subscriptions.add @emitter
     @editorLinters = new Map()
+    @editorLintersByPath = new Map()
 
   create: (textEditor) ->
-    @editorLinters.set(textEditor, editorLinter = new EditorLinter(textEditor))
+    editorLinter = new EditorLinter(textEditor)
+    if currentPath = textEditor.getPath()
+      @editorLintersByPath.set(currentPath, editorLinter)
+    textEditor.onDidChangePath (path) =>
+      @editorLintersByPath.delete(currentPath)
+      @editorLintersByPath.set(currentPath = path, editorLinter)
+
+    @editorLinters.set(textEditor, editorLinter)
     editorLinter.onDidDestroy =>
       @editorLinters.delete(textEditor)
       editorLinter.dispose()
@@ -18,6 +26,9 @@ class EditorRegistry
 
   forEach: (callback) ->
     @editorLinters.forEach(callback)
+
+  ofPath: (path) ->
+    return @editorLintersByPath.get(path)
 
   ofTextEditor: (editor) ->
     return @editorLinters.get(editor)
