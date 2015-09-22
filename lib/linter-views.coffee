@@ -22,7 +22,6 @@ class LinterViews
     )
     @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
       @classifyMessages(@messages)
-      @renderPanelMarkers({added: @messages, removed: @messages})
       @renderBubble()
       @renderCount()
       @panel.refresh(@state.scope)
