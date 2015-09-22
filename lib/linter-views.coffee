@@ -110,6 +110,9 @@ class LinterViews
     @bubble = null
 
   dispose: ->
+    @linter.eachEditorLinter((editorLinter) =>
+      editorLinter.updateMarkers({added: [], removed: @messages})
+    )
     @removeBubble()
     @subscriptions.dispose()
     @bottomBar?.destroy()
