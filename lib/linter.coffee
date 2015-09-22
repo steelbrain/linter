@@ -104,6 +104,7 @@ class Linter
       @linters.lint({onChange, editorLinter})
     editorLinter.onDidDestroy =>
       @messages.deleteEditorMessages(editor)
+    editorLinter.updateMarkers({removed: [], added: @views.messages})
 
   deactivate: ->
     @subscriptions.dispose()
