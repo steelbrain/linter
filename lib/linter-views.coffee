@@ -17,9 +17,6 @@ class LinterViews
     @count = File: 0, Line: 0, Project: 0
 
     @subscriptions.add @panel
-    @subscriptions.add atom.config.observe('linter.underlineIssues', (underlineIssues) =>
-      @underlineIssues = underlineIssues
-    )
     @subscriptions.add atom.config.observe('linter.showErrorInline', (showBubble) =>
       @showBubble = showBubble
     )
