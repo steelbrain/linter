@@ -36,9 +36,19 @@ class LinterViews
     @panel.setMessages({added, removed})
     @renderBubble()
     @renderCount()
-    @linter.eachEditorLinter((editorLinter) =>
-      editorLinter.updateMarkers({added, removed})
-    )
+    @notifyEditors({added, removed})
+
+  notifyEditors: ({added, removed}) ->
+    removed.forEach (message) =>
+      return unless message.filePath and message.range
+      unless editorLinter = @linter.getEditorLinterByPath(message.filePath)
+        then return
+      editorLinter.removeMessage(message)
+    added.forEach (message) =>
+      return unless message.filePath and message.range
+      unless editorLinter = @linter.getEditorLinterByPath(message.filePath)
+      then return
+      editorLinter.addMessage(message)
 
   renderLineMessages: (render = false) ->
     @classifyMessagesByLine(@messages)
@@ -110,9 +120,7 @@ class LinterViews
     @bubble = null
 
   dispose: ->
-    @linter.eachEditorLinter((editorLinter) =>
-      editorLinter.updateMarkers({added: [], removed: @messages})
-    )
+    @notifyEditors({added: [], removed: @messages})
     @removeBubble()
     @subscriptions.dispose()
     @bottomBar?.destroy()
