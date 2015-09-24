@@ -1,3 +1,7 @@
+## Upcoming
+
+* Linter now supports decorating multiple panes at the same time. Decorations are no longer removed and re-added on tab changed, only added to the new tab. Which could improve the tab switch performance with large errors.
+
 ## 1.6.0
 
 * Fixed messages so that they line up and don't wrap in weird ways (Fixes #859)
