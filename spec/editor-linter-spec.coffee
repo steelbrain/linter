@@ -3,6 +3,7 @@ describe 'editor-linter', ->
   EditorLinter = require('../lib/editor-linter')
   editorLinter = null
   textEditor = null
+
   beforeEach ->
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
@@ -26,6 +27,7 @@ describe 'editor-linter', ->
   describe '::{add, remove}Message', ->
     it 'adds/removes decorations from the editor', ->
       countDecorations = textEditor.getDecorations().length
+      editorLinter.underlineIssues = true
       message = getMessage('Hey!', __dirname + '/fixtures/file.txt', [[0, 1], [0, 2]])
       editorLinter.addMessage(message)
       expect(textEditor.getDecorations().length).toBe(countDecorations + 1)
