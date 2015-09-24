@@ -4,8 +4,8 @@ EditorLinter = require('../lib/editor-linter')
 module.exports =
   getLinter: ->
     return {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'project', lint: -> }
-  getMessage: (type, filePath) ->
-    return {type, text: "Some Message", filePath}
+  getMessage: (type, filePath, range) ->
+    return {type, text: "Some Message", filePath, range}
   getLinterRegistry: ->
     linterRegistry = new LinterRegistry
     editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())

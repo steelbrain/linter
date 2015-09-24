@@ -88,6 +88,9 @@ class Linter
   getEditorLinter: (editor) ->
     @editors.ofTextEditor(editor)
 
+  getEditorLinterByPath: (path) ->
+    @editors.ofPath(path)
+
   eachEditorLinter: (callback) ->
     @editors.forEach(callback)
 
@@ -104,6 +107,7 @@ class Linter
       @linters.lint({onChange, editorLinter})
     editorLinter.onDidDestroy =>
       @messages.deleteEditorMessages(editor)
+    @views.notifyEditor(editorLinter)
 
   deactivate: ->
     @subscriptions.dispose()
