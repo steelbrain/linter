@@ -41,13 +41,11 @@ class LinterViews
   notifyEditors: ({added, removed}) ->
     removed.forEach (message) =>
       return unless message.filePath and message.range
-      unless editorLinter = @linter.getEditorLinterByPath(message.filePath)
-        return
+      return unless editorLinter = @linter.getEditorLinterByPath(message.filePath)
       editorLinter.removeMessage(message)
     added.forEach (message) =>
       return unless message.filePath and message.range
-      unless editorLinter = @linter.getEditorLinterByPath(message.filePath)
-        return
+      return unless editorLinter = @linter.getEditorLinterByPath(message.filePath)
       editorLinter.addMessage(message)
 
   notifyEditor: (editorLinter) ->
