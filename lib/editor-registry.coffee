@@ -20,7 +20,6 @@ class EditorRegistry
     @editorLinters.set(textEditor, editorLinter)
     editorLinter.onDidDestroy =>
       @editorLinters.delete(textEditor)
-      editorLinter.dispose()
     @emitter.emit('observe', editorLinter)
     return editorLinter
 
