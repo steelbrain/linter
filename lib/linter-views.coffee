@@ -98,7 +98,7 @@ class LinterViews
   renderBubbleContent: (message) ->
     bubble = document.createElement 'div'
     bubble.id = 'linter-inline'
-    bubble.appendChild Message.fromMessage(message)
+    bubble.appendChild Message.fromMessage(message, false)
     if message.trace then message.trace.forEach (trace) ->
       element = Message.fromMessage(trace)
       bubble.appendChild element
