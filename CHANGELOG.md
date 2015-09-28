@@ -1,5 +1,6 @@
 ## Upcoming
 
+* Deprecated self-APIs `Linter::{onDidChangeMessages, onDidChangeProjectMessages, getProjectMessages, setProjectMessages, deleteProjectMessages}` have been removed
 * Add new `gutterEnabled` and `gutterPosition` configurations
 * Removed EditorLinter::destroy in favor of EditorLinter::dispose
 * `.icon-right::before` css selector has been replaced by `.linter-gutter` of the new linter gutter element.
