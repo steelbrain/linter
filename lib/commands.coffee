@@ -23,7 +23,7 @@ class Commands
     return unless activeEditor
     editorLinter = @linter.getEditorLinter(activeEditor)
     if editorLinter
-      editorLinter.destroy()
+      editorLinter.dispose()
     else
       @linter.createEditorLinter(activeEditor)
       @lint()

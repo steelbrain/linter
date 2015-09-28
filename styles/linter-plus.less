@@ -138,12 +138,13 @@ linter-bottom-tab {
     margin-left: .2em;
   }
 }
-
-atom-text-editor::shadow .linter-highlight .icon-right{
-  visibility: visible;
-  &::before{
-    content: @primitive-dot;
-  }
+atom-text-editor::shadow .linter-gutter {
+  height: 7px !important;
+  width: 7px;
+  display: block;
+  margin-left: 2px;
+  margin-top: 6px;
+  border-radius: 50%;
 }
 // Styling Error Types
 atom-text-editor::shadow .linter-highlight, .linter-highlight{
@@ -157,7 +158,7 @@ atom-text-editor::shadow .linter-highlight, .linter-highlight{
       background-color: @background-color-error;
       color: white;
     }
-    .icon-right::before{
+    .linter-gutter{
       color: @background-color-error;
     }
     .region {
@@ -169,7 +170,7 @@ atom-text-editor::shadow .linter-highlight, .linter-highlight{
       background-color: @background-color-warning;
       color: white;
     }
-    .icon-right::before{
+    .linter-gutter{
       color: @background-color-warning;
     }
     .region {
@@ -181,7 +182,7 @@ atom-text-editor::shadow .linter-highlight, .linter-highlight{
       background-color: @background-color-info;
       color: white;
     }
-    .icon-right::before{
+    .linter-gutter{
       color: @background-color-info;
     }
     .region {

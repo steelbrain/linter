@@ -23,6 +23,17 @@ module.exports =
       type: 'boolean'
       default: true
       order: 3
+    gutterEnabled:
+      title: 'Highlight error lines in gutter'
+      type: 'boolean'
+      default: true
+      order: 3
+    gutterPosition:
+      title: 'Position of gutter highlights'
+      enum: ['Left', 'Right']
+      default: 'Right'
+      order: 3
+      type: 'string'
     underlineIssues:
       title: 'Underline Issues'
       type: 'boolean'
