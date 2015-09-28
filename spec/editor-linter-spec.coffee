@@ -64,6 +64,23 @@ describe 'editor-linter', ->
       expect(messageChange.mostRecentCall.args[0].type).toBe('delete')
       expect(messageChange.mostRecentCall.args[0].message).toBe(message)
 
+  describe '::{handle, add, remove}Gutter', ->
+    it 'handles the attachment and detachment of gutter to text editor', ->
+      editorLinter.gutterEnabled = false
+      expect(editorLinter.gutter is null).toBe(true)
+      editorLinter.gutterEnabled = true
+      editorLinter.handleGutter()
+      expect(editorLinter.gutter is null).toBe(false)
+      editorLinter.gutterEnabled = false
+      editorLinter.handleGutter()
+      expect(editorLinter.gutter is null).toBe(true)
+      editorLinter.addGutter()
+      expect(editorLinter.gutter is null).toBe(false)
+      editorLinter.removeGutter()
+      expect(editorLinter.gutter is null).toBe(true)
+      editorLinter.removeGutter()
+      expect(editorLinter.gutter is null).toBe(true)
+
   describe '::onShouldLint', ->
     it 'ignores instant save requests', ->
       timesTriggered = 0
