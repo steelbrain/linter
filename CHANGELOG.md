@@ -2,7 +2,7 @@
 
 * Removed EditorLinter::destroy in favor of EditorLinter::dispose
 * `.icon-right::before` css selector has been replaced by `.linter-gutter` of the new linter gutter element.
-* Added `onDidMessage{Add, Remove, Change}` listeners on EditorLinter for self-api consumers
+* Added `onDidMessage{Add, Remove, Delete}` listeners on EditorLinter for self-api consumers
 * Added EditorLinter::getMessages API for getting messages specific to that editor linter.
 * Linter now supports decorating multiple panes at the same time. Decorations are no longer removed and re-added on tab changed, only added to the new tab. Which could improve the tab switch performance with large errors.
 * Multiline messages render correctly by allowing overflow and using flexbox to enable single line output of the location.

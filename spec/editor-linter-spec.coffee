@@ -43,7 +43,7 @@ describe 'editor-linter', ->
       editorLinter.deleteMessage(message)
       expect(messageSet.has(message)).toBe(false)
 
-  describe '::onDidMessage*', ->
+  describe '::onDidMessage{Add, Change, Delete}', ->
     it 'notifies us of the changes to messages', ->
       message = getMessage('Hey!', __dirname + '/fixtures/file.txt', [[0, 1], [0, 2]])
       messageAdd = jasmine.createSpy('messageAdd')
@@ -51,7 +51,7 @@ describe 'editor-linter', ->
       messageRemove = jasmine.createSpy('messageRemove')
       editorLinter.onDidMessageAdd(messageAdd)
       editorLinter.onDidMessageChange(messageChange)
-      editorLinter.onDidMessageRemove(messageRemove)
+      editorLinter.onDidMessageDelete(messageRemove)
       editorLinter.addMessage(message)
       expect(messageAdd).toHaveBeenCalled()
       expect(messageAdd).toHaveBeenCalledWith(message)
@@ -61,7 +61,7 @@ describe 'editor-linter', ->
       editorLinter.deleteMessage(message)
       expect(messageRemove).toHaveBeenCalled()
       expect(messageRemove).toHaveBeenCalledWith(message)
-      expect(messageChange.mostRecentCall.args[0].type).toBe('remove')
+      expect(messageChange.mostRecentCall.args[0].type).toBe('delete')
       expect(messageChange.mostRecentCall.args[0].message).toBe(message)
 
   describe '::onShouldLint', ->
