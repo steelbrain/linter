@@ -31,7 +31,7 @@ describe 'editor-linter', ->
       message = getMessage('Hey!', __dirname + '/fixtures/file.txt', [[0, 1], [0, 2]])
       editorLinter.addMessage(message)
       expect(textEditor.getDecorations().length).toBe(countDecorations + 1)
-      editorLinter.removeMessage(message)
+      editorLinter.deleteMessage(message)
       expect(textEditor.getDecorations().length).toBe(countDecorations)
 
   describe '::getMessages', ->
@@ -40,7 +40,7 @@ describe 'editor-linter', ->
       messageSet = editorLinter.getMessages()
       editorLinter.addMessage(message)
       expect(messageSet.has(message)).toBe(true)
-      editorLinter.removeMessage(message)
+      editorLinter.deleteMessage(message)
       expect(messageSet.has(message)).toBe(false)
 
   describe '::onDidMessage*', ->
@@ -58,7 +58,7 @@ describe 'editor-linter', ->
       expect(messageChange).toHaveBeenCalled()
       expect(messageChange.mostRecentCall.args[0].type).toBe('add')
       expect(messageChange.mostRecentCall.args[0].message).toBe(message)
-      editorLinter.removeMessage(message)
+      editorLinter.deleteMessage(message)
       expect(messageRemove).toHaveBeenCalled()
       expect(messageRemove).toHaveBeenCalledWith(message)
       expect(messageChange.mostRecentCall.args[0].type).toBe('remove')

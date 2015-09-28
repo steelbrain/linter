@@ -42,7 +42,7 @@ class LinterViews
     removed.forEach (message) =>
       return unless message.filePath and message.range
       return unless editorLinter = @linter.getEditorLinterByPath(message.filePath)
-      editorLinter.removeMessage(message)
+      editorLinter.deleteMessage(message)
     added.forEach (message) =>
       return unless message.filePath and message.range
       return unless editorLinter = @linter.getEditorLinterByPath(message.filePath)
