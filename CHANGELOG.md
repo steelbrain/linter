@@ -1,5 +1,6 @@
 ## Upcoming
 
+* Removed EditorLinter::destroy in favor of EditorLinter::dispose
 * `.icon-right::before` css selector has been replaced by `.linter-gutter` of the new linter gutter element.
 * Added `onDidMessage{Add, Remove, Change}` listeners on EditorLinter for self-api consumers
 * Added EditorLinter::getMessages API for getting messages specific to that editor linter.
