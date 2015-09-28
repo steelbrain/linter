@@ -34,6 +34,15 @@ describe 'editor-linter', ->
       editorLinter.removeMessage(message)
       expect(textEditor.getDecorations().length).toBe(countDecorations)
 
+  describe '::getMessages', ->
+    it 'returns a set of messages', ->
+      message = getMessage('Hey!', __dirname + '/fixtures/file.txt', [[0, 1], [0, 2]])
+      messageSet = editorLinter.getMessages()
+      editorLinter.addMessage(message)
+      expect(messageSet.has(message)).toBe(true)
+      editorLinter.removeMessage(message)
+      expect(messageSet.has(message)).toBe(false)
+
   describe '::onShouldLint', ->
     it 'ignores instant save requests', ->
       timesTriggered = 0
