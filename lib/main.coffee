@@ -84,14 +84,6 @@ module.exports =
   activate: (@state) ->
     LinterPlus = require('./linter.coffee')
     @instance = new LinterPlus state
-    {deprecate} = require('grim')
-    for atomPackage in atom.packages.getLoadedPackages()
-      deprecate('AtomLinter legacy API has been removed.
-        Please refer to the Linter docs to update and the latest API:
-        https://github.com/atom-community/linter/wiki/Migrating-to-the-new-API', {
-        packageName: atomPackage.name
-      }) if atomPackage.metadata['linter-package']
-
 
   serialize: ->
     @state

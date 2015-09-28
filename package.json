@@ -30,8 +30,5 @@
         "0.1.0": "provideLinter"
       }
     }
-  },
-  "dependencies": {
-    "grim": "^1.4.1"
   }
 }
