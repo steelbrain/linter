@@ -21,6 +21,7 @@ module.exports = Validate =
   messages: (messages, linter) ->
     unless messages instanceof Array
       throw new Error("Expected messages to be array, provided: #{typeof messages}")
+    throw new Error 'No linter provided' unless linter
     messages.forEach (result) ->
       if result.type
         throw new Error 'Invalid type field on Linter Response' if typeof result.type isnt 'string'
@@ -32,9 +33,12 @@ module.exports = Validate =
         throw new Error 'Invalid text field on Linter Response' if typeof result.text isnt 'string'
       else
         throw new Error 'Missing html/text field on Linter Response'
+      if result.trace
+        throw new Error 'Invalid trace field on Lintere Response' unless result.trace instanceof Array
+      else result.trace = null
       result.range = Range.fromObject result.range if result.range?
       result.key = JSON.stringify(result)
       result.class = result.type.toLowerCase().replace(' ', '-')
       result.linter = linter.name
-      Validate.messages(result.trace) if result.trace
+      Validate.messages(result.trace) if result.trace and result.trace.length
     return undefined
