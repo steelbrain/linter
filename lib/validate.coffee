@@ -40,5 +40,5 @@ module.exports = Validate =
       result.key = JSON.stringify(result)
       result.class = result.type.toLowerCase().replace(' ', '-')
       result.linter = linter.name
-      Validate.messages(result.trace) if result.trace and result.trace.length
+      Validate.messages(result.trace, linter) if result.trace and result.trace.length
     return undefined
