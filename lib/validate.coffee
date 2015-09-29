@@ -12,6 +12,10 @@ module.exports = Validate =
       throw new Error("linter.lint isn't a function on provider") if typeof linter.lint isnt 'function'
     else
       throw new Error('Missing linter.lint on provider')
+    if linter.name
+      throw new Error('Linter.name must be a string') if typeof linter.name isnt 'string'
+    else
+      linter.name = null
     return true
 
   messages: (messages) ->
