@@ -18,7 +18,7 @@ module.exports = Validate =
       linter.name = null
     return true
 
-  messages: (messages) ->
+  messages: (messages, linter) ->
     unless messages instanceof Array
       throw new Error("Expected messages to be array, provided: #{typeof messages}")
     messages.forEach (result) ->
@@ -35,5 +35,6 @@ module.exports = Validate =
       result.range = Range.fromObject result.range if result.range?
       result.key = JSON.stringify(result)
       result.class = result.type.toLowerCase().replace(' ', '-')
+      result.linter = linter.name
       Validate.messages(result.trace) if result.trace
     return undefined
