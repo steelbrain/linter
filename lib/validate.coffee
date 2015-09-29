@@ -34,7 +34,7 @@ module.exports = Validate =
       else
         throw new Error 'Missing html/text field on Linter Response'
       if result.trace
-        throw new Error 'Invalid trace field on Lintere Response' unless result.trace instanceof Array
+        throw new Error 'Invalid trace field on Linter Response' unless result.trace instanceof Array
       else result.trace = null
       result.range = Range.fromObject result.range if result.range?
       result.key = JSON.stringify(result)
