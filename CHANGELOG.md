@@ -1,4 +1,4 @@
-## Upcoming
+## 1.7.0
 
 * Add `showProviderName` config
 * Deprecated self-APIs `Linter::{onDidChangeMessages, onDidChangeProjectMessages, getProjectMessages, setProjectMessages, deleteProjectMessages}` have been removed
