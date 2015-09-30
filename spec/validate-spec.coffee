@@ -53,3 +53,8 @@ describe 'validate', ->
       expect ->
         validate.messages([{type: 'Error', text: []}])
       .toThrow()
+    it 'throws if trace is invalid', ->
+      expect ->
+        validate.messages([{type: 'Error', html: 'a', trace: 1}], {name: ''})
+      .toThrow()
+      validate.messages([{type: 'Error', html: 'a', trace: false}], {name: ''})

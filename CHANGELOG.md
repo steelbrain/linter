@@ -1,6 +1,7 @@
 ## Upcoming
 
 * Linter bottom panel is now resizable
+* Add `showProviderName` config
 * Deprecated self-APIs `Linter::{onDidChangeMessages, onDidChangeProjectMessages, getProjectMessages, setProjectMessages, deleteProjectMessages}` have been removed
 * Add new `gutterEnabled` and `gutterPosition` configurations
 * Removed EditorLinter::destroy in favor of EditorLinter::dispose
