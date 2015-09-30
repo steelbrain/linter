@@ -1,5 +1,6 @@
 ## Upcoming
 
+* Add `showProviderName` config
 * Deprecated self-APIs `Linter::{onDidChangeMessages, onDidChangeProjectMessages, getProjectMessages, setProjectMessages, deleteProjectMessages}` have been removed
 * Add new `gutterEnabled` and `gutterPosition` configurations
 * Removed EditorLinter::destroy in favor of EditorLinter::dispose

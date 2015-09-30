@@ -39,6 +39,11 @@ module.exports =
       type: 'boolean'
       default: true
       order: 3
+    showProviderName:
+      title: 'Show Provider Name (when available)'
+      type: 'boolean'
+      default: true
+      order: 3
 
     showErrorPanel:
       title: 'Show Error Panel at the Bottom'
