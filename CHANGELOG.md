@@ -1,3 +1,7 @@
+## 1.7.1
+
+* Fix a crash that would happen if message has a filePath but doesn't have a link in DOM
+
 ## 1.7.0
 
 * Add `showProviderName` config
