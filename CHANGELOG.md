@@ -1,3 +1,7 @@
+## Upcoming
+
+* Improve rendering of multiline messages to align with recent single line changes
+
 ## 1.7.2
 
 * Fixed links for multiline messages
