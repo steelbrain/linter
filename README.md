@@ -9,7 +9,7 @@ Linter
 
 Linter is a base linter provider for the Hackable [Atom Editor](http://atom.io).
 
-It provides a top-level API to it's consumer that allow them to visualize errors and other kind-of messages, easily.
+It provides a top-level API to its consumer that allows them to visualize errors and other kind-of messages, easily.
 
 
 ![Preview](http://g.recordit.co/13RfmirPz2.gif)
