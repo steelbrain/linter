@@ -150,7 +150,7 @@ describe 'linter-registry', ->
         lintOnFly: false
         modifiesBuffer: false
         scope: 'file'
-        lint: -> return [{type: "Error", text: "Something"}]
+        lint: -> return [{type: 'Error', text: 'Something'}]
       }
       info = undefined
       linterRegistry.addLinter(linter)

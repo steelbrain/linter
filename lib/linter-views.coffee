@@ -28,8 +28,8 @@ class LinterViews
     @subscriptions.add @bottomContainer.onDidChangeTab =>
       atom.config.set('linter.showErrorPanel', true)
       @panel.refresh(@state.scope)
-    @subscriptions.add @bottomContainer.onShouldTogglePanel =>
-      atom.config.set('linter.showErrorPanel', !atom.config.get('linter.showErrorPanel'))
+    @subscriptions.add @bottomContainer.onShouldTogglePanel ->
+      atom.config.set('linter.showErrorPanel', not atom.config.get('linter.showErrorPanel'))
 
   render: ({added, removed, messages}) ->
     @messages = @classifyMessages(messages)
@@ -113,7 +113,7 @@ class LinterViews
       @bottomBar?.destroy()
       @bottomBar = statusBar["add#{statusIconPosition}Tile"]
         item: @bottomContainer,
-        priority: if statusIconPosition == 'Left' then -100 else 100
+        priority: if statusIconPosition is 'Left' then -100 else 100
     )
     @subscriptions.add atom.config.observe('linter.displayLinterInfo', (displayLinterInfo) =>
       @bottomContainer.setVisibility(displayLinterInfo)

@@ -106,9 +106,9 @@ describe 'message-registry', ->
       # We need a file-scoped linter that returns different errors each lint
       linter.scope = 'file'
       lintCount = 0
-      linter.lint = () ->
+      linter.lint = ->
         lintId = lintCount++
-        [{key: lintId, type: "Error " + lintId, text: "Something"}]
+        [{key: lintId, type: 'Error ' + lintId, text: 'Something'}]
       leftPane = atom.workspace.getActivePane()
       rightPane = leftPane.splitRight({copyActiveItem: true})
       rightEditorLinter = new EditorLinter(rightPane.getActiveItem())
@@ -123,7 +123,7 @@ describe 'message-registry', ->
 
     runLint = (editorLinter) ->
       atom.workspace.paneForItem(editorLinter.editor).activate()
-      linterRegistry.lint({onChange: false, editorLinter}).then () ->
+      linterRegistry.lint({onChange: false, editorLinter}).then ->
         returnDetails = messageUpdateDetails
         messageUpdateDetails = null
         returnDetails
