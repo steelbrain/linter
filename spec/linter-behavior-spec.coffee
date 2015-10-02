@@ -4,13 +4,12 @@ describe 'Linter Behavior', ->
   bottomContainer = null
   {getLinter} = require('./common')
   trigger = (el, name) ->
-    event = document.createEvent('HTMLEvents');
-    event.initEvent(name, true, false);
-    el.dispatchEvent(event);
+    event = document.createEvent('HTMLEvents')
+    event.initEvent(name, true, false)
+    el.dispatchEvent(event)
 
   getMessage = (type, filePath) ->
-    return {type, text: "Some Message", filePath, range: [[0, 0], [1,1]]}
-
+    return {type, text: 'Some Message', filePath, range: [[0, 0], [1, 1]]}
 
   beforeEach ->
     waitsForPromise ->

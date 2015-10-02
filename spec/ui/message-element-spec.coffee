@@ -3,7 +3,7 @@ describe 'Message Element', ->
   filePath = __dirname + '/fixtures/file.txt'
 
   getMessage = (type) ->
-    return {type, text: "Some Message", filePath}
+    return {type, text: 'Some Message', filePath}
   visibleText = (element) ->
     cloned = element.cloneNode(true)
     Array.prototype.forEach.call(cloned.querySelectorAll('[hidden]'), (item) ->

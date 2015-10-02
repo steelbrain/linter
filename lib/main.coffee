@@ -10,7 +10,7 @@ module.exports =
       order: 1
 
     ignoredMessageTypes:
-      title: "Ignored message Types"
+      title: 'Ignored message Types'
       type: 'array'
       default: []
       items:
@@ -74,7 +74,7 @@ module.exports =
       default: true
       order: 5
     statusIconScope:
-      title: "Scope of messages to show in status icon"
+      title: 'Scope of messages to show in status icon'
       type: 'string'
       enum: ['File', 'Line', 'Project']
       default: 'Project'

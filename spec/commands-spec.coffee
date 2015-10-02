@@ -10,7 +10,7 @@ describe 'Commands', ->
     it 'toggles the panel visibility', ->
       visibility = linter.views.panel.getVisibility()
       linter.commands.togglePanel()
-      expect(linter.views.panel.getVisibility()).toBe(!visibility)
+      expect(linter.views.panel.getVisibility()).toBe(not visibility)
       linter.commands.togglePanel()
       expect(linter.views.panel.getVisibility()).toBe(visibility)
 

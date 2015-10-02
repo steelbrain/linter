@@ -16,7 +16,7 @@ class Commands
     @index = null
 
   togglePanel: ->
-    atom.config.set('linter.showErrorPanel', !atom.config.get('linter.showErrorPanel'))
+    atom.config.set('linter.showErrorPanel', not atom.config.get('linter.showErrorPanel'))
 
   toggleLinter: ->
     activeEditor = atom.workspace.getActiveTextEditor()

@@ -10,7 +10,7 @@ describe 'BottomPanel', ->
         linter = atom.packages.getActivePackage('linter').mainModule.instance
 
   getMessage = (type, filePath) ->
-    return {type, text: "Some Message", filePath}
+    return {type, text: 'Some Message', filePath}
 
   it 'remains visible when theres no active pane', ->
     expect(linter.views.panel.getVisibility()).toBe(true)

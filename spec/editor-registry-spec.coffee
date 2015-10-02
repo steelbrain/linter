@@ -37,7 +37,7 @@ describe 'editor-registry', ->
       expect(editorRegistry.ofTextEditor(null)).toBeUndefined()
       expect(editorRegistry.ofTextEditor(1)).toBeUndefined()
       expect(editorRegistry.ofTextEditor(5)).toBeUndefined()
-      expect(editorRegistry.ofTextEditor("asd")).toBeUndefined()
+      expect(editorRegistry.ofTextEditor('asd')).toBeUndefined()
     it 'returns editorLinter when valid key is provided', ->
       activeEditor = atom.workspace.getActiveTextEditor()
       expect(editorRegistry.ofTextEditor(activeEditor)).toBeUndefined()
@@ -49,7 +49,7 @@ describe 'editor-registry', ->
       expect(editorRegistry.ofPath(null)).toBeUndefined()
       expect(editorRegistry.ofPath(1)).toBeUndefined()
       expect(editorRegistry.ofPath(5)).toBeUndefined()
-      expect(editorRegistry.ofPath("asd")).toBeUndefined()
+      expect(editorRegistry.ofPath('asd')).toBeUndefined()
     it 'returns editorLinter when valid key is provided', ->
       activeEditor = atom.workspace.getActiveTextEditor()
       editorPath = activeEditor.getPath()
