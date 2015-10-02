@@ -5,7 +5,7 @@
 
 linter-message {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   font-size: @font-size;
   line-height: 1.2;
 }
@@ -16,37 +16,40 @@ linter-message {
 
 .linter-highlight {
   flex: 0 0 auto;
+  align-self: flex-start;
 }
 
 .linter-message-link {
-  float: right;
-  margin: 0 0 @spacing @spacing;
+  margin: 0 0 0 @spacing;
+}
+
+linter-message-line {
+  white-space: pre-wrap; /* Enable whitespace to be maintained from the user message. */
 }
 
 linter-multiline-message {
-  display: block;
-  pointer-events: auto;
-  linter-message-line {
-    display: block;
-    white-space: pre;
-  }
-  linter-message-line:not(:first-child) {
-    display: none;
-    margin-left: 1.1em;
-  }
-  linter-message-line:first-child:not(:nth-last-of-type(1))::before {
+  cursor: pointer;
+
+  &::before {
     font-family: 'Octicons Regular';
     content: @triangle-right;
     display: inline-block;
     width: 1em;
-    margin-right: 0.1em;
+    margin-right: 0.2em;
     text-align: center;
     height: 1em;
   }
-  &:focus, &.expanded {
-    linter-message-line:first-child:not(:nth-last-of-type(1))::before {
+
+  linter-message-line:not(:first-child) {
+    display: none;
+    margin-left: 1.2em;
+  }
+
+  &.expanded {
+    &::before {
       content: @triangle-down;
     }
+
     linter-message-line:not(:first-child) {
       display: block;
     }

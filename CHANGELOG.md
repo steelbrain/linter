@@ -1,6 +1,19 @@
 ## Upcoming
 
+* Improve rendering of multiline messages to align with recent single line changes
+* Enable clicking on multiline messages to view next lines
 * Linter bottom panel is now resizable
+
+## 1.7.2
+
+* Fixed links for multiline messages
+
+## 1.7.1
+
+* Fix a crash that would happen if message has a filePath but doesn't have a link in DOM
+
+## 1.7.0
+
 * Add `showProviderName` config
 * Deprecated self-APIs `Linter::{onDidChangeMessages, onDidChangeProjectMessages, getProjectMessages, setProjectMessages, deleteProjectMessages}` have been removed
 * Add new `gutterEnabled` and `gutterPosition` configurations
