@@ -5,6 +5,7 @@
 * Add default styles for `Info` type
 * Aligned bottom panel buttons
 * Made the text in the bottom panel selectable
+* Add a new `class` attribute for providers (when class is provided, no class is automatically added).
 
 ## 1.7.2
 
