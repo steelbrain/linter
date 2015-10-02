@@ -36,9 +36,12 @@ module.exports = Validate =
       if result.trace
         throw new Error 'Invalid trace field on Linter Response' unless result.trace instanceof Array
       else result.trace = null
+      if result.class
+        throw new Error 'Invalid class field on Linter Response' if typeof result.class isnt 'string'
+      else
+        result.class = result.type.toLowerCase().replace(' ', '-')
       result.range = Range.fromObject result.range if result.range?
       result.key = JSON.stringify(result)
-      result.class = result.type.toLowerCase().replace(' ', '-')
       result.linter = linter.name
       Validate.messages(result.trace, linter) if result.trace and result.trace.length
     return undefined

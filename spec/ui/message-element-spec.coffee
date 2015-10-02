@@ -31,3 +31,13 @@ describe 'Message Element', ->
     messageElement.updateVisibility('Line')
     expect(messageElement.hasAttribute('hidden')).toBe(false)
     expect(visibleText(messageElement).indexOf(filePath) is -1).toBe(true)
+
+  it 'plays nice with class attribute', ->
+    message = getMessage('Error')
+    message.class = 'Well Hello'
+    messageElement = Message.fromMessage(message, 'Project')
+    messageElement.attachedCallback()
+
+    expect(messageElement.querySelector('.Well') instanceof Element).toBe(true)
+    expect(messageElement.querySelector('.Hello') instanceof Element).toBe(true)
+    expect(messageElement.querySelector('.haha')).toBe(null)
