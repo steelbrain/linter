@@ -5,7 +5,7 @@
 * Add default styles for `Info` type
 * Aligned bottom panel buttons
 * Made the text in the bottom panel selectable
-* Linter bottom panel is now resizable
+* Linter bottom panel is now resizable (Drag the height down to 0 to reset your changes)
 
 ## 1.7.2
 
