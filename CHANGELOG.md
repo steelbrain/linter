@@ -2,6 +2,7 @@
 
 * Improve rendering of multiline messages to align with recent single line changes
 * Enable clicking on multiline messages to view next lines
+* Add default styles for `Info` type
 
 ## 1.7.2
 
