@@ -30,5 +30,8 @@
         "0.1.0": "provideLinter"
       }
     }
+  },
+  "dependencies": {
+    "interact.js": "^1.2.5"
   }
 }
