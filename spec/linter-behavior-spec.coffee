@@ -27,14 +27,18 @@ describe 'Linter Behavior', ->
       expect(linterState.scope).toBe('Project')
 
     it 'toggles panel visibility on click', ->
+      # Set up errors.
+      linter.views.panel.setMessages({added: [getMessage('Error')], removed: []})
+
+      trigger(bottomContainer.getTab('Project'), 'click')
       expect(linter.views.panel.getVisibility()).toBe(true)
-      trigger(bottomContainer.getTab('File'), 'click')
+      trigger(bottomContainer.getTab('Project'), 'click')
       expect(linter.views.panel.getVisibility()).toBe(false)
-      trigger(bottomContainer.getTab('File'), 'click')
-      expect(linter.views.panel.getVisibility()).toBe(true)
 
     it 're-enables panel when another tab is clicked', ->
-      expect(linter.views.panel.getVisibility()).toBe(true)
+      # Set up errors.
+      linter.views.panel.setMessages({added: [getMessage('Error')], removed: []})
+
       trigger(bottomContainer.getTab('File'), 'click')
       expect(linter.views.panel.getVisibility()).toBe(false)
       trigger(bottomContainer.getTab('Project'), 'click')
@@ -49,9 +53,11 @@ describe 'Linter Behavior', ->
       waitsForPromise ->
         atom.workspace.open('file.txt').then ->
           expect(bottomContainer.getTab('File').count).toBe(1)
+          expect(linter.views.panel.getVisibility()).toBe(true)
           atom.workspace.open('/tmp/non-existing-file')
         .then ->
           expect(bottomContainer.getTab('File').count).toBe(0)
+          expect(linter.views.panel.getVisibility()).toBe(false)
 
   describe 'Markers', ->
     it 'automatically marks files when they are opened if they have any markers', ->

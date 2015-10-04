@@ -59,17 +59,10 @@ linter-multiline-message {
 linter-panel {
   display: block;
   overflow-y: auto;
-  max-height: 150px;
-  &[hidden]{
-    display: none;
-  }
-  padding-left: @spacing;
-  padding-right: @spacing;
-  linter-message:first-child {
-    padding-top: @spacing;
-  }
-  linter-message:last-child {
-    padding-bottom: @spacing;
+  min-height: 2em;
+
+  .linter-messages {
+    padding: @spacing;
   }
 }
 

@@ -12,10 +12,14 @@ describe 'BottomPanel', ->
   getMessage = (type, filePath) ->
     return {type, text: 'Some Message', filePath}
 
-  it 'remains visible when theres no active pane', ->
-    expect(linter.views.panel.getVisibility()).toBe(true)
+  it 'is not visible when there are no errors', ->
+    expect(linter.views.panel.getVisibility()).toBe(false)
 
   it 'hides on config change', ->
+    # Set up visibility.
+    linter.views.panel.scope = 'Project'
+    linter.views.panel.setMessages({added: [getMessage('Error')], removed: []})
+
     expect(linter.views.panel.getVisibility()).toBe(true)
     atom.config.set('linter.showErrorPanel', false)
     expect(linter.views.panel.getVisibility()).toBe(false)
@@ -26,10 +30,10 @@ describe 'BottomPanel', ->
     it 'works as expected', ->
       messages = [getMessage('Error'), getMessage('Warning')]
       bottomPanel.setMessages({added: messages, removed: []})
-      expect(bottomPanel.element.childNodes.length).toBe(2)
+      expect(bottomPanel.element.childNodes[0].childNodes.length).toBe(2)
       bottomPanel.setMessages({added: [], removed: messages})
-      expect(bottomPanel.element.childNodes.length).toBe(0)
+      expect(bottomPanel.element.childNodes[0].childNodes.length).toBe(0)
       bottomPanel.setMessages({added: messages, removed: []})
-      expect(bottomPanel.element.childNodes.length).toBe(2)
+      expect(bottomPanel.element.childNodes[0].childNodes.length).toBe(2)
       bottomPanel.removeMessages(messages)
-      expect(bottomPanel.element.childNodes.length).toBe(0)
+      expect(bottomPanel.element.childNodes[0].childNodes.length).toBe(0)
