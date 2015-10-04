@@ -7,6 +7,7 @@
 * Made the text in the bottom panel selectable
 * Linter bottom panel is now resizable (Drag the height down to 0 to reset your changes)
 * Add a new `class` attribute for providers (when class is provided, no class is automatically added).
+* Fix linter gutter dot alignment across themes and zoom level.
 
 ## 1.7.2
 

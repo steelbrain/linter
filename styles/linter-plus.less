@@ -140,14 +140,23 @@ linter-bottom-tab {
     margin-left: .2em;
   }
 }
+
+atom-text-editor::shadow .linter-row {
+  /* Take up the full allowed width */
+  left: 0;
+  right: 0;
+  /* Align the linter dot in the middle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 atom-text-editor::shadow .linter-gutter {
-  height: 7px !important;
-  width: 7px;
-  display: block;
-  margin-left: 2px;
-  margin-top: 6px;
+  height: 0.5em !important;
+  width: 0.5em;
   border-radius: 50%;
 }
+
 // Styling Error Types
 atom-text-editor::shadow .linter-highlight, .linter-highlight{
   &.badge {
