@@ -1,4 +1,4 @@
-## Upcoming
+## 1.8.0
 
 * Improve rendering of multiline messages to align with recent single line changes
 * Enable clicking on multiline messages to view next lines
