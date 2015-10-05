@@ -25,7 +25,7 @@ describe 'editor-registry', ->
       expect(editorRegistry.editorLinters.size).toBe(0)
 
   describe '::has', ->
-    it 'returns the status of existance', ->
+    it 'returns the status of existence', ->
       editor = atom.workspace.getActiveTextEditor()
       expect(editorRegistry.has(1)).toBe(false)
       expect(editorRegistry.has(false)).toBe(false)
