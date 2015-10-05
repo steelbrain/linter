@@ -1,5 +1,6 @@
 ## Upcoming
 
+* Workaround an atom bug where moving an editor between panes would throw an error
 * Allow panel resize to persist
 * Add option to always have the panel to fill the minimum space
 * Fix issue where external scope errors would cause panel to continue displaying
