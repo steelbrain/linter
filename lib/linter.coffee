@@ -77,6 +77,8 @@ class Linter
     @editors.observe(callback)
 
   createEditorLinter: (editor) ->
+    return if @editors.has(editor)
+
     editorLinter = @editors.create(editor)
     editorLinter.onShouldUpdateBubble =>
       @views.renderBubble()
