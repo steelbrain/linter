@@ -23,6 +23,9 @@ class EditorRegistry
     @emitter.emit('observe', editorLinter)
     return editorLinter
 
+  has: (textEditor) ->
+    return @editorLinters.has(textEditor)
+
   forEach: (callback) ->
     @editorLinters.forEach(callback)
 
