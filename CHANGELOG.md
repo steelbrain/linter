@@ -1,4 +1,4 @@
-## Upcoming
+## 1.8.1
 
 * Workaround an atom bug where moving an editor between panes would throw an error
 * Allow panel resize to persist
