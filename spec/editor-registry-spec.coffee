@@ -24,6 +24,18 @@ describe 'editor-registry', ->
       atom.workspace.destroyActivePaneItem()
       expect(editorRegistry.editorLinters.size).toBe(0)
 
+  describe '::has', ->
+    it 'returns the status of existance', ->
+      editor = atom.workspace.getActiveTextEditor()
+      expect(editorRegistry.has(1)).toBe(false)
+      expect(editorRegistry.has(false)).toBe(false)
+      expect(editorRegistry.has([])).toBe(false)
+      expect(editorRegistry.has(editor)).toBe(false)
+      editorRegistry.create(editor)
+      expect(editorRegistry.has(editor)).toBe(true)
+      atom.workspace.destroyActivePaneItem()
+      expect(editorRegistry.has(editor)).toBe(false)
+
   describe '::forEach', ->
     it 'calls the callback once per editorLinter', ->
       editorRegistry.create(atom.workspace.getActiveTextEditor())
