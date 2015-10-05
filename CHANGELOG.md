@@ -1,3 +1,9 @@
+## Upcoming
+
+* Allow panel resize to persist
+* Add option to always have the panel to fill the minimum space
+* Fix issue where external scope errors would cause panel to continue displaying
+
 ## 1.8.0
 
 * Improve rendering of multiline messages to align with recent single line changes
