@@ -1,7 +1,7 @@
 ## Upcoming
 
 * Fix compatibility with upcoming version of atom
-* Remove self-API exported EditorLinter API (EditorLinter::getMessages)
+* Support for buffer modifying linters has been removed (We don't think anybody was using them anyway)
 
 ## 1.8.1
 
