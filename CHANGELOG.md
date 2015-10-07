@@ -1,3 +1,7 @@
+## Upcoming
+
+* Fix compatibility with upcoming version of atom
+
 ## 1.8.1
 
 * Workaround an atom bug where moving an editor between panes would throw an error
