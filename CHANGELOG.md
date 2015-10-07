@@ -1,7 +1,7 @@
 ## Upcoming
 
 * Fix compatibility with upcoming version of atom
-* Remove internal EditorLinter API (EditorLinter::getMessages)
+* Remove self-API exported EditorLinter API (EditorLinter::getMessages)
 
 ## 1.8.1
 
