@@ -12,9 +12,9 @@ class BottomContainer extends HTMLElement
     @subscriptions = new CompositeDisposable
     @emitter = emitter = new Emitter
     @tabs =
-      Line: new BottomTab().prepare('Line')
-      File: new BottomTab().prepare('File')
-      Project: new BottomTab().prepare('Project')
+      Line: BottomTab.create('Line')
+      File: BottomTab.create('File')
+      Project: BottomTab.create('Project')
     @status = new BottomStatus()
     Me = this
 
