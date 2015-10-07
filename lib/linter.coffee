@@ -18,7 +18,7 @@ class Linter
     @linters = new (require('./linter-registry'))()
     @editors = new (require('./editor-registry'))()
     @messages = new (require('./message-registry'))()
-    @views = new LinterViews(this)
+    @views = new LinterViews(state.scope, @editors)
     @commands = new Commands(this)
 
     @subscriptions = new CompositeDisposable(@views, @editors, @linters, @messages, @commands)
@@ -88,7 +88,7 @@ class Linter
       @linters.lint({onChange, editorLinter})
     editorLinter.onDidDestroy =>
       @messages.deleteEditorMessages(editor)
-    @views.notifyEditor(editorLinter)
+    @views.notifyEditorLinter(editorLinter)
 
   deactivate: ->
     @subscriptions.dispose()
