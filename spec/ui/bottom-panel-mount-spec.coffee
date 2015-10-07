@@ -23,11 +23,11 @@ describe 'BottomPanelMount', ->
 
   it 'defaults to visible', ->
     tile = statusBar.getLeftTiles()[0]
-    expect(tile.item.getVisibility()).toBe(true)
+    expect(tile.item.visibility).toBe(true)
 
   it 'toggles on config change', ->
     tile = statusBar.getLeftTiles()[0]
     atom.config.set('linter.displayLinterInfo', false)
-    expect(tile.item.getVisibility()).toBe(false)
+    expect(tile.item.visibility).toBe(false)
     atom.config.set('linter.displayLinterInfo', true)
-    expect(tile.item.getVisibility()).toBe(true)
+    expect(tile.item.visibility).toBe(true)
