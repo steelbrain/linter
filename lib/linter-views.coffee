@@ -11,7 +11,8 @@ class LinterViews
     @subscriptions = new CompositeDisposable
     @messages = []
     @panel = new BottomPanel(@state.scope)
-    @bottomContainer = new BottomContainer().prepare(@linter.state)
+    @bottomContainer = BottomContainer.create()
+    @bottomContainer.activeTab = @state.scope
     @bottomBar = null
     @bubble = null
     @count = File: 0, Line: 0, Project: 0
@@ -113,9 +114,6 @@ class LinterViews
       @bottomBar = statusBar["add#{statusIconPosition}Tile"]
         item: @bottomContainer,
         priority: if statusIconPosition is 'Left' then -100 else 100
-    )
-    @subscriptions.add atom.config.observe('linter.displayLinterInfo', (displayLinterInfo) =>
-      @bottomContainer.setVisibility(displayLinterInfo)
     )
 
   removeBubble: ->
