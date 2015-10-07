@@ -62,20 +62,21 @@ class LinterViews
       @panel.refresh(@state.scope)
 
   classifyMessages: (messages) ->
-    activeEditorLinter = @linter.getActiveEditorLinter()
-    @count.File = if activeEditorLinter then activeEditorLinter.getMessages().size else 0
-    @count.Project = @messages.length
+    filePath = atom.workspace.getActiveTextEditor()?.getPath()
+    @count.File = 0
+    @count.Project = 0
+    for key, message of messages
+      if message.currentFile = (filePath and message.filePath is filePath)
+        @count.File++
+      @count.Project++
     return @classifyMessagesByLine(messages)
 
   classifyMessagesByLine: (messages) ->
-    activeEditorLinter = @linter.getActiveEditorLinter()
-    return unless activeEditorLinter
-    row = atom.workspace.getActiveTextEditor().getCursorBufferPosition().row
+    row = atom.workspace.getActiveTextEditor()?.getCursorBufferPosition().row
     @count.Line = 0
-    activeEditorLinter.getMessages().forEach((message) =>
-      if message.currentLine = (message.range and message.range.intersectsRow(row))
+    for key, message of messages
+      if message.currentLine = (message.currentFile and message.range and message.range.intersectsRow(row))
         @count.Line++
-    )
     return messages
 
   renderBubble: ->
