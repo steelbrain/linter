@@ -26,7 +26,8 @@ class LinterViews
       @renderBubble()
       @renderCount()
       @panel.refresh(@state.scope)
-    @subscriptions.add @bottomContainer.onDidChangeTab =>
+    @subscriptions.add @bottomContainer.onDidChangeTab (scope) =>
+      @state.scope = scope
       atom.config.set('linter.showErrorPanel', true)
       @panel.refresh(@state.scope)
     @subscriptions.add @bottomContainer.onShouldTogglePanel ->
