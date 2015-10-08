@@ -1,11 +1,14 @@
 LinterRegistry = require('../lib/linter-registry')
 EditorLinter = require('../lib/editor-linter')
+Validators = require('../lib/validate')
 
 module.exports =
   getLinter: ->
     return {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'project', lint: -> }
   getMessage: (type, filePath, range) ->
-    return {type, text: 'Some Message', filePath, range}
+    message = {type, text: 'Some Message', filePath, range}
+    Validators.messages([message], {name: 'Some Linter'})
+    return message
   getLinterRegistry: ->
     linterRegistry = new LinterRegistry
     editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
@@ -18,3 +21,7 @@ module.exports =
     }
     linterRegistry.addLinter(linter)
     return {linterRegistry, editorLinter, linter}
+  trigger: (el, name) ->
+    event = document.createEvent('HTMLEvents')
+    event.initEvent(name, true, false)
+    el.dispatchEvent(event)
