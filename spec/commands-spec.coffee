@@ -12,15 +12,15 @@ describe 'Commands', ->
   describe 'linter:togglePanel', ->
     it 'toggles the panel visibility', ->
       # Set up visibility.
-      linter.views.panel.scope = 'Project'
-      linter.views.panel.setMessages({added: [getMessage('Error')], removed: []})
+      linter.views.bottomPanel.scope = 'Project'
+      linter.views.bottomPanel.setMessages({added: [getMessage('Error')], removed: []})
 
-      visibility = linter.views.panel.getVisibility()
+      visibility = linter.views.bottomPanel.getVisibility()
       expect(visibility).toBe(true)
       linter.commands.togglePanel()
-      expect(linter.views.panel.getVisibility()).toBe(not visibility)
+      expect(linter.views.bottomPanel.getVisibility()).toBe(not visibility)
       linter.commands.togglePanel()
-      expect(linter.views.panel.getVisibility()).toBe(visibility)
+      expect(linter.views.bottomPanel.getVisibility()).toBe(visibility)
 
   describe 'linter:toggle', ->
     it 'relint when enabled', ->

@@ -28,21 +28,21 @@ describe 'Linter Behavior', ->
 
     it 'toggles panel visibility on click', ->
       # Set up errors.
-      linter.views.panel.setMessages({added: [getMessage('Error')], removed: []})
+      linter.views.bottomPanel.setMessages({added: [getMessage('Error')], removed: []})
 
       trigger(bottomContainer.getTab('Project'), 'click')
-      expect(linter.views.panel.getVisibility()).toBe(true)
+      expect(linter.views.bottomPanel.getVisibility()).toBe(true)
       trigger(bottomContainer.getTab('Project'), 'click')
-      expect(linter.views.panel.getVisibility()).toBe(false)
+      expect(linter.views.bottomPanel.getVisibility()).toBe(false)
 
     it 're-enables panel when another tab is clicked', ->
       # Set up errors.
-      linter.views.panel.setMessages({added: [getMessage('Error')], removed: []})
+      linter.views.bottomPanel.setMessages({added: [getMessage('Error')], removed: []})
 
       trigger(bottomContainer.getTab('File'), 'click')
-      expect(linter.views.panel.getVisibility()).toBe(false)
+      expect(linter.views.bottomPanel.getVisibility()).toBe(false)
       trigger(bottomContainer.getTab('Project'), 'click')
-      expect(linter.views.panel.getVisibility()).toBe(true)
+      expect(linter.views.bottomPanel.getVisibility()).toBe(true)
 
     it 'updates count on pane change', ->
       provider = getLinter()
@@ -53,11 +53,11 @@ describe 'Linter Behavior', ->
       waitsForPromise ->
         atom.workspace.open('file.txt').then ->
           expect(bottomContainer.getTab('File').count).toBe(1)
-          expect(linter.views.panel.getVisibility()).toBe(true)
+          expect(linter.views.bottomPanel.getVisibility()).toBe(true)
           atom.workspace.open('/tmp/non-existing-file')
         .then ->
           expect(bottomContainer.getTab('File').count).toBe(0)
-          expect(linter.views.panel.getVisibility()).toBe(false)
+          expect(linter.views.bottomPanel.getVisibility()).toBe(false)
 
   describe 'Markers', ->
     it 'automatically marks files when they are opened if they have any markers', ->
