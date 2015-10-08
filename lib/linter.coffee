@@ -88,6 +88,8 @@ class Linter
       @linters.lint({onChange, editorLinter})
     editorLinter.onDidDestroy =>
       @messages.deleteEditorMessages(editor)
+    editorLinter.onDidCalculateLineMessages =>
+      @views.updateCounts()
     @views.notifyEditorLinter(editorLinter)
 
   deactivate: ->
