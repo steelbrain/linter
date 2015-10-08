@@ -30,6 +30,10 @@ $ apm install linter
 
 [Linter API wiki](https://github.com/atom-community/linter/wiki/Linter-API)
 
+#### Performance Tuning
+
+Is linter working slow for you? Try changing the interval of inline bubble or disabling it completely and/or try disabling Line tab.
+
 #### Contribute
 
 Stick to imposed codestyle:
