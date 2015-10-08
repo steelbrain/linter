@@ -18,3 +18,7 @@ module.exports =
     }
     linterRegistry.addLinter(linter)
     return {linterRegistry, editorLinter, linter}
+  trigger: (el, name) ->
+    event = document.createEvent('HTMLEvents')
+    event.initEvent(name, true, false)
+    el.dispatchEvent(event)

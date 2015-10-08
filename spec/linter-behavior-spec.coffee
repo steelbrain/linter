@@ -2,11 +2,7 @@ describe 'Linter Behavior', ->
   linter = null
   linterState = null
   bottomContainer = null
-  {getLinter} = require('./common')
-  trigger = (el, name) ->
-    event = document.createEvent('HTMLEvents')
-    event.initEvent(name, true, false)
-    el.dispatchEvent(event)
+  {getLinter, trigger} = require('./common')
 
   getMessage = (type, filePath) ->
     return {type, text: 'Some Message', filePath, range: [[0, 0], [1, 1]]}
