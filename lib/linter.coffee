@@ -81,7 +81,7 @@ class Linter
   createEditorLinter: (editor) ->
     return if @editors.has(editor)
 
-    editorLinter = @editors.create(editor, true)
+    editorLinter = @editors.create(editor)
     editorLinter.onShouldUpdateBubble =>
       @views.renderBubble(editorLinter)
     editorLinter.onShouldLint (onChange) =>
