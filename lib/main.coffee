@@ -11,6 +11,7 @@ module.exports =
 
     ignoredMessageTypes:
       title: 'Ignored message Types'
+      description: 'Comma separated list of message types to completely ignore'
       type: 'array'
       default: []
       items:
