@@ -23,10 +23,12 @@ class Linter
 
     @subscriptions = new CompositeDisposable(@views, @editors, @linters, @messages, @commands)
 
-    @subscriptions.add @linters.onDidUpdateMessages (info) =>
+    @linters.onDidUpdateMessages (info) =>
       @messages.set(info)
-    @subscriptions.add @messages.onDidUpdateMessages (messages) =>
+    @messages.onDidUpdateMessages (messages) =>
       @views.render(messages)
+    @views.onDidUpdateScope (scope) =>
+      @state.scope = scope
 
     @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
