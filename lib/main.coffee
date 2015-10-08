@@ -23,6 +23,12 @@ module.exports =
       type: 'boolean'
       default: true
       order: 3
+    inlineTooltipInterval:
+      title: 'Inline tooltip interval'
+      description: 'Interval at which inline tooltip is updated'
+      type: 'integer'
+      default: 200
+      order: 3
     gutterEnabled:
       title: 'Highlight error lines in gutter'
       type: 'boolean'
