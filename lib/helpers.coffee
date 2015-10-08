@@ -15,3 +15,10 @@ Helpers = module.exports =
     return true
   requestUpdateFrame: (callback) ->
     setTimeout(callback, 100)
+  debounce: (callback, delay) ->
+    timeout = null
+    return (arg) ->
+      clearTimeout(timeout)
+      timeout = setTimeout(() =>
+        callback.call(this, arg)
+      , delay)

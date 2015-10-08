@@ -1,5 +1,5 @@
 describe 'BottomPanel', ->
-  {BottomPanel} = require('../../lib/ui/bottom-panel')
+  BottomPanel = require('../../lib/ui/bottom-panel')
   linter = null
   bottomPanel = null
   beforeEach ->
@@ -13,18 +13,18 @@ describe 'BottomPanel', ->
     return {type, text: 'Some Message', filePath}
 
   it 'is not visible when there are no errors', ->
-    expect(linter.views.panel.getVisibility()).toBe(false)
+    expect(linter.views.bottomPanel.getVisibility()).toBe(false)
 
   it 'hides on config change', ->
     # Set up visibility.
-    linter.views.panel.scope = 'Project'
-    linter.views.panel.setMessages({added: [getMessage('Error')], removed: []})
+    linter.views.bottomPanel.scope = 'Project'
+    linter.views.bottomPanel.setMessages({added: [getMessage('Error')], removed: []})
 
-    expect(linter.views.panel.getVisibility()).toBe(true)
+    expect(linter.views.bottomPanel.getVisibility()).toBe(true)
     atom.config.set('linter.showErrorPanel', false)
-    expect(linter.views.panel.getVisibility()).toBe(false)
+    expect(linter.views.bottomPanel.getVisibility()).toBe(false)
     atom.config.set('linter.showErrorPanel', true)
-    expect(linter.views.panel.getVisibility()).toBe(true)
+    expect(linter.views.bottomPanel.getVisibility()).toBe(true)
 
   describe '{set, remove}Messages', ->
     it 'works as expected', ->

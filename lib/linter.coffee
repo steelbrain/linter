@@ -18,15 +18,17 @@ class Linter
     @linters = new (require('./linter-registry'))()
     @editors = new (require('./editor-registry'))()
     @messages = new (require('./message-registry'))()
-    @views = new LinterViews(this)
+    @views = new LinterViews(state.scope, @editors)
     @commands = new Commands(this)
 
     @subscriptions = new CompositeDisposable(@views, @editors, @linters, @messages, @commands)
 
-    @subscriptions.add @linters.onDidUpdateMessages (info) =>
+    @linters.onDidUpdateMessages (info) =>
       @messages.set(info)
-    @subscriptions.add @messages.onDidUpdateMessages (messages) =>
+    @messages.onDidUpdateMessages (messages) =>
       @views.render(messages)
+    @views.onDidUpdateScope (scope) =>
+      @state.scope = scope
 
     @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
@@ -81,14 +83,15 @@ class Linter
 
     editorLinter = @editors.create(editor)
     editorLinter.onShouldUpdateBubble =>
-      @views.renderBubble()
-    editorLinter.onShouldUpdateLineMessages =>
-      @views.renderLineMessages(true)
+      @views.renderBubble(editorLinter)
     editorLinter.onShouldLint (onChange) =>
       @linters.lint({onChange, editorLinter})
     editorLinter.onDidDestroy =>
       @messages.deleteEditorMessages(editor)
-    @views.notifyEditor(editorLinter)
+    editorLinter.onDidCalculateLineMessages =>
+      @views.updateCounts()
+      @views.bottomPanel.refresh() if @state.scope is 'Line'
+    @views.notifyEditorLinter(editorLinter)
 
   deactivate: ->
     @subscriptions.dispose()
