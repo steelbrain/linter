@@ -64,6 +64,36 @@ describe 'editor-linter', ->
       expect(messageChange.mostRecentCall.args[0].type).toBe('delete')
       expect(messageChange.mostRecentCall.args[0].message).toBe(message)
 
+  describe '::active', ->
+    it 'updates currentFile attribute on the messages', ->
+      message = getMessage('Hey!', __dirname + '/fixtures/file.txt', [[0, 1], [0, 2]])
+      editorLinter.addMessage(message)
+      expect(message.currentFile).toBe(true)
+      editorLinter.active = false
+      expect(message.currentFile).toBe(false)
+      editorLinter.deleteMessage(message)
+      editorLinter.addMessage(message)
+      expect(message.currentFile).toBe(false)
+
+  describe '::{calculateLineMessages, onDidCalculateLineMessages}', ->
+    it 'works and also ignores', ->
+      listener = jasmine.createSpy('onDidCalculateLineMessages')
+      message = getMessage('Hey!', __dirname + '/fixtures/file.txt', [[0, 1], [0, 2]])
+      editorLinter.addMessage(message)
+      editorLinter.onDidCalculateLineMessages(listener)
+      atom.config.set('linter.showErrorTabLine', true)
+      expect(editorLinter.calculateLineMessages(0)).toBe(1)
+      expect(editorLinter.countLineMessages).toBe(1)
+      expect(listener).toHaveBeenCalledWith(1)
+      atom.config.set('linter.showErrorTabLine', false)
+      expect(editorLinter.calculateLineMessages(0)).toBe(0)
+      expect(editorLinter.countLineMessages).toBe(0)
+      expect(listener).toHaveBeenCalledWith(0)
+      atom.config.set('linter.showErrorTabLine', true)
+      expect(editorLinter.calculateLineMessages(0)).toBe(1)
+      expect(editorLinter.countLineMessages).toBe(1)
+      expect(listener).toHaveBeenCalledWith(1)
+
   describe '::{handle, add, remove}Gutter', ->
     it 'handles the attachment and detachment of gutter to text editor', ->
       editorLinter.gutterEnabled = false
