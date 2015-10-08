@@ -83,7 +83,7 @@ class Linter
 
     editorLinter = @editors.create(editor, true)
     editorLinter.onShouldUpdateBubble =>
-      @views.renderBubble()
+      @views.renderBubble(editorLinter)
     editorLinter.onShouldLint (onChange) =>
       @linters.lint({onChange, editorLinter})
     editorLinter.onDidDestroy =>
