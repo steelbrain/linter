@@ -4,6 +4,7 @@
 * Support for buffer modifying linters has been removed (We don't think anybody was using them anyway)
 * Add a new `inlineTooltipInterval` config
 * Major speed improvements
+* Make ctrl-c work on bottom panel
 
 ## 1.8.1
 
