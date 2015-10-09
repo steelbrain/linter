@@ -1,5 +1,11 @@
 language: objective-c
 
+sudo: false
+
+branches:
+  only:
+    - master
+
 notifications:
   email:
     on_success: never
