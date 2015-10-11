@@ -17,6 +17,11 @@ module.exports =
       items:
         type: 'string'
       order: 2
+    sortMessages:
+      description: 'This comes at a performance penalty'
+      type: 'boolean'
+      default: true
+      order: 2
 
     showErrorInline:
       title: 'Show Inline Tooltips'
