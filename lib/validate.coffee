@@ -16,6 +16,9 @@ module.exports = Validate =
       throw new Error('Linter.name must be a string') if typeof linter.name isnt 'string'
     else
       linter.name = null
+    if linter.scope
+      linter.scope = linter.scope.toLowerCase()
+    throw new Error('Linter.scope must be either `file` or `project`') if linter.scope isnt 'file' and linter.scope isnt 'project'
     return true
 
   messages: (messages, linter) ->
