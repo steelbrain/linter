@@ -48,15 +48,18 @@ describe 'BottomPanel', ->
         getMessage('Error', path, [[2, 0], [2, 1]]),
         getMessage('Error', path, [[1, 0], [1, 1]]),
         getMessage('Error', path, [[5, 0], [5, 1]]),
-        getMessage('Error', path, [[3, 0], [3, 1]])
+        getMessage('Error', path, [[3, 0], [3, 1]]),
+        getMessage('Error', '/tmp/test', [[1, 0], [1, 1]]),
       ]})
       Array.prototype.forEach.call(bottomPanel.messagesElement.childNodes, (entry) ->
         entry.attachedCallback?() # No idea why but Custom Elements' attachedCallback is not triggered in test suite
       )
-      expect(bottomPanel.messagesElement.childNodes[0].textContent).toContain('line 1 col 1')
-      expect(bottomPanel.messagesElement.childNodes[1].textContent).toContain('line 2 col 1')
-      expect(bottomPanel.messagesElement.childNodes[2].textContent).toContain('line 3 col 1')
-      expect(bottomPanel.messagesElement.childNodes[3].textContent).toContain('line 4 col 1')
-      expect(bottomPanel.messagesElement.childNodes[4].textContent).toContain('line 6 col 1')
-      expect(bottomPanel.messagesElement.childNodes.length).toBe(5)
+      expect(bottomPanel.messagesElement.childNodes[0].textContent).toContain('line 2 col 1')
+      expect(bottomPanel.messagesElement.childNodes[0].textContent).toContain('/tmp/test')
+      expect(bottomPanel.messagesElement.childNodes[1].textContent).toContain('line 1 col 1')
+      expect(bottomPanel.messagesElement.childNodes[2].textContent).toContain('line 2 col 1')
+      expect(bottomPanel.messagesElement.childNodes[3].textContent).toContain('line 3 col 1')
+      expect(bottomPanel.messagesElement.childNodes[4].textContent).toContain('line 4 col 1')
+      expect(bottomPanel.messagesElement.childNodes[5].textContent).toContain('line 6 col 1')
+      expect(bottomPanel.messagesElement.childNodes.length).toBe(6)
 
