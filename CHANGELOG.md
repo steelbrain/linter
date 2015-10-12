@@ -6,7 +6,7 @@
 * Major speed improvements
 * Make ctrl-c work on bottom panel
 * Fix certain scenarios where inline bubbles would be placed incorrectly (Bubbles no longer follow the cursor, they re-use markers from underlines)
-* Implement sorted messages (comes at a performance penality, can be turned off in configuration)
+* Implement sorted messages (comes at a performance penalty, can be turned off in configuration)
 
 ## 1.8.1
 
