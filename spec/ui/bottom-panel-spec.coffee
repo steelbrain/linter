@@ -8,9 +8,10 @@ describe 'BottomPanel', ->
     waitsForPromise ->
       atom.packages.activatePackage('linter').then ->
         linter = atom.packages.getActivePackage('linter').mainModule.instance
+      .then ->
+        atom.workspace.open(__dirname + '/../fixtures/file.txt')
 
-  getMessage = (type, filePath) ->
-    return {type, text: 'Some Message', filePath}
+  {getMessage, getLinter} = require('../common')
 
   it 'is not visible when there are no errors', ->
     expect(linter.views.bottomPanel.getVisibility()).toBe(false)
@@ -37,3 +38,28 @@ describe 'BottomPanel', ->
       expect(bottomPanel.element.childNodes[0].childNodes.length).toBe(2)
       bottomPanel.removeMessages(messages)
       expect(bottomPanel.element.childNodes[0].childNodes.length).toBe(0)
+
+    it 'sorts messages', ->
+      bottomPanel.scope = 'Project'
+      atom.config.set('linter.sortMessages', true)
+      path = __dirname + '/../fixtures/file.txt'
+      bottomPanel.setMessages({removed: [], added: [
+        getMessage('Error', path, [[0, 0], [0, 1]]),
+        getMessage('Error', path, [[2, 0], [2, 1]]),
+        getMessage('Error', path, [[1, 0], [1, 1]]),
+        getMessage('Error', path, [[5, 0], [5, 1]]),
+        getMessage('Error', path, [[3, 0], [3, 1]]),
+        getMessage('Error', '/tmp/test', [[1, 0], [1, 1]]),
+      ]})
+      Array.prototype.forEach.call(bottomPanel.messagesElement.childNodes, (entry) ->
+        entry.attachedCallback?() # No idea why but Custom Elements' attachedCallback is not triggered in test suite
+      )
+      expect(bottomPanel.messagesElement.childNodes[0].textContent).toContain('line 2 col 1')
+      expect(bottomPanel.messagesElement.childNodes[0].textContent).toContain('/tmp/test')
+      expect(bottomPanel.messagesElement.childNodes[1].textContent).toContain('line 1 col 1')
+      expect(bottomPanel.messagesElement.childNodes[2].textContent).toContain('line 2 col 1')
+      expect(bottomPanel.messagesElement.childNodes[3].textContent).toContain('line 3 col 1')
+      expect(bottomPanel.messagesElement.childNodes[4].textContent).toContain('line 4 col 1')
+      expect(bottomPanel.messagesElement.childNodes[5].textContent).toContain('line 6 col 1')
+      expect(bottomPanel.messagesElement.childNodes.length).toBe(6)
+

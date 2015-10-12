@@ -4,7 +4,7 @@ Validators = require('../lib/validate')
 
 module.exports =
   getLinter: ->
-    return {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'project', lint: -> }
+    return {grammarScopes: ['*'], lintOnFly: false, scope: 'project', lint: -> }
   getMessage: (type, filePath, range) ->
     message = {type, text: 'Some Message', filePath, range}
     Validators.messages([message], {name: 'Some Linter'})
