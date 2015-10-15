@@ -3,6 +3,9 @@ EditorLinter = require('../lib/editor-linter')
 Validators = require('../lib/validate')
 
 module.exports =
+  wait: (timeout) ->
+    return new Promise (resolve) ->
+      setTimeout(resolve, timeout)
   getLinter: ->
     return {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'project', lint: -> }
   getMessage: (type, filePath, range) ->
