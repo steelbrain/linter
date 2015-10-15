@@ -3,10 +3,14 @@ module.exports =
   instance: null
   config:
     lintOnFly:
-      title: 'Lint on fly'
       description: 'Lint files while typing, without the need to save them'
       type: 'boolean'
       default: true
+      order: 1
+    lintOnFlyInterval:
+      description: 'Interval at which providers are triggered on the fly'
+      type: 'integer'
+      default: 300
       order: 1
 
     ignoredMessageTypes:

@@ -1,10 +1,12 @@
 describe 'editor-linter', ->
-  {getMessage} = require('./common')
+  {getMessage, wait} = require('./common')
   EditorLinter = require('../lib/editor-linter')
   editorLinter = null
   textEditor = null
 
   beforeEach ->
+    global.setTimeout = require('remote').getGlobal('setTimeout')
+    global.setInterval = require('remote').getGlobal('setInterval')
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
       atom.workspace.open(__dirname + '/fixtures/file.txt').then ->
@@ -112,7 +114,7 @@ describe 'editor-linter', ->
       expect(editorLinter.gutter is null).toBe(true)
 
   describe '::onShouldLint', ->
-    it 'ignores instant save requests', ->
+    it 'is triggered on save', ->
       timesTriggered = 0
       editorLinter.onShouldLint ->
         timesTriggered++
@@ -122,6 +124,35 @@ describe 'editor-linter', ->
       textEditor.save()
       textEditor.save()
       expect(timesTriggered).toBe(5)
+    it 'respects lintOnFlyInterval config', ->
+      timeCalled = null
+      flyStatus = null
+      atom.config.set('linter.lintOnFlyInterval', 300)
+      editorLinter.onShouldLint (fly) ->
+        flyStatus = fly
+        timeCalled = new Date()
+      timeDid = new Date()
+      editorLinter.editor.insertText("Hey\n")
+      waitsForPromise ->
+        wait(300).then ->
+          expect(timeCalled isnt null).toBe(true)
+          expect(flyStatus isnt null).toBe(true)
+          expect(flyStatus).toBe(true)
+          expect(timeCalled - timeDid).toBeLessThan(400)
+
+          atom.config.set('linter.lintOnFlyInterval', 600)
+          timeCalled = null
+          flyStatus = null
+          timeDid = new Date()
+          editorLinter.editor.insertText("Hey\n")
+
+          wait(600)
+        .then ->
+          expect(timeCalled isnt null).toBe(true)
+          expect(flyStatus isnt null).toBe(true)
+          expect(flyStatus).toBe(true)
+          expect(timeCalled - timeDid).toBeGreaterThan(599)
+          expect(timeCalled - timeDid).toBeLessThan(700)
 
   describe '::onDidDestroy', ->
     it 'is called when TextEditor is destroyed', ->
