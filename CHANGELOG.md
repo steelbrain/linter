@@ -7,6 +7,7 @@
 * Make ctrl-c work on bottom panel
 * Fix certain scenarios where inline bubbles would be placed incorrectly (Bubbles no longer follow the cursor, they re-use markers from underlines)
 * Add a new `lintOnFlyInterval` config
+* Messages of a single editor are now shown together
 
 ## 1.8.1
 
