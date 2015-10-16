@@ -65,7 +65,6 @@ describe 'linter-registry', ->
       linter = {
         grammarScopes: ['*']
         lintOnFly: false
-        modifiesBuffer: false
         scope: 'file'
         lint: ->
       }
@@ -78,7 +77,6 @@ describe 'linter-registry', ->
       linter = {
         grammarScopes: ['*']
         lintOnFly: false
-        modifiesBuffer: false
         scope: 'file'
         lint: ->
       }
@@ -92,7 +90,6 @@ describe 'linter-registry', ->
       linter = {
         grammarScopes: ['*']
         lintOnFly: false
-        modifiesBuffer: false
         scope: 'file'
         lint: -> return [{type: 'Error', text: 'Something'}]
       }

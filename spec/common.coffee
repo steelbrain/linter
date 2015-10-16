@@ -7,7 +7,7 @@ module.exports =
     return new Promise (resolve) ->
       setTimeout(resolve, timeout)
   getLinter: ->
-    return {grammarScopes: ['*'], lintOnFly: false, modifiesBuffer: false, scope: 'project', lint: -> }
+    return {grammarScopes: ['*'], lintOnFly: false, scope: 'project', lint: -> }
   getMessage: (type, filePath, range) ->
     message = {type, text: 'Some Message', filePath, range}
     Validators.messages([message], {name: 'Some Linter'})
@@ -18,7 +18,6 @@ module.exports =
     linter = {
       grammarScopes: ['*']
       lintOnFly: false
-      modifiesBuffer: false
       scope: 'project'
       lint: -> return [{type: 'Error', text: 'Something'}]
     }

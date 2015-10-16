@@ -1,18 +1,51 @@
 describe 'validate', ->
   validate = require('../lib/validate')
+  {getLinter} = require('./common')
   describe '::linter', ->
     it 'throws error if grammarScopes is not an array', ->
       expect ->
-        validate.linter({lint: -> })
-      .toThrow('grammarScopes is not an Array. Got: undefined')
+        linter = getLinter()
+        linter.grammarScopes = false
+        validate.linter(linter)
+      .toThrow('grammarScopes is not an Array. Got: false')
     it 'throws if lint is missing', ->
       expect ->
-        validate.linter({grammarScopes: []})
+        linter = getLinter()
+        delete linter.lint
+        validate.linter(linter)
       .toThrow()
     it 'throws if lint is not a function', ->
       expect ->
-        validate.linter({grammarScopes: [], lint: true})
+        linter = getLinter()
+        linter.lint = 'woah'
+        validate.linter(linter)
       .toThrow()
+    it 'works well with name attribute', ->
+      expect ->
+        linter = getLinter()
+        linter.name = 1
+        validate.linter(linter)
+      .toThrow('Linter.name must be a string')
+      linter = getLinter()
+      linter.name = null
+      validate.linter(linter)
+    it 'works well with scope attribute', ->
+      expect ->
+        linter = getLinter()
+        linter.scope = null
+        validate.linter(linter)
+      .toThrow('Linter.scope must be either `file` or `project`')
+      expect ->
+        linter = getLinter()
+        linter.scope = 'a'
+        validate.linter(linter)
+      .toThrow('Linter.scope must be either `file` or `project`')
+      linter = getLinter()
+      linter.scope = 'Project'
+      validate.linter(linter)
+    it 'works overall', ->
+      validate.linter(getLinter())
+      expect(true).toBe(true)
 
   describe '::messages', ->
     it 'throws if messages is not an array', ->

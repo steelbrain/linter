@@ -9,8 +9,7 @@ describe 'BottomPanel', ->
       atom.packages.activatePackage('linter').then ->
         linter = atom.packages.getActivePackage('linter').mainModule.instance
 
-  getMessage = (type, filePath) ->
-    return {type, text: 'Some Message', filePath}
+  {getMessage} = require('../common')
 
   it 'is not visible when there are no errors', ->
     expect(linter.views.bottomPanel.getVisibility()).toBe(false)
