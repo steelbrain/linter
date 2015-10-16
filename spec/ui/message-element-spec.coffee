@@ -17,19 +17,11 @@ describe 'Message Element', ->
     messageElement.attachedCallback()
 
     expect(visibleText(messageElement).indexOf(filePath) isnt -1).toBe(true)
-    messageElement.updateVisibility('File')
-    expect(messageElement.hasAttribute('hidden')).toBe(true)
-
-    message.currentFile = true
-    messageElement.updateVisibility('File')
-    expect(messageElement.hasAttribute('hidden')).toBe(false)
-    expect(visibleText(messageElement).indexOf(filePath) is -1).toBe(true)
 
     messageElement.updateVisibility('Line')
     expect(messageElement.hasAttribute('hidden')).toBe(true)
     message.currentLine = true
     messageElement.updateVisibility('Line')
-    expect(messageElement.hasAttribute('hidden')).toBe(false)
     expect(visibleText(messageElement).indexOf(filePath) is -1).toBe(true)
 
   it 'plays nice with class attribute', ->

@@ -44,5 +44,6 @@ module.exports = Validate =
       result.range = Range.fromObject result.range if result.range?
       result.key = JSON.stringify(result)
       result.linter = linter.name
+      result.scope = linter.scope
       Validate.messages(result.trace, linter) if result.trace and result.trace.length
     return undefined
