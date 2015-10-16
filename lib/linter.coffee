@@ -24,7 +24,7 @@ class Linter
     @subscriptions = new CompositeDisposable(@views, @editors, @linters, @messages, @commands)
 
     @linters.onDidUpdateMessages ({linter, messages, editor}) =>
-      @messages.set({linter, messages, editorLinter: @linters.ofTextEditor(editor)})
+      @messages.set({linter, messages, editorLinter: @editors.ofTextEditor(editor)})
     @messages.onDidUpdateMessages (messages) =>
       @views.render(messages)
     @views.onDidUpdateScope (scope) =>
