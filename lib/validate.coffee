@@ -4,8 +4,6 @@ helpers = require('./helpers')
 module.exports = Validate =
 
   linter: (linter) ->
-    # set undefined to false for backward compatibility
-    linter.modifiesBuffer = Boolean(linter.modifiesBuffer)
     unless linter.grammarScopes instanceof Array
       throw new Error("grammarScopes is not an Array. Got: #{linter.grammarScopes}")
     if linter.lint
