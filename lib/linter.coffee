@@ -23,8 +23,8 @@ class Linter
 
     @subscriptions = new CompositeDisposable(@views, @editors, @linters, @messages, @commands)
 
-    @linters.onDidUpdateMessages (info) =>
-      @messages.set(info)
+    @linters.onDidUpdateMessages ({linter, messages, editor}) =>
+      @messages.set({linter, messages, editorLinter: @linters.ofTextEditor(editor)})
     @messages.onDidUpdateMessages (messages) =>
       @views.render(messages)
     @views.onDidUpdateScope (scope) =>
@@ -87,7 +87,7 @@ class Linter
     editorLinter.onShouldLint (onChange) =>
       @linters.lint({onChange, editorLinter})
     editorLinter.onDidDestroy =>
-      @messages.deleteEditorMessages(editor)
+      @messages.deleteEditorMessages(editorLinter)
     editorLinter.onDidCalculateLineMessages =>
       @views.updateCounts()
       @views.bottomPanel.refresh() if @state.scope is 'Line'
