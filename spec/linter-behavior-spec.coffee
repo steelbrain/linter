@@ -24,21 +24,22 @@ describe 'Linter Behavior', ->
 
     it 'toggles panel visibility on click', ->
       # Set up errors.
-      linter.views.bottomPanel.setMessages({added: [getMessage('Error')], removed: []})
-
+      timesCalled = 0
+      bottomContainer.onShouldTogglePanel -> ++timesCalled
       trigger(bottomContainer.getTab('Project'), 'click')
-      expect(linter.views.bottomPanel.getVisibility()).toBe(true)
+      expect(timesCalled).toBe(0)
       trigger(bottomContainer.getTab('Project'), 'click')
-      expect(linter.views.bottomPanel.getVisibility()).toBe(false)
+      expect(timesCalled).toBe(1)
 
     it 're-enables panel when another tab is clicked', ->
       # Set up errors.
-      linter.views.bottomPanel.setMessages({added: [getMessage('Error')], removed: []})
 
+      timesCalled = 0
+      bottomContainer.onShouldTogglePanel -> ++timesCalled
       trigger(bottomContainer.getTab('File'), 'click')
-      expect(linter.views.bottomPanel.getVisibility()).toBe(false)
+      expect(timesCalled).toBe(1)
       trigger(bottomContainer.getTab('Project'), 'click')
-      expect(linter.views.bottomPanel.getVisibility()).toBe(true)
+      expect(timesCalled).toBe(1)
 
     it 'updates count on pane change', ->
       provider = getLinter()

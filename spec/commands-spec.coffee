@@ -5,15 +5,16 @@ describe 'Commands', ->
     waitsForPromise ->
       atom.packages.activatePackage('linter').then ->
         linter = atom.packages.getActivePackage('linter').mainModule.instance
+        atom.workspace.open(__dirname + '/fixtures/file.txt')
 
-  getMessage = (type, filePath) ->
-    return {type, text: 'Some Message', filePath}
+  {getMessage} = require('./common')
 
   describe 'linter:togglePanel', ->
     it 'toggles the panel visibility', ->
       # Set up visibility.
       linter.views.bottomPanel.scope = 'Project'
-      linter.views.bottomPanel.setMessages({added: [getMessage('Error')], removed: []})
+      linter.getActiveEditorLinter().addMessage(getMessage('Error'))
+      linter.views.render({added: [getMessage('Error')], removed: [], messages: []})
 
       visibility = linter.views.bottomPanel.getVisibility()
       expect(visibility).toBe(true)
