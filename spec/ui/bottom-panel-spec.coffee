@@ -18,13 +18,10 @@ describe 'BottomPanel', ->
   it 'hides on config change', ->
     # Set up visibility.
     linter.views.bottomPanel.scope = 'Project'
-    linter.getActiveEditorLinter().addMessage(getMessage('Error'))
+    linter.views.bottomPanel.setMessages({added: [getMessage('Error')], removed: []})
 
-    linter.views.bottomPanel.updateVisibility()
     expect(linter.views.bottomPanel.getVisibility()).toBe(true)
     atom.config.set('linter.showErrorPanel', false)
-    linter.views.bottomPanel.updateVisibility()
     expect(linter.views.bottomPanel.getVisibility()).toBe(false)
     atom.config.set('linter.showErrorPanel', true)
-    linter.views.bottomPanel.updateVisibility()
     expect(linter.views.bottomPanel.getVisibility()).toBe(true)
