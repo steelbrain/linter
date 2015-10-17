@@ -99,3 +99,8 @@ describe 'validate', ->
         validate.messages([{type: 'Error', text: 'Well', class: []}], {name: ''})
       .toThrow()
       validate.messages([{type: 'Error', text: 'Well', class: 'error'}], {name: ''})
+    it 'throws if filePath is invalid', ->
+      expect ->
+        validate.messages([{type: 'Error', text: 'Well', class: 'error', filePath: 1}], {name: ''})
+      .toThrow()
+      validate.messages([{type: 'Error', text: 'Well', class: 'error', filePath: '/'}], {name: ''})
