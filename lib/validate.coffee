@@ -41,9 +41,12 @@ module.exports = Validate =
         throw new Error 'Invalid class field on Linter Response' if typeof result.class isnt 'string'
       else
         result.class = result.type.toLowerCase().replace(' ', '-')
+      if result.filePath
+        throw new Error('Invalid filePath field on Linter response') if typeof result.filePath isnt 'string'
+      else
+        result.filePath = null
       result.range = Range.fromObject result.range if result.range?
       result.key = JSON.stringify(result)
       result.linter = linter.name
-      result.scope = linter.scope
       Validate.messages(result.trace, linter) if result.trace and result.trace.length
     return undefined
