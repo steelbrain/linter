@@ -7,7 +7,7 @@ describe 'BottomPanel', ->
       atom.packages.activatePackage('linter').then ->
         linter = atom.packages.getActivePackage('linter').mainModule.instance
         bottomPanel?.dispose()
-        bottomPanel = new BottomPanel('File', linter.editors)
+        bottomPanel = new BottomPanel('File')
         atom.workspace.open(__dirname + '/fixtures/file.txt')
 
   {getMessage} = require('../common')
