@@ -3,6 +3,7 @@ describe 'Linter Config', ->
   {getLinter, getMessage} = require('./common')
   CP = require('child_process')
   FS = require('fs')
+  Helpers = require('../lib/helpers')
   beforeEach ->
     waitsForPromise ->
       atom.packages.activatePackage('linter').then ->
@@ -33,20 +34,18 @@ describe 'Linter Config', ->
       expect(linter.views.bottomContainer.status.count).toBe(1)
   describe 'ignoreVCSIgnoredFiles', ->
     it 'ignores the file if its ignored by the VCS', ->
-      repoPath = "/tmp/linter_git_repo"
-      CP.execSync("rm -rf #{repoPath}")
-      CP.execSync("mkdir #{repoPath}")
-      CP.execSync("cd #{repoPath}; git init")
-      FS.writeFileSync("#{repoPath}/.gitignore", "/test.js\n")
-      FS.writeFileSync("#{repoPath}/test.js", "'use strict'\n")
+      filePath = "/tmp/linter_test_file"
+      FS.writeFileSync(filePath, "'use strict'\n")
+
       atom.config.set('linter.ignoreVCSIgnoredFiles', true)
-      atom.project.addPath(repoPath)
       linterProvider = getLinter()
       spyOn(linterProvider, 'lint')
+      spyOn(Helpers, 'isPathIgnored').andCallFake( -> true)
+
       linter.addLinter(linterProvider)
 
       waitsForPromise ->
-        atom.workspace.open("#{repoPath}/test.js").then ->
+        atom.workspace.open(filePath).then ->
           editor = atom.workspace.getActiveTextEditor()
           editor.insertText("a")
           editor.save()
@@ -55,4 +54,4 @@ describe 'Linter Config', ->
           editor.insertText("a")
           editor.save()
           expect(linterProvider.lint).toHaveBeenCalled()
-          CP.execSync("rm -rf #{repoPath}")
+          CP.execSync("rm -f #{filePath}")
