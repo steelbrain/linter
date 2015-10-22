@@ -22,6 +22,7 @@ module.exports =
       order: 2
     ignoreVCSIgnoredFiles:
       title: 'Ignore VCS Ignored Files'
+      description: 'Do not lint files ignored by VCS'
       type: 'boolean'
       default: true
       order: 2
