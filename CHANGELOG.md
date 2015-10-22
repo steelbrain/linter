@@ -1,4 +1,4 @@
-## Upcoming
+## 1.9.1
 
 * Fix compatibility with upcoming version of atom
 * Support for buffer modifying linters has been removed (We don't think anybody was using them anyway)
