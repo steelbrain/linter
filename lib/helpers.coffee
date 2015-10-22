@@ -21,3 +21,8 @@ Helpers = module.exports =
       timeout = setTimeout(() =>
         callback.call(this, arg)
       , delay)
+  repoForPath: (filePath) ->
+    for projectPath, i in atom.project.getPaths()
+      if filePath.indexOf(projectPath + path.sep) is 0
+        return atom.project.getRepositories()[i]
+    null
