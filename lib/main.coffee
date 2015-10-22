@@ -14,12 +14,17 @@ module.exports =
       order: 1
 
     ignoredMessageTypes:
-      title: 'Ignored message Types'
       description: 'Comma separated list of message types to completely ignore'
       type: 'array'
       default: []
       items:
         type: 'string'
+      order: 2
+    ignoreVCSIgnoredFiles:
+      title: 'Ignore VCS Ignored Files'
+      description: 'Do not lint files ignored by VCS'
+      type: 'boolean'
+      default: true
       order: 2
 
     showErrorInline:
