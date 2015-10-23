@@ -1,3 +1,7 @@
+## Upcoming
+
+* Add `ignoreMatchedFiles` config
+
 ## 1.9.0
 
 * Fix compatibility with upcoming version of atom
