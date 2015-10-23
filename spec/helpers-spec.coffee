@@ -12,22 +12,22 @@ describe 'helpers', ->
     normalLinter =
       grammarScopes: ['*']
       scope: 'file'
-      lintAsYouType: false
+      lintOnFly: false
       lint: ->
-    lintAsYouType =
+    lintOnFly =
       grammarScopes: ['*']
       scope: 'file'
-      lintAsYouType: true
+      lintOnFly: true
       lint: ->
     bufferModifying =
       grammarScopes: ['*']
       scope: 'file'
-      lintAsYouType: false
+      lintOnFly: false
       lint: ->
     it 'accepts a wildcard grammarScope', ->
       expect(helpers.shouldTriggerLinter(normalLinter, false, ['*'])).toBe(true)
-    it 'runs lintAsYouType ones on both save and lintAsYouType', ->
-      expect(helpers.shouldTriggerLinter(lintAsYouType, false, ['*'])).toBe(true)
-      expect(helpers.shouldTriggerLinter(lintAsYouType, true, ['*'])).toBe(true)
-    it "doesn't run save ones on lintAsYouType", ->
+    it 'runs lintOnFly ones on both save and lintOnFly', ->
+      expect(helpers.shouldTriggerLinter(lintOnFly, false, ['*'])).toBe(true)
+      expect(helpers.shouldTriggerLinter(lintOnFly, true, ['*'])).toBe(true)
+    it "doesn't run save ones on fly", ->
       expect(helpers.shouldTriggerLinter(normalLinter, true, ['*'])).toBe(false)

@@ -1,6 +1,6 @@
-describe 'The Lint as you Type Configuration Option', ->
+describe 'The Lint on the Fly Configuration Option', ->
 
-  configString = 'linter.lintAsYouType'
+  configString = 'linter.lintOnFly'
 
   beforeEach ->
     waitsForPromise ->
