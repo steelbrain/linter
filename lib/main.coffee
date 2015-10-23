@@ -28,6 +28,11 @@ module.exports =
       type: 'boolean'
       default: true
       order: 2
+    ignoreMatchedFiles:
+      title: 'Do Not Lint Files that match this Glob'
+      type: 'string'
+      default: '/**/*.min.{js,css}'
+      order: 2
 
     showErrorInline:
       title: 'Show Inline Error Tooltips'
