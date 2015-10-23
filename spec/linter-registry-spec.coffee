@@ -51,7 +51,7 @@ describe 'linter-registry', ->
       editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
       linter = {
         grammarScopes: ['*']
-        lintOnFly: false
+        lintAsYouType: false
         modifiesBuffer: false
         scope: 'file'
         lint: ->
@@ -64,7 +64,7 @@ describe 'linter-registry', ->
       editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
       linter = {
         grammarScopes: ['*']
-        lintOnFly: false
+        lintAsYouType: false
         scope: 'file'
         lint: ->
       }
@@ -76,7 +76,7 @@ describe 'linter-registry', ->
       editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
       linter = {
         grammarScopes: ['*']
-        lintOnFly: false
+        lintAsYouType: false
         scope: 'file'
         lint: ->
       }
@@ -89,7 +89,7 @@ describe 'linter-registry', ->
       editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
       linter = {
         grammarScopes: ['*']
-        lintOnFly: false
+        lintAsYouType: false
         scope: 'file'
         lint: -> return [{type: 'Error', text: 'Something'}]
       }

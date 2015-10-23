@@ -124,33 +124,33 @@ describe 'editor-linter', ->
       textEditor.save()
       textEditor.save()
       expect(timesTriggered).toBe(5)
-    it 'respects lintOnFlyInterval config', ->
+    it 'respects lintAsYouTypeInterval config', ->
       timeCalled = null
-      flyStatus = null
-      atom.config.set('linter.lintOnFlyInterval', 300)
-      editorLinter.onShouldLint (fly) ->
-        flyStatus = fly
+      asYouTypeStatus = null
+      atom.config.set('linter.lintAsYouTypeInterval', 300)
+      editorLinter.onShouldLint (asYouType) ->
+        asYouTypeStatus = asYouType
         timeCalled = new Date()
       timeDid = new Date()
       editorLinter.editor.insertText("Hey\n")
       waitsForPromise ->
         wait(300).then ->
           expect(timeCalled isnt null).toBe(true)
-          expect(flyStatus isnt null).toBe(true)
-          expect(flyStatus).toBe(true)
+          expect(asYouTypeStatus isnt null).toBe(true)
+          expect(asYouTypeStatus).toBe(true)
           expect(timeCalled - timeDid).toBeLessThan(400)
 
-          atom.config.set('linter.lintOnFlyInterval', 600)
+          atom.config.set('linter.lintAsYouTypeInterval', 600)
           timeCalled = null
-          flyStatus = null
+          asYouTypeStatus = null
           timeDid = new Date()
           editorLinter.editor.insertText("Hey\n")
 
           wait(600)
         .then ->
           expect(timeCalled isnt null).toBe(true)
-          expect(flyStatus isnt null).toBe(true)
-          expect(flyStatus).toBe(true)
+          expect(asYouTypeStatus isnt null).toBe(true)
+          expect(asYouTypeStatus).toBe(true)
           expect(timeCalled - timeDid).toBeGreaterThan(599)
           expect(timeCalled - timeDid).toBeLessThan(700)
 

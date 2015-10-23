@@ -2,13 +2,12 @@
 module.exports =
   instance: null
   config:
-    lintOnFly:
-      description: 'Lint files while typing, without the need to save them'
+    lintAsYouType:
       type: 'boolean'
       default: true
       order: 1
-    lintOnFlyInterval:
-      description: 'Interval at which providers are triggered on the fly'
+    lintAsYouTypeInterval:
+      description: 'Interval at which providers are triggered as you type (in ms)'
       type: 'integer'
       default: 300
       order: 1

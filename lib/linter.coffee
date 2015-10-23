@@ -11,7 +11,7 @@ class Linter
     @state.scope ?= 'File'
 
     # Public Stuff
-    @lintOnFly = true # A default art value, to be immediately replaced by the observe config below
+    @lintAsYouType = true # A default art value, to be immediately replaced by the observe config below
 
     # Private Stuff
     @emitter = new Emitter
@@ -30,8 +30,8 @@ class Linter
     @views.onDidUpdateScope (scope) =>
       @state.scope = scope
 
-    @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
-      @lintOnFly = value
+    @subscriptions.add atom.config.observe 'linter.lintAsYouType', (value) =>
+      @lintAsYouType = value
     @subscriptions.add atom.project.onDidChangePaths =>
       @commands.lint()
 
