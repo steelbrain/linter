@@ -1,6 +1,7 @@
 {Range} = require('atom')
 path = require 'path'
 child_process = require('child_process')
+minimatch = require('minimatch')
 
 Helpers = module.exports =
   error: (e) ->
@@ -28,4 +29,4 @@ Helpers = module.exports =
         repo = atom.project.getRepositories()[i]
         break
     return true if repo and repo.isProjectAtRoot() and repo.isPathIgnored(filePath)
-    return false
+    return minimatch(atom.config.get('linter.ignoreMatchedFiles'), filePath)
