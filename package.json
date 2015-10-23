@@ -32,6 +32,7 @@
     }
   },
   "dependencies": {
-    "interact.js": "^1.2.5"
+    "interact.js": "^1.2.5",
+    "minimatch": "^3.0.0"
   }
 }
