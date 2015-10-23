@@ -88,22 +88,22 @@ module.exports =
       default: true
       order: 5
     showErrorTabLine:
-      title: 'Show Line Errors Tab in the Status Bar'
+      title: 'Show "Line" Tab in the Status Bar'
       type: 'boolean'
       default: false
       order: 5
     showErrorTabFile:
-      title: 'Show File Errors Tab in the Status Bar'
+      title: 'Show "File" Tab in the Status Bar'
       type: 'boolean'
       default: true
       order: 5
     showErrorTabProject:
-      title: 'Show Project Errors Tab in the Status Bar'
+      title: 'Show "Project" Tab in the Status Bar'
       type: 'boolean'
       default: true
       order: 5
     statusIconScope:
-      title: 'Scope of Error Messages to Show in Status Icon'
+      title: 'Scope of Linter Messages to Show in Status Icon'
       type: 'string'
       enum: ['File', 'Line', 'Project']
       default: 'Project'
