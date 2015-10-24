@@ -46,12 +46,29 @@ describe 'Linter Config', ->
 
       waitsForPromise ->
         atom.workspace.open(filePath).then ->
-          editor = atom.workspace.getActiveTextEditor()
-          editor.insertText("a")
-          editor.save()
+          linter.commands.lint()
           expect(linterProvider.lint).not.toHaveBeenCalled()
           atom.config.set('linter.ignoreVCSIgnoredFiles', false)
-          editor.insertText("a")
-          editor.save()
+          linter.commands.lint()
+          expect(linterProvider.lint).toHaveBeenCalled()
+          CP.execSync("rm -f #{filePath}")
+
+  describe 'ignoreMatchedFiles', ->
+    it 'ignores the file if it matches pattern', ->
+      filePath = '/tmp/linter_spec_test.min.js'
+      FS.writeFileSync(filePath, "'use strict'\n")
+
+      atom.config.set('linter.ignoreMatchedFiles', '/**/*.min.{js,css}')
+      linterProvider = getLinter()
+      spyOn(linterProvider, 'lint')
+
+      linter.addLinter(linterProvider)
+
+      waitsForPromise ->
+        atom.workspace.open(filePath).then ->
+          linter.commands.lint()
+          expect(linterProvider.lint).not.toHaveBeenCalled()
+          atom.config.set('linter.ignoreMatchedFiles', '/**/*.min.css')
+          linter.commands.lint()
           expect(linterProvider.lint).toHaveBeenCalled()
           CP.execSync("rm -f #{filePath}")
