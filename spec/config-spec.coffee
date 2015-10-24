@@ -71,3 +71,4 @@ describe 'Linter Config', ->
           atom.config.set('linter.ignoreMatchedFiles', '/**/*.min.css')
           linter.commands.lint()
           expect(linterProvider.lint).toHaveBeenCalled()
+          CP.execSync("rm -f #{filePath}")
