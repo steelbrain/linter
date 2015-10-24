@@ -29,4 +29,4 @@ Helpers = module.exports =
         repo = atom.project.getRepositories()[i]
         break
     return true if repo and repo.isProjectAtRoot() and repo.isPathIgnored(filePath)
-    return minimatch(atom.config.get('linter.ignoreMatchedFiles'), filePath)
+    return minimatch(filePath, atom.config.get('linter.ignoreMatchedFiles'))
