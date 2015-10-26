@@ -1,4 +1,4 @@
-## Upcoming
+## 1.9.1
 
 * Add `ignoreMatchedFiles` config
 * Fix an issue where the `linter.displayLinterInfo` preference was not respected
