@@ -30,8 +30,11 @@ module.exports = Validate =
         throw new Error 'Missing type field on Linter Response'
       if result.html
         throw new Error 'Invalid html field on Linter Response' if typeof result.html isnt 'string'
+        throw new Error 'Got both html and text fields on Linter Response, expecting only one' if typeof result.text is 'string'
+        result.text = null
       else if result.text
         throw new Error 'Invalid text field on Linter Response' if typeof result.text isnt 'string'
+        result.html = null
       else
         throw new Error 'Missing html/text field on Linter Response'
       if result.trace
@@ -49,4 +52,4 @@ module.exports = Validate =
       result.key = JSON.stringify(result)
       result.linter = linter.name
       Validate.messages(result.trace, linter) if result.trace and result.trace.length
-    return undefined
+    return
