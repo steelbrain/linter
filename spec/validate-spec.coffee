@@ -104,3 +104,9 @@ describe 'validate', ->
         validate.messages([{type: 'Error', text: 'Well', class: 'error', filePath: 1}], {name: ''})
       .toThrow()
       validate.messages([{type: 'Error', text: 'Well', class: 'error', filePath: '/'}], {name: ''})
+    it 'throws if both text and html are provided', ->
+      expect ->
+        validate.messages([{type: 'Error', text: 'Well', html: 'a', class: 'error', filePath: '/'}], {name: ''})
+      .toThrow()
+      validate.messages([{type: 'Error', text: 'Well', class: 'error', filePath: '/'}], {name: ''})
+      validate.messages([{type: 'Error', html: 'Well', class: 'error', filePath: '/'}], {name: ''})
