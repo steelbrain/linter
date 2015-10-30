@@ -1,6 +1,7 @@
 ## Upcoming
 
 * Fix a minor style issue in bottom tabs
+* Add a new `displayLinterStatus` config
 
 ## 1.9.1
 
