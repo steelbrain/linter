@@ -1,4 +1,4 @@
-## Upcoming
+## 1.10.0
 
 * Fix a minor style issue in bottom tabs
 * Add a new `displayLinterStatus` config
