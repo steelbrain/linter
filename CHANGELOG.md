@@ -1,3 +1,7 @@
+## Upcoming
+
+* Fix a minor style issue in bottom tabs
+
 ## 1.9.1
 
 * Add `ignoreMatchedFiles` config

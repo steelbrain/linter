@@ -111,15 +111,6 @@ linter-bottom-tab {
   cursor: pointer;
   vertical-align: middle;
   position: relative;
-  &:first-of-type {
-    border-top-left-radius: @component-border-radius;
-    border-bottom-left-radius: @component-border-radius;
-  }
-  &:last-of-type {
-    margin-right: .6em;
-    border-top-right-radius: @component-border-radius;
-    border-bottom-right-radius: @component-border-radius;
-  }
 
   &:active {
     background: transparent;
@@ -201,4 +192,8 @@ atom-text-editor::shadow .linter-highlight, .linter-highlight{
   &.status-success{
     color: @background-color-success;
   }
+}
+
+linter-bottom-status {
+  margin-left: .6em;
 }
