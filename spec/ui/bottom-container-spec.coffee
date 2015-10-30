@@ -91,3 +91,12 @@ describe 'Bottom Container', ->
       expect(bottomContainer.visibility).toBe(true)
       bottomContainer.visibility = false
       expect(bottomContainer.visibility).toBe(false)
+
+  describe '.status::visibility', ->
+    it 'depends on displayLinterStatus', ->
+      atom.config.set('linter.displayLinterStatus', true)
+      expect(bottomContainer.status.visibility).toBe(true)
+      atom.config.set('linter.displayLinterStatus', false)
+      expect(bottomContainer.status.visibility).toBe(false)
+      atom.config.set('linter.displayLinterStatus', true)
+      expect(bottomContainer.status.visibility).toBe(true)
