@@ -5,6 +5,7 @@ MessageRegistry = require './message-registry'
 EditorRegistry = require './editor-registry'
 EditorLinter = require './editor-linter'
 LinterRegistry = require './linter-registry'
+IndieRegistry = require './indie-registry'
 Helpers = require './helpers'
 Commands = require './commands'
 
@@ -19,13 +20,19 @@ class Linter
     # Private Stuff
     @emitter = new Emitter
     @linters = new LinterRegistry
+    @indieLinters = new IndieRegistry()
     @editors = new EditorRegistry
     @messages = new MessageRegistry()
     @views = new LinterViews(state.scope, @editors)
     @commands = new Commands(this)
 
-    @subscriptions = new CompositeDisposable(@views, @editors, @linters, @messages, @commands)
+    @subscriptions = new CompositeDisposable(@views, @editors, @linters, @messages, @commands, @indieLinters)
 
+    @indieLinters.observe (indieLinter) =>
+      indieLinter.onDidDestroy =>
+        @messages.deleteMessages(indieLinter)
+    @indieLinters.onDidUpdateMessages (param) => # param = {linter, messages}
+      @messages.set(param)
     @linters.onDidUpdateMessages ({linter, messages, editor}) =>
       @messages.set({linter, messages, editorLinter: @editors.ofTextEditor(editor)})
     @messages.onDidUpdateMessages (messages) =>
