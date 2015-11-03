@@ -31,8 +31,8 @@ class Linter
     @indieLinters.observe (indieLinter) =>
       indieLinter.onDidDestroy =>
         @messages.deleteMessages(indieLinter)
-    @indieLinters.onDidUpdateMessages (param) => # param = {linter, messages}
-      @messages.set(param)
+    @indieLinters.onDidUpdateMessages ({linter, messages}) =>
+      @messages.set({linter, messages})
     @linters.onDidUpdateMessages ({linter, messages, editor}) =>
       @messages.set({linter, messages, editorLinter: @editors.ofTextEditor(editor)})
     @messages.onDidUpdateMessages (messages) =>
