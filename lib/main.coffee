@@ -150,5 +150,8 @@ module.exports =
   provideLinter: ->
     @instance
 
+  provideIndie: ->
+    @instance?.indieLinters
+
   deactivate: ->
     @instance?.deactivate()
