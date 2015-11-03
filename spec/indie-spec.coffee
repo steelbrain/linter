@@ -42,5 +42,5 @@ describe 'Indie', ->
     it 'triggers the onDidDestroy event', ->
       listener = jasmine.createSpy('indie.destroy')
       indie.onDidDestroy(listener)
-      indie.disposeS()
+      indie.dispose()
       expect(listener).toHaveBeenCalled()
