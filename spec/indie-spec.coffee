@@ -23,3 +23,24 @@ describe 'Indie', ->
   describe 'constructor', ->
     it 'sets a scope for message registry to know', ->
       expect(indie.scope).toBe('project')
+
+  describe '{set, delete}Messages', ->
+    it 'notifies the event listeners of the change', ->
+      listener = jasmine.createSpy('indie.listener')
+      messages = [{}]
+      indie.onDidUpdateMessages(listener)
+      indie.setMessages(messages)
+      expect(listener).toHaveBeenCalled()
+      expect(listener.calls.length).toBe(1)
+      expect(listener).toHaveBeenCalledWith(messages)
+      indie.deleteMessages()
+      expect(listener.calls.length).toBe(2)
+      expect(listener.mostRecentCall.args[0] instanceof Array)
+      expect(listener.mostRecentCall.args[0].length).toBe(0)
+
+  describe 'dispose', ->
+    it 'triggers the onDidDestroy event', ->
+      listener = jasmine.createSpy('indie.destroy')
+      indie.onDidDestroy(listener)
+      indie.disposeS()
+      expect(listener).toHaveBeenCalled()
