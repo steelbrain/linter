@@ -11,13 +11,13 @@ module.exports = Validate =
         throw new Error("linter.lint isn't a function on provider") if typeof linter.lint isnt 'function'
       else
         throw new Error('Missing linter.lint on provider')
+      if linter.scope and typeof linter.scope is 'string'
+        linter.scope = linter.scope.toLowerCase()
+      throw new Error('Linter.scope must be either `file` or `project`') if linter.scope isnt 'file' and linter.scope isnt 'project'
     if linter.name
       throw new Error('Linter.name must be a string') if typeof linter.name isnt 'string'
     else
       linter.name = null
-    if linter.scope and typeof linter.scope is 'string'
-      linter.scope = linter.scope.toLowerCase()
-    throw new Error('Linter.scope must be either `file` or `project`') if linter.scope isnt 'file' and linter.scope isnt 'project'
     return true
 
   messages: (messages, linter) ->
