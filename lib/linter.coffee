@@ -1,7 +1,10 @@
 Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
 LinterViews = require './linter-views'
+MessageRegistry = require './message-registry'
+EditorRegistry = require './editor-registry'
 EditorLinter = require './editor-linter'
+LinterRegistry = require './linter-registry'
 Helpers = require './helpers'
 Commands = require './commands'
 
@@ -15,9 +18,9 @@ class Linter
 
     # Private Stuff
     @emitter = new Emitter
-    @linters = new (require('./linter-registry'))()
-    @editors = new (require('./editor-registry'))()
-    @messages = new (require('./message-registry'))()
+    @linters = new LinterRegistry
+    @editors = new EditorRegistry
+    @messages = new MessageRegistry()
     @views = new LinterViews(state.scope, @editors)
     @commands = new Commands(this)
 
