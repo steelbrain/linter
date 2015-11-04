@@ -1,3 +1,7 @@
+## Upcoming
+
+* A better self-API for PUSH style providers. Check the wiki for more information.
+
 ## 1.10.0
 
 * Fix a minor style issue in bottom tabs

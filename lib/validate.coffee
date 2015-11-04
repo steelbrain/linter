@@ -3,20 +3,21 @@ helpers = require('./helpers')
 
 module.exports = Validate =
 
-  linter: (linter) ->
-    unless linter.grammarScopes instanceof Array
-      throw new Error("grammarScopes is not an Array. Got: #{linter.grammarScopes}")
-    if linter.lint
-      throw new Error("linter.lint isn't a function on provider") if typeof linter.lint isnt 'function'
-    else
-      throw new Error('Missing linter.lint on provider')
+  linter: (linter, indie = false) ->
+    unless indie
+      unless linter.grammarScopes instanceof Array
+        throw new Error("grammarScopes is not an Array. Got: #{linter.grammarScopes}")
+      if linter.lint
+        throw new Error("linter.lint isn't a function on provider") if typeof linter.lint isnt 'function'
+      else
+        throw new Error('Missing linter.lint on provider')
+      if linter.scope and typeof linter.scope is 'string'
+        linter.scope = linter.scope.toLowerCase()
+      throw new Error('Linter.scope must be either `file` or `project`') if linter.scope isnt 'file' and linter.scope isnt 'project'
     if linter.name
       throw new Error('Linter.name must be a string') if typeof linter.name isnt 'string'
     else
       linter.name = null
-    if linter.scope and typeof linter.scope is 'string'
-      linter.scope = linter.scope.toLowerCase()
-    throw new Error('Linter.scope must be either `file` or `project`') if linter.scope isnt 'file' and linter.scope isnt 'project'
     return true
 
   messages: (messages, linter) ->
