@@ -7,7 +7,7 @@ class Commands
       'linter:next-error': => @nextError()
       'linter:previous-error': => @previousError()
       'linter:toggle': => @toggleLinter()
-      'linter:togglePanel': => @togglePanel()
+      'linter:toggle-panel': => @togglePanel()
       'linter:set-bubble-transparent': => @setBubbleTransparent()
       'linter:expand-multiline-messages': => @expandMultilineMessages()
       'linter:lint': => @lint()
