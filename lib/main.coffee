@@ -2,6 +2,11 @@
 module.exports =
   instance: null
   config:
+    autoUpdate:
+      description: 'Automatically install updates once they become available'
+      type: 'boolean'
+      default: true
+      order: 1
     lintOnFly:
       title: 'Lint As You Type'
       description: 'Lint files while typing, without the need to save'
