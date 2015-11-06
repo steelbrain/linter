@@ -37,6 +37,7 @@
     }
   },
   "dependencies": {
+    "atom-package-upgrader": "^1.0.1",
     "interact.js": "^1.2.5",
     "minimatch": "^3.0.0"
   }
