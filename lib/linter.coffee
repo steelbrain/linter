@@ -13,6 +13,7 @@ class Linter
   # State is an object by default; never null or undefined
   constructor: (@state)  ->
     @state.scope ?= 'File'
+    @warningShown = false
 
     # Public Stuff
     @lintOnFly = true # A default art value, to be immediately replaced by the observe config below
@@ -95,7 +96,11 @@ class Linter
     editorLinter.onShouldUpdateBubble =>
       @views.renderBubble(editorLinter)
     editorLinter.onShouldLint (onChange) =>
-      @linters.lint({onChange, editorLinter})
+      if @linters.linters.size
+        @linters.lint({onChange, editorLinter})
+      else if not @indieLinters.indieLinters.size and not @warningShown
+        @warningShown = true
+        atom.notifications.addWarning('No Linter Providers Found', {detail: 'Goto atomlinter.github.io to get a list of linter providers for your favorite language', dismissable: true})
     editorLinter.onDidDestroy =>
       @messages.deleteEditorMessages(editorLinter)
     editorLinter.onDidCalculateLineMessages =>
