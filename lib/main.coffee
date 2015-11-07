@@ -132,10 +132,10 @@ module.exports =
       order: 5
 
   activate: (@state) ->
-    if atom.config.get('linter.autoUpdate')
-      require('atom-package-upgrader').upgrade('linter')
     LinterPlus = require('./linter.coffee')
     @instance = new LinterPlus state
+    if atom.config.get('linter.autoUpdate')
+      @instance.subscriptions.add(require('atom-package-upgrader').upgrade('linter'))
 
   serialize: ->
     @state
