@@ -6,6 +6,7 @@ EditorRegistry = require './editor-registry'
 EditorLinter = require './editor-linter'
 LinterRegistry = require './linter-registry'
 IndieRegistry = require './indie-registry'
+UIRegistry = require './ui-registry'
 Helpers = require './helpers'
 Commands = require './commands'
 
@@ -26,6 +27,7 @@ class Linter
     @messages = new MessageRegistry()
     @views = new LinterViews(state.scope, @editors)
     @commands = new Commands(this)
+    @ui = new UIRegistry()
 
     @subscriptions = new CompositeDisposable(@views, @editors, @linters, @messages, @commands, @indieLinters)
 
@@ -47,6 +49,12 @@ class Linter
       @commands.lint()
 
     @subscriptions.add atom.workspace.observeTextEditors (editor) => @createEditorLinter(editor)
+
+  addUI: (ui) ->
+    @ui.add(ui, @editors)
+
+  deleteUI: (ui) ->
+    @ui.delete(ui)
 
   addLinter: (linter) ->
     @linters.addLinter(linter)
