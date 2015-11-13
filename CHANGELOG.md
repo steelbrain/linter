@@ -1,3 +1,7 @@
+## 1.11.1
+
+* Revert notification for when no providers are installed.
+
 ## 1.11.0
 
 * A notification is shown to user if no linter providers are installed.
