@@ -18,6 +18,11 @@
         "^1.0.0": "consumeLinter"
       }
     },
+    "linter-ui": {
+      "versions": {
+        "^1.0.0": "consumeUI"
+      }
+    },
     "status-bar": {
       "versions": {
         "^1.0.0": "consumeStatusBar"
