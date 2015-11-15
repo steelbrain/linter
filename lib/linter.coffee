@@ -1,13 +1,10 @@
-Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
 LinterViews = require './linter-views'
 MessageRegistry = require './message-registry'
 EditorRegistry = require './editor-registry'
-EditorLinter = require './editor-linter'
 LinterRegistry = require './linter-registry'
 IndieRegistry = require './indie-registry'
 UIRegistry = require './ui-registry'
-Helpers = require './helpers'
 Commands = require './commands'
 
 class Linter
