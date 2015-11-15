@@ -144,6 +144,16 @@ module.exports =
       for linter in linters
         @instance.deleteLinter(linter)
 
+  consumeUI: (UIs) ->
+    unless UIs instanceof Array
+      UIs = [ UIs ]
+    for UI in UIs
+      @instance.addUI(UI)
+
+    new Disposable =>
+      for UI in UIs
+        @instance.deleteUI(UI)
+
   consumeStatusBar: (statusBar) ->
     @instance.views.attachBottom(statusBar)
 
