@@ -4,7 +4,7 @@ helpers = require('./helpers')
 module.exports = Validate =
 
   ui: (ui) ->
-    throw new Error('UI.name must be a string') unless typeof ui.name isnt 'string'
+    throw new Error('UI.name must be a string') unless typeof ui.name is 'string'
 
   linter: (linter, indie = false) ->
     unless indie
