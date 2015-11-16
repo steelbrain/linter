@@ -110,3 +110,4 @@ describe 'validate', ->
       .toThrow()
       validate.messages([{type: 'Error', text: 'Well', class: 'error', filePath: '/'}], {name: ''})
       validate.messages([{type: 'Error', html: 'Well', class: 'error', filePath: '/'}], {name: ''})
+      validate.messages([{type: 'Error', html: document.createElement('div'), class: 'error', filePath: '/'}], {name: ''})
