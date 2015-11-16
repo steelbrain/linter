@@ -48,7 +48,7 @@ class Linter
     @subscriptions.add atom.workspace.observeTextEditors (editor) => @createEditorLinter(editor)
 
   addUI: (key) ->
-    @ui.add(key, new provider(@editors))
+    @ui.add(key, new key(@editors))
 
   deleteUI: (ui) ->
     @ui.delete(ui)
