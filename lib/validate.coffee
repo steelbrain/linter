@@ -35,8 +35,8 @@ module.exports = Validate =
       else
         throw new Error 'Missing type field on Linter Response'
       if result.html
-        throw new Error 'Invalid html field on Linter Response' if typeof result.html isnt 'string'
         throw new Error 'Got both html and text fields on Linter Response, expecting only one' if typeof result.text is 'string'
+        throw new Error 'Invalid html field on Linter Response' if typeof result.html isnt 'string' and not (result.html instanceof HTMLElement)
         result.text = null
       else if result.text
         throw new Error 'Invalid text field on Linter Response' if typeof result.text isnt 'string'

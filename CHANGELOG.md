@@ -1,3 +1,7 @@
+## 1.11.2
+
+* Fix a bug where HTMLElements as `html` property on messages would be mistaken as incorrect.
+
 ## 1.11.1
 
 * Revert notification for when no providers are installed.
