@@ -105,9 +105,6 @@ class Linter
       @linters.lint({onChange, editorLinter})
     editorLinter.onDidDestroy =>
       @messages.deleteEditorMessages(editorLinter)
-    editorLinter.onDidCalculateLineMessages =>
-      @views.updateCounts()
-      @views.bottomPanel.refresh() if @state.scope is 'Line'
     @views.notifyEditorLinter(editorLinter)
 
   deactivate: ->
