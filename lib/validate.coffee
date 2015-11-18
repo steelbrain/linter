@@ -4,9 +4,11 @@ helpers = require('./helpers')
 module.exports = Validate =
 
   ui: (ui) ->
+    throw new Error('UI must be an object/class instance') unless typeof ui is 'object'
     throw new Error('UI.name must be a string') unless typeof ui.name is 'string'
-    throw new Error('UI.update must be a function') unless typeof ui.prototype.update is 'function'
-    throw new Error('UI.dispose must be a function') unless typeof ui.prototype.dispose is 'function'
+    throw new Error('UI.initialize must be a function') unless typeof ui.initialize is 'function'
+    throw new Error('UI.update must be a function') unless typeof ui.update is 'function'
+    throw new Error('UI.dispose must be a function') unless typeof ui.dispose is 'function'
 
   linter: (linter, indie = false) ->
     unless indie

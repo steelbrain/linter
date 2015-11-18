@@ -47,9 +47,9 @@ class Linter
 
     @subscriptions.add atom.workspace.observeTextEditors (editor) => @createEditorLinter(editor)
 
-  addUI: (key) ->
-    throw new Error('Provided UI is not a class') unless typeof key is 'function'
-    @ui.add(key, new key(@editors))
+  addUI: (ui) ->
+    @ui.add(ui)
+    ui.initialize(@editors)
 
   deleteUI: (ui) ->
     @ui.delete(ui)
