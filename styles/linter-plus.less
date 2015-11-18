@@ -100,31 +100,6 @@ linter-panel {
   }
 }
 
-linter-bottom-tab {
-  display: inline-block;
-  margin-right: -1px; // hide left border
-  padding: 0 .6em;
-  line-height: 1.8em;
-  color: @text-color-subtle;
-  border: 1px solid @button-border-color;
-  background: fade(@button-background-color, 33%);
-  cursor: pointer;
-  vertical-align: middle;
-  position: relative;
-
-  &:active {
-    background: transparent;
-  }
-  &.active {
-    color: @text-color-highlight;
-    background: @button-background-color;
-  }
-
-  .count {
-    margin-left: .2em;
-  }
-}
-
 atom-text-editor::shadow .linter-row {
   /* Take up the full allowed width */
   left: 0;
