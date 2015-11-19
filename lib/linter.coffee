@@ -1,11 +1,12 @@
 {CompositeDisposable, Emitter} = require 'atom'
-LinterViews = require './linter-views'
 MessageRegistry = require './message-registry'
 EditorRegistry = require './editor-registry'
 LinterRegistry = require './linter-registry'
 IndieRegistry = require './indie-registry'
 UIRegistry = require './ui-registry'
 Commands = require './commands'
+
+require './ui/message-element'
 
 class Linter
   # State is an object by default; never null or undefined
@@ -21,11 +22,10 @@ class Linter
     @indieLinters = new IndieRegistry()
     @editors = new EditorRegistry
     @messages = new MessageRegistry()
-    @views = new LinterViews()
     @commands = new Commands(this)
     @ui = new UIRegistry()
 
-    @subscriptions = new CompositeDisposable(@views, @editors, @linters, @messages, @commands, @indieLinters)
+    @subscriptions = new CompositeDisposable(@editors, @linters, @messages, @commands, @indieLinters)
 
     @indieLinters.observe (indieLinter) =>
       indieLinter.onDidDestroy =>
@@ -36,7 +36,6 @@ class Linter
       @messages.set({linter, messages, editorLinter: @editors.ofTextEditor(editor)})
     @messages.onDidUpdateMessages (messages) =>
       @ui.notify(messages)
-      @views.render(messages)
 
     @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
@@ -97,8 +96,6 @@ class Linter
     return if @editors.has(editor)
 
     editorLinter = @editors.create(editor)
-    editorLinter.onShouldUpdateBubble =>
-      @views.renderBubble(editorLinter)
     editorLinter.onShouldLint (onChange) =>
       @linters.lint({onChange, editorLinter})
     editorLinter.onDidDestroy =>

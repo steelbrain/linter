@@ -34,16 +34,10 @@ module.exports =
       default: '/**/*.min.{js,css}'
       order: 2
 
-    showErrorInline:
-      title: 'Show Inline Error Tooltips'
+    showProviderName:
+      title: 'Show Provider Name (When Available)'
       type: 'boolean'
       default: true
-      order: 3
-    inlineTooltipInterval:
-      title: 'Inline Tooltip Interval'
-      description: 'Interval at which inline tooltip is updated (in ms)'
-      type: 'integer'
-      default: 60
       order: 3
     gutterEnabled:
       title: 'Highlight Error Lines in Gutter'
@@ -56,16 +50,6 @@ module.exports =
       default: 'Right'
       order: 3
       type: 'string'
-    underlineIssues:
-      title: 'Underline Issues'
-      type: 'boolean'
-      default: true
-      order: 3
-    showProviderName:
-      title: 'Show Provider Name (When Available)'
-      type: 'boolean'
-      default: true
-      order: 3
 
     errorPanelHeight:
       title: 'Error Panel Height'
