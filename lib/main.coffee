@@ -39,17 +39,6 @@ module.exports =
       type: 'boolean'
       default: true
       order: 3
-    gutterEnabled:
-      title: 'Highlight Error Lines in Gutter'
-      type: 'boolean'
-      default: true
-      order: 3
-    gutterPosition:
-      title: 'Position of Gutter Highlights'
-      enum: ['Left', 'Right']
-      default: 'Right'
-      order: 3
-      type: 'string'
 
     errorPanelHeight:
       title: 'Error Panel Height'
