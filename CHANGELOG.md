@@ -1,3 +1,7 @@
+## 1.11.3
+
+* Fix a typo that didn't let `linter-indie` service to work
+
 ## 1.11.2
 
 * Fix a bug where HTMLElements as `html` property on messages would be mistaken as incorrect.
