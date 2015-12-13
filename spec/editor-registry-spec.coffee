@@ -56,18 +56,17 @@ describe 'editor-registry', ->
       editorRegistry.create(activeEditor)
       expect(editorRegistry.ofTextEditor(activeEditor)).toBeDefined()
 
-  describe '::ofPath', ->
-    it 'returns undefined when invalid key is provided', ->
-      expect(editorRegistry.ofPath(null)).toBeUndefined()
-      expect(editorRegistry.ofPath(1)).toBeUndefined()
-      expect(editorRegistry.ofPath(5)).toBeUndefined()
-      expect(editorRegistry.ofPath('asd')).toBeUndefined()
-    it 'returns editorLinter when valid key is provided', ->
+
+  describe '::getMap', ->
+    it 'returns an object', ->
+      expect(typeof editorRegistry.getMap() is 'object').toBe(true)
+    it 'has paths as keys and arrays of editorLinters as values', ->
       activeEditor = atom.workspace.getActiveTextEditor()
-      editorPath = activeEditor.getPath()
-      expect(editorRegistry.ofPath(editorPath)).toBeUndefined()
+      activeEditorPath = activeEditor.getPath()
       editorRegistry.create(activeEditor)
-      expect(editorRegistry.ofPath(editorPath)).toBeDefined()
+      editorMap = editorRegistry.getMap()
+      expect(editorMap[activeEditorPath] instanceof Array).toBe(true)
+      expect(editorMap[activeEditorPath].indexOf(editorRegistry.ofTextEditor(activeEditor))).toBe(0)
 
   describe '::observe', ->
     it 'calls with the current editorLinters', ->

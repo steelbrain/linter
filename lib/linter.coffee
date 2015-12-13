@@ -79,9 +79,6 @@ class Linter
   getEditorLinter: (editor) ->
     @editors.ofTextEditor(editor)
 
-  getEditorLinterByPath: (path) ->
-    @editors.ofPath(path)
-
   eachEditorLinter: (callback) ->
     @editors.forEach(callback)
 
