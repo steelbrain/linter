@@ -12,14 +12,14 @@ describe 'Linter Config', ->
   describe 'ignoredMessageTypes', ->
     it 'ignores certain types of messages', ->
       linterProvider = getLinter()
-      expect(linter.messages.publicMessages.length).toBe(0)
+      expect(linter.messages.getAllMessages().length).toBe(0)
       linter.messages.set({linter: linterProvider, messages: [getMessage('Error'), getMessage('Warning')]})
       linter.messages.processQueue()
-      expect(linter.messages.publicMessages.length).toBe(2)
+      expect(linter.messages.getAllMessages().length).toBe(2)
       atom.config.set('linter.ignoredMessageTypes', ['Error'])
       linter.messages.set({linter: linterProvider, messages: [getMessage('Error'), getMessage('Warning')]})
       linter.messages.processQueue()
-      expect(linter.messages.publicMessages.length).toBe(1)
+      expect(linter.messages.getAllMessages().length).toBe(1)
 
   describe 'statusIconScope', ->
     it 'only shows messages of the current scope', ->
