@@ -16,8 +16,8 @@ describe 'Linter Indie API', ->
     indieLinter.setMessages([{type: 'Error', text: 'Hey!'}])
     waitsForPromise ->
       wait(100).then ->
-        expect(linter.messages.publicMessages.length).toBe(1)
+        expect(linter.messages.getAllMessages().length).toBe(1)
         indieLinter.deleteMessages()
         wait(100)
       .then ->
-        expect(linter.messages.publicMessages.length).toBe(0)
+        expect(linter.messages.getAllMessages().length).toBe(0)
