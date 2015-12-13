@@ -31,15 +31,15 @@ describe 'message-registry', ->
     it 'ignores deactivated linters', ->
       {linterRegistry, editorLinter, linter} = getLinterRegistry()
       messageRegistry.set({linter, messages: [getMessage('Error'), getMessage('Warning')]})
-      messageRegistry.updatePublic()
+      messageRegistry.processQueue()
       expect(messageRegistry.publicMessages.length).toBe(2)
       linter.deactivated = true
       messageRegistry.set({linter, messages: [getMessage('Error')]})
-      messageRegistry.updatePublic()
+      messageRegistry.processQueue()
       expect(messageRegistry.publicMessages.length).toBe(2)
       linter.deactivated = false
       messageRegistry.set({linter, messages: [getMessage('Error')]})
-      messageRegistry.updatePublic()
+      messageRegistry.processQueue()
       expect(messageRegistry.publicMessages.length).toBe(1)
 
   describe '::onDidUpdateMessages', ->
@@ -49,7 +49,7 @@ describe 'message-registry', ->
       linterRegistry.onDidUpdateMessages (linterInfo) ->
         messageRegistry.set(linterInfo)
         expect(messageRegistry.hasChanged).toBe(true)
-        messageRegistry.updatePublic()
+        messageRegistry.processQueue()
       messageRegistry.onDidUpdateMessages ({added, removed, messages}) ->
         wasUpdated = true
         expect(added.length).toBe(1)
@@ -64,7 +64,7 @@ describe 'message-registry', ->
       {linterRegistry, editorLinter} = getLinterRegistry()
       linterRegistry.onDidUpdateMessages (linterInfo) ->
         messageRegistry.set(linterInfo)
-        messageRegistry.updatePublic()
+        messageRegistry.processQueue()
       disposable = messageRegistry.onDidUpdateMessages ({added}) ->
         expect(added.length).toBe(1)
         obj = added[0]
@@ -87,7 +87,7 @@ describe 'message-registry', ->
       linterRegistry.onDidUpdateMessages (linterInfo) ->
         messageRegistry.set(linterInfo)
         expect(messageRegistry.hasChanged).toBe(true)
-        messageRegistry.updatePublic()
+        messageRegistry.processQueue()
       messageRegistry.onDidUpdateMessages ({messages}) ->
         wasUpdated = 1
         expect(objectSize(messages)).toBe(1)

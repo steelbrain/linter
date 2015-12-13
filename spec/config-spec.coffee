@@ -14,11 +14,11 @@ describe 'Linter Config', ->
       linterProvider = getLinter()
       expect(linter.messages.publicMessages.length).toBe(0)
       linter.messages.set({linter: linterProvider, messages: [getMessage('Error'), getMessage('Warning')]})
-      linter.messages.updatePublic()
+      linter.messages.processQueue()
       expect(linter.messages.publicMessages.length).toBe(2)
       atom.config.set('linter.ignoredMessageTypes', ['Error'])
       linter.messages.set({linter: linterProvider, messages: [getMessage('Error'), getMessage('Warning')]})
-      linter.messages.updatePublic()
+      linter.messages.processQueue()
       expect(linter.messages.publicMessages.length).toBe(1)
 
   describe 'statusIconScope', ->
@@ -26,7 +26,7 @@ describe 'Linter Config', ->
       linterProvider = getLinter()
       expect(linter.views.bottomContainer.status.count).toBe(0)
       linter.messages.set({linter: linterProvider, messages: [getMessage('Error', '/tmp/test.coffee')]})
-      linter.messages.updatePublic()
+      linter.messages.processQueue()
       expect(linter.views.bottomContainer.status.count).toBe(1)
       atom.config.set('linter.statusIconScope', 'File')
       expect(linter.views.bottomContainer.status.count).toBe(0)
