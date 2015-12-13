@@ -46,7 +46,7 @@ describe 'Linter Behavior', ->
       expect(bottomContainer.getTab('File').count).toBe(0)
       messages = [getMessage('Error', __dirname + '/fixtures/file.txt')]
       linter.setMessages(provider, messages)
-      linter.messages.updatePublic()
+      linter.messages.processQueue()
       waitsForPromise ->
         atom.workspace.open('file.txt').then ->
           expect(bottomContainer.getTab('File').count).toBe(1)
@@ -61,7 +61,7 @@ describe 'Linter Behavior', ->
       provider = getLinter()
       messages = [getMessage('Error', '/etc/passwd')]
       linter.setMessages(provider, messages)
-      linter.messages.updatePublic()
+      linter.messages.processQueue()
       waitsForPromise ->
         atom.workspace.open('/etc/passwd').then ->
           activeEditor = atom.workspace.getActiveTextEditor()
