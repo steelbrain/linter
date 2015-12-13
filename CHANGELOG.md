@@ -1,5 +1,6 @@
 ## Upcoming
 
+* Fix linter message synchronization between buffers (See #1007)
 * Remove `Linter.getEditorLinterByPath` of self API (GitHub code search says nobody was using it)
 
 ## 1.11.3
