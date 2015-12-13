@@ -23,7 +23,7 @@ describe 'message-registry', ->
       linterRegistry.onDidUpdateMessages (linterInfo) ->
         wasUpdated = true
         messageRegistry.set(linterInfo)
-        expect(messageRegistry.queue.length).toBe(1)
+        expect(messageRegistry.hasChanged).toBe(true)
       waitsForPromise ->
         linterRegistry.lint({onChange: false, editorLinter}).then ->
           expect(wasUpdated).toBe(true)
@@ -31,16 +31,16 @@ describe 'message-registry', ->
     it 'ignores deactivated linters', ->
       {linterRegistry, editorLinter, linter} = getLinterRegistry()
       messageRegistry.set({linter, messages: [getMessage('Error'), getMessage('Warning')]})
-      messageRegistry.processQueue()
-      expect(messageRegistry.getAllMessages().length).toBe(2)
+      messageRegistry.updatePublic()
+      expect(messageRegistry.publicMessages.length).toBe(2)
       linter.deactivated = true
       messageRegistry.set({linter, messages: [getMessage('Error')]})
-      messageRegistry.processQueue()
-      expect(messageRegistry.getAllMessages().length).toBe(2)
+      messageRegistry.updatePublic()
+      expect(messageRegistry.publicMessages.length).toBe(2)
       linter.deactivated = false
       messageRegistry.set({linter, messages: [getMessage('Error')]})
-      messageRegistry.processQueue()
-      expect(messageRegistry.getAllMessages().length).toBe(1)
+      messageRegistry.updatePublic()
+      expect(messageRegistry.publicMessages.length).toBe(1)
 
   describe '::onDidUpdateMessages', ->
     it 'is triggered asyncly with results and provides a diff', ->
@@ -48,8 +48,8 @@ describe 'message-registry', ->
       {linterRegistry, editorLinter} = getLinterRegistry()
       linterRegistry.onDidUpdateMessages (linterInfo) ->
         messageRegistry.set(linterInfo)
-        expect(messageRegistry.queue.length).toBe(1)
-        messageRegistry.processQueue()
+        expect(messageRegistry.hasChanged).toBe(true)
+        messageRegistry.updatePublic()
       messageRegistry.onDidUpdateMessages ({added, removed, messages}) ->
         wasUpdated = true
         expect(added.length).toBe(1)
@@ -60,16 +60,12 @@ describe 'message-registry', ->
           expect(wasUpdated).toBe(true)
           linterRegistry.dispose()
     it 'provides the same objects when they dont change', ->
-      firstTime = true
       wasUpdated = false
       {linterRegistry, editorLinter} = getLinterRegistry()
       linterRegistry.onDidUpdateMessages (linterInfo) ->
-        unless firstTime
-          linterInfo.messages.push(getMessage('Warning'))
         messageRegistry.set(linterInfo)
-        messageRegistry.processQueue()
+        messageRegistry.updatePublic()
       disposable = messageRegistry.onDidUpdateMessages ({added}) ->
-        firstTime = false
         expect(added.length).toBe(1)
         obj = added[0]
         disposable.dispose()
@@ -90,8 +86,8 @@ describe 'message-registry', ->
       editor = editorLinter.editor
       linterRegistry.onDidUpdateMessages (linterInfo) ->
         messageRegistry.set(linterInfo)
-        expect(messageRegistry.queue.length).toBe(1)
-        messageRegistry.processQueue()
+        expect(messageRegistry.hasChanged).toBe(true)
+        messageRegistry.updatePublic()
       messageRegistry.onDidUpdateMessages ({messages}) ->
         wasUpdated = 1
         expect(objectSize(messages)).toBe(1)

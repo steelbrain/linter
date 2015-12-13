@@ -68,7 +68,7 @@ class Linter
     @messages.deleteMessages(linter)
 
   getMessages: ->
-    @messages.getAllMessages()
+    @messages.publicMessages
 
   onDidUpdateMessages: (callback) ->
     @messages.onDidUpdateMessages(callback)
