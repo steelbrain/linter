@@ -1,9 +1,13 @@
 describe 'Linter Config', ->
   linter = null
   {getLinter, getMessage} = require('./common')
+  Path = require('path')
   CP = require('child_process')
   FS = require('fs')
   Helpers = require('../lib/helpers')
+
+  TempDir = require('os').tmpdir()
+
   beforeEach ->
     waitsForPromise ->
       atom.packages.activatePackage('linter').then ->
@@ -34,8 +38,8 @@ describe 'Linter Config', ->
       expect(linter.views.bottomContainer.status.count).toBe(1)
   describe 'ignoreVCSIgnoredFiles', ->
     it 'ignores the file if its ignored by the VCS', ->
-      filePath = "/tmp/linter_test_file"
-      FS.writeFileSync(filePath, "'use strict'\n")
+      filePath = Path.join(TempDir, 'linter_spec_ignored_vcs.min.js')
+      FS.writeFileSync(filePath, 'Hello Dolly')
 
       atom.config.set('linter.ignoreVCSIgnoredFiles', true)
       linterProvider = getLinter()
@@ -55,8 +59,8 @@ describe 'Linter Config', ->
 
   describe 'ignoreMatchedFiles', ->
     it 'ignores the file if it matches pattern', ->
-      filePath = '/tmp/linter_spec_test.min.js'
-      FS.writeFileSync(filePath, "'use strict'\n")
+      filePath = Path.join(TempDir, 'linter_spec_ignored_match.min.js')
+      FS.writeFileSync(filePath, 'Hello Dolly')
 
       atom.config.set('linter.ignoreMatchedFiles', '/**/*.min.{js,css}')
       linterProvider = getLinter()
