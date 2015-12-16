@@ -2,7 +2,6 @@ describe 'Linter Config', ->
   linter = null
   {getLinter, getMessage} = require('./common')
   Path = require('path')
-  CP = require('child_process')
   FS = require('fs')
   Helpers = require('../lib/helpers')
 
@@ -55,14 +54,14 @@ describe 'Linter Config', ->
           atom.config.set('linter.ignoreVCSIgnoredFiles', false)
           linter.commands.lint()
           expect(linterProvider.lint).toHaveBeenCalled()
-          CP.execSync("rm -f #{filePath}")
+          FS.unlinkSync(filePath)
 
   describe 'ignoreMatchedFiles', ->
     it 'ignores the file if it matches pattern', ->
       filePath = Path.join(TempDir, 'linter_spec_ignored_match.min.js')
       FS.writeFileSync(filePath, 'Hello Dolly')
 
-      atom.config.set('linter.ignoreMatchedFiles', '/**/*.min.{js,css}')
+      atom.config.set('linter.ignoreMatchedFiles', '{\,/}**{\,/}*.min.{js,css}')
       linterProvider = getLinter()
       spyOn(linterProvider, 'lint')
 
@@ -72,7 +71,7 @@ describe 'Linter Config', ->
         atom.workspace.open(filePath).then ->
           linter.commands.lint()
           expect(linterProvider.lint).not.toHaveBeenCalled()
-          atom.config.set('linter.ignoreMatchedFiles', '/**/*.min.css')
+          atom.config.set('linter.ignoreMatchedFiles', '{\,/}**{\,/}*.min.css')
           linter.commands.lint()
           expect(linterProvider.lint).toHaveBeenCalled()
-          CP.execSync("rm -f #{filePath}")
+          FS.unlinkSync(filePath)
