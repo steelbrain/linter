@@ -48,11 +48,12 @@ describe 'Linter Behavior', ->
     it 'updates count on pane change', ->
       provider = getLinter()
       expect(bottomContainer.getTab('File').count).toBe(0)
-      messages = [getMessage('Error', __dirname + '/fixtures/file.txt')]
+      filePath = Path.join(__dirname, 'fixtures', 'file.txt')
+      messages = [getMessage('Error', filePath)]
       linter.setMessages(provider, messages)
       linter.messages.updatePublic()
       waitsForPromise ->
-        atom.workspace.open('file.txt').then ->
+        atom.workspace.open(filePath).then ->
           expect(bottomContainer.getTab('File').count).toBe(1)
           expect(linter.views.bottomPanel.getVisibility()).toBe(true)
           atom.workspace.open('/tmp/non-existing-file')
