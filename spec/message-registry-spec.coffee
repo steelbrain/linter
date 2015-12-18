@@ -91,7 +91,7 @@ describe 'message-registry', ->
       messageRegistry.onDidUpdateMessages ({messages}) ->
         wasUpdated = 1
         expect(objectSize(messages)).toBe(1)
-        messageRegistry.deleteEditorMessages(editor)
+        messageRegistry.deleteEditorMessages({editor})
       waitsForPromise ->
         linterRegistry.lint({onChange: false, editorLinter}).then ->
           expect(wasUpdated).toBe(1)

@@ -3,6 +3,10 @@ describe 'Linter Behavior', ->
   linterState = null
   bottomContainer = null
   {getLinter, trigger} = require('./common')
+  FS = require('fs')
+  Path = require('path')
+
+  TempDir = require('os').tmpdir()
 
   getMessage = (type, filePath) ->
     return {type, text: 'Some Message', filePath, range: [[0, 0], [1, 1]]}
@@ -44,11 +48,12 @@ describe 'Linter Behavior', ->
     it 'updates count on pane change', ->
       provider = getLinter()
       expect(bottomContainer.getTab('File').count).toBe(0)
-      messages = [getMessage('Error', __dirname + '/fixtures/file.txt')]
+      filePath = Path.join(__dirname, 'fixtures', 'file.txt')
+      messages = [getMessage('Error', filePath)]
       linter.setMessages(provider, messages)
       linter.messages.updatePublic()
       waitsForPromise ->
-        atom.workspace.open('file.txt').then ->
+        atom.workspace.open(filePath).then ->
           expect(bottomContainer.getTab('File').count).toBe(1)
           expect(linter.views.bottomPanel.getVisibility()).toBe(true)
           atom.workspace.open('/tmp/non-existing-file')
@@ -59,10 +64,13 @@ describe 'Linter Behavior', ->
   describe 'Markers', ->
     it 'automatically marks files when they are opened if they have any markers', ->
       provider = getLinter()
-      messages = [getMessage('Error', '/etc/passwd')]
+      filePath = Path.join(TempDir, 'marker_test.js')
+      FS.writeFileSync(filePath, '42')
+      messages = [getMessage('Error', filePath)]
       linter.setMessages(provider, messages)
       linter.messages.updatePublic()
       waitsForPromise ->
-        atom.workspace.open('/etc/passwd').then ->
+        atom.workspace.open(filePath).then ->
           activeEditor = atom.workspace.getActiveTextEditor()
-          expect(activeEditor.getMarkers().length > 0).toBe(true)
+          expect(activeEditor.getMarkers().length).toBeGreaterThan(0)
+      FS.unlinkSync(filePath)
