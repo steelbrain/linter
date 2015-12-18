@@ -35,7 +35,7 @@ class Linter
     @linters.onDidUpdateMessages ({linter, messages, editor}) =>
       @messages.set({linter, messages, editorLinter: @editors.ofTextEditor(editor)})
     @messages.onDidUpdateMessages (messages) =>
-      @ui.notify(messages)
+      @ui.didCalculateMessages(messages)
 
     @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
