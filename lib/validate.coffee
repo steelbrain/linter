@@ -6,7 +6,7 @@ module.exports = Validate =
   ui: (ui) ->
     throw new Error('UI must be an object/class instance') unless typeof ui is 'object'
     throw new Error('UI.name must be a string') unless typeof ui.name is 'string'
-    throw new Error('UI.initialize must be a function') unless typeof ui.initialize is 'function'
+    throw new Error('UI.activate must be a function') unless typeof ui.activate is 'function'
     throw new Error('UI.didCalculateMessages must be a function') unless typeof ui.didCalculateMessages is 'function'
     throw new Error('UI.didBeginLinting must be a function') unless typeof ui.didBeginLinting is 'function'
     throw new Error('UI.didFinishLinting must be a function') unless typeof ui.didFinishLinting is 'function'

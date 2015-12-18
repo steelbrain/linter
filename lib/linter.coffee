@@ -50,7 +50,7 @@ class Linter
 
   addUI: (ui) ->
     @ui.add(ui)
-    ui.initialize(@editors)
+    ui.activate(@editors)
 
   deleteUI: (ui) ->
     @ui.delete(ui)
