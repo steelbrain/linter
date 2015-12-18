@@ -2,6 +2,7 @@
 
 * Fix linter message synchronization between buffers (See #1007)
 * Remove `Linter.getEditorLinterByPath` of self API (GitHub code search says nobody was using it)
+* Linter now supports message-specific names (see wiki for updated API)
 
 ## 1.11.3
 
