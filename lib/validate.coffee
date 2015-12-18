@@ -8,8 +8,8 @@ module.exports = Validate =
     throw new Error('UI.name must be a string') unless typeof ui.name is 'string'
     throw new Error('UI.initialize must be a function') unless typeof ui.initialize is 'function'
     throw new Error('UI.didCalculateMessages must be a function') unless typeof ui.didCalculateMessages is 'function'
-    throw new Error('UI.didBeginLint must be a function') unless typeof ui.didBeginLint is 'function'
-    throw new Error('UI.didFinishLint must be a function') unless typeof ui.didFinishLint is 'function'
+    throw new Error('UI.didBeginLinting must be a function') unless typeof ui.didBeginLinting is 'function'
+    throw new Error('UI.didFinishLinting must be a function') unless typeof ui.didFinishLinting is 'function'
     throw new Error('UI.dispose must be a function') unless typeof ui.dispose is 'function'
 
   linter: (linter, indie = false) ->

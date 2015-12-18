@@ -34,6 +34,10 @@ class Linter
       @messages.set({linter, messages})
     @linters.onDidUpdateMessages ({linter, messages, editor}) =>
       @messages.set({linter, messages, editorLinter: @editors.ofTextEditor(editor)})
+    @linters.onDidBeginLinting ({linter, filePath}) =>
+      @ui.didBeginLinting(linter, filePath)
+    @linters.onDidFinishLinting ({linter, filePath}) =>
+      @ui.didFinishLinting(linter, filePath)
     @messages.onDidUpdateMessages (messages) =>
       @ui.didCalculateMessages(messages)
 
