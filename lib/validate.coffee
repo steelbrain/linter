@@ -60,6 +60,6 @@ module.exports = Validate =
         result.filePath = null
       result.range = Range.fromObject result.range if result.range?
       result.key = JSON.stringify(result)
-      result.linter = result.name or linter.name
+      result.name = result.name or linter.name
       Validate.messages(result.trace, linter) if result.trace and result.trace.length
     return
