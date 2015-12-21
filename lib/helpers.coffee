@@ -1,6 +1,3 @@
-{Range} = require('atom')
-path = require 'path'
-child_process = require('child_process')
 minimatch = require('minimatch')
 
 Helpers = module.exports =
