@@ -55,7 +55,7 @@ describe 'editor-registry', ->
       expect(editorRegistry.ofTextEditor(activeEditor)).toBeUndefined()
       editorRegistry.create(activeEditor)
       expect(editorRegistry.ofTextEditor(activeEditor)).toBeDefined()
-      
+
   describe '::observe', ->
     it 'calls with the current editorLinters', ->
       timesCalled = 0
