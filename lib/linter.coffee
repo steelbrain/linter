@@ -6,8 +6,6 @@ IndieRegistry = require './indie-registry'
 UIRegistry = require './ui-registry'
 Commands = require './commands'
 
-require './ui/message-element'
-
 class Linter
   # State is an object by default; never null or undefined
   constructor: (@state)  ->
