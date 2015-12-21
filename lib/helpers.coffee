@@ -1,3 +1,4 @@
+path = require('path')
 minimatch = require('minimatch')
 
 Helpers = module.exports =
