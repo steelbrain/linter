@@ -22,12 +22,6 @@ module.exports =
       items:
         type: 'string'
       order: 2
-    ignoreVCSIgnoredFiles:
-      title: 'Do Not Lint Files Ignored by VCS'
-      description: 'E.g., ignore files specified in .gitignore'
-      type: 'boolean'
-      default: true
-      order: 2
     ignoreMatchedFiles:
       title: 'Do Not Lint Files that match this Glob'
       type: 'string'
