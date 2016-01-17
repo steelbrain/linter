@@ -34,12 +34,6 @@ module.exports =
       default: '{\,/}**{\,/}*.min.{js,css}'
       order: 2
 
-    showProviderName:
-      title: 'Show Provider Name (When Available)'
-      type: 'boolean'
-      default: true
-      order: 3
-
     errorPanelHeight:
       title: 'Error Panel Height'
       description: 'Height of the error panel (in px)'
