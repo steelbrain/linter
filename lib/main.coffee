@@ -15,13 +15,6 @@ module.exports =
       default: 300
       order: 1
 
-    ignoredMessageTypes:
-      description: 'Comma separated list of message types to completely ignore'
-      type: 'array'
-      default: []
-      items:
-        type: 'string'
-      order: 2
     ignoreMatchedFiles:
       title: 'Do Not Lint Files that match this Glob'
       type: 'string'
