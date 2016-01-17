@@ -21,19 +21,6 @@ module.exports =
       default: '{\,/}**{\,/}*.min.{js,css}'
       order: 2
 
-    errorPanelHeight:
-      title: 'Error Panel Height'
-      description: 'Height of the error panel (in px)'
-      type: 'number'
-      default: 150
-      order: 4
-    alwaysTakeMinimumSpace:
-      title: 'Automatically Reduce Error Panel Height'
-      description: 'Reduce panel height when it exceeds the height of the error list'
-      type: 'boolean'
-      default: true
-      order: 4
-
   activate: (@state) ->
     LinterPlus = require('./linter.coffee')
     @instance = new LinterPlus state
