@@ -22,7 +22,7 @@ module.exports =
       order: 2
 
   activate: (@state) ->
-    requir('atom-package-deps').install()
+    require('atom-package-deps').install()
     LinterPlus = require('./linter.coffee')
     @instance = new LinterPlus state
 
