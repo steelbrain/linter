@@ -1,5 +1,4 @@
 {Range} = require('atom')
-helpers = require('./helpers')
 
 module.exports = Validate =
 

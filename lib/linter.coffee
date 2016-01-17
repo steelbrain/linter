@@ -20,7 +20,7 @@ class Linter
     @indieLinters = new IndieRegistry()
     @editors = new EditorRegistry
     @messages = new MessageRegistry()
-    @commands = new Commands(this)
+    @commands = new Commands()
     @ui = new UIRegistry()
 
     @subscriptions = new CompositeDisposable(@editors, @linters, @messages, @commands, @indieLinters)
@@ -45,6 +45,14 @@ class Linter
       @commands.lint()
 
     @subscriptions.add atom.workspace.observeTextEditors (editor) => @createEditorLinter(editor)
+    @commands.onShouldLint =>
+      @getActiveEditorLinter().lint()
+    @commands.onShouldToggleActiveEditor ->
+      activeLinter = @getActiveEditorLinter()
+      if activeLinter
+        activeLinter.dispose()
+      else
+        @createEditorLinter(atom.workspace.getActiveTextEditor())
 
   addUI: (ui) ->
     @ui.add(ui)
