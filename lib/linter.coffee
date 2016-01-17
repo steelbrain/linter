@@ -41,8 +41,6 @@ class Linter
 
     @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
-    @subscriptions.add atom.project.onDidChangePaths =>
-      @commands.lint()
 
     @subscriptions.add atom.workspace.observeTextEditors (editor) => @createEditorLinter(editor)
     @commands.onShouldLint =>
@@ -53,6 +51,12 @@ class Linter
         activeLinter.dispose()
       else
         @createEditorLinter(atom.workspace.getActiveTextEditor())
+
+    # Defer execution because onDidChangePaths is added on editor init,
+    # we don't want to lint until editor is initialized
+    setImmediate =>
+      @subscriptions.add atom.project.onDidChangePaths =>
+        @commands.lint()
 
   addUI: (ui) ->
     @ui.add(ui)
