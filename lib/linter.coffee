@@ -47,7 +47,7 @@ class Linter
     @subscriptions.add atom.workspace.observeTextEditors (editor) => @createEditorLinter(editor)
     @commands.onShouldLint =>
       @getActiveEditorLinter().lint()
-    @commands.onShouldToggleActiveEditor ->
+    @commands.onShouldToggleActiveEditor =>
       activeLinter = @getActiveEditorLinter()
       if activeLinter
         activeLinter.dispose()
