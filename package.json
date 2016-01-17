@@ -37,6 +37,8 @@
     }
   },
   "dependencies": {
+    "atom-package-deps": "^3.0.7",
     "minimatch": "^3.0.0"
-  }
+  },
+  "package-deps": ["linter-ui-default"]
 }
