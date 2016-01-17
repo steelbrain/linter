@@ -15,6 +15,8 @@ describe 'message-registry', ->
       atom.workspace.open('test.txt').then ->
         messageRegistry?.dispose()
         messageRegistry = new MessageRegistry()
+    waitsForPromise ->
+      atom.packages.activatePackage('linter')
 
   describe '::set', ->
     it 'accepts info from LinterRegistry::lint', ->

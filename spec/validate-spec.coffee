@@ -116,8 +116,8 @@ describe 'validate', ->
 
       message = {type: 'Error', text: 'Some Text'}
       validate.messages([message], linter)
-      expect(message.linter).toBe('Wow')
+      expect(message.name).toBe('Wow')
 
       message = {type: 'Error', text: 'Some Text', name: 'Ha!'}
       validate.messages([message], linter)
-      expect(message.linter).toBe('Ha!')
+      expect(message.name).toBe('Ha!')
