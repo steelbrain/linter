@@ -15,8 +15,8 @@ module.exports =
       default: 300
       order: 1
 
-    ignoreMatchedFiles:
-      title: 'Do Not Lint Files that match this Glob'
+    ignoreGlob:
+      title: 'Ignore files matching this Glob'
       type: 'string'
       default: '{\,/}**{\,/}*.min.{js,css}'
       order: 2
