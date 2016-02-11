@@ -28,10 +28,9 @@ module.exports = Validate =
       linter.name = null
     return true
 
-  messages: (messages, linter) ->
+  messages: (messages) ->
     unless messages instanceof Array
       throw new Error("Expected messages to be array, provided: #{typeof messages}")
-    throw new Error 'No linter provided' unless linter
     messages.forEach (result) ->
       if result.type
         throw new Error 'Invalid type field on Linter Response' if typeof result.type isnt 'string'
@@ -57,5 +56,5 @@ module.exports = Validate =
         throw new Error('Invalid filePath field on Linter response') if typeof result.filePath isnt 'string'
       else
         result.filePath = null
-      Validate.messages(result.trace, linter) if result.trace and result.trace.length
+      Validate.messages(result.trace) if result.trace and result.trace.length
     return
