@@ -31,7 +31,7 @@ describe 'message-registry', ->
         messageRegistry.set(linterInfo)
         expect(messageRegistry.debouncedUpdate).toHaveBeenCalled()
       waitsForPromise ->
-        linterRegistry.lint({onChange: false, editorLinter}).then ->
+        linterRegistry.lint({onChange: false, editor: editorLinter.editor}).then ->
           expect(wasUpdated).toBe(true)
           linterRegistry.dispose()
 
@@ -49,7 +49,7 @@ describe 'message-registry', ->
         expect(removed.length).toBe(0)
         expect(messages.length).toBe(1)
       waitsForPromise ->
-        linterRegistry.lint({onChange: false, editorLinter}).then ->
+        linterRegistry.lint({onChange: false, editor: editorLinter.editor}).then ->
           expect(wasUpdated).toBe(true)
           linterRegistry.dispose()
     it 'provides the same objects when they dont change', ->
@@ -72,8 +72,8 @@ describe 'message-registry', ->
           return [message, getMessage('Warning')]
 
       waitsForPromise ->
-        linterRegistry.lint({onChange: false, editorLinter}).then( ->
-          return linterRegistry.lint({onChange: false, editorLinter})
+        linterRegistry.lint({onChange: false, editor: editorLinter.editor}).then( ->
+          return linterRegistry.lint({onChange: false, editor: editorLinter.editor})
         ).then ->
           expect(timesTriggered).toBe(2)
           expect(registryMessages[0]).toBe(message)
@@ -92,7 +92,7 @@ describe 'message-registry', ->
         expect(objectSize(messages)).toBe(1)
         messageRegistry.deleteByBuffer(buffer)
       waitsForPromise ->
-        linterRegistry.lint({onChange: false, editorLinter}).then ->
+        linterRegistry.lint({onChange: false, editor: editorLinter.editor}).then ->
           expect(wasUpdated).toBe(1)
           linterRegistry.dispose()
 

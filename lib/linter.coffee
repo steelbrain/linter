@@ -98,7 +98,7 @@ class Linter
 
     editorLinter = @editors.create(editor)
     editorLinter.onShouldLint (onChange) =>
-      @linters.lint({onChange, editorLinter})
+      @linters.lint({onChange, editor})
     editorLinter.onDidDestroy =>
       @messages.deleteByBuffer(editor.getBuffer())
 
