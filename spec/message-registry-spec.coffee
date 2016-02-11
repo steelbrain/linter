@@ -76,7 +76,7 @@ describe 'message-registry', ->
           return linterRegistry.lint({onChange: false, editor: editorLinter.editor})
         ).then ->
           expect(timesTriggered).toBe(2)
-          expect(registryMessages[0]).toBe(message)
+          expect(registryMessages[0] is message || registryMessages[1] is message).toBe(true)
 
   describe '::deleteByBuffer', ->
     it 'removes messages for that buffer', ->
@@ -105,6 +105,6 @@ describe 'message-registry', ->
       }
       messageRegistry.set({linter: {name: 'Something'}, buffer: null, messages: [message]})
       messageRegistry.update()
-      expect(message.class).toBe(' error')
+      expect(message.className).toBe(' error')
       expect(message.name).toBe('Something')
       expect(message.range.start).toEqual(row: 0, column: 0)
