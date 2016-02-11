@@ -97,7 +97,7 @@ describe 'message-registry', ->
           linterRegistry.dispose()
 
   describe '::update', ->
-    it 'sets name, class and range properly', ->
+    it 'sets name properly', ->
       message = {
         type: 'Error',
         text: 'Something',
@@ -105,6 +105,4 @@ describe 'message-registry', ->
       }
       messageRegistry.set({linter: {name: 'Something'}, buffer: null, messages: [message]})
       messageRegistry.update()
-      expect(message.className).toBe(' error')
       expect(message.name).toBe('Something')
-      expect(message.range.start).toEqual(row: 0, column: 0)
