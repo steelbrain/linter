@@ -57,8 +57,5 @@ module.exports = Validate =
         throw new Error('Invalid filePath field on Linter response') if typeof result.filePath isnt 'string'
       else
         result.filePath = null
-      result.range = Range.fromObject result.range if result.range?
-      result.key = JSON.stringify(result)
-      result.name = result.name or linter.name
       Validate.messages(result.trace, linter) if result.trace and result.trace.length
     return
