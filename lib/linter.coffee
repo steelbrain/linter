@@ -1,5 +1,5 @@
 {CompositeDisposable, Emitter} = require 'atom'
-MessageRegistry = require './message-registry'
+{MessageRegistry} = require './message-registry'
 EditorRegistry = require './editor-registry'
 LinterRegistry = require './linter-registry'
 IndieRegistry = require './indie-registry'
@@ -27,11 +27,11 @@ class Linter
 
     @indieLinters.observe (indieLinter) =>
       indieLinter.onDidDestroy =>
-        @messages.deleteMessages(indieLinter)
+        @messages.deleteByLinter(indieLinter)
     @indieLinters.onDidUpdateMessages ({linter, messages}) =>
-      @messages.set({linter, messages})
-    @linters.onDidUpdateMessages ({linter, messages, editor}) =>
-      @messages.set({linter, messages, editorLinter: @editors.ofTextEditor(editor)})
+      @messages.set({messages, linter, buffer: null})
+    @linters.onDidUpdateMessages ({messages, linter, buffer}) =>
+      @messages.set({messages, linter, buffer})
     @linters.onDidBeginLinting ({linter, filePath}) =>
       @ui.didBeginLinting(linter, filePath)
     @linters.onDidFinishLinting ({linter, filePath}) =>
@@ -70,22 +70,13 @@ class Linter
   deleteLinter: (linter) ->
     return unless @hasLinter(linter)
     @linters.deleteLinter(linter)
-    @deleteMessages(linter)
+    @messages.deleteByLinter(linter)
 
   hasLinter: (linter) ->
     @linters.hasLinter(linter)
 
   getLinters: ->
     @linters.getLinters()
-
-  setMessages: (linter, messages) ->
-    @messages.set({linter, messages})
-
-  deleteMessages: (linter) ->
-    @messages.deleteMessages(linter)
-
-  getMessages: ->
-    @messages.publicMessages
 
   onDidUpdateMessages: (callback) ->
     @messages.onDidUpdateMessages(callback)
@@ -109,7 +100,7 @@ class Linter
     editorLinter.onShouldLint (onChange) =>
       @linters.lint({onChange, editorLinter})
     editorLinter.onDidDestroy =>
-      @messages.deleteEditorMessages(editorLinter)
+      @messages.deleteByBuffer(editor.getBuffer())
 
   deactivate: ->
     @subscriptions.dispose()
