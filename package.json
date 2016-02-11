@@ -38,7 +38,10 @@
   },
   "dependencies": {
     "atom-package-deps": "^3.0.7",
-    "minimatch": "^3.0.0"
+    "minimatch": "^3.0.0",
+    "sb-debounce": "^1.0.1"
   },
-  "package-deps": ["linter-ui-default"]
+  "package-deps": [
+    "linter-ui-default"
+  ]
 }
