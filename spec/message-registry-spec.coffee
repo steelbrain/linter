@@ -95,3 +95,16 @@ describe 'message-registry', ->
         linterRegistry.lint({onChange: false, editorLinter}).then ->
           expect(wasUpdated).toBe(1)
           linterRegistry.dispose()
+
+  describe '::update', ->
+    it 'sets name, class and range properly', ->
+      message = {
+        type: 'Error',
+        text: 'Something',
+        range: [[0, 0], [1, Infinity]]
+      }
+      messageRegistry.set({linter: {name: 'Something'}, buffer: null, messages: [message]})
+      messageRegistry.update()
+      expect(message.class).toBe(' error')
+      expect(message.name).toBe('Something')
+      expect(message.range.start).toEqual(row: 0, column: 0)
