@@ -37,7 +37,7 @@
     }
   },
   "dependencies": {
-    "atom-package-deps": "^3.0.7",
+    "atom-package-deps": "^4.0.0",
     "minimatch": "^3.0.0",
     "sb-debounce": "^1.0.1"
   },
