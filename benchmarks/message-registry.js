@@ -16,7 +16,8 @@ function benchmarkRegistry(i) {
   messageRegistry.update()
   console.timeEnd(timeKey)
 }
-
-for (let i = 0; i < 50; ++i) {
-  benchmarkRegistry(i)
+module.exports = function() {
+  for (let i = 0; i < 50; ++i) {
+    benchmarkRegistry(i)
+  }
 }
