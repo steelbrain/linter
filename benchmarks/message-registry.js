@@ -11,13 +11,16 @@ const linter = getLinter()
 function benchmarkRegistry(i) {
   let timeKey = 'iteration #' + i
   messages = getMessages(5000)
-  console.time(timeKey)
+  const start = performance.now()
   messageRegistry.set({linter, messages, buffer: null})
   messageRegistry.update()
-  console.timeEnd(timeKey)
+  return performance.now() - start
 }
 module.exports = function() {
-  for (let i = 0; i < 50; ++i) {
-    benchmarkRegistry(i)
+  let sum = 0
+  let count = 500
+  for (let i = 0; i < count; ++i) {
+    sum += benchmarkRegistry(i)
   }
+  console.log('average', sum / (count - 1))
 }
