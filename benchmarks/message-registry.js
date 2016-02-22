@@ -1,41 +1,26 @@
 'use babel'
 
-import MessageRegistry from '../lib/message-registry'
+import {MessageRegistry} from '../lib/message-registry'
 import {getLinter, getMessage} from '../spec/common'
 import {timeNow, timeDiff, getMessages} from './common'
 
 const messageRegistry = new MessageRegistry()
-messageRegistry.active = false // Disable the auto-updater
-messageRegistry.shouldRefresh = false // Disable the auto-updater
+messageRegistry.debouncedUpdate = function() {}
 const linter = getLinter()
 
-let time = null
-let messages = null
-
 function benchmarkRegistry(i) {
+  let timeKey = 'iteration #' + i
   messages = getMessages(5000)
-  time = timeNow()
-
-  messageRegistry.set({linter, messages})
-  if (messageRegistry.updatePublic) {
-    messageRegistry.updatePublic()
-  } else if (messageRegistry.processQueue) {
-    messageRegistry.processQueue()
-  }
-  const diff = timeDiff(time)
-  console.log('iteration #', i,'took', diff, 'ms')
-  return diff
+  const start = performance.now()
+  messageRegistry.set({linter, messages, buffer: null})
+  messageRegistry.update()
+  return performance.now() - start
 }
-
-let promise = Promise.resolve()
-let sum = 0
-let count = 1000
-
-for (let i = 0; i < count; ++i) {
-  promise = promise.then(function() {
+module.exports = function() {
+  let sum = 0
+  let count = 500
+  for (let i = 0; i < count; ++i) {
     sum += benchmarkRegistry(i)
-  })
+  }
+  console.log('average', sum / (count - 1))
 }
-promise.then(function() {
-  console.log('average', sum / count)
-})

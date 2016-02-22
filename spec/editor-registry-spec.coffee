@@ -56,18 +56,6 @@ describe 'editor-registry', ->
       editorRegistry.create(activeEditor)
       expect(editorRegistry.ofTextEditor(activeEditor)).toBeDefined()
 
-
-  describe '::getMap', ->
-    it 'returns an object', ->
-      expect(typeof editorRegistry.getMap() is 'object').toBe(true)
-    it 'has paths as keys and arrays of editorLinters as values', ->
-      activeEditor = atom.workspace.getActiveTextEditor()
-      activeEditorPath = activeEditor.getPath()
-      editorRegistry.create(activeEditor)
-      editorMap = editorRegistry.getMap()
-      expect(editorMap[activeEditorPath] instanceof Array).toBe(true)
-      expect(editorMap[activeEditorPath].indexOf(editorRegistry.ofTextEditor(activeEditor))).toBe(0)
-
   describe '::observe', ->
     it 'calls with the current editorLinters', ->
       timesCalled = 0

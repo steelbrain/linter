@@ -1,7 +1,15 @@
 {Range} = require('atom')
-helpers = require('./helpers')
 
 module.exports = Validate =
+
+  ui: (ui) ->
+    throw new Error('UI must be an object/class instance') unless typeof ui is 'object'
+    throw new Error('UI.name must be a string') unless typeof ui.name is 'string'
+    throw new Error('UI.activate must be a function') unless typeof ui.activate is 'function'
+    throw new Error('UI.didCalculateMessages must be a function') unless typeof ui.didCalculateMessages is 'function'
+    throw new Error('UI.didBeginLinting must be a function') unless typeof ui.didBeginLinting is 'function'
+    throw new Error('UI.didFinishLinting must be a function') unless typeof ui.didFinishLinting is 'function'
+    throw new Error('UI.dispose must be a function') unless typeof ui.dispose is 'function'
 
   linter: (linter, indie = false) ->
     unless indie
@@ -20,10 +28,9 @@ module.exports = Validate =
       linter.name = null
     return true
 
-  messages: (messages, linter) ->
+  messages: (messages) ->
     unless messages instanceof Array
       throw new Error("Expected messages to be array, provided: #{typeof messages}")
-    throw new Error 'No linter provided' unless linter
     messages.forEach (result) ->
       if result.type
         throw new Error 'Invalid type field on Linter Response' if typeof result.type isnt 'string'
@@ -49,8 +56,5 @@ module.exports = Validate =
         throw new Error('Invalid filePath field on Linter response') if typeof result.filePath isnt 'string'
       else
         result.filePath = null
-      result.range = Range.fromObject result.range if result.range?
-      result.key = JSON.stringify(result)
-      result.linter = result.name or linter.name
-      Validate.messages(result.trace, linter) if result.trace and result.trace.length
+      Validate.messages(result.trace) if result.trace and result.trace.length
     return

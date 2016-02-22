@@ -111,13 +111,3 @@ describe 'validate', ->
       validate.messages([{type: 'Error', text: 'Well', class: 'error', filePath: '/'}], {name: ''})
       validate.messages([{type: 'Error', html: 'Well', class: 'error', filePath: '/'}], {name: ''})
       validate.messages([{type: 'Error', html: document.createElement('div'), class: 'error', filePath: '/'}], {name: ''})
-    it 'sets name on messages according to linter or message itself', ->
-      linter = {name: 'Wow'}
-
-      message = {type: 'Error', text: 'Some Text'}
-      validate.messages([message], linter)
-      expect(message.linter).toBe('Wow')
-
-      message = {type: 'Error', text: 'Some Text', name: 'Ha!'}
-      validate.messages([message], linter)
-      expect(message.linter).toBe('Ha!')

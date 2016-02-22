@@ -18,9 +18,9 @@
         "^1.0.0": "consumeLinter"
       }
     },
-    "status-bar": {
+    "linter-ui": {
       "versions": {
-        "^1.0.0": "consumeStatusBar"
+        "^1.0.0": "consumeUI"
       }
     }
   },
@@ -37,7 +37,11 @@
     }
   },
   "dependencies": {
-    "interact.js": "^1.2.5",
-    "minimatch": "^3.0.0"
-  }
+    "atom-package-deps": "^4.0.0",
+    "minimatch": "^3.0.0",
+    "sb-debounce": "^1.0.1"
+  },
+  "package-deps": [
+    "linter-ui-default"
+  ]
 }

@@ -1,12 +1,9 @@
-Path = require 'path'
 {CompositeDisposable, Emitter} = require 'atom'
-LinterViews = require './linter-views'
-MessageRegistry = require './message-registry'
+{MessageRegistry} = require './message-registry'
 EditorRegistry = require './editor-registry'
-EditorLinter = require './editor-linter'
 LinterRegistry = require './linter-registry'
 IndieRegistry = require './indie-registry'
-Helpers = require './helpers'
+UIRegistry = require './ui-registry'
 Commands = require './commands'
 
 class Linter
@@ -23,29 +20,49 @@ class Linter
     @indieLinters = new IndieRegistry()
     @editors = new EditorRegistry
     @messages = new MessageRegistry()
-    @views = new LinterViews(state.scope, @editors)
-    @commands = new Commands(this)
+    @commands = new Commands()
+    @ui = new UIRegistry()
 
-    @subscriptions = new CompositeDisposable(@views, @editors, @linters, @messages, @commands, @indieLinters)
+    @subscriptions = new CompositeDisposable(@editors, @linters, @messages, @commands, @indieLinters)
 
     @indieLinters.observe (indieLinter) =>
       indieLinter.onDidDestroy =>
-        @messages.deleteMessages(indieLinter)
+        @messages.deleteByLinter(indieLinter)
     @indieLinters.onDidUpdateMessages ({linter, messages}) =>
-      @messages.set({linter, messages})
-    @linters.onDidUpdateMessages ({linter, messages, editor}) =>
-      @messages.set({linter, messages, editorLinter: @editors.ofTextEditor(editor)})
+      @messages.set({messages, linter, buffer: null})
+    @linters.onDidUpdateMessages ({messages, linter, buffer}) =>
+      @messages.set({messages, linter, buffer})
+    @linters.onDidBeginLinting ({linter, filePath}) =>
+      @ui.didBeginLinting(linter, filePath)
+    @linters.onDidFinishLinting ({linter, filePath}) =>
+      @ui.didFinishLinting(linter, filePath)
     @messages.onDidUpdateMessages (messages) =>
-      @views.render(messages)
-    @views.onDidUpdateScope (scope) =>
-      @state.scope = scope
+      @ui.didCalculateMessages(messages)
 
     @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
-    @subscriptions.add atom.project.onDidChangePaths =>
-      @commands.lint()
 
     @subscriptions.add atom.workspace.observeTextEditors (editor) => @createEditorLinter(editor)
+    @commands.onShouldLint =>
+      @getActiveEditorLinter()?.lint()
+    @commands.onShouldToggleActiveEditor =>
+      activeLinter = @getActiveEditorLinter()
+      if activeLinter
+        activeLinter.dispose()
+      else
+        @createEditorLinter(atom.workspace.getActiveTextEditor())
+
+    # Defer execution because onDidChangePaths is added on editor init,
+    # we don't want to lint until editor is initialized
+    setImmediate =>
+      @subscriptions.add atom.project.onDidChangePaths =>
+        @commands.lint()
+
+  addUI: (ui) ->
+    @ui.add(ui)
+
+  deleteUI: (ui) ->
+    @ui.delete(ui)
 
   addLinter: (linter) ->
     @linters.addLinter(linter)
@@ -53,22 +70,13 @@ class Linter
   deleteLinter: (linter) ->
     return unless @hasLinter(linter)
     @linters.deleteLinter(linter)
-    @deleteMessages(linter)
+    @messages.deleteByLinter(linter)
 
   hasLinter: (linter) ->
     @linters.hasLinter(linter)
 
   getLinters: ->
     @linters.getLinters()
-
-  setMessages: (linter, messages) ->
-    @messages.set({linter, messages})
-
-  deleteMessages: (linter) ->
-    @messages.deleteMessages(linter)
-
-  getMessages: ->
-    @messages.publicMessages
 
   onDidUpdateMessages: (callback) ->
     @messages.onDidUpdateMessages(callback)
@@ -89,16 +97,10 @@ class Linter
     return if @editors.has(editor)
 
     editorLinter = @editors.create(editor)
-    editorLinter.onShouldUpdateBubble =>
-      @views.renderBubble(editorLinter)
     editorLinter.onShouldLint (onChange) =>
-      @linters.lint({onChange, editorLinter})
+      @linters.lint({onChange, editor})
     editorLinter.onDidDestroy =>
-      @messages.deleteEditorMessages(editorLinter)
-    editorLinter.onDidCalculateLineMessages =>
-      @views.updateCounts()
-      @views.bottomPanel.refresh() if @state.scope is 'Line'
-    @views.notifyEditorLinter(editorLinter)
+      @messages.deleteByBuffer(editor.getBuffer())
 
   deactivate: ->
     @subscriptions.dispose()
