@@ -22,5 +22,5 @@ module.exports = function() {
   for (let i = 0; i < count; ++i) {
     sum += benchmarkRegistry(i)
   }
-  console.log('average', sum / (count - 1))
+  console.log('average message registry diff time for 5k messages', sum / (count - 1))
 }
