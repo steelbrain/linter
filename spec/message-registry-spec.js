@@ -115,7 +115,7 @@ describe('Message Registry', function() {
     })
     it('notifies properly for as many linters as you want', function() {
       const buffer = {}
-      const linterFirst = {}
+      const linterFirst = getLinter('named')
       const linterSecond = {}
       const messageFirst = getMessage()
       const messageSecond = getMessage()
@@ -130,6 +130,7 @@ describe('Message Registry', function() {
           expect(removed.length).toBe(0)
           expect(added).toEqual(messages)
           expect(added[0]).toEqual(messageFirst)
+          expect(added[0].name).toEqual('named')
         } else if (called === 2) {
           expect(added.length).toBe(2)
           expect(removed.length).toBe(0)
@@ -179,6 +180,92 @@ describe('Message Registry', function() {
       messageRegistry.update()
       messageRegistry.update()
       expect(called).toBe(4)
+    })
+  })
+
+  describe('::deleteByBuffer', function() {
+    it('deletes the messages and sends them in an event', function() {
+      const linter = {}
+      const buffer = {}
+      const messageFirst = getMessage()
+      const messageSecond = getMessage()
+
+      let called = 0
+
+      messageRegistry.onDidUpdateMessages(function({added, removed, messages}) {
+        called++
+        if (called === 1) {
+          expect(added.length).toBe(2)
+          expect(removed.length).toBe(0)
+          expect(messages.length).toBe(2)
+          expect(added).toEqual(messages)
+          expect(added[0]).toBe(messageFirst)
+          expect(added[1]).toBe(messageSecond)
+        } else if (called === 2) {
+          expect(added.length).toBe(0)
+          expect(removed.length).toBe(2)
+          expect(messages.length).toBe(0)
+          expect(removed[0]).toBe(messageFirst)
+          expect(removed[1]).toBe(messageSecond)
+        } else {
+          throw new Error('Unnecessary update call')
+        }
+      })
+      messageRegistry.set({buffer, linter, messages: [messageFirst, messageSecond]})
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      expect(called).toBe(1)
+      messageRegistry.deleteByBuffer(buffer)
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      expect(called).toBe(2)
+    })
+  })
+
+  describe('::deleteByLinter', function() {
+    it('deletes the messages and sends them in an event', function() {
+      const linter = {}
+      const buffer = {}
+      const messageFirst = getMessage()
+      const messageSecond = getMessage()
+
+      let called = 0
+
+      messageRegistry.onDidUpdateMessages(function({added, removed, messages}) {
+        called++
+        if (called === 1) {
+          expect(added.length).toBe(2)
+          expect(removed.length).toBe(0)
+          expect(messages.length).toBe(2)
+          expect(added).toEqual(messages)
+          expect(added[0]).toBe(messageFirst)
+          expect(added[1]).toBe(messageSecond)
+        } else if (called === 2) {
+          expect(added.length).toBe(0)
+          expect(removed.length).toBe(2)
+          expect(messages.length).toBe(0)
+          expect(removed[0]).toBe(messageFirst)
+          expect(removed[1]).toBe(messageSecond)
+        } else {
+          throw new Error('Unnecessary update call')
+        }
+      })
+      messageRegistry.set({buffer, linter, messages: [messageFirst, messageSecond]})
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      expect(called).toBe(1)
+      messageRegistry.deleteByLinter(linter)
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      expect(called).toBe(2)
     })
   })
 })
