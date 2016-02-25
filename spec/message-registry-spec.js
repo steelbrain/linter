@@ -4,7 +4,7 @@ import {MessageRegistry} from '../lib/message-registry'
 
 describe('Message Registry', function() {
   function getMessage() {
-    return {type: 'text', filePath: '/tmp/passwd', range: [[0, 1], [1, 0]], text: String(Math.random())}
+    return {type: 'Error', filePath: '/tmp/passwd', range: [[0, 1], [1, 0]], text: String(Math.random())}
   }
   function getLinter(name) {
     return {name}
@@ -20,7 +20,7 @@ describe('Message Registry', function() {
   })
 
   describe('::set', function() {
-    fit('stores results using both buffer and linter', function() {
+    it('stores results using both buffer and linter', function() {
       const messageFirst = getMessage()
       const messageSecond = getMessage()
       const messageThird = getMessage()
@@ -94,6 +94,91 @@ describe('Message Registry', function() {
       expect(info.oldMessages.length).toBe(0)
       expect(info.messages.length).toBe(1)
       expect(info.messages[0]).toBe(messageThird)
+    })
+  })
+
+  describe('updates (::update & ::onDidUpdateMessages)', function() {
+    it('notifies on changes', function() {
+      let called = 0
+      const message = getMessage()
+      messageRegistry.onDidUpdateMessages(function({added, removed, messages}) {
+        called++
+        expect(added.length).toBe(1)
+        expect(removed.length).toBe(0)
+        expect(messages.length).toBe(1)
+        expect(added).toEqual(messages)
+        expect(added[0]).toBe(message)
+      })
+      messageRegistry.set({linter: {}, buffer: null, messages: [message]})
+      messageRegistry.update()
+      expect(called).toBe(1)
+    })
+    it('notifies properly for as many linters as you want', function() {
+      const buffer = {}
+      const linterFirst = {}
+      const linterSecond = {}
+      const messageFirst = getMessage()
+      const messageSecond = getMessage()
+      const messageThird = getMessage()
+      let called = 0
+
+      messageRegistry.onDidUpdateMessages(function({added, removed, messages}) {
+        called++
+
+        if (called === 1) {
+          expect(added.length).toBe(1)
+          expect(removed.length).toBe(0)
+          expect(added).toEqual(messages)
+          expect(added[0]).toEqual(messageFirst)
+        } else if (called === 2) {
+          expect(added.length).toBe(2)
+          expect(removed.length).toBe(0)
+          expect(messages.length).toBe(3)
+          expect(messages[0]).toBe(messageFirst)
+          expect(messages[1]).toBe(messageSecond)
+          expect(messages[2]).toBe(messageThird)
+        } else if (called === 3) {
+          expect(added.length).toBe(0)
+          expect(removed.length).toBe(1)
+          expect(removed[0]).toBe(messageFirst)
+          expect(messages.length).toBe(2)
+          expect(messages[0]).toBe(messageSecond)
+          expect(messages[1]).toBe(messageThird)
+        } else if (called === 4) {
+          expect(added.length).toBe(0)
+          expect(removed.length).toBe(2)
+          expect(messages.length).toBe(0)
+          expect(removed[0]).toBe(messageSecond)
+          expect(removed[1]).toBe(messageThird)
+        } else {
+          throw new Error('Unnecessary update call')
+        }
+      })
+
+      messageRegistry.set({buffer, linter: linterFirst, messages: [messageFirst]})
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      expect(called).toBe(1)
+      messageRegistry.set({buffer, linter: linterSecond, messages: [messageSecond, messageThird]})
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      expect(called).toBe(2)
+      messageRegistry.set({buffer, linter: linterFirst, messages: []})
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      expect(called).toBe(3)
+      messageRegistry.set({buffer, linter: linterSecond, messages: []})
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      messageRegistry.update()
+      expect(called).toBe(4)
     })
   })
 })
