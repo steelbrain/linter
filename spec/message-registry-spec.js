@@ -48,7 +48,6 @@ describe('Message Registry', function() {
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
       expect(info.buffer).toBe(null)
-      expect(info.oldMessages.length).toBe(1)
       expect(info.messages.length).toBe(1)
       expect(info.messages[0]).toBe(messageFirst)
 
@@ -60,7 +59,6 @@ describe('Message Registry', function() {
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
       expect(info.buffer).toBe(null)
-      expect(info.oldMessages.length).toBe(1)
       expect(info.messages.length).toBe(1)
       expect(info.messages[0]).toBe(messageFirst)
 
@@ -69,7 +67,6 @@ describe('Message Registry', function() {
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
       expect(info.buffer).toBe(buffer)
-      expect(info.oldMessages.length).toBe(0)
       expect(info.messages.length).toBe(1)
       expect(info.messages[0]).toBe(messageThird)
 
@@ -81,7 +78,6 @@ describe('Message Registry', function() {
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
       expect(info.buffer).toBe(null)
-      expect(info.oldMessages.length).toBe(1)
       expect(info.messages.length).toBe(2)
       expect(info.messages[0]).toBe(messageFirst)
       expect(info.messages[1]).toBe(messageSecond)
@@ -91,7 +87,6 @@ describe('Message Registry', function() {
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
       expect(info.buffer).toBe(buffer)
-      expect(info.oldMessages.length).toBe(0)
       expect(info.messages.length).toBe(1)
       expect(info.messages[0]).toBe(messageThird)
     })
