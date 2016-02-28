@@ -1,6 +1,6 @@
 'use babel'
 
-import {MessageRegistry} from '../lib/message-registry'
+import MessageRegistry from '../lib/message-registry'
 
 describe('Message Registry', function() {
   function getMessage() {

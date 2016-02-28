@@ -1,6 +1,6 @@
 'use babel'
 
-import {MessageRegistry} from '../lib/message-registry'
+import MessageRegistry from '../lib/message-registry'
 import {getLinter, getMessage} from '../spec/common'
 import {timeNow, timeDiff, getMessages} from './common'
 
