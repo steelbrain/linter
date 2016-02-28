@@ -42,6 +42,6 @@
     "sb-debounce": "^1.0.1"
   },
   "package-deps": [
-    "linter-ui-default"
+    "linter-ui-default", "intentions"
   ]
 }
