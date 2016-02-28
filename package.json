@@ -48,5 +48,24 @@
   },
   "package-deps": [
     "linter-ui-default", "intentions"
-  ]
+  ],
+  "configSchema": {
+    "lintOnFly": {
+      "title": "Lint As You Type",
+      "description": "Lint files while typing, without the need to save",
+      "type": "boolean",
+      "default": true
+    },
+    "lintOnFlyInterval": {
+      "title": "Lint As You Type Interval",
+      "description": "Interval at which providers are triggered as you type (in ms)",
+      "type": "integer",
+      "default": 300
+    },
+    "ignoreGlob": {
+      "title": "Ignore files matching this Glob",
+      "type": "string",
+      "default": "{\\,/}**{\\,/}*.min.{js,css}"
+    }
+  }
 }
