@@ -1,6 +1,6 @@
 {
   "name": "linter",
-  "main": "./lib/main",
+  "main": "./lib",
   "author": "atom-community",
   "version": "1.11.3",
   "description": "A Base Linter with Cow Powers",
