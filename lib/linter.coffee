@@ -102,7 +102,7 @@ class Linter
     editorLinter.onDidDestroy =>
       @messages.deleteByBuffer(editor.getBuffer())
 
-  deactivate: ->
+  dispose: ->
     @subscriptions.dispose()
 
 module.exports = Linter
