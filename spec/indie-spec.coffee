@@ -11,7 +11,7 @@ describe 'Indie', ->
     it 'just cares about a name', ->
       linter = {}
       Validate.linter(linter, true)
-      expect(linter.name).toBe(null)
+      expect(linter.name).toBe(undefined)
       linter.name = 'a'
       Validate.linter(linter, true)
       expect(linter.name).toBe('a')
