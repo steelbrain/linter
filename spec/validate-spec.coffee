@@ -7,7 +7,7 @@ describe 'validate', ->
         linter = getLinter()
         linter.grammarScopes = false
         validate.linter(linter)
-      .toThrow('grammarScopes is not an Array. Got: false')
+      .toThrow()
     it 'throws if lint is missing', ->
       expect ->
         linter = getLinter()
@@ -34,14 +34,14 @@ describe 'validate', ->
         linter = getLinter()
         linter.scope = null
         validate.linter(linter)
-      .toThrow('Linter.scope must be either `file` or `project`')
+      .toThrow()
       expect ->
         linter = getLinter()
         linter.scope = 'a'
         validate.linter(linter)
-      .toThrow('Linter.scope must be either `file` or `project`')
+      .toThrow()
       linter = getLinter()
-      linter.scope = 'Project'
+      linter.scope = 'project'
       validate.linter(linter)
     it 'works overall', ->
       validate.linter(getLinter())
@@ -51,10 +51,10 @@ describe 'validate', ->
     it 'throws if messages is not an array', ->
       expect ->
         validate.messages()
-      .toThrow('Expected messages to be array, provided: undefined')
+      .toThrow()
       expect ->
         validate.messages(true)
-      .toThrow('Expected messages to be array, provided: boolean')
+      .toThrow()
     it 'throws if type field is not present', ->
       expect ->
         validate.messages([{}], {name: ''})
