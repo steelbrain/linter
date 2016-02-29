@@ -4,7 +4,6 @@
 * Remove `Linter.getEditorLinterByPath` of self API (GitHub code search says nobody was using it)
 * Linter now supports message-specific names (see wiki for updated API)
 * Require at least Atom 1.4.0 for upcoming versions
-* Auto install `intentions` package, we're gonna use it to provide linter fix API
 
 ## 1.11.3
 
