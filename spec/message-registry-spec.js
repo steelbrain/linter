@@ -176,6 +176,43 @@ describe('Message Registry', function() {
       messageRegistry.update()
       expect(called).toBe(4)
     })
+
+    it('sets key on messages', function() {
+      const linter = {}
+      const buffer = {}
+      const messageFirst = getMessage()
+      const messageSecond = getMessage()
+      const messageThird = getMessage()
+
+      let called = 0
+
+      messageRegistry.onDidUpdateMessages(function({added, removed, messages}) {
+        called++
+        if (called === 1) {
+          // All messages are new
+          expect(added.length).toBe(2)
+          expect(removed.length).toBe(0)
+          expect(messages.length).toBe(2)
+          expect(added).toEqual(messages)
+          expect(typeof messages[0].key).toBe('string')
+          expect(typeof messages[1].key).toBe('string')
+        } else {
+          // One removed, one added
+          expect(added.length).toBe(1)
+          expect(removed.length).toBe(1)
+          expect(messages.length).toBe(2)
+          expect(messages.indexOf(added[0])).not.toBe(-1)
+          expect(typeof messages[0].key).toBe('string')
+          expect(typeof messages[1].key).toBe('string')
+        }
+      })
+
+      messageRegistry.set({buffer, linter, messages: [messageFirst, messageSecond]})
+      messageRegistry.update()
+      messageRegistry.set({buffer, linter, messages: [messageFirst, messageThird]})
+      messageRegistry.update()
+      expect(called).toBe(2)
+    })
   })
 
   describe('::deleteByBuffer', function() {
