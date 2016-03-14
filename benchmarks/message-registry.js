@@ -1,7 +1,8 @@
 'use babel'
 
 import MessageRegistry from '../lib/message-registry'
-import { getLinter, getMessages } from '../spec/common'
+import { getLinter } from '../spec/common'
+import { getMessages } from './common'
 
 const messageRegistry = new MessageRegistry()
 messageRegistry.debouncedUpdate = function() {}
