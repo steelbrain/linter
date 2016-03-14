@@ -1,7 +1,7 @@
 'use babel'
 
 import Commands from '../lib/commands'
-import {join} from 'path'
+import { join } from 'path'
 let commands
 
 describe('Linter Commands', function() {
@@ -12,7 +12,6 @@ describe('Linter Commands', function() {
     commands = new Commands()
   })
   it('properly notifies its listeners of command execution', function() {
-
     let lintCalled = 0
     let toggleCalled = 0
 

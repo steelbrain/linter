@@ -17,7 +17,10 @@
     "react/jsx-closing-bracket-location": 0,
     "react/no-deprecated": 0,
     "react/jsx-boolean-value": 0,
-    "react/sort-comp": 0
+    "react/sort-comp": 0,
+    "prefer-template": 0,
+    "no-nested-ternary": 0,
+    "no-multi-spaces": 0
   },
   "globals": {
     "it": true,

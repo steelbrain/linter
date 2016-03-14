@@ -4,10 +4,10 @@ import MessageRegistry from '../lib/message-registry'
 
 describe('Message Registry', function() {
   function getMessage() {
-    return {type: 'Error', filePath: '/tmp/passwd', range: [[0, 1], [1, 0]], text: String(Math.random())}
+    return { type: 'Error', filePath: '/tmp/passwd', range: [[0, 1], [1, 0]], text: String(Math.random()) }
   }
   function getLinter(name) {
-    return {name}
+    return { name }
   }
 
   let messageRegistry
@@ -28,7 +28,7 @@ describe('Message Registry', function() {
       const buffer = {}
       let info
 
-      messageRegistry.set({linter, buffer: null, messages: [messageFirst]})
+      messageRegistry.set({ linter, buffer: null, messages: [messageFirst] })
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(1)
       expect(messageRegistry.messagesMap.size).toBe(1)
       info = [...messageRegistry.messagesMap][0]
@@ -40,7 +40,7 @@ describe('Message Registry', function() {
       expect(info.messages.length).toBe(1)
       expect(info.messages[0]).toBe(messageFirst)
 
-      messageRegistry.set({linter, buffer: null, messages: [messageFirst]})
+      messageRegistry.set({ linter, buffer: null, messages: [messageFirst] })
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(2)
       expect(messageRegistry.messagesMap.size).toBe(1)
       info = [...messageRegistry.messagesMap][0]
@@ -51,7 +51,7 @@ describe('Message Registry', function() {
       expect(info.messages.length).toBe(1)
       expect(info.messages[0]).toBe(messageFirst)
 
-      messageRegistry.set({linter, buffer, messages: [messageThird]})
+      messageRegistry.set({ linter, buffer, messages: [messageThird] })
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(3)
       expect(messageRegistry.messagesMap.size).toBe(2)
       info = [...messageRegistry.messagesMap][0]
@@ -70,7 +70,7 @@ describe('Message Registry', function() {
       expect(info.messages.length).toBe(1)
       expect(info.messages[0]).toBe(messageThird)
 
-      messageRegistry.set({linter, buffer: null, messages: [messageFirst, messageSecond]})
+      messageRegistry.set({ linter, buffer: null, messages: [messageFirst, messageSecond] })
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(4)
       expect(messageRegistry.messagesMap.size).toBe(2)
       info = [...messageRegistry.messagesMap][0]
@@ -96,7 +96,7 @@ describe('Message Registry', function() {
     it('notifies on changes', function() {
       let called = 0
       const message = getMessage()
-      messageRegistry.onDidUpdateMessages(function({added, removed, messages}) {
+      messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
         called++
         expect(added.length).toBe(1)
         expect(removed.length).toBe(0)
@@ -104,7 +104,7 @@ describe('Message Registry', function() {
         expect(added).toEqual(messages)
         expect(added[0]).toBe(message)
       })
-      messageRegistry.set({linter: {}, buffer: null, messages: [message]})
+      messageRegistry.set({ linter: {}, buffer: null, messages: [message] })
       messageRegistry.update()
       expect(called).toBe(1)
     })
@@ -117,7 +117,7 @@ describe('Message Registry', function() {
       const messageThird = getMessage()
       let called = 0
 
-      messageRegistry.onDidUpdateMessages(function({added, removed, messages}) {
+      messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
         called++
 
         if (called === 1) {
@@ -151,25 +151,25 @@ describe('Message Registry', function() {
         }
       })
 
-      messageRegistry.set({buffer, linter: linterFirst, messages: [messageFirst]})
+      messageRegistry.set({ buffer, linter: linterFirst, messages: [messageFirst] })
       messageRegistry.update()
       messageRegistry.update()
       messageRegistry.update()
       messageRegistry.update()
       expect(called).toBe(1)
-      messageRegistry.set({buffer, linter: linterSecond, messages: [messageSecond, messageThird]})
+      messageRegistry.set({ buffer, linter: linterSecond, messages: [messageSecond, messageThird] })
       messageRegistry.update()
       messageRegistry.update()
       messageRegistry.update()
       messageRegistry.update()
       expect(called).toBe(2)
-      messageRegistry.set({buffer, linter: linterFirst, messages: []})
+      messageRegistry.set({ buffer, linter: linterFirst, messages: [] })
       messageRegistry.update()
       messageRegistry.update()
       messageRegistry.update()
       messageRegistry.update()
       expect(called).toBe(3)
-      messageRegistry.set({buffer, linter: linterSecond, messages: []})
+      messageRegistry.set({ buffer, linter: linterSecond, messages: [] })
       messageRegistry.update()
       messageRegistry.update()
       messageRegistry.update()
@@ -186,7 +186,7 @@ describe('Message Registry', function() {
 
       let called = 0
 
-      messageRegistry.onDidUpdateMessages(function({added, removed, messages}) {
+      messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
         called++
         if (called === 1) {
           // All messages are new
@@ -207,9 +207,9 @@ describe('Message Registry', function() {
         }
       })
 
-      messageRegistry.set({buffer, linter, messages: [messageFirst, messageSecond]})
+      messageRegistry.set({ buffer, linter, messages: [messageFirst, messageSecond] })
       messageRegistry.update()
-      messageRegistry.set({buffer, linter, messages: [messageFirst, messageThird]})
+      messageRegistry.set({ buffer, linter, messages: [messageFirst, messageThird] })
       messageRegistry.update()
       expect(called).toBe(2)
     })
@@ -224,7 +224,7 @@ describe('Message Registry', function() {
 
       let called = 0
 
-      messageRegistry.onDidUpdateMessages(function({added, removed, messages}) {
+      messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
         called++
         if (called === 1) {
           expect(added.length).toBe(2)
@@ -243,7 +243,7 @@ describe('Message Registry', function() {
           throw new Error('Unnecessary update call')
         }
       })
-      messageRegistry.set({buffer, linter, messages: [messageFirst, messageSecond]})
+      messageRegistry.set({ buffer, linter, messages: [messageFirst, messageSecond] })
       messageRegistry.update()
       messageRegistry.update()
       messageRegistry.update()
@@ -267,7 +267,7 @@ describe('Message Registry', function() {
 
       let called = 0
 
-      messageRegistry.onDidUpdateMessages(function({added, removed, messages}) {
+      messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
         called++
         if (called === 1) {
           expect(added.length).toBe(2)
@@ -286,7 +286,7 @@ describe('Message Registry', function() {
           throw new Error('Unnecessary update call')
         }
       })
-      messageRegistry.set({buffer, linter, messages: [messageFirst, messageSecond]})
+      messageRegistry.set({ buffer, linter, messages: [messageFirst, messageSecond] })
       messageRegistry.update()
       messageRegistry.update()
       messageRegistry.update()
