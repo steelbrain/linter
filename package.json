@@ -7,7 +7,8 @@
   "repository": "https://github.com/atom-community/linter",
   "license": "MIT",
   "scripts": {
-    "lint": "coffeelint lib && eslint lib"
+    "lint": "eslint lib",
+    "test": "apm test"
   },
   "engines": {
     "atom": ">=1.4.0 <2.0.0"
