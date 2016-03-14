@@ -1,0 +1,32 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "rules": {
+    "semi": [2, "never"],
+    "prefer-arrow-callback": 0,
+    "space-before-function-paren": [2, "never"],
+    "func-names": 0,
+    "no-param-reassign": 0,
+    "comma-dangle": [2, "never"],
+    "prefer-rest-params": 0,
+    "max-len": [1, 150],
+    "no-console": 0,
+    "react/prefer-stateless-function": 0,
+    "react/prop-types": 0,
+    "react/jsx-no-bind": 0,
+    "react/jsx-closing-bracket-location": 0,
+    "react/no-deprecated": 0,
+    "react/jsx-boolean-value": 0,
+    "react/sort-comp": 0
+  },
+  "globals": {
+    "it": true,
+    "waitsForPromise": true,
+    "describe": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "jasmine": true,
+    "expect": true,
+    "atom": true
+  }
+}
