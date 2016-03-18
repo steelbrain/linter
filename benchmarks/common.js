@@ -1,6 +1,6 @@
 'use babel'
 
-import {getMessage} from '../spec/common'
+import { getMessage } from '../spec/common'
 
 export function getMessages(count) {
   const messages = []

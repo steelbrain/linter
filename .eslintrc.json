@@ -1,0 +1,20 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb/base",
+  "rules": {
+    "semi": [2, "never"],
+    "prefer-arrow-callback": 0,
+    "space-before-function-paren": [2, "never"],
+    "func-names": 0,
+    "no-param-reassign": 0,
+    "comma-dangle": [2, "never"],
+    "max-len": [1, 120],
+    "no-console": 0,
+    "prefer-template": 0,
+    "no-nested-ternary": 0,
+    "no-multi-spaces": 0
+  },
+  "globals": {
+    "atom": true
+  }
+}
