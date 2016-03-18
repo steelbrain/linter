@@ -15,13 +15,6 @@
     "no-multi-spaces": 0
   },
   "globals": {
-    "it": true,
-    "waitsForPromise": true,
-    "describe": true,
-    "beforeEach": true,
-    "afterEach": true,
-    "jasmine": true,
-    "expect": true,
     "atom": true
   }
 }
