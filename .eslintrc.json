@@ -9,7 +9,7 @@
     "no-param-reassign": 0,
     "comma-dangle": [2, "never"],
     "prefer-rest-params": 0,
-    "max-len": [1, 150],
+    "max-len": [1, 120],
     "no-console": 0,
     "prefer-template": 0,
     "no-nested-ternary": 0,
