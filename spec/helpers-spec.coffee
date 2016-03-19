@@ -3,9 +3,9 @@ describe 'helpers', ->
   beforeEach ->
     atom.notifications.clear()
 
-  describe '::error', ->
+  describe '::showError', ->
     it 'adds an error notification', ->
-      helpers.error(new Error())
+      helpers.showError(new Error())
       expect(atom.notifications.getNotifications().length).toBe(1)
 
   describe '::shouldTriggerLinter', ->

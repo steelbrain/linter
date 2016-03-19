@@ -1,13 +1,17 @@
 describe 'linter-registry', ->
   LinterRegistry = require('../lib/linter-registry')
   EditorLinter = require('../lib/editor-linter')
+  editor = null
   linterRegistry = null
   {getLinter, getMessage} = require('./common')
 
   beforeEach ->
+    atom.workspace.destroyActivePaneItem()
     waitsForPromise ->
-      atom.workspace.destroyActivePaneItem()
-      atom.workspace.open('file.txt')
+      atom.workspace.open('file.txt').then ->
+        editor = atom.workspace.getActiveTextEditor()
+    waitsForPromise ->
+      atom.packages.activatePackage('linter')
     linterRegistry?.dispose()
     linterRegistry = new LinterRegistry
 
@@ -48,7 +52,7 @@ describe 'linter-registry', ->
 
   describe '::lint', ->
     it "doesn't lint if textEditor isn't active one", ->
-      editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
+      editorLinter = new EditorLinter(editor)
       linter = {
         grammarScopes: ['*']
         lintOnFly: false
@@ -59,34 +63,83 @@ describe 'linter-registry', ->
       linterRegistry.addLinter(linter)
       waitsForPromise ->
         atom.workspace.open('test2.txt').then ->
-          expect(linterRegistry.lint({onChange: false, editorLinter})).toBeUndefined()
+          linterRegistry.lint({onChange: false, editor}).then (result) ->
+            expect(result).toBe(false)
     it "doesn't lint if textEditor doesn't have a path", ->
-      editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
+      editorLinter = new EditorLinter(editor)
       linter = {
         grammarScopes: ['*']
         lintOnFly: false
         scope: 'file'
         lint: ->
+          return []
       }
       linterRegistry.addLinter(linter)
       waitsForPromise ->
         atom.workspace.open('someNonExistingFile.txt').then ->
-          expect(linterRegistry.lint({onChange: false, editorLinter})).toBeUndefined()
-    it 'disallows two co-current lints of same type', ->
-      editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
+          linterRegistry.lint({onChange: false, editor}).then (result) ->
+            expect(result).toBe(false)
+    it 'only uses results from the latest invocation', ->
+      time = 0
+      messagesUpdated = false
+      editorLinter = new EditorLinter(editor)
+      message = getMessage('Error')
+      linter = {
+        grammarScopes: ['*']
+        lintOnFly: false
+        scope: 'file'
+        lint: ->
+          time++
+          if time is 1
+            return []
+          else
+            return [message]
+      }
+      linterRegistry.addLinter(linter)
+      linterRegistry.onDidUpdateMessages (result) ->
+        expect(result.messages[0]).toBe(message)
+        messagesUpdated = true
+      linterRegistry.lint({onChange: false, editor})
+      waitsForPromise ->
+        linterRegistry.lint({onChange: false, editor}).then (result) ->
+          expect(result).toBe(true)
+          expect(time).toBe(2)
+          expect(messagesUpdated).toBe(true)
+    it 'only sets messages of active linters', ->
+      called = 0
       linter = {
         grammarScopes: ['*']
         lintOnFly: false
         scope: 'file'
         lint: ->
       }
+      linterRegistry.onDidUpdateMessages ->
+        called++
       linterRegistry.addLinter(linter)
-      expect(linterRegistry.lint({onChange: false, editorLinter})).toBeDefined()
-      expect(linterRegistry.lint({onChange: false, editorLinter})).toBeUndefined()
+      linter.deactivated = true
+      waitsForPromise ->
+        linterRegistry.lint({onChange: false, editor}).then ->
+          expect(called).toBe(0)
+
+    it 'only sets messages of active editors', ->
+      called = 0
+      linter = {
+        grammarScopes: ['*']
+        lintOnFly: false
+        scope: 'file'
+        lint: ->
+      }
+      linterRegistry.onDidUpdateMessages ->
+        called++
+      linterRegistry.addLinter(linter)
+      atom.workspace.destroyActivePaneItem()
+      waitsForPromise ->
+        linterRegistry.lint({onChange: false, editor}).then ->
+          expect(called).toBe(0)
 
   describe '::onDidUpdateMessages', ->
     it 'is triggered whenever messages change', ->
-      editorLinter = new EditorLinter(atom.workspace.getActiveTextEditor())
+      editorLinter = new EditorLinter(editor)
       linter = {
         grammarScopes: ['*']
         lintOnFly: false
@@ -98,6 +151,6 @@ describe 'linter-registry', ->
       linterRegistry.onDidUpdateMessages (linterInfo) ->
         info = linterInfo
       waitsForPromise ->
-        linterRegistry.lint({onChange: false, editorLinter}).then ->
+        linterRegistry.lint({onChange: false, editor}).then ->
           expect(info).toBeDefined()
           expect(info.messages.length).toBe(1)

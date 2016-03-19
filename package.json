@@ -1,16 +1,17 @@
 {
   "name": "linter",
-  "main": "./lib/main",
+  "main": "./lib/index",
   "author": "atom-community",
   "version": "1.11.4",
   "description": "A Base Linter with Cow Powers",
   "repository": "https://github.com/atom-community/linter",
   "license": "MIT",
   "scripts": {
-    "lint": "coffeelint lib && eslint lib"
+    "lint": "eslint .",
+    "test": "apm test"
   },
   "engines": {
-    "atom": ">=0.174.0 <2.0.0"
+    "atom": ">=1.4.0 <2.0.0"
   },
   "consumedServices": {
     "linter": {
@@ -18,9 +19,9 @@
         "^1.0.0": "consumeLinter"
       }
     },
-    "status-bar": {
+    "linter-ui": {
       "versions": {
-        "^1.0.0": "consumeStatusBar"
+        "^1.0.0": "consumeUI"
       }
     }
   },
@@ -37,7 +38,36 @@
     }
   },
   "dependencies": {
-    "interact.js": "^1.2.5",
-    "minimatch": "^3.0.0"
+    "atom-package-deps": "^4.0.0",
+    "minimatch": "^3.0.0",
+    "sb-debounce": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^5.0.0",
+    "eslint": "~2.2.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-react": "^4.2.1"
+  },
+  "package-deps": [
+    "linter-ui-default"
+  ],
+  "configSchema": {
+    "lintOnFly": {
+      "title": "Lint As You Type",
+      "description": "Lint files while typing, without the need to save",
+      "type": "boolean",
+      "default": true
+    },
+    "lintOnFlyInterval": {
+      "title": "Lint As You Type Interval",
+      "description": "Interval at which providers are triggered as you type (in ms)",
+      "type": "integer",
+      "default": 300
+    },
+    "ignoreGlob": {
+      "title": "Ignore files matching this Glob",
+      "type": "string",
+      "default": "{\\,/}**{\\,/}*.min.{js,css}"
+    }
   }
 }
