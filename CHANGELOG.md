@@ -1,3 +1,7 @@
+## 1.11.4
+
+* Make the panel copy compatible with latest version of electron
+
 ## 1.11.3
 
 * Fix a typo that didn't let `linter-indie` service to work
