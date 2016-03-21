@@ -177,7 +177,7 @@ describe('Message Registry', function() {
       expect(called).toBe(4)
     })
 
-    it('sets key on messages', function() {
+    it('sets key, severity and name on messages', function() {
       const linter = {}
       const buffer = {}
       const messageFirst = getMessage()
@@ -196,6 +196,10 @@ describe('Message Registry', function() {
           expect(added).toEqual(messages)
           expect(typeof messages[0].key).toBe('string')
           expect(typeof messages[1].key).toBe('string')
+          expect(typeof messages[0].severity).toBe('string')
+          expect(typeof messages[1].severity).toBe('string')
+          expect(messages[0].name).toBe(null)
+          expect(messages[1].name).toBe(null)
         } else {
           // One removed, one added
           expect(added.length).toBe(1)
@@ -204,6 +208,10 @@ describe('Message Registry', function() {
           expect(messages.indexOf(added[0])).not.toBe(-1)
           expect(typeof messages[0].key).toBe('string')
           expect(typeof messages[1].key).toBe('string')
+          expect(typeof messages[0].severity).toBe('string')
+          expect(typeof messages[1].severity).toBe('string')
+          expect(messages[0].name).toBe(null)
+          expect(messages[1].name).toBe(null)
         }
       })
 
