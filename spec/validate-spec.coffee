@@ -111,3 +111,13 @@ describe 'validate', ->
       validate.messages([{type: 'Error', text: 'Well', class: 'error', filePath: '/'}], {name: ''})
       validate.messages([{type: 'Error', html: 'Well', class: 'error', filePath: '/'}], {name: ''})
       validate.messages([{type: 'Error', html: document.createElement('div'), class: 'error', filePath: '/'}], {name: ''})
+    it 'throws if severity is incorrect', ->
+      expect ->
+        validate.messages([{type: 'Error', text: 'Hey', severity: 'invalid'}])
+      .toThrow()
+      expect ->
+        validate.messages([{type: 'Error', text: 'Hey', severity: 123}])
+      .toThrow()
+      validate.messages([{type: 'Error', text: 'Hey', severity: 'error'}])
+      validate.messages([{type: 'Error', text: 'Hey', severity: 'warning'}])
+      validate.messages([{type: 'Error', text: 'Hey', severity: 'info'}])
