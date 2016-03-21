@@ -4,6 +4,7 @@
 * Remove `Linter.getEditorLinterByPath` of self API (GitHub code search says nobody was using it)
 * Linter now supports message-specific names (see wiki for updated API)
 * Require at least Atom 1.4.0 for upcoming versions
+* Add severity attribute to linter messages, see the API doc for the new message struct
 
 ## 1.11.4
 
