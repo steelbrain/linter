@@ -68,6 +68,10 @@
       "title": "Ignore files matching this Glob",
       "type": "string",
       "default": "{\\,/}**{\\,/}*.min.{js,css}"
+    },
+    "lintPreviewTabs": {
+      "type": "boolean",
+      "default": true
     }
   }
 }
