@@ -23,7 +23,6 @@ describe 'Linter Config', ->
 
       waitsForPromise ->
         atom.workspace.open(filePath).then ->
-          atom.workspace.getActiveTextEditor().terminatePendingState()
           linter.commands.lint()
           expect(linterProvider.lint).not.toHaveBeenCalled()
           atom.config.set('linter.ignoreGlob', '{\,/}**{\,/}*.min.css')
@@ -46,7 +45,6 @@ describe 'Linter Config', ->
 
       waitsForPromise ->
         atom.workspace.open(ignoredFilePath).then ->
-          atom.workspace.getActiveTextEditor().terminatePendingState()
           linter.commands.lint()
           expect(linterProvider.lint).toHaveBeenCalled()
           expect(linterProvider.lint.calls.length).toBe(1)
@@ -56,3 +54,48 @@ describe 'Linter Config', ->
           linter.commands.lint()
           expect(linterProvider.lint).toHaveBeenCalled()
           expect(linterProvider.lint.calls.length).toBe(1)
+
+  describe 'lintPreviewTabs', ->
+    it 'does not lint preview tabs if disabled', ->
+      atom.config.set('linter.lintPreviewTabs', false)
+
+      linterProvider = {
+        grammarScopes: ['*']
+        lintOnFly: false
+        modifiesBuffer: false
+        scope: 'file'
+        lint: jasmine.createSpy('linter::lint')
+      }
+      linter.addLinter(linterProvider)
+      waitsForPromise ->
+        atom.workspace.open(__filename).then ->
+          editor = atom.workspace.getActiveTextEditor()
+
+          editor.hasTerminatedPendingState = false
+          linter.commands.lint()
+          expect(linterProvider.lint).not.toHaveBeenCalled()
+          editor.hasTerminatedPendingState = true
+          linter.commands.lint()
+          expect(linterProvider.lint).toHaveBeenCalled()
+
+    it 'lints if enabled', ->
+      atom.config.set('linter.lintPreviewTabs', true)
+
+      linterProvider = {
+        grammarScopes: ['*']
+        lintOnFly: false
+        modifiesBuffer: false
+        scope: 'file'
+        lint: jasmine.createSpy('linter::lint')
+      }
+      linter.addLinter(linterProvider)
+      waitsForPromise ->
+        atom.workspace.open(__filename).then ->
+          editor = atom.workspace.getActiveTextEditor()
+
+          editor.hasTerminatedPendingState = false
+          linter.commands.lint()
+          expect(linterProvider.lint).toHaveBeenCalled()
+          editor.hasTerminatedPendingState = true
+          linter.commands.lint()
+          expect(linterProvider.lint.calls.length).toBe(2)
