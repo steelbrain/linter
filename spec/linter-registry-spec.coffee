@@ -51,6 +51,23 @@ describe 'linter-registry', ->
       expect(linter.deactivated).toBe(true)
 
   describe '::lint', ->
+    it "doesn't lint if textEditor is in pending state", ->
+      editorLinter = new EditorLinter(editor)
+      linter = {
+        grammarScopes: ['*']
+        lintOnFly: false
+        modifiesBuffer: false
+        scope: 'file'
+        lint: jasmine.createSpy('lint')
+      }
+      editor.hasTerminatedPendingState = false
+      linterRegistry.addLinter(linter)
+      linterRegistry.lint({onChange: false, editor})
+      expect(linter.lint).not.toHaveBeenCalled()
+      editor.hasTerminatedPendingState = true
+      linterRegistry.lint({onChange: false, editor})
+      expect(linter.lint).toHaveBeenCalled()
+
     it "doesn't lint if textEditor isn't active one", ->
       editorLinter = new EditorLinter(editor)
       linter = {
