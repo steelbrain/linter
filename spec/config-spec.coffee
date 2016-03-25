@@ -23,6 +23,7 @@ describe 'Linter Config', ->
 
       waitsForPromise ->
         atom.workspace.open(filePath).then ->
+          atom.workspace.getActiveTextEditor().terminatePendingState()
           linter.commands.lint()
           expect(linterProvider.lint).not.toHaveBeenCalled()
           atom.config.set('linter.ignoreGlob', '{\,/}**{\,/}*.min.css')
@@ -45,6 +46,7 @@ describe 'Linter Config', ->
 
       waitsForPromise ->
         atom.workspace.open(ignoredFilePath).then ->
+          atom.workspace.getActiveTextEditor().terminatePendingState()
           linter.commands.lint()
           expect(linterProvider.lint).toHaveBeenCalled()
           expect(linterProvider.lint.calls.length).toBe(1)

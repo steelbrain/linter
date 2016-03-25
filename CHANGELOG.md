@@ -6,6 +6,7 @@
 * Require at least Atom 1.4.0 for upcoming versions
 * Add severity attribute to linter messages, see the API doc for the new message struct
 * Respect core config `excludeVcsIgnoredPaths` to ignore linting on files
+* Defer linting on preview tabs (Fixes #1041)
 
 ## 1.11.4
 
