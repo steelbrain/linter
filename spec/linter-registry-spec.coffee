@@ -10,7 +10,6 @@ describe 'linter-registry', ->
     waitsForPromise ->
       atom.workspace.open('file.txt').then ->
         editor = atom.workspace.getActiveTextEditor()
-        editor.terminatePendingState()
     waitsForPromise ->
       atom.packages.activatePackage('linter')
     linterRegistry?.dispose()
@@ -81,7 +80,6 @@ describe 'linter-registry', ->
       linterRegistry.addLinter(linter)
       waitsForPromise ->
         atom.workspace.open('test2.txt').then ->
-          atom.workspace.getActiveTextEditor().terminatePendingState()
           linterRegistry.lint({onChange: false, editor}).then (result) ->
             expect(result).toBe(false)
     it "doesn't lint if textEditor doesn't have a path", ->
@@ -96,7 +94,6 @@ describe 'linter-registry', ->
       linterRegistry.addLinter(linter)
       waitsForPromise ->
         atom.workspace.open('someNonExistingFile.txt').then ->
-          atom.workspace.getActiveTextEditor().terminatePendingState()
           linterRegistry.lint({onChange: false, editor}).then (result) ->
             expect(result).toBe(false)
     it 'only uses results from the latest invocation', ->
