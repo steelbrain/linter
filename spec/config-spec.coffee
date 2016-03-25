@@ -29,3 +29,28 @@ describe 'Linter Config', ->
           linter.commands.lint()
           expect(linterProvider.lint).toHaveBeenCalled()
           FS.unlinkSync(filePath)
+
+  describe 'excludeVcsIgnoredPaths', ->
+    ignoredFilePath = Path.join(__dirname, 'fixtures', 'ignored.txt')
+
+    it 'determines if a file is going to be excluded or not', ->
+      FS.writeFileSync(ignoredFilePath, 'Hello World')
+
+      linterProvider = getLinter()
+      spyOn(linterProvider, 'lint')
+
+      linter.addLinter(linterProvider)
+      atom.config.set('core.excludeVcsIgnoredPaths', false)
+      atom.project.addPath(Path.normalize(Path.join(__dirname, '..')))
+
+      waitsForPromise ->
+        atom.workspace.open(ignoredFilePath).then ->
+          linter.commands.lint()
+          expect(linterProvider.lint).toHaveBeenCalled()
+          expect(linterProvider.lint.calls.length).toBe(1)
+
+          atom.config.set('core.excludeVcsIgnoredPaths', true)
+
+          linter.commands.lint()
+          expect(linterProvider.lint).toHaveBeenCalled()
+          expect(linterProvider.lint.calls.length).toBe(1)
