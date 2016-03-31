@@ -221,6 +221,41 @@ describe('Message Registry', function() {
       messageRegistry.update()
       expect(called).toBe(2)
     })
+
+    it('checks if an old message has updated, if so invalidates it properly', function() {
+      let called = 0
+      const messageFirst = getMessage()
+      const messageSecond = Object.assign({}, messageFirst)
+      const linter = {}
+      const buffer = {}
+
+      messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
+        called++
+        if (called === 1) {
+          expect(messages.length).toBe(1)
+          expect(removed.length).toBe(0)
+          expect(added.length).toBe(1)
+          expect(added[0]).toBe(messageFirst)
+        } else {
+          expect(messages.length).toBe(1)
+          expect(removed.length).toBe(1)
+          expect(added.length).toBe(1)
+          expect(added[0]).toBe(messageSecond)
+          expect(removed[0]).toBe(messageFirst)
+        }
+      })
+
+      expect(called).toBe(0)
+      messageRegistry.set({ buffer, linter, messages: [messageFirst] })
+      messageRegistry.update()
+      messageRegistry.set({ buffer, linter, messages: [messageSecond] })
+      messageRegistry.update()
+      expect(called).toBe(1)
+      messageFirst.text = 'Hellow'
+      messageRegistry.set({ buffer, linter, messages: [messageSecond] })
+      messageRegistry.update()
+      expect(called).toBe(2)
+    })
   })
 
   describe('::deleteByBuffer', function() {

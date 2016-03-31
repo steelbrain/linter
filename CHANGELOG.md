@@ -8,6 +8,7 @@
 * Respect core config `excludeVcsIgnoredPaths` to ignore linting on files
 * Defer linting on preview tabs (Fixes #1041)
 * Add `lintPreviewTabs` config
+* Fix a bug where messages won't go away
 
 ## 1.11.4
 
