@@ -23,24 +23,24 @@ describe('Helpers', function() {
         lintOnFly: false,
         grammarScopes: ['source.js']
       }
-      expect(provider, true, ['source.js']).toBe(false)
-      expect(provider, false, ['source.js']).toBe(true)
+      expect(Helpers.shouldTriggerLinter(provider, true, ['source.js'])).toBe(false)
+      expect(Helpers.shouldTriggerLinter(provider, false, ['source.js'])).toBe(true)
     })
     it('triggers on fly ones in both scenarios', function() {
       const provider = {
         lintOnFly: true,
         grammarScopes: ['source.js']
       }
-      expect(provider, true, ['source.js']).toBe(true)
-      expect(provider, false, ['source.js']).toBe(true)
+      expect(Helpers.shouldTriggerLinter(provider, true, ['source.js'])).toBe(true)
+      expect(Helpers.shouldTriggerLinter(provider, false, ['source.js'])).toBe(true)
     })
     it('only triggers if scope matches', function() {
       const provider = {
         lintOnFly: false,
         grammarScopes: ['source.js']
       }
-      expect(provider, false, ['source.js']).toBe(true)
-      expect(provider, false, ['source.php']).toBe(false)
+      expect(Helpers.shouldTriggerLinter(provider, false, ['source.js'])).toBe(true)
+      expect(Helpers.shouldTriggerLinter(provider, false, ['source.php'])).toBe(false)
     })
   })
 
