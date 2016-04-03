@@ -26,7 +26,7 @@ describe 'linter-registry', ->
     it 'set deactivated to false on linter', ->
       linter = getLinter()
       linterRegistry.addLinter(linter)
-      expect(linter.deactivated).toBe(false)
+      expect(linter.__deactivated).toBe(false)
 
   describe '::hasLinter', ->
     it 'returns true if present', ->
@@ -48,7 +48,7 @@ describe 'linter-registry', ->
       linter = getLinter()
       linterRegistry.addLinter(linter)
       linterRegistry.deleteLinter(linter)
-      expect(linter.deactivated).toBe(true)
+      expect(linter.__deactivated).toBe(true)
 
   describe '::lint', ->
     it "doesn't lint if textEditor isn't active one", ->
@@ -116,7 +116,7 @@ describe 'linter-registry', ->
       linterRegistry.onDidUpdateMessages ->
         called++
       linterRegistry.addLinter(linter)
-      linter.deactivated = true
+      linter.__deactivated = true
       waitsForPromise ->
         linterRegistry.lint({onChange: false, editor}).then ->
           expect(called).toBe(0)
