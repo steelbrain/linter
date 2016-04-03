@@ -10,8 +10,7 @@ describe 'linter-registry', ->
     waitsForPromise ->
       atom.workspace.open('file.txt').then ->
         editor = atom.workspace.getActiveTextEditor()
-    waitsForPromise ->
-      atom.packages.activatePackage('linter')
+    atom.packages.loadPackage('linter')
     linterRegistry?.dispose()
     linterRegistry = new LinterRegistry
 
@@ -79,32 +78,46 @@ describe 'linter-registry', ->
         atom.workspace.open('someNonExistingFile.txt').then ->
           linterRegistry.lint({onChange: false, editor}).then (result) ->
             expect(result).toBe(false)
-    it 'only uses results from the latest invocation', ->
-      time = 0
-      messagesUpdated = false
-      editorLinter = new EditorLinter(editor)
-      message = getMessage('Error')
+    it 'only uses result if its newer than the last one', ->
+      timeLint = 0
+      timeUpdate = 0
+      messages = [getMessage('Error'), getMessage('Warning')]
+
       linter = {
-        grammarScopes: ['*']
-        lintOnFly: false
-        scope: 'file'
+        grammarScopes: ['*'],
+        scope: 'file',
         lint: ->
-          time++
-          if time is 1
+          timeLint++
+          if timeLint is 1
             return []
-          else
-            return [message]
+          if timeLint is 2
+            return new Promise (resolve) ->
+              setTimeout ->
+                resolve([messages[0]])
+              , 0
+          if timeLint is 3
+            return [messages[1]]
+          if timeLint is 4
+            return []
       }
       linterRegistry.addLinter(linter)
       linterRegistry.onDidUpdateMessages (result) ->
-        expect(result.messages[0]).toBe(message)
-        messagesUpdated = true
+        timeUpdate++
+        if timeUpdate is 1
+          expect(result.messages).toEqual([])
+        else if timeUpdate is 2
+          expect(result.messages).toEqual([messages[1]])
+        else if timeUpdate is 3
+          expect(result.messages).toEqual([])
       linterRegistry.lint({onChange: false, editor})
+      linterRegistry.lint({onChange: false, editor})
+      linterRegistry.lint({onChange: false, editor})
+      advanceClock()
       waitsForPromise ->
-        linterRegistry.lint({onChange: false, editor}).then (result) ->
-          expect(result).toBe(true)
-          expect(time).toBe(2)
-          expect(messagesUpdated).toBe(true)
+        linterRegistry.lint({onChange: false, editor}).then ->
+          expect(timeLint).toBe(4)
+          expect(timeUpdate).toBe(3)
+
     it 'only sets messages of active linters', ->
       called = 0
       linter = {
