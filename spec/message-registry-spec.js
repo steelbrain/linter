@@ -256,6 +256,55 @@ describe('Message Registry', function() {
       messageRegistry.update()
       expect(called).toBe(2)
     })
+
+    it('sends the same object each time even in complicated scenarios', function() {
+      let called = 0
+      const knownMessages = new Set()
+      messageRegistry.onDidUpdateMessages(({ added, removed, messages }) => {
+        called++
+        for (const entry of added) {
+          if (knownMessages.has(entry)) {
+            throw new Error('Message already exists')
+          } else knownMessages.add(entry)
+        }
+        for (const entry of removed) {
+          if (knownMessages.has(entry)) {
+            knownMessages.delete(entry)
+          } else throw new Error('Message does not exist')
+        }
+        if (messages.length !== knownMessages.size) {
+          throw new Error('Size mismatch, registry is having hiccups')
+        }
+      })
+
+      const linter = {}
+      const buffer = {}
+      const messageRealFirst = getMessage()
+      const messageDupeFirst = Object.assign({}, messageRealFirst)
+      const messageRealSecond = getMessage()
+      const messageDupeSecond = Object.assign({}, messageRealSecond)
+
+      expect(called).toBe(0)
+      messageRegistry.set({ buffer, linter, messages: [messageRealFirst, messageRealSecond] })
+      messageRegistry.update()
+      expect(called).toBe(1)
+      expect(knownMessages.size).toBe(2)
+      messageRegistry.update()
+      expect(called).toBe(1)
+      expect(knownMessages.size).toBe(2)
+      messageRegistry.set({ buffer, linter, messages: [messageRealFirst, messageRealSecond] })
+      messageRegistry.update()
+      expect(called).toBe(1)
+      expect(knownMessages.size).toBe(2)
+      messageRegistry.set({ buffer, linter, messages: [messageDupeFirst, messageDupeSecond] })
+      messageRegistry.update()
+      expect(called).toBe(1)
+      expect(knownMessages.size).toBe(2)
+      messageRegistry.deleteByLinter(linter)
+      messageRegistry.update()
+      expect(called).toBe(2)
+      expect(knownMessages.size).toBe(0)
+    })
   })
 
   describe('::deleteByBuffer', function() {
