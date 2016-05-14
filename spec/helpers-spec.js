@@ -2,7 +2,7 @@
 
 /* @flow */
 
-import { Point } from 'atom'
+import { Point, Range } from 'atom'
 import { getMessage } from './common'
 import * as Helpers from '../lib/helpers'
 
@@ -53,7 +53,7 @@ describe('Helpers', function() {
     it('works with mixed arrays and points in ranges', function() {
       expect(function() {
         const message = getMessage('Error')
-        message.range = [new Point(1, 0), new Point(1, 1)]
+        message.range = new Range(new Point(1, 0), new Point(1, 1))
         Helpers.messageKey(message)
       }).not.toThrow()
     })
