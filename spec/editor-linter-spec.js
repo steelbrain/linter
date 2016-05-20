@@ -3,7 +3,7 @@
 import { it, wait } from 'jasmine-fix'
 import EditorLinter from '../lib/editor-linter'
 
-fdescribe('EditorLinter', function() {
+describe('EditorLinter', function() {
   let textEditor
 
   beforeEach(function() {
