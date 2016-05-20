@@ -1,14 +1,15 @@
 ## Upcoming
 
-* Fix linter message synchronization between buffers (See #1007)
-* Remove `Linter.getEditorLinterByPath` of self API (GitHub code search says nobody was using it)
-* Linter now supports message-specific names (see wiki for updated API)
-* Require at least Atom 1.4.0 for upcoming versions
-* Add severity attribute to linter messages, see the API doc for the new message struct
-* Respect core config `excludeVcsIgnoredPaths` to ignore linting on files
-* Defer linting on preview tabs (Fixes #1041)
+* Fix races with beautifiers
 * Add `lintPreviewTabs` config
 * Fix a bug where messages won't go away
+* Defer linting on preview tabs (Fixes #1041)
+* Require at least Atom 1.4.0 for upcoming versions
+* Fix linter message synchronization between buffers (See #1007)
+* Linter now supports message-specific names (see wiki for updated API)
+* Respect core config `excludeVcsIgnoredPaths` to ignore linting on files
+* Add severity attribute to linter messages, see the API doc for the new message struct
+* Remove `Linter.getEditorLinterByPath` of self API (GitHub code search says nobody was using it)
 
 ## 1.11.4
 
