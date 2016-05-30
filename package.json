@@ -1,10 +1,10 @@
 {
   "name": "linter",
   "main": "./lib/index",
-  "author": "atom-community",
+  "author": "steelbrain",
   "version": "1.11.4",
   "description": "A Base Linter with Cow Powers",
-  "repository": "https://github.com/atom-community/linter",
+  "repository": "https://github.com/steelbrain/linter",
   "license": "MIT",
   "scripts": {
     "lint": "eslint .",
