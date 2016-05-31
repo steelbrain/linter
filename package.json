@@ -2,6 +2,7 @@
   "name": "linter",
   "main": "./lib/index",
   "author": "steelbrain",
+  "readme": "./README.md",
   "version": "1.11.4",
   "description": "A Base Linter with Cow Powers",
   "repository": "https://github.com/steelbrain/linter",
@@ -47,7 +48,8 @@
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.0.2",
     "eslint-plugin-react": "^4.2.1",
-    "jasmine-fix": "^1.0.0"
+    "jasmine-fix": "^1.0.0",
+    "coffee-script": "^1.7.0"
   },
   "package-deps": [
     "linter-ui-default"
