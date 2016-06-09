@@ -1,3 +1,8 @@
+## 1.11.5
+
+- Fix cannot decorate destroyed marker error
+- Fix support for incrementally adding messages
+
 ## 1.11.4
 
 * Make the panel copy compatible with latest version of electron
