@@ -50,7 +50,7 @@ module.exports = Validate =
       else
         result.filePath = null
       result.range = Range.fromObject result.range if result.range?
-      result.key = (message.text or message.html) + '$' + message.type + '$' + (message.class or '') + '$' + (message.name or '') + '$' + message.filePath + '$' + (if message.range then message.range.start.column + ':' + message.range.start.row + ':' + message.range.end.column + ':' + message.range.end.row else '')
+      result.key = (result.text or result.html) + '$' + result.type + '$' + (result.class or '') + '$' + (result.name or '') + '$' + result.filePath + '$' + (if result.range then result.range.start.column + ':' + result.range.start.row + ':' + result.range.end.column + ':' + result.range.end.row else '')
       result.linter = linter.name
       Validate.messages(result.trace, linter) if result.trace and result.trace.length
     return
