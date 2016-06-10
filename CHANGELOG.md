@@ -1,3 +1,7 @@
+## 1.11.6
+
+- Fix a bug where messages without a range would crash bubble
+
 ## 1.11.5
 
 - Fix cannot decorate destroyed marker error
