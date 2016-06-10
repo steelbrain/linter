@@ -1,3 +1,7 @@
+## 1.11.8
+
+- Remove bubble properly when all errors have been fixed
+
 ## 1.11.7
 
 - Show error tooltip on cursor position
