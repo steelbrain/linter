@@ -1,3 +1,7 @@
+## 1.11.7
+
+- Show error tooltip on cursor position
+
 ## 1.11.6
 
 - Fix a bug where messages without a range would crash bubble
