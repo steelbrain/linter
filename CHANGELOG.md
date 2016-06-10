@@ -1,6 +1,7 @@
 ## 1.11.8
 
 - Remove bubble properly when all errors have been fixed
+- Fix another bug with bubble (#1177)
 
 ## 1.11.7
 
