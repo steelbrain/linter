@@ -68,27 +68,26 @@ class Commands
     # That way the index can be ++ an -- without caring about the array bounds.
     messages[index %% messages.length]
 
+  gotoError: (index) ->
+    message = @getMessage(@index)
+    return unless message?.filePath
+    return unless message?.range
+    atom.workspace.open(message.filePath, {searchAllPanes: true}).then ->
+      atom.workspace.getActiveTextEditor().setCursorBufferPosition(message.range.start)
+
   nextError: ->
     if @index?
       @index++
     else
       @index = 0
-    message = @getMessage(@index)
-    return unless message?.filePath
-    return unless message?.range
-    atom.workspace.open(message.filePath).then ->
-      atom.workspace.getActiveTextEditor().setCursorBufferPosition(message.range.start)
+    @gotoError(@index)
 
   previousError: ->
     if @index?
       @index--
     else
       @index = 0
-    message = @getMessage(@index)
-    return unless message?.filePath
-    return unless message?.range
-    atom.workspace.open(message.filePath).then ->
-      atom.workspace.getActiveTextEditor().setCursorBufferPosition(message.range.start)
+    @gotoError(@index)
 
   dispose: ->
     @messages = null
