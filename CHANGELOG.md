@@ -1,3 +1,7 @@
+## 1.11.9
+
+- Make tooltip invalidatable (Fixes a bug reported in #1002)
+
 ## 1.11.8
 
 - Remove bubble properly when all errors have been fixed
