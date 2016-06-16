@@ -1,3 +1,7 @@
+## 1.11.11
+
+- Fix bubble not re-rendering when messages were updated (Fixes #1002)
+
 ## 1.11.10
 
 - Fix a typo introduced by last release
