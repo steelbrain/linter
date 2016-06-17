@@ -2,10 +2,10 @@ Linter
 ======
 
 [![Slack Badge](https://img.shields.io/badge/chat-atom.io%20slack-blue.svg?style=flat-square)](http://atom-slack.herokuapp.com/)
-[![Build Status](https://img.shields.io/travis/atom-community/linter.svg?style=flat-square)](https://travis-ci.org/atom-community/linter)
+[![Build Status](https://img.shields.io/travis/steelbrain/linter.svg?style=flat-square)](https://travis-ci.org/steelbrain/linter)
 [![Plugin installs!](https://img.shields.io/apm/dm/linter.svg?style=flat-square)](https://atom.io/packages/linter)
 [![Package version!](https://img.shields.io/apm/v/linter.svg?style=flat-square)](https://atom.io/packages/linter)
-[![Dependencies!](https://img.shields.io/david/atom-community/Linter.svg?style=flat-square)](https://david-dm.org/atom-community/linter)
+[![Dependencies!](https://img.shields.io/david/steelbrain/Linter.svg?style=flat-square)](https://david-dm.org/steelbrain/linter)
 
 Linter is a base linter provider for the Hackable [Atom Editor](http://atom.io). Additionally you need to install specific linter for your language. You will find full list below in **Available linters** section.
 
