@@ -17,7 +17,7 @@
   "consumedServices": {
     "linter": {
       "versions": {
-        "^1.0.0": "consumeLinterOld",
+        "^1.0.0": "consumeLinterLegacy",
         "^2.0.0": "consumeLinter"
       }
     },
