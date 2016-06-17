@@ -30,7 +30,8 @@
   "providedServices": {
     "linter-indie": {
       "versions": {
-        "1.0.0": "provideIndie"
+        "1.0.0": "provideIndieLegacy",
+        "2.0.0": "provideIndie"
       }
     },
     "linter-plus-self": {
