@@ -4,6 +4,8 @@ child_process = require('child_process')
 minimatch = require('minimatch')
 
 Helpers = module.exports =
+  messageKey: (message) ->
+    (message.text or message.html) + '$' + message.type + '$' + (message.class or '') + '$' + (message.name or '') + '$' + message.filePath + '$' + (if message.range then message.range.start.column + ':' + message.range.start.row + ':' + message.range.end.column + ':' + message.range.end.row else '')
   error: (e) ->
     atom.notifications.addError(e.toString(), {detail: e.stack or '', dismissable: true})
   shouldTriggerLinter: (linter, onChange, scopes) ->

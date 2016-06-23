@@ -1,3 +1,7 @@
+## 1.11.12
+
+- Possible fix for an issue reported in #1002
+
 ## 1.11.11
 
 - Fix bubble not re-rendering when messages were updated (Fixes #1002)
