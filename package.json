@@ -39,17 +39,17 @@
     }
   },
   "dependencies": {
-    "atom-package-deps": "^4.0.0",
-    "minimatch": "^3.0.0",
-    "sb-debounce": "^1.0.1"
+    "atom-package-deps": "^4.0.1",
+    "minimatch": "^3.0.2",
+    "sb-debounce": "^1.0.2"
   },
   "devDependencies": {
-    "babel-eslint": "^6.0.0",
-    "eslint": "^2.4.0",
-    "eslint-config-airbnb": "^6.0.2",
-    "eslint-plugin-react": "^4.2.1",
+    "babel-eslint": "^6.1.0",
+    "eslint": "^2.13.1",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-react": "^5.2.2",
     "jasmine-fix": "^1.0.0",
-    "coffee-script": "^1.7.0"
+    "coffee-script": "^1.10.0"
   },
   "package-deps": [
     "linter-ui-default"
