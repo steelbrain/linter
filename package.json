@@ -45,11 +45,13 @@
   },
   "devDependencies": {
     "babel-eslint": "^6.1.0",
+    "coffee-script": "^1.10.0",
     "eslint": "^2.13.1",
     "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.9.2",
+    "eslint-plugin-jsx-a11y": "^1.5.3",
     "eslint-plugin-react": "^5.2.2",
-    "jasmine-fix": "^1.0.0",
-    "coffee-script": "^1.10.0"
+    "jasmine-fix": "^1.0.0"
   },
   "package-deps": [
     "linter-ui-default"
