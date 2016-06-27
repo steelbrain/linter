@@ -3,7 +3,7 @@
 /* @flow */
 
 import { Point, Range } from 'atom'
-import { getMessage } from './common'
+import { getMessage } from './common' // eslint-disable-line
 import * as Helpers from '../lib/helpers'
 
 describe('Helpers', function() {

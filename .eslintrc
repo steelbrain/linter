@@ -2,8 +2,12 @@
   "parser": "babel-eslint",
   "extends": "airbnb/base",
   "rules": {
+    "no-underscore-dangle": 0,
+    "no-duplicate-imports": 0,
+    "global-require": 0,
     "semi": [2, "never"],
     "prefer-arrow-callback": 0,
+    "import/no-unresolved": [2, { ignore: ["atom"] }],
     "space-before-function-paren": [2, "never"],
     "func-names": 0,
     "no-param-reassign": 0,
