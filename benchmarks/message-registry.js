@@ -1,7 +1,7 @@
 'use babel'
 
 import MessageRegistry from '../lib/message-registry'
-import { getLinter } from '../spec/common'
+import { getLinter } from '../spec/common' // eslint-disable-line
 import { getMessages } from './common'
 
 const messageRegistry = new MessageRegistry()
