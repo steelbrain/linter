@@ -46,12 +46,8 @@
     "sb-debounce": "^1.0.1"
   },
   "devDependencies": {
-    "babel-eslint": "^6.0.0",
-    "eslint": "^2.4.0",
-    "eslint-config-airbnb": "^6.0.2",
-    "eslint-plugin-react": "^4.2.1",
-    "jasmine-fix": "^1.0.0",
-    "coffee-script": "^1.7.0"
+    "eslint-config-steelbrain": "^1.0.1",
+    "jasmine-fix": "^1.0.0"
   },
   "package-deps": [
     "linter-ui-default"
