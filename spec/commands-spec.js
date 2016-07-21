@@ -1,7 +1,7 @@
 'use babel'
 
-import Commands from '../lib/commands'
 import { join } from 'path'
+import Commands from '../lib/commands'
 let commands
 
 describe('Linter Commands', function() {

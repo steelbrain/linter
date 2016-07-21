@@ -16,7 +16,7 @@ describe('UI Registry', function() {
       didCalculateMessages: jasmine.createSpy('ui.didCalculateMessages'),
       didBeginLinting: jasmine.createSpy('ui.didBeginLinting'),
       didFinishLinting: jasmine.createSpy('ui.didFinishLinting'),
-      dispose: jasmine.createSpy('ui.dispose')
+      dispose: jasmine.createSpy('ui.dispose'),
     }
   })
 

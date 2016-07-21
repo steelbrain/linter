@@ -1,10 +1,10 @@
 [ignore]
-.*/node_modules/*
 .*/spec/*
 
 [include]
 
 [libs]
+decls
 
 [options]
 module.system=node

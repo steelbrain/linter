@@ -21,7 +21,7 @@ describe('Helpers', function() {
     it('triggers a normal linter only on save', function() {
       const provider = {
         lintOnFly: false,
-        grammarScopes: ['source.js']
+        grammarScopes: ['source.js'],
       }
       expect(Helpers.shouldTriggerLinter(provider, true, ['source.js'])).toBe(false)
       expect(Helpers.shouldTriggerLinter(provider, false, ['source.js'])).toBe(true)
@@ -29,7 +29,7 @@ describe('Helpers', function() {
     it('triggers on fly ones in both scenarios', function() {
       const provider = {
         lintOnFly: true,
-        grammarScopes: ['source.js']
+        grammarScopes: ['source.js'],
       }
       expect(Helpers.shouldTriggerLinter(provider, true, ['source.js'])).toBe(true)
       expect(Helpers.shouldTriggerLinter(provider, false, ['source.js'])).toBe(true)
@@ -37,7 +37,7 @@ describe('Helpers', function() {
     it('only triggers if scope matches', function() {
       const provider = {
         lintOnFly: false,
-        grammarScopes: ['source.js']
+        grammarScopes: ['source.js'],
       }
       expect(Helpers.shouldTriggerLinter(provider, false, ['source.js'])).toBe(true)
       expect(Helpers.shouldTriggerLinter(provider, false, ['source.php'])).toBe(false)
