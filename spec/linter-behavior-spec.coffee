@@ -55,14 +55,3 @@ describe 'Linter Behavior', ->
         .then ->
           expect(bottomContainer.getTab('File').count).toBe(0)
           expect(linter.views.bottomPanel.getVisibility()).toBe(false)
-
-  describe 'Markers', ->
-    it 'automatically marks files when they are opened if they have any markers', ->
-      provider = getLinter()
-      messages = [getMessage('Error', '/etc/passwd')]
-      linter.setMessages(provider, messages)
-      linter.messages.updatePublic()
-      waitsForPromise ->
-        atom.workspace.open('/etc/passwd').then ->
-          activeEditor = atom.workspace.getActiveTextEditor()
-          expect(activeEditor.getMarkers().length > 0).toBe(true)
