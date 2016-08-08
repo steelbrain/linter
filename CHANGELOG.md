@@ -1,3 +1,7 @@
+## 1.11.14
+
+- Make sure errors are hidden in panel (Atom Beta broke `[hidden]` styles)
+
 ## 1.11.13
 
 - Fix for bottom tabs not hiding in Atom 1.10.x beta
