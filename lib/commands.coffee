@@ -12,9 +12,6 @@ class Commands
       'linter:expand-multiline-messages': => @expandMultilineMessages()
       'linter:lint': => @lint()
 
-    # Default values
-    @index = null
-
   togglePanel: ->
     atom.config.set('linter.showErrorPanel', not atom.config.get('linter.showErrorPanel'))
 
@@ -61,30 +58,51 @@ class Commands
     catch error
       atom.notifications.addError error.message, {detail: error.stack, dismissable: true}
 
-  getMessage: (index) ->
-    messages = @linter.views.messages
-    # Use the dividend independent modulo so that the index stays inside the
-    # array's bounds, even when negative.
-    # That way the index can be ++ an -- without caring about the array bounds.
-    messages[index %% messages.length]
-
   nextError: ->
-    if @index?
-      @index++
-    else
-      @index = 0
-    message = @getMessage(@index)
+
+    activeTextEditor = atom.workspace.getActiveTextEditor()
+    if activeTextEditor?
+      {row, column} = activeTextEditor.getCursorBufferPosition()
+      thisFile = @linter.views.messages.filter((m) -> m.currentFile )
+
+      message = do ->
+        for m in thisFile when m.range?
+          {start} = m.range
+          if start.row > row
+            return m
+          if start.row is row and start.column > column
+            return m
+
+      # loop around if necessary
+      message ?= thisFile[0]
+    # Move on to another file if there's nothing here
+    message ?= @linter.views.messages[0]
+
     return unless message?.filePath
     return unless message?.range
     atom.workspace.open(message.filePath).then ->
       atom.workspace.getActiveTextEditor().setCursorBufferPosition(message.range.start)
 
   previousError: ->
-    if @index?
-      @index--
-    else
-      @index = 0
-    message = @getMessage(@index)
+    activeTextEditor = atom.workspace.getActiveTextEditor()
+    if activeTextEditor?
+      {row, column} = activeTextEditor.getCursorBufferPosition()
+      thisFile = @linter.views.messages.filter((m) -> m.currentFile )
+
+      message = undefined
+      for m in thisFile when m.range?
+        {start} = m.range
+        if start.row < row
+          message = m
+        if start.row is row and start.column < column
+          message = m
+
+      # loop around if necessary
+      message ?= thisFile[-1..]?[0]
+    # Move on to another file if there's nothing here
+    message ?= @linter.views.messages[-1..]?[0]
+
+
     return unless message?.filePath
     return unless message?.range
     atom.workspace.open(message.filePath).then ->
