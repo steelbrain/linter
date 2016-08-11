@@ -60,6 +60,7 @@
 
 * A notification is shown to user if no linter providers are installed.
 * A better self-API for PUSH style providers. Check the wiki for more information.
+* Linter will now automatically try to update if one is available, you can disable it in settings.
 
 ## 1.10.0
 
