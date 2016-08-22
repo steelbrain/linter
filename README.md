@@ -7,9 +7,9 @@ Linter
 [![Package version!](https://img.shields.io/apm/v/linter.svg?style=flat-square)](https://atom.io/packages/linter)
 [![Dependencies!](https://img.shields.io/david/steelbrain/Linter.svg?style=flat-square)](https://david-dm.org/steelbrain/linter)
 
-Linter is a base linter provider for the Hackable [Atom Editor](http://atom.io). Additionally you need to install specific linter for your language. You will find full list below in **Available linters** section.
+Linter is a base linter provider for the hackable [Atom Editor](http://atom.io). Additionally, you need to install a specific linter for your language. You will find a full list below in the [Available linters](#available-linters) section.
 
-It provides a top-level API to its consumer that allows them to visualize errors and other types of messages, easily.
+It provides a top-level API to its consumer so that they can visualize errors and other types of messages with ease.
 
 
 ![Preview](http://g.recordit.co/13RfmirPz2.gif)
