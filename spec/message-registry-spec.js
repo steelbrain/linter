@@ -1,10 +1,13 @@
 'use babel'
 
+import { normalizeMessagesLegacy } from '../lib/helpers'
 import MessageRegistry from '../lib/message-registry'
 
-describe('Message Registry', function() {
+fdescribe('Message Registry', function() {
   function getMessage() {
-    return { type: 'Error', filePath: '/tmp/passwd', range: [[0, 1], [1, 0]], text: String(Math.random()) }
+    const message = { type: 'Error', filePath: '/tmp/passwd', range: [[0, 1], [1, 0]], text: String(Math.random()), version: 1 }
+    normalizeMessagesLegacy('Some Linter', [message])
+    return message
   }
   function getLinter(name) {
     return { name }
@@ -125,7 +128,6 @@ describe('Message Registry', function() {
           expect(removed.length).toBe(0)
           expect(added).toEqual(messages)
           expect(added[0]).toEqual(messageFirst)
-          expect(added[0].name).toEqual('named')
         } else if (called === 2) {
           expect(added.length).toBe(2)
           expect(removed.length).toBe(0)
@@ -177,7 +179,7 @@ describe('Message Registry', function() {
       expect(called).toBe(4)
     })
 
-    it('sets key, severity and name on messages', function() {
+    it('sets key, severity on messages', function() {
       const linter = {}
       const buffer = {}
       const messageFirst = getMessage()
@@ -198,8 +200,6 @@ describe('Message Registry', function() {
           expect(typeof messages[1].key).toBe('string')
           expect(typeof messages[0].severity).toBe('string')
           expect(typeof messages[1].severity).toBe('string')
-          expect(messages[0].name).toBe(null)
-          expect(messages[1].name).toBe(null)
         } else {
           // One removed, one added
           expect(added.length).toBe(1)
@@ -210,8 +210,6 @@ describe('Message Registry', function() {
           expect(typeof messages[1].key).toBe('string')
           expect(typeof messages[0].severity).toBe('string')
           expect(typeof messages[1].severity).toBe('string')
-          expect(messages[0].name).toBe(null)
-          expect(messages[1].name).toBe(null)
         }
       })
 
