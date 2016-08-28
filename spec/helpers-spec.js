@@ -1,18 +1,12 @@
 /* @flow */
 
-import Path from 'path'
 import { Disposable } from 'atom'
 import { it, wait } from 'jasmine-fix'
 import * as Helpers from '../lib/helpers'
-import { getMessage, getMessageLegacy } from './common'
+import { getFixturesPath, getMessage, getMessageLegacy } from './common'
 
 describe('Helpers', function() {
   // NOTE: Did *not* add specs for messageKey and messageKeyLegacy on purpose
-
-  function getFixturesPath(path: string): string {
-    return Path.join(__dirname, 'fixtures', path)
-  }
-
   describe('shouldTriggerLinter', function() {
     function shouldTriggerLinter(a: any, b: any, c: any) {
       return Helpers.shouldTriggerLinter(a, b, c)
