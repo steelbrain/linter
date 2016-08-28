@@ -12,8 +12,7 @@ describe('UI Registry', function() {
     uiRegistry = new UIRegistry()
     uiProvider = {
       name: 'Test',
-      activate: jasmine.createSpy('ui.activate'),
-      didCalculateMessages: jasmine.createSpy('ui.didCalculateMessages'),
+      render: jasmine.createSpy('ui.didCalculateMessages'),
       didBeginLinting: jasmine.createSpy('ui.didBeginLinting'),
       didFinishLinting: jasmine.createSpy('ui.didFinishLinting'),
       dispose: jasmine.createSpy('ui.dispose'),
@@ -24,11 +23,10 @@ describe('UI Registry', function() {
     let testObj
 
     uiRegistry.add(uiProvider)
-    expect(uiProvider.activate).toHaveBeenCalled()
 
     testObj = {}
-    uiRegistry.didCalculateMessages(testObj)
-    expect(uiProvider.didCalculateMessages).toHaveBeenCalledWith(testObj)
+    uiRegistry.render(testObj)
+    expect(uiProvider.render).toHaveBeenCalledWith(testObj)
 
     testObj = {}
     uiRegistry.didBeginLinting(testObj)
