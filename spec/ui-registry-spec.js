@@ -1,4 +1,4 @@
-'use babel'
+/* @flow */
 
 import UIRegistry from '../lib/ui-registry'
 let uiRegistry = null
