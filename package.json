@@ -7,6 +7,10 @@
   "description": "A Base Linter with Cow Powers",
   "repository": "https://github.com/steelbrain/linter",
   "license": "MIT",
+  "keywords": [
+    "linter"
+  ],
+  "private": true,
   "scripts": {
     "lint": "eslint .",
     "test": "apm test"
