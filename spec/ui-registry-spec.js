@@ -1,8 +1,8 @@
 /* @flow */
 
 import UIRegistry from '../lib/ui-registry'
-let uiRegistry = null
-let uiProvider = null
+let uiRegistry
+let uiProvider: Object
 
 describe('UI Registry', function() {
   beforeEach(function() {
@@ -20,22 +20,21 @@ describe('UI Registry', function() {
   })
 
   it('works in a lifecycle', function() {
-    let testObj
+    const testObjA: Object = {}
+    const testObjB: Object = {}
+    const testObjC: Object = {}
 
     uiRegistry.add(uiProvider)
 
-    testObj = {}
-    uiRegistry.render(testObj)
-    expect(uiProvider.render).toHaveBeenCalledWith(testObj)
+    uiRegistry.render(testObjA)
+    expect(uiProvider.render).toHaveBeenCalledWith(testObjA)
 
-    testObj = {}
-    uiRegistry.didBeginLinting(testObj)
-    expect(uiProvider.didBeginLinting.mostRecentCall.args[0]).toBe(testObj)
+    uiRegistry.didBeginLinting(testObjB)
+    expect(uiProvider.didBeginLinting.mostRecentCall.args[0]).toBe(testObjB)
     expect(uiProvider.didBeginLinting.mostRecentCall.args[1]).toBe(null)
 
-    testObj = {}
-    uiRegistry.didFinishLinting(testObj)
-    expect(uiProvider.didFinishLinting.mostRecentCall.args[0]).toBe(testObj)
+    uiRegistry.didFinishLinting(testObjC)
+    expect(uiProvider.didFinishLinting.mostRecentCall.args[0]).toBe(testObjC)
     expect(uiProvider.didFinishLinting.mostRecentCall.args[1]).toBe(null)
 
     uiRegistry.dispose()

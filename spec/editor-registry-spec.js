@@ -10,7 +10,7 @@ describe('EditorRegistry', function() {
     await atom.workspace.open(__filename)
     editorRegistry = new EditorRegistry()
   })
-  afterEach(async function() {
+  afterEach(function() {
     atom.workspace.destroyActivePane()
     editorRegistry.dispose()
   })
