@@ -35,11 +35,6 @@
       "versions": {
         "2.0.0": "provideIndie"
       }
-    },
-    "linter-plus-self": {
-      "versions": {
-        "0.1.0": "provideLinter"
-      }
     }
   },
   "dependencies": {
