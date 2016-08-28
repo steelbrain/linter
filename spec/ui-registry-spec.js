@@ -1,8 +1,8 @@
-'use babel'
+/* @flow */
 
 import UIRegistry from '../lib/ui-registry'
-let uiRegistry = null
-let uiProvider = null
+let uiRegistry
+let uiProvider: Object
 
 describe('UI Registry', function() {
   beforeEach(function() {
@@ -12,32 +12,29 @@ describe('UI Registry', function() {
     uiRegistry = new UIRegistry()
     uiProvider = {
       name: 'Test',
-      activate: jasmine.createSpy('ui.activate'),
-      didCalculateMessages: jasmine.createSpy('ui.didCalculateMessages'),
+      render: jasmine.createSpy('ui.didCalculateMessages'),
       didBeginLinting: jasmine.createSpy('ui.didBeginLinting'),
       didFinishLinting: jasmine.createSpy('ui.didFinishLinting'),
-      dispose: jasmine.createSpy('ui.dispose')
+      dispose: jasmine.createSpy('ui.dispose'),
     }
   })
 
   it('works in a lifecycle', function() {
-    let testObj
+    const testObjA: Object = {}
+    const testObjB: Object = {}
+    const testObjC: Object = {}
 
     uiRegistry.add(uiProvider)
-    expect(uiProvider.activate).toHaveBeenCalled()
 
-    testObj = {}
-    uiRegistry.didCalculateMessages(testObj)
-    expect(uiProvider.didCalculateMessages).toHaveBeenCalledWith(testObj)
+    uiRegistry.render(testObjA)
+    expect(uiProvider.render).toHaveBeenCalledWith(testObjA)
 
-    testObj = {}
-    uiRegistry.didBeginLinting(testObj)
-    expect(uiProvider.didBeginLinting.mostRecentCall.args[0]).toBe(testObj)
+    uiRegistry.didBeginLinting(testObjB)
+    expect(uiProvider.didBeginLinting.mostRecentCall.args[0]).toBe(testObjB)
     expect(uiProvider.didBeginLinting.mostRecentCall.args[1]).toBe(null)
 
-    testObj = {}
-    uiRegistry.didFinishLinting(testObj)
-    expect(uiProvider.didFinishLinting.mostRecentCall.args[0]).toBe(testObj)
+    uiRegistry.didFinishLinting(testObjC)
+    expect(uiProvider.didFinishLinting.mostRecentCall.args[0]).toBe(testObjC)
     expect(uiProvider.didFinishLinting.mostRecentCall.args[1]).toBe(null)
 
     uiRegistry.dispose()

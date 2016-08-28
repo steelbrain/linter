@@ -9,6 +9,7 @@
 * Linter now supports message-specific names (see wiki for updated API)
 * Respect core config `excludeVcsIgnoredPaths` to ignore linting on files
 * Add severity attribute to linter messages, see the API doc for the new message struct
+* Remove previous messages of a linter when it returns non-array response (API Breaking)
 * Remove `Linter.getEditorLinterByPath` of self API (GitHub code search says nobody was using it)
 
 ## 1.11.4

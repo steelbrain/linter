@@ -7,9 +7,12 @@
   "description": "A Base Linter with Cow Powers",
   "repository": "https://github.com/steelbrain/linter",
   "license": "MIT",
+  "keywords": [
+    "linter"
+  ],
+  "private": true,
   "scripts": {
-    "lint": "eslint .",
-    "test": "apm test"
+    "test": "(apm test) && (flow check) && (eslint . )"
   },
   "engines": {
     "atom": ">=1.4.0 <2.0.0"
@@ -17,7 +20,8 @@
   "consumedServices": {
     "linter": {
       "versions": {
-        "^1.0.0": "consumeLinter"
+        "^1.0.0": "consumeLinterLegacy",
+        "^2.0.0": "consumeLinter"
       }
     },
     "linter-ui": {
@@ -29,27 +33,19 @@
   "providedServices": {
     "linter-indie": {
       "versions": {
-        "1.0.0": "provideIndie"
-      }
-    },
-    "linter-plus-self": {
-      "versions": {
-        "0.1.0": "provideLinter"
+        "2.0.0": "provideIndie"
       }
     }
   },
   "dependencies": {
-    "atom-package-deps": "^4.0.0",
+    "atom-package-deps": "^4.3.1",
     "minimatch": "^3.0.0",
     "sb-debounce": "^1.0.1"
   },
   "devDependencies": {
-    "babel-eslint": "^6.0.0",
-    "eslint": "^2.4.0",
-    "eslint-config-airbnb": "^6.0.2",
-    "eslint-plugin-react": "^4.2.1",
-    "jasmine-fix": "^1.0.0",
-    "coffee-script": "^1.7.0"
+    "eslint-config-steelbrain": "^1.0.1",
+    "flow-bin": "^0.31.1",
+    "jasmine-fix": "^1.0.0"
   },
   "package-deps": [
     "linter-ui-default"
@@ -70,7 +66,7 @@
     "ignoreGlob": {
       "title": "Ignore files matching this Glob",
       "type": "string",
-      "default": "{\\,/}**{\\,/}*.min.{js,css}"
+      "default": "**/*.min.{js,css}"
     },
     "lintPreviewTabs": {
       "type": "boolean",

@@ -1,17 +1,14 @@
 'use babel'
 
-import { it, wait } from 'jasmine-fix'
+import { it, wait, beforeEach } from 'jasmine-fix'
 import EditorLinter from '../lib/editor-linter'
 
 describe('EditorLinter', function() {
   let textEditor
 
-  beforeEach(function() {
-    waitsForPromise(function() {
-      return atom.workspace.open(`${__dirname}/fixtures/file.txt`).then(function() {
-        textEditor = atom.workspace.getActiveTextEditor()
-      })
-    })
+  beforeEach(async function() {
+    await atom.workspace.open(`${__dirname}/fixtures/file.txt`)
+    textEditor = atom.workspace.getActiveTextEditor()
   })
   afterEach(function() {
     atom.workspace.destroyActivePaneItem()
