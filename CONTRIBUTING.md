@@ -97,30 +97,6 @@ describe 'when the dog is happy', ->
     # spec here
 ```
 
-## Documentation Styleguide
-
-* Use [AtomDoc](https://github.com/atom/atomdoc).
-* Use [Markdown](https://daringfireball.net/projects/markdown).
-* Reference methods and classes in markdown with the custom `{}` notation:
-    * Reference classes with `{ClassName}`
-    * Reference instance methods with `{ClassName::methodName}`
-    * Reference class methods with `{ClassName.methodName}`
-
-### Example
-
-```coffee
-# Public: Disable the package with the given name.
-#
-# * `name`    The {String} name of the package to disable.
-# * `options` (optional) The {Object} with disable options (default: {}):
-#   * `trackTime`     A {Boolean}, `true` to track the amount of time taken.
-#   * `ignoreErrors`  A {Boolean}, `true` to catch and ignore errors thrown.
-# * `callback` The {Function} to call after the package has been disabled.
-#
-# Returns `undefined`.
-disablePackage: (name, options, callback) ->
-```
-
 ### Commit Rights
 
 * Commit rights may be given to a contributor who has shown prior history of submitting high
