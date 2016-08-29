@@ -7,11 +7,10 @@ These are just guidelines, not rules, use your best judgment and feel free to
 propose changes to this document in a pull request.
 
 This project adheres to the [Open Code of Conduct][code-of-conduct]. By participating, you are expected to uphold this code.
-[code-of-conduct]: http://todogroup.org/opencodeofconduct/#Atom/opensource@github.com
 
 ## Submitting Issues
 
-* You can create an issue [here](https://github.com/atom-community/linter/issues/new), but
+* You can create an issue [here](https://github.com/steelbrain/linter/issues/new), but
   before doing that please read the notes below on collecting information and submitting issues.
   Include as many details as possible with your report.
 * Include the version of Atom you are using and the OS.
@@ -24,7 +23,7 @@ This project adheres to the [Open Code of Conduct][code-of-conduct]. By particip
   will be logged. If you can reproduce the error, use this approach to get the
   full stack trace and include it in the issue.
 * On Mac, check Console.app for stack traces to include if reporting a crash.
-* Perform a [cursory search](https://github.com/atom-community/linter/search?q=&type=Issues&utf8=%E2%9C%93)
+* Perform a [cursory search](https://github.com/steelbrain/linter/search?q=&type=Issues&utf8=%E2%9C%93)
   to see if a similar issue has already been submitted.
 * Please setup a [profile picture](https://help.github.com/articles/how-do-i-set-up-my-profile-picture)
   to make yourself recognizable and so we can all get to know each other better.
@@ -131,3 +130,5 @@ that has repeatedly or willfully disregarded the [code of conduct][code-of-condu
 
 Committers are expected to submit non-trivial changes via pull request, and receive :+1: / :-1: votes from two other contributors. Use your best judgement on what
 constitutes a "trivial" change.
+
+[code-of-conduct]: http://todogroup.org/opencodeofconduct/#Atom/opensource@github.com
