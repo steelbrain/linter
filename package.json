@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "atom-package-deps": "^4.3.1",
-    "minimatch": "^3.0.0",
+    "minimatch": "^3.0.3",
     "sb-debounce": "^1.0.1"
   },
   "devDependencies": {
