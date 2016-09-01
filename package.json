@@ -21,12 +21,12 @@
     "linter": {
       "versions": {
         "^1.0.0": "consumeLinterLegacy",
-        "2.0.0": "consumeLinter"
+        "^2.0.0": "consumeLinter"
       }
     },
     "linter-ui": {
       "versions": {
-        "1.0.0": "consumeUI"
+        "^1.0.0": "consumeUI"
       }
     }
   },
