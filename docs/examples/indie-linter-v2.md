@@ -1,6 +1,6 @@
 # Indie Linter v2
 
-The Indie Linter demoed below supports [Messages v2](../linter-message-v2.md) only.
+The Indie Linter demoed below supports [Messages v2](../types/linter-message-v2.md) only.
 
 ## package.json
 
@@ -8,7 +8,7 @@ Only the `consumedServices` field is important in this manifest, the rest are ju
 
 ```json
 {
-  "name": "my-indie-linter",
+  "name": "linter-example",
   "main": "index.js",
   "version": "0.0.0",
   "private": true,
@@ -30,48 +30,66 @@ Only the `consumedServices` field is important in this manifest, the rest are ju
 ## index.js
 
 ```js
-/* @flow */
+'use babel'
 
 import { CompositeDisposable } from 'atom'
 
-const myLinterPackage = {
-  activate() {
-    this.subscriptions = new CompositeDisposable()
-  },
-  deactivate() {
-    this.subscriptions.dispose()
-  },
-  consumeIndie(registry) {
-    const linter = registry.register({
-      name: 'My Linter',
+let subscriptions
+export function activate() {
+  subscriptions = new CompositeDisposable()
+}
+export function deactivate() {
+  subscriptions.dispose()
+}
+export function consumeIndie() {
+  const linter = registry.register({
+    name: 'My Linter',
+  })
+  subscriptions.add(linter)
+
+  // Example using ::setMessages
+  subscriptions.add(atom.workspace.observeTextEditors(function(textEditor) {
+    const editorPath = textEditor.getPath()
+    if (!editorPath) {
+      return
+    }
+
+    linter.setMessages(editorPath, [{
+      severity: 'info',
+      location: {
+        path: editorPath,
+        position: [[0, 0], [0, Infinity]],
+      },
+      excerpt: `A random value is ${Math.random()}`,
+      description: `### What is this?\nThis is a randomly generated value`
+    }])
+
+    const subscription = textEditor.onDidDestroy(function() {
+      subscriptions.remove(subscription)
+      linter.setMessages(editorPath, [])
     })
-    this.subscriptions.add(linter)
+    subscriptions.add(subscription)
+  })))
 
-    // Set messages on every opened file
-    this.subscriptions.add(atom.workspace.observeTextEditors(textEditor => {
-      const editorPath = textEditor.getPath()
-      if (!editorPath) {
-        return
-      }
-
-      linter.setMessages(editorPath, [{
-        severity: 'info',
-        location: {
-          path: editorPath,
-          position: [[0, 0], [0, Infinity]],
-        },
-        excerpt: `A random value is ${Math.random()}`,
-        description: `### What is this?\nThis is a randomly generated value`
-      }])
-
-      const subscription = textEditor.onDidDestroy(() => {
-        this.subscriptions.remove(subscription)
-        linter.setMessages(editorPath, [])
-      })
-      this.subscriptions.add(subscription)
-    })))
-  },
+  // Example using ::setAllMessages
+  linter.setAllMessages([
+    {
+      severity: 'info',
+      location: {
+        path: '/tmp/test-1.js',
+        position: [[5, 0], [5, Infinity]],
+      },
+      excerpt: 'This is an error message on a file',
+    },
+    {
+      severity: 'info',
+      location: {
+        path: '/tmp/test-3.js',
+        position: [[5, 0], [5, Infinity]],
+      },
+      excerpt: 'This is another error message on a file',
+    }
+  ])
 }
 
-module.exports = myLinterPackage
 ```
