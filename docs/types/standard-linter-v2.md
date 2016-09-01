@@ -16,7 +16,7 @@ type Linter = {
   // From providers
   name: string,
   scope: 'file' | 'project',
-  lintOnFly: boolean,
+  lintsOnChange: boolean,
   grammarScopes: Array<string>,
   lint(textEditor: TextEditor): ?Array<Message | MessageLegacy> | Promise<?Array<Message | MessageLegacy>>,
 }
@@ -37,13 +37,13 @@ scoped linters are not tied to any specific TextEditor and are not discarded
 even when all TextEditors are disposed. New results replace all previous
 results.
 
-**Q**: What's the purpose of `lintOnFly`?
+**Q**: What's the purpose of `lintsOnChange`?
 
-**A**: If `lintOnFly` is false, the linter is only triggered when the user saves
+**A**: If `lintsOnChange` is false, the linter is only triggered when the user saves
 a file. When set to true, it also invokes the linter every time the user stops
 typing, after a delay configurable by the user in Linter's settings.
 
-**Q**: What should I set `lintOnFly` to?
+**Q**: What should I set `lintsOnChange` to?
 
 **A**: Only set it to `true` if you are able to run your base linter on the
 current buffer contents, whether by passing them to it directly via `stdin`

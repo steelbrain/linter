@@ -46,7 +46,7 @@ export function provideLinter() {
   return {
     name: 'Example',
     scope: 'file', // or 'project'
-    lintOnFly: false, // or true
+    lintsOnChange: false, // or true
     grammarScopes: ['source.js'],
     lint(textEditor) {
       const editorPath = textEditor.getPath()
