@@ -1,6 +1,6 @@
 # Indie Linter v2
 
-This document describes the type of Indie Linter v2, see the [Example Usage](../examples/indie-linter-v2.md) document for usage info.
+This document describes the type of Indie Linter v2, for an example in how to implement this in your own package see the see the [Example Usage](../examples/indie-linter-v2.md) document.
 
 ## Types
 
@@ -33,4 +33,8 @@ class IndieDelegate {
 
 **Q**: What's the difference between `setMessages` and `setAllMessages`?
 
-**A**: `setMessages` only clears messages of the given file path and replaces them with the given value. `setAllMessages` clears all last messages and uses the new given value.
+**A**:
+
+* `setMessages` replaces the last stored messages for the given `filePath` for your delegate. All messages provided must have the same `location.path` as the given `filePath`.
+
+* `setAllMessages` replaces the list of messages Linter has stored for your provider. Any existing messages, regardless of the file they are associated with, are discarded.

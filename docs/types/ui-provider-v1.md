@@ -1,6 +1,6 @@
 # UI Provider v1
 
-This document describes the type of UI Provider v1, see the [Example Usage](../examples/ui-provider-v1.md) document for usage info.
+This document describes the type of UI Provider v1, for an example in how to implement this in your own package see the see the [Example Usage](../examples/ui-provider-v1.md) document.
 
 ## Type
 

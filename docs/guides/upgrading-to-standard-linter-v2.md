@@ -1,15 +1,16 @@
 # Upgrading to Standard Linter v2
 
-This upgrade guide assumes your package uses Standard Linter API v1 and Message API v1.
+This upgrade guide assumes your package current implements [Standard Linter API v1](https://github.com/steelbrain/linter/wiki/Linter-API) and [Message API v1](https://github.com/steelbrain/linter/wiki/Linter-API#messages).
 
 ## package.json
 
 You need to update the version in the manifest for `linter` service from `1.x.x` to `2.0.0`.
 
-**Before:**
+### Before
 
-```
-... stuff above
+```cjson
+{
+  # stuff above
   "providedServices": {
     "linter": {
       "versions": {
@@ -17,13 +18,15 @@ You need to update the version in the manifest for `linter` service from `1.x.x`
       }
     }
   },
-... stuff below
+  # stuff below
+}
 ```
 
-**After:**
+### After
 
-```
-... stuff above
+```cjson
+{
+  # stuff above
   "providedServices": {
     "linter": {
       "versions": {
@@ -31,14 +34,15 @@ You need to update the version in the manifest for `linter` service from `1.x.x`
       }
     }
   },
-... stuff below
+  # stuff below
+}
 ```
 
 ## index.js
 
 In the newer version, the `name` property is now mandatory. Providers must also return Message v2 instead of Message v1.
 
-**Before:**
+### Before
 
 ```js
 export function provideLinter() {
@@ -50,7 +54,7 @@ export function provideLinter() {
       return [{
         type: 'Error',
         filePath: '/etc/passwd',
-        range: [[0, 0], [0, Infinity]],
+        range: [[0, 0], [0, 1]],
         text: 'This is the start, of something beautiful',
       }]
     }
@@ -60,12 +64,12 @@ export function provideLinter() {
 }
 ```
 
-**After:**
+### After
 
 ```js
 export function provideLinter() {
   const linter = {
-    name: 'Perfectionist',
+    name: 'Example',
     scope: 'file',
     lintOnFly: false,
     grammarScopes: ['source.js'],
@@ -74,7 +78,7 @@ export function provideLinter() {
         severity: 'error',
         location: {
           file: '/etc/passwd',
-          position: [[0, 0], [0, Infinity]],
+          position: [[0, 0], [0, 1]],
         },
         excerpt: 'This is the start, of something beautiful'
       }]

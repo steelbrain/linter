@@ -6,7 +6,7 @@ This document describes the type of Linter Message v2. It's supported in [`Indie
 
 ```js
 type Message = {
-  // Automatically added, not guaranteed
+  // Automatically added for UI consumers, do not specify in a provider
   key: string,
   version: 2,
   linterName: string,
@@ -33,7 +33,7 @@ type Message = {
     position: Range,
     apply: (() => any),
   }>,
-  description: string | (() => Promise<string> | string)
+  description?: string | (() => Promise<string> | string)
 }
 ```
 
@@ -45,7 +45,7 @@ type Message = {
 
 **Q**: What type of value to add in `description`?
 
-**A**: The description property uses markdown, and also accepts a callback that resolves to a markdown string. You can use it to provide in-editor description of the error using http requests to remote servers.
+**A**: The description property uses Markdown, and also accepts a callback that resolves to a Markdown string. You can use it to provide in-editor description of the error using longer running tasks, such as making an HTTP request.
 
 **Q**: What to do in the `apply` callback of a solution?
 
@@ -54,3 +54,7 @@ type Message = {
 **Q**: What's the purpose of the `title` in a solution?
 
 **A**: Depends on the UI provider, the default Linter UI uses this attribute as it's title for [Intentions](https://atom.io/packages/intentions) package, `Fix linter error` is the default one used at the time of writing this document.
+
+**Q**: What is `Point` and `Range`?
+
+**A**: These are references to built in [`Point`](https://atom.io/docs/api/latest/Point) and [`Range`](https://atom.io/docs/api/latest/Range) classes.

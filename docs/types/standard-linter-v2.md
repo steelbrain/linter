@@ -1,6 +1,6 @@
 # Standard Linter v2
 
-This document describes the type of Standard Linter v2, see the [Example Usage](../examples/standard-linter-v2.md) document for usage info.
+This document describes the type of Standard Linter v2, for an example in how to implement this in your own package see the see the [Example Usage](../examples/standard-linter-v2.md) document.
 
 ## Type
 
@@ -25,13 +25,13 @@ type Linter = {
 
 **Q**: What's the difference between `file` and `project` scopes?
 
-**A**: Results of `file` scoped linters are for individual files, therefore their result for a file is discarded as soon as it's TextEditor is closed. Their newer results only replace their previous results for that particular file. Examples of such linters are `ESLint`.
+**A**: Their newer results only replace their previous results for that particular file. Examples of such linters are `ESLint`.
 
 Results of `project` scoped linters are not tied to any TextEditor and are not discarded even when all TextEditors are disposed. Their new results replace all of their previous results. This is useful for linters that run background daemons that scan the entire project, `FlowType` for example.
 
 **Q**: What's the purpose of `lintOnFly`?
 
-**A**: If lintOnFly is false, the linter is only triggered when the user saves a file. But when set to true, it also invokes the linter every time the user stops typing.
+**A**: If lintOnFly is false, the linter is only triggered when the user saves a file. But when set to true, it also invokes the linter every time the user stops typing, after a user configurable delay.
 
 **Q**: What should I set my `lintOnFly` to?
 

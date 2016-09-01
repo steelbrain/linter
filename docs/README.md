@@ -1,6 +1,6 @@
 Welcome to the official Linter docs.
 
-# Examples
+# Linter Provider Examples
 
 - [Indie Linter Provider v2](examples/indie-linter-v2.md) (push-style)
 - [Standard Linter Provider v2](examples/standard-linter-v2.md) (pull-style)
@@ -13,7 +13,7 @@ Welcome to the official Linter docs.
 - [Standard Linter Provider v2](types/standard-linter-v2.md) (pull-style)
 - [UI Provider v1](types/ui-provider-v1.md)
 
-# Guides
+# Migration Guides
 
 - [Upgrading to Indie Linter v2](guides/upgrading-to-indie-linter-v2.md)
 - [Upgrading to Standard Linter v2](guides/upgrading-to-standard-linter-v2.md)

@@ -8,7 +8,7 @@ Only the `providedServices` field is important in this manifest, the rest are ju
 
 ```json
 {
-  "name": "my-linter",
+  "name": "linter-example",
   "main": "index.js",
   "version": "0.0.0",
   "private": true,
@@ -35,12 +35,14 @@ Only the `providedServices` field is important in this manifest, the rest are ju
 export function activate() {
   // Fill something here, optional
 }
+
 export function deactivate() {
   // Fill something here, optional
 }
+
 export function provideLinter() {
-  const linterProvider = {
-    name: 'Awesomeness',
+  return {
+    name: 'Example',
     scope: 'file', // or 'project'
     lintOnFly: false, // or true
     grammarScopes: ['source.js'],
@@ -52,7 +54,7 @@ export function provideLinter() {
         severity: 'info',
         location: {
           path: editorPath,
-          position: [[0, 0], [0, Infinity]],
+          position: [[0, 0], [0, 1]],
         },
         excerpt: `A random value is ${Math.random()}`,
         description: `### What is this?\nThis is a randomly generated value`
@@ -64,7 +66,7 @@ export function provideLinter() {
           severity: 'info',
           location: {
             path: editorPath,
-            position: [[0, 0], [0, Infinity]],
+            position: [[0, 0], [0, 1]],
           },
           excerpt: `A random value is ${Math.random()}`,
           description: `### What is this?\nThis is a randomly generated value`
@@ -72,7 +74,5 @@ export function provideLinter() {
       })
     }
   }
-
-  return linterProvider
 }
 ```

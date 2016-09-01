@@ -2,7 +2,7 @@
 
 This example demonstrates usage of [UI Provider v1 API](../types/ui-provider-v1.md)
 
-**Note**: Linter fills the messages with `version` and `key` keys to make telling difference between them easy for UI providers.
+**Note**: Linter fills the messages with `version` and `key` keys to make telling the difference between `Message`s easy for UI providers.
 **Note**: UI Providers may receive all versions of messages the base linter can accept.
 
 ## package.json
@@ -11,12 +11,12 @@ Only the `providedServices` field is important in this manifest, the rest are ju
 
 ```json
 {
-  "name": "my-linter-ui",
+  "name": "linter-ui-example",
   "main": "index.js",
   "version": "0.0.0",
   "private": true,
   "description": "My Linter UI Package",
-  "keywords": ["linter-ui", "my"],
+  "keywords": ["linter-ui", "example"],
   "engines": {
     "atom": ">=1.4.0 <2.0.0"
   },
@@ -38,12 +38,14 @@ Only the `providedServices` field is important in this manifest, the rest are ju
 export function activate() {
   // Fill something here, optional
 }
+
 export function deactivate() {
   // Fill something here, optional
 }
+
 export function provideUI() {
-  const uiProvider = {
-    name: 'Alduin - The World Eater',
+  return {
+    name: 'Example',
     didBeginLinting(linter, filePath) {
       if (filePath === null) {
         console.log('Project scoped linter started', linter.name)
@@ -67,8 +69,5 @@ export function provideUI() {
       // Delete any registered panels and stuff here
     },
   }
-
-  return uiProvider
 }
-
 ```

@@ -35,15 +35,18 @@ Only the `consumedServices` field is important in this manifest, the rest are ju
 import { CompositeDisposable } from 'atom'
 
 let subscriptions
+
 export function activate() {
   subscriptions = new CompositeDisposable()
 }
+
 export function deactivate() {
   subscriptions.dispose()
 }
+
 export function consumeIndie(registerIndie) {
   const linter = registerIndie({
-    name: 'My Linter',
+    name: 'Example',
   })
   subscriptions.add(linter)
 
@@ -58,7 +61,7 @@ export function consumeIndie(registerIndie) {
       severity: 'info',
       location: {
         path: editorPath,
-        position: [[0, 0], [0, Infinity]],
+        position: [[0, 0], [0, 1]],
       },
       excerpt: `A random value is ${Math.random()}`,
       description: `### What is this?\nThis is a randomly generated value`
@@ -77,7 +80,7 @@ export function consumeIndie(registerIndie) {
       severity: 'info',
       location: {
         path: '/tmp/test-1.js',
-        position: [[5, 0], [5, Infinity]],
+        position: [[5, 0], [5, 1]],
       },
       excerpt: 'This is an error message on a file',
     },
@@ -85,11 +88,10 @@ export function consumeIndie(registerIndie) {
       severity: 'info',
       location: {
         path: '/tmp/test-3.js',
-        position: [[5, 0], [5, Infinity]],
+        position: [[5, 0], [5, 1]],
       },
-      excerpt: 'This is another error message on a file',
+      excerpt: 'This is an error message on a different file',
     }
   ])
 }
-
 ```

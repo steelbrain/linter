@@ -1,15 +1,16 @@
 # Upgrading to Indie Linter v2
 
-This upgrade guide assumes your package uses Indie Linter API v1 and Message API v1.
+This upgrade guide assumes your package current implements [Indie Linter API v1](https://github.com/steelbrain/linter/wiki/Linter-Indie-API) and [Message API v1](https://github.com/steelbrain/linter/wiki/Linter-API#messages).
 
 ## package.json
 
 You need to update the version in the manifest for `linter-indie` service from `1.x.x` to `2.0.0`.
 
-**Before:**
+### Before
 
-```
-... stuff above
+```cjson
+{
+  # stuff above
   "consumedServices": {
     "linter-indie": {
       "versions": {
@@ -17,13 +18,15 @@ You need to update the version in the manifest for `linter-indie` service from `
       }
     }
   },
-... stuff below
+  # stuff below
+}
 ```
 
-**After:**
+### After
 
-```
-... stuff above
+```cjson
+{
+  # stuff above
   "consumedServices": {
     "linter-indie": {
       "versions": {
@@ -31,45 +34,46 @@ You need to update the version in the manifest for `linter-indie` service from `
       }
     }
   },
-... stuff below
+  # stuff below
+}
 ```
 
 ## index.js
 
-You can restructure your package to use the new `NewIndieDelegate::setMessages` method that is per file, but to keep this guide simple we're gonna upgrade from `OldIndieDelegate::setMessages` to `NewIndieDelegate::setAllMessages` because these two methods are identical.
+You can restructure your package to use the new `IndieDelegate::setMessages` method that is per file, but to keep this guide simple we're gonna upgrade from `OldIndieDelegate::setMessages` to `IndieDelegate::setAllMessages` because these two methods are identical.
 
-Another thing to update is the type of the message objects.
+The Message format used also needs to be updated to match the new [Messages v2](../types/linter-message-v2.md) format.
 
-**Before:**
+### Before
 
 ```js
 export function consumeIndie(registry) {
   const indie = registry.register({
-    name: 'TSLint',
+    name: 'Example',
   })
 
   indie.setMessages([{
     type: 'Error',
     filePath: '/etc/passwd',
-    range: [[0, 0], [0, Infinity]],
+    range: [[0, 0], [0, 1]],
     text: 'MURICAA! F YEAH!',
   }])
 }
 ```
 
-**After:**
+### After
 
 ```js
 export function consumeIndie(registerIndie) {
   const indie = registerIndie({
-    name: 'TSLint',
+    name: 'Example',
   })
 
   indie.setAllMessages([{
     severity: 'error',
     location: {
       file: '/etc/passwd',
-      position: [[0, 0], [0, Infinity]]
+      position: [[0, 0], [0, 1]]
     },
     excerpt: 'MURICAA! F YEAH!',
   }])
