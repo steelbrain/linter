@@ -55,7 +55,7 @@ export function provideLinter() {
       return [{
         severity: 'info',
         location: {
-          path: editorPath,
+          file: editorPath,
           position: [[0, 0], [0, 1]],
         },
         excerpt: `A random value is ${Math.random()}`,
@@ -67,7 +67,7 @@ export function provideLinter() {
         resolve([{
           severity: 'info',
           location: {
-            path: editorPath,
+            file: editorPath,
             position: [[0, 0], [0, 1]],
           },
           excerpt: `A random value is ${Math.random()}`,

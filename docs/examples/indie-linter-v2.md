@@ -80,7 +80,7 @@ export function consumeIndie(registerIndie) {
     {
       severity: 'info',
       location: {
-        path: '/tmp/test-1.js',
+        file: '/tmp/test-1.js',
         position: [[5, 0], [5, 1]],
       },
       excerpt: 'This is an error message on a file',
@@ -88,7 +88,7 @@ export function consumeIndie(registerIndie) {
     {
       severity: 'info',
       location: {
-        path: '/tmp/test-3.js',
+        file: '/tmp/test-3.js',
         position: [[5, 0], [5, 1]],
       },
       excerpt: 'This is an error message on a different file',
