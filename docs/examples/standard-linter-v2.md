@@ -41,7 +41,7 @@ export function deactivate() {
 export function provideLinter() {
   const linterProvider = {
     scope: 'file', // or 'project'
-    lintOnFly: true, // or false
+    lintOnFly: false, // or true
     grammarScopes: ['source.js'],
     lint(textEditor) {
       const editorPath = textEditor.getPath()
