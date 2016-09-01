@@ -1,6 +1,6 @@
 # Linter Message v2
 
-This document describes the type of Linter Message v2 and tries to answer some of the FAQs
+This document describes the type of Linter Message v2. It's supported in [`Indie Linter v2`](indie-linter-v2.md) and [`Standard Linter v2`](standard-linter-v2.md).
 
 ## Type
 
@@ -41,7 +41,7 @@ type Message = {
 
 **Q**: Which properties are optional?
 
-**A**: The type above uses [`flowtype`](https://flowtype.org/), `?` along the key indicates that it's optional and can be falsy.
+**A**: The type above uses [`flowtype`](https://flowtype.org/), `?` with the key indicates that it's optional and can be falsy.
 
 **Q**: What type of value to add in `description`?
 
@@ -53,4 +53,4 @@ type Message = {
 
 **Q**: What's the purpose of the `title` in a solution?
 
-**A**: The title attribute of a solution is provided to the [Intentions](https://atom.io/packages/intentions) package, `Fix linter error` is the default one used at the time of writing this document.
+**A**: Depends on the UI provider, the default Linter UI uses this attribute as it's title for [Intentions](https://atom.io/packages/intentions) package, `Fix linter error` is the default one used at the time of writing this document.

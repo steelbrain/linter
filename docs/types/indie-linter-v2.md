@@ -33,4 +33,4 @@ class IndieDelegate {
 
 **Q**: What's the difference between `setMessages` and `setAllMessages`?
 
-**A**: `setMessages` only clears messages of the given file path and replaces them with the given value. `setAllMessages` clears all last messages and splits them into groups of filePaths itself.
+**A**: `setMessages` only clears messages of the given file path and replaces them with the given value. `setAllMessages` clears all last messages and uses the new given value.

@@ -18,7 +18,7 @@ type UI = {
 
 **Q**: Which versions of messages may the UI provider receive?
 
-**A**: The UI provider may receive all types of messages the base linter can accept depending on the providers.
+**A**: The UI provider may receive any version of messages the base linter can accept depending on the providers.
 
 **Q**: Under what circumstances is the `filePath` null for `onDid{Begin,Finish}Linting`?
 

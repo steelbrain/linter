@@ -36,7 +36,7 @@ You need to update the version in the manifest for `linter-indie` service from `
 
 ## index.js
 
-You can restructure your package to use the new `NewIndieRegistry::setMessages` method that is per file, but to keep this guide simple we're gonna upgrade from `OldIndieRegistry::setMessages` to `NewIndieRegistry::setAllMessages` because these two methods are identical.
+You can restructure your package to use the new `NewIndieDelegate::setMessages` method that is per file, but to keep this guide simple we're gonna upgrade from `OldIndieDelegate::setMessages` to `NewIndieDelegate::setAllMessages` because these two methods are identical.
 
 Another thing to update is the type of the message objects.
 

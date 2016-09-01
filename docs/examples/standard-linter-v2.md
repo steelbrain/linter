@@ -40,6 +40,7 @@ export function deactivate() {
 }
 export function provideLinter() {
   const linterProvider = {
+    name: 'Awesomeness',
     scope: 'file', // or 'project'
     lintOnFly: false, // or true
     grammarScopes: ['source.js'],
@@ -71,6 +72,7 @@ export function provideLinter() {
       })
     }
   }
+
   return linterProvider
 }
 ```

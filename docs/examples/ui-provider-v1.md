@@ -42,7 +42,7 @@ export function deactivate() {
   // Fill something here, optional
 }
 export function provideUI() {
-  return {
+  const uiProvider = {
     name: 'Alduin - The World Eater',
     didBeginLinting(linter, filePath) {
       if (filePath === null) {
@@ -67,6 +67,8 @@ export function provideUI() {
       // Delete any registered panels and stuff here
     },
   }
+
+  return uiProvider
 }
 
 ```
