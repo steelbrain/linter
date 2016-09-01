@@ -80,10 +80,10 @@ describe('IndieDelegate', function() {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
-      indieDelegate.setMessages(__filename, [getMessage()])
+      indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(1)
       indieDelegate.dispose()
-      indieDelegate.setMessages(__filename, [getMessage()])
+      indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(1)
     })
     it('does update if not disposed', function() {
@@ -92,10 +92,30 @@ describe('IndieDelegate', function() {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
-      indieDelegate.setMessages(__filename, [getMessage()])
+      indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(1)
-      indieDelegate.setMessages(__filename, [getMessage()])
+      indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(2)
+    })
+    it('cries if message has a different filePath', function() {
+      expect(function() {
+        indieDelegate.setMessages(__filename, [getMessage(__filename)])
+      }).not.toThrow()
+      expect(function() {
+        indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(__filename), getMessage(__filename)])
+      }).not.toThrow()
+      expect(function() {
+        indieDelegate.setMessages(__filename, [getMessage()])
+      }).toThrow('messages[0].location.file does not match the given filePath')
+      expect(function() {
+        indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage()])
+      }).toThrow('messages[1].location.file does not match the given filePath')
+      expect(function() {
+        indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(), getMessage(__filename)])
+      }).toThrow('messages[1].location.file does not match the given filePath')
+      expect(function() {
+        indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(__filename), getMessage()])
+      }).toThrow('messages[2].location.file does not match the given filePath')
     })
   })
   describe('::clearMessages', function() {
@@ -105,7 +125,7 @@ describe('IndieDelegate', function() {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
-      indieDelegate.setMessages(__filename, [getMessage()])
+      indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(1)
       indieDelegate.dispose()
       indieDelegate.clearMessages()
@@ -117,7 +137,7 @@ describe('IndieDelegate', function() {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
-      indieDelegate.setMessages(__filename, [getMessage()])
+      indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(1)
       indieDelegate.clearMessages()
       expect(timesUpdated).toBe(2)
