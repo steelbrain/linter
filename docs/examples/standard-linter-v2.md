@@ -1,6 +1,6 @@
 # Standard Linter v2
 
-The Standard Linter demoed below supports [Messages v2](../types/linter-message-v2.md) only.
+The [Standard Linter API v2](../types/standard-linter-v2.md) demoed below supports [Messages v2](../types/linter-message-v2.md) only.
 
 ## package.json
 

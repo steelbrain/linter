@@ -1,6 +1,6 @@
 # Indie Linter v2
 
-The Indie Linter demoed below supports [Messages v2](../types/linter-message-v2.md) only.
+The [Indie Linter API v2](../types/indie-linter-v2.md) demoed below supports [Messages v2](../types/linter-message-v2.md) only.
 
 ## package.json
 

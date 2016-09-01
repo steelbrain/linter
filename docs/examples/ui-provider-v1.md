@@ -1,6 +1,8 @@
 # UI Provider v1
 
-Linter fills the messages with `version` and `key` keys to make telling difference easy for UI providers.
+This example demonstrates usage of [UI Provider v1 API](../types/ui-provider-v1.md)
+
+**Note**: Linter fills the messages with `version` and `key` keys to make telling difference between them easy for UI providers.
 
 ## package.json
 
