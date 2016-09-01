@@ -313,6 +313,17 @@ describe('Validate', function() {
       validateMessages(5, false, 'Linter Result must be an Array')
       validateMessages(NaN, false, 'Linter Result must be an Array')
     })
+    it('cries if message.icon is present and invalid', function() {
+      validateMessages([{
+        icon: 5,
+      }], false, 'Message.icon must be a string')
+      validateMessages([{
+        icon: {},
+      }], false, 'Message.icon must be a string')
+      validateMessages([{
+        icon() {},
+      }], false, 'Message.icon must be a string')
+    })
     it('cries if message.location is invalid', function() {
       validateMessages([{
         location: 5,
