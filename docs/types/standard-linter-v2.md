@@ -40,3 +40,7 @@ But results of `project` scoped linters are not tied to any TextEditor and are n
 **Q**: How do I find out `grammarScopes`?
 
 **A**: grammarScopes is an array of scopes the linter should be invoked on, set your cursor in an editor and execute `Editor: Log Cursor Scope` command, you'll get something like `source.js` or `source.gfm`, that's what you should put in `grammarScopes`.
+
+**Q**: How do I make my provider trigger for all file types?
+
+**A**: Use `['*']` as the `grammarScopes` value, and it'll be triggered regardless of scope.

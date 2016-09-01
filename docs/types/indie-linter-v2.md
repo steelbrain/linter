@@ -4,7 +4,7 @@ This document describes the type of Indie Linter v2, see the [Example Usage](../
 
 ## Types
 
-There are two different types in the Indie Linter v2 API. `Indie` is the value you input to `IndieRegistry::register`, it's return value is `IndieDelegate`
+There are two different types in the Indie Linter v2 API. `Indie` is the value you input to `registerIndie` (the param of your `consumeIndie` function), it's return value is `IndieDelegate`
 
 ### Indie
 

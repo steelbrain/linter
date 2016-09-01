@@ -41,8 +41,8 @@ export function activate() {
 export function deactivate() {
   subscriptions.dispose()
 }
-export function consumeIndie() {
-  const linter = registry.register({
+export function consumeIndie(registerIndie) {
+  const linter = registerIndie({
     name: 'My Linter',
   })
   subscriptions.add(linter)
