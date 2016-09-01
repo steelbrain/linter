@@ -97,6 +97,26 @@ describe('IndieDelegate', function() {
       indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(2)
     })
+    it('cries if message has a different filePath', function() {
+      expect(function() {
+        indieDelegate.setMessages(__filename, [getMessage(__filename)])
+      }).not.toThrow()
+      expect(function() {
+        indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(__filename), getMessage(__filename)])
+      }).not.toThrow()
+      expect(function() {
+        indieDelegate.setMessages(__filename, [getMessage()])
+      }).toThrow('messages[0].location.file does not match the given filePath')
+      expect(function() {
+        indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage()])
+      }).toThrow('messages[1].location.file does not match the given filePath')
+      expect(function() {
+        indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(), getMessage(__filename)])
+      }).toThrow('messages[1].location.file does not match the given filePath')
+      expect(function() {
+        indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(__filename), getMessage()])
+      }).toThrow('messages[2].location.file does not match the given filePath')
+    })
   })
   describe('::clearMessages', function() {
     it('does not update if disposed', function() {
