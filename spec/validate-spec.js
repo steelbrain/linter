@@ -144,7 +144,7 @@ describe('Validate', function() {
     })
   })
   describe('::linter', function() {
-    function validateLinter(linter: any, expectedValue: boolean, message: string = '', version: number) {
+    function validateLinter(linter: any, expectedValue: boolean, message: string = '', version: 1 | 2) {
       expect(Validate.linter(linter, version)).toBe(expectedValue)
       if (!expectedValue) {
         expectNotification(message)
