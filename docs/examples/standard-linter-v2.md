@@ -1,10 +1,12 @@
 # Standard Linter v2
 
-The [Standard Linter API v2](../types/standard-linter-v2.md) demoed below supports [Messages v2](../types/linter-message-v2.md) only.
+The [Standard Linter API v2](../types/standard-linter-v2.md) demoed below
+supports [Messages v2](../types/linter-message-v2.md) only.
 
 ## package.json
 
-Only the `providedServices` field is important in this manifest, the rest are just for reference.
+Only the `providedServices` field is important in this manifest, the rest are
+just for reference.
 
 ```json
 {

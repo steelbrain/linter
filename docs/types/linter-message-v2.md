@@ -41,19 +41,26 @@ type Message = {
 
 **Q**: Which properties are optional?
 
-**A**: The type above uses [`flowtype`](https://flowtype.org/), `?` with the key indicates that it's optional and can be falsy.
+**A**: The type above uses [`flowtype`](https://flowtype.org/), `?` with the key
+indicates that it's optional and can be falsy.
 
 **Q**: What type of value to add in `description`?
 
-**A**: The description property uses Markdown, and also accepts a callback that resolves to a Markdown string. You can use it to provide in-editor description of the error using longer running tasks, such as making an HTTP request.
+**A**: The description property uses Markdown, and also accepts a callback that
+resolves to a Markdown string. You can use it to provide in-editor description
+of the error using longer running tasks, such as making an HTTP request.
 
 **Q**: What to do in the `apply` callback of a solution?
 
-**A**: That's entirely up to you, you can manipulate the editor text or do something else. If you just want to replace some simple text in the editor, use the other solution type that was specifically built for text replacement.
+**A**: That's entirely up to you, you can manipulate the editor text or do
+something else. If you just want to replace some simple text in the editor, use
+the other solution type that was specifically built for text replacement.
 
 **Q**: What's the purpose of the `title` in a solution?
 
-**A**: Depends on the UI provider, the default Linter UI uses this attribute as it's title for [Intentions](https://atom.io/packages/intentions) package, `Fix linter error` is the default one used at the time of writing this document.
+**A**: Depends on the UI provider, the default Linter UI uses this attribute as
+it's title for [Intentions](https://atom.io/packages/intentions) package,
+`Fix linter error` is the default one used at the time of writing this document.
 
 **Q**: What is `Point` and `Range`?
 

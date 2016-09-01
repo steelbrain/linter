@@ -4,7 +4,8 @@ This upgrade guide assumes your package current implements [Indie Linter API v1]
 
 ## package.json
 
-You need to update the version in the manifest for `linter-indie` service from `1.x.x` to `2.0.0`.
+You need to update the version in the manifest for `linter-indie` service from
+`1.x.x` to `2.0.0`.
 
 ### Before
 
@@ -40,7 +41,11 @@ You need to update the version in the manifest for `linter-indie` service from `
 
 ## index.js
 
-You can restructure your package to use the new `IndieDelegate::setMessages` method that is per file, but to keep this guide simple we're only going to upgrade from the old `IndieDelegate::setMessages` to `IndieDelegate::setAllMessages` because these two methods are functionally identical.
+You can restructure your package to use the new `IndieDelegate::setMessages`
+method that is per file, but to keep this guide simple we're only going to
+upgrade from the old `IndieDelegate::setMessages` to
+`IndieDelegate::setAllMessages` because these two methods are functionally
+identical.
 
 The Message format used also needs to be updated to match the new [Messages v2](../types/linter-message-v2.md) format.
 

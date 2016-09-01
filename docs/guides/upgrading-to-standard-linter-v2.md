@@ -4,7 +4,8 @@ This upgrade guide assumes your package currently implements [Standard Linter AP
 
 ## package.json
 
-You need to update the version in the manifest for `linter` service from `1.x.x` to `2.0.0`.
+You need to update the version in the manifest for `linter` service from
+`1.x.x` to `2.0.0`.
 
 ### Before
 
@@ -40,17 +41,30 @@ You need to update the version in the manifest for `linter` service from `1.x.x`
 
 ## index.js
 
-The new Message format is quite different from the v1 format, although all the essential elements are still there. The changes in required information are:
+The new Message format is quite different from the v1 format, although all the
+essential elements are still there. The changes in required information are:
 
-* `type` is no longer allowed and...
-* `severity` is now mandatory
-* `text` is renamed to `excerpt`
-* `html` is no longer allowed, similar functionality is available as `description` which is either a string or a function (Promise) returning a string which is then rendered as Markdown.
-* `name` is no longer allowed
-* `filePath` and `range` have been combined into a mandatory `location` property
-* `trace` no longer exists, the functionality has been split into `source` (for the `location` equivalent) and `reference` for the `text` equivalent.
-* `fix` has been replaced with `solutions`, which is far more flexible.
-* `selected` is no longer allowed
+*   `type` is no longer allowed and...
+
+*   `severity` is now mandatory
+
+*   `text` is renamed to `excerpt`
+
+*   `html` is no longer allowed, similar functionality is available as
+    `description` which is either a string or a function (Promise) returning a
+    string which is then rendered as Markdown.
+
+*   `name` is no longer allowed
+
+*   `filePath` and `range` have been combined into a mandatory `location`
+    property
+
+*   `trace` no longer exists, the functionality has been split into `source`
+    (for the `location` equivalent) and `reference` for the `text` equivalent.
+
+*   `fix` has been replaced with `solutions`, which is far more flexible.
+
+*   `selected` is no longer allowed
 
 As for the provider itself, the `name` attribute is now mandatory.
 

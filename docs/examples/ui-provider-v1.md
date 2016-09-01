@@ -2,12 +2,15 @@
 
 This example demonstrates usage of [UI Provider v1 API](../types/ui-provider-v1.md)
 
-**Note**: Linter fills the messages with `version` and `key` keys to make telling the difference between `Message`s easy for UI providers.
-**Note**: UI Providers may receive all versions of messages the base linter can accept.
+**Note**: Linter fills the messages with `version` and `key` keys to make
+telling the difference between `Message`s easy for UI providers.
+**Note**: UI Providers may receive all versions of messages the base linter can
+accept.
 
 ## package.json
 
-Only the `providedServices` field is important in this manifest, the rest are just for reference.
+Only the `providedServices` field is important in this manifest, the rest are
+just for reference.
 
 ```json
 {
