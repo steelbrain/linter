@@ -144,125 +144,187 @@ describe('Validate', function() {
     })
   })
   describe('::linter', function() {
-    function validateLinter(linter: any, expectedValue: boolean, message: string = '') {
-      expect(Validate.linter(linter)).toBe(expectedValue)
+    function validateLinter(linter: any, expectedValue: boolean, message: string = '', version: number) {
+      expect(Validate.linter(linter, version)).toBe(expectedValue)
       if (!expectedValue) {
         expectNotification(message)
       }
     }
 
     it('cries if params is not an object', function() {
-      validateLinter(null, false, 'Linter must be an object')
-      validateLinter(5, false, 'Linter must be an object')
-      validateLinter(NaN, false, 'Linter must be an object')
-      validateLinter(undefined, false, 'Linter must be an object')
+      validateLinter(null, false, 'Linter must be an object', 1)
+      validateLinter(5, false, 'Linter must be an object', 1)
+      validateLinter(NaN, false, 'Linter must be an object', 1)
+      validateLinter(undefined, false, 'Linter must be an object', 1)
     })
     it('cries if linter.name is not a string', function() {
       validateLinter({
         name: undefined,
-      }, false, 'Linter.name must be a string')
+      }, false, 'Linter.name must be a string', 1)
       validateLinter({
         name: NaN,
-      }, false, 'Linter.name must be a string')
+      }, false, 'Linter.name must be a string', 1)
       validateLinter({
         name: null,
-      }, false, 'Linter.name must be a string')
+      }, false, 'Linter.name must be a string', 1)
       validateLinter({
         name: 5,
-      }, false, 'Linter.name must be a string')
+      }, false, 'Linter.name must be a string', 1)
     })
     it('cries if linter.scope is not valid', function() {
       validateLinter({
         name: 'Linter',
         scope: 5,
-      }, false, "Linter.scope must be either 'file' or 'project'")
+      }, false, "Linter.scope must be either 'file' or 'project'", 1)
       validateLinter({
         name: 'Linter',
         scope: NaN,
-      }, false, "Linter.scope must be either 'file' or 'project'")
+      }, false, "Linter.scope must be either 'file' or 'project'", 1)
       validateLinter({
         name: 'Linter',
         scope: null,
-      }, false, "Linter.scope must be either 'file' or 'project'")
+      }, false, "Linter.scope must be either 'file' or 'project'", 1)
       validateLinter({
         name: 'Linter',
         scope: undefined,
-      }, false, "Linter.scope must be either 'file' or 'project'")
+      }, false, "Linter.scope must be either 'file' or 'project'", 1)
       validateLinter({
         name: 'Linter',
         scope: 'something',
-      }, false, "Linter.scope must be either 'file' or 'project'")
+      }, false, "Linter.scope must be either 'file' or 'project'", 1)
       validateLinter({
         name: 'Linter',
         scope: 'fileistic',
-      }, false, "Linter.scope must be either 'file' or 'project'")
+      }, false, "Linter.scope must be either 'file' or 'project'", 1)
+    })
+    it('cries if v is 1 and linter.lintOnFly is not boolean', function() {
+      validateLinter({
+        name: 'Linter',
+        scope: 'file',
+        lintOnFly: {},
+      }, false, 'Linter.lintOnFly must be a boolean', 1)
+      validateLinter({
+        name: 'Linter',
+        scope: 'file',
+        lintOnFly: [],
+      }, false, 'Linter.lintOnFly must be a boolean', 1)
+      validateLinter({
+        name: 'Linter',
+        scope: 'file',
+        lintOnFly: '',
+      }, false, 'Linter.lintOnFly must be a boolean', 1)
+      validateLinter({
+        name: 'Linter',
+        scope: 'file',
+        lintOnFly() {},
+      }, false, 'Linter.lintOnFly must be a boolean', 1)
+    })
+    it('cries if v is 2 and linter.lintsOnChange is not boolean', function() {
+      validateLinter({
+        name: 'Linter',
+        scope: 'file',
+        lintsOnChange: {},
+      }, false, 'Linter.lintsOnChange must be a boolean', 2)
+      validateLinter({
+        name: 'Linter',
+        scope: 'file',
+        lintsOnChange: [],
+      }, false, 'Linter.lintsOnChange must be a boolean', 2)
+      validateLinter({
+        name: 'Linter',
+        scope: 'file',
+        lintsOnChange: '',
+      }, false, 'Linter.lintsOnChange must be a boolean', 2)
+      validateLinter({
+        name: 'Linter',
+        scope: 'file',
+        lintsOnChange() {},
+      }, false, 'Linter.lintsOnChange must be a boolean', 2)
     })
     it('cries if linter.grammarScopes is not an array', function() {
       validateLinter({
         name: 'Linter',
         scope: 'file',
+        lintOnFly: false,
         grammarScopes: undefined,
-      }, false, 'Linter.grammarScopes must be an Array')
+      }, false, 'Linter.grammarScopes must be an Array', 1)
       validateLinter({
         name: 'Linter',
         scope: 'file',
+        lintOnFly: false,
         grammarScopes: null,
-      }, false, 'Linter.grammarScopes must be an Array')
+      }, false, 'Linter.grammarScopes must be an Array', 1)
       validateLinter({
         name: 'Linter',
         scope: 'file',
+        lintOnFly: false,
         grammarScopes: 5,
-      }, false, 'Linter.grammarScopes must be an Array')
+      }, false, 'Linter.grammarScopes must be an Array', 1)
       validateLinter({
         name: 'Linter',
         scope: 'file',
+        lintOnFly: false,
         grammarScopes: NaN,
-      }, false, 'Linter.grammarScopes must be an Array')
+      }, false, 'Linter.grammarScopes must be an Array', 1)
       validateLinter({
         name: 'Linter',
         scope: 'file',
+        lintOnFly: false,
         grammarScopes: {},
-      }, false, 'Linter.grammarScopes must be an Array')
+      }, false, 'Linter.grammarScopes must be an Array', 1)
     })
     it('cries if linter.lint is not a function', function() {
       validateLinter({
         name: 'Linter',
         scope: 'file',
+        lintOnFly: false,
         grammarScopes: ['source.js'],
         lint: undefined,
-      }, false, 'Linter.lint must be a function')
+      }, false, 'Linter.lint must be a function', 1)
       validateLinter({
         name: 'Linter',
         scope: 'file',
+        lintOnFly: false,
         grammarScopes: ['source.js'],
         lint: 5,
-      }, false, 'Linter.lint must be a function')
+      }, false, 'Linter.lint must be a function', 1)
       validateLinter({
         name: 'Linter',
         scope: 'file',
+        lintOnFly: false,
         grammarScopes: ['source.js'],
         lint: NaN,
-      }, false, 'Linter.lint must be a function')
+      }, false, 'Linter.lint must be a function', 1)
       validateLinter({
         name: 'Linter',
         scope: 'file',
+        lintOnFly: false,
         grammarScopes: ['source.js'],
         lint: {},
-      }, false, 'Linter.lint must be a function')
+      }, false, 'Linter.lint must be a function', 1)
       validateLinter({
         name: 'Linter',
         scope: 'file',
+        lintOnFly: false,
         grammarScopes: ['source.js'],
         lint: 'something',
-      }, false, 'Linter.lint must be a function')
+      }, false, 'Linter.lint must be a function', 1)
     })
     it('does not cry if everything is valid', function() {
       validateLinter({
         name: 'Linter',
         scope: 'file',
+        lintOnFly: false,
         grammarScopes: ['source.js'],
         lint() { },
-      }, true)
+      }, true, '', 1)
+      validateLinter({
+        name: 'Linter',
+        scope: 'file',
+        lintsOnChange: false,
+        grammarScopes: ['source.js'],
+        lint() { },
+      }, true, '', 2)
     })
   })
   describe('::indie', function() {

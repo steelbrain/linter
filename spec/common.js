@@ -7,6 +7,7 @@ export function getLinter(): Object {
   return {
     name: 'Some Linter',
     scope: 'project',
+    lintsOnChange: false,
     grammarScopes: ['source.js'],
     lint() {
       return []

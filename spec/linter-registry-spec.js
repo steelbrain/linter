@@ -52,6 +52,7 @@ describe('LinterRegistry', function() {
       {
         // scenario: 1
         const linter = getLinter()
+        linter.lintOnFly = linter.lintsOnChange
         linterRegistry.addLinter(linter, true)
         expect(linter[Helpers.$version]).toBe(1)
       }
