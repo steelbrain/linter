@@ -80,10 +80,10 @@ describe('IndieDelegate', function() {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
-      indieDelegate.setMessages(__filename, [getMessage()])
+      indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(1)
       indieDelegate.dispose()
-      indieDelegate.setMessages(__filename, [getMessage()])
+      indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(1)
     })
     it('does update if not disposed', function() {
@@ -92,9 +92,9 @@ describe('IndieDelegate', function() {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
-      indieDelegate.setMessages(__filename, [getMessage()])
+      indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(1)
-      indieDelegate.setMessages(__filename, [getMessage()])
+      indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(2)
     })
   })
@@ -105,7 +105,7 @@ describe('IndieDelegate', function() {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
-      indieDelegate.setMessages(__filename, [getMessage()])
+      indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(1)
       indieDelegate.dispose()
       indieDelegate.clearMessages()
@@ -117,7 +117,7 @@ describe('IndieDelegate', function() {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
-      indieDelegate.setMessages(__filename, [getMessage()])
+      indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(1)
       indieDelegate.clearMessages()
       expect(timesUpdated).toBe(2)
