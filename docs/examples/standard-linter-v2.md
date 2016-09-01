@@ -4,7 +4,7 @@ The [Standard Linter API v2](../types/standard-linter-v2.md) demoed below suppor
 
 ## package.json
 
-Only the `providedServices` field is important in this manifest, the rest are just for reference
+Only the `providedServices` field is important in this manifest, the rest are just for reference.
 
 ```json
 {
@@ -49,7 +49,7 @@ export function provideLinter() {
     lint(textEditor) {
       const editorPath = textEditor.getPath()
 
-      // Do something sync and
+      // Do something sync
       return [{
         severity: 'info',
         location: {

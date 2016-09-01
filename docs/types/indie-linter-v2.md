@@ -4,7 +4,7 @@ This document describes the type of Indie Linter v2, for an example in how to im
 
 ## Types
 
-There are two different types in the Indie Linter v2 API. `Indie` is the value you input to `registerIndie` (the param of your `consumeIndie` function), it's return value is `IndieDelegate`
+There are two different types in the Indie Linter v2 API. `Indie` is the value you input to `registerIndie` (the param of your `consumeIndie` function), it's return value is an `IndieDelegate`.
 
 ### Indie
 
@@ -36,5 +36,4 @@ class IndieDelegate {
 **A**:
 
 * `setMessages` replaces the last stored messages for the given `filePath` for your delegate. All messages provided must have the same `location.path` as the given `filePath`.
-
 * `setAllMessages` replaces the list of messages Linter has stored for your provider. Any existing messages, regardless of the file they are associated with, are discarded.

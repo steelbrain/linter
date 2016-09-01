@@ -40,7 +40,7 @@ You need to update the version in the manifest for `linter-indie` service from `
 
 ## index.js
 
-You can restructure your package to use the new `IndieDelegate::setMessages` method that is per file, but to keep this guide simple we're gonna upgrade from `OldIndieDelegate::setMessages` to `IndieDelegate::setAllMessages` because these two methods are identical.
+You can restructure your package to use the new `IndieDelegate::setMessages` method that is per file, but to keep this guide simple we're only going to upgrade from the old `IndieDelegate::setMessages` to `IndieDelegate::setAllMessages` because these two methods are functionally identical.
 
 The Message format used also needs to be updated to match the new [Messages v2](../types/linter-message-v2.md) format.
 

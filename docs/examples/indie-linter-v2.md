@@ -4,7 +4,7 @@ The [Indie Linter API v2](../types/indie-linter-v2.md) demoed below supports [Me
 
 ## package.json
 
-Only the `consumedServices` field is important in this manifest, the rest are just for reference
+Only the `consumedServices` field is important in this manifest, the rest are just for reference.
 
 ```json
 {

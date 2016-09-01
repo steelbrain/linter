@@ -22,7 +22,7 @@ type UI = {
 
 **Q**: Under what circumstances is the `filePath` null for `onDid{Begin,Finish}Linting`?
 
-**A**: It's null for editors that are not tied to a specific editor (ie project-scoped ones).
+**A**: It's null for editors that are not tied to a specific editor (i.e. project-scoped ones).
 
 **Q**: What is the proper place to run the activation logic?
 

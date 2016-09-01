@@ -7,7 +7,7 @@ This example demonstrates usage of [UI Provider v1 API](../types/ui-provider-v1.
 
 ## package.json
 
-Only the `providedServices` field is important in this manifest, the rest are just for reference
+Only the `providedServices` field is important in this manifest, the rest are just for reference.
 
 ```json
 {
@@ -30,7 +30,7 @@ Only the `providedServices` field is important in this manifest, the rest are ju
 }
 ```
 
-# index.js
+## index.js
 
 ```js
 'use babel'
@@ -46,6 +46,7 @@ export function deactivate() {
 export function provideUI() {
   return {
     name: 'Example',
+
     didBeginLinting(linter, filePath) {
       if (filePath === null) {
         console.log('Project scoped linter started', linter.name)
@@ -53,6 +54,7 @@ export function provideUI() {
         console.log('File scoped linter started', linter.name, 'on', filePath)
       }
     },
+
     didFinishLinting(linter, filePath) {
       if (filePath === null) {
         console.log('Project scoped linter finished', linter.name)
@@ -60,11 +62,13 @@ export function provideUI() {
         console.log('File scoped linter finished', linter.name, 'on', filePath)
       }
     },
+
     render({ added, removed, messages }) {
       console.log('added messages', added.length)
       console.log('removed messages', removed.length)
       console.log('total messages', messages.length)
     },
+
     dispose() {
       // Delete any registered panels and stuff here
     },

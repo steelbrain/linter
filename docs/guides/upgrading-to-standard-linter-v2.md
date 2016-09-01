@@ -1,6 +1,6 @@
 # Upgrading to Standard Linter v2
 
-This upgrade guide assumes your package current implements [Standard Linter API v1](https://github.com/steelbrain/linter/wiki/Linter-API) and [Message API v1](https://github.com/steelbrain/linter/wiki/Linter-API#messages).
+This upgrade guide assumes your package currently implements [Standard Linter API v1](https://github.com/steelbrain/linter/wiki/Linter-API) and [Message API v1](https://github.com/steelbrain/linter/wiki/Linter-API#messages).
 
 ## package.json
 
@@ -40,7 +40,19 @@ You need to update the version in the manifest for `linter` service from `1.x.x`
 
 ## index.js
 
-In the newer version, the `name` property is now mandatory. Providers must also return Message v2 instead of Message v1.
+The new Message format is quite different from the v1 format, although all the essential elements are still there. The changes in required information are:
+
+* `type` is no longer allowed and...
+* `severity` is now mandatory
+* `text` is renamed to `excerpt`
+* `html` is no longer allowed, similar functionality is available as `description` which is either a string or a function (Promise) returning a string which is then rendered as Markdown.
+* `name` is no longer allowed
+* `filePath` and `range` have been combined into a mandatory `location` property
+* `trace` no longer exists, the functionality has been split into `source` (for the `location` equivalent) and `reference` for the `text` equivalent.
+* `fix` has been replaced with `solutions`, which is far more flexible.
+* `selected` is no longer allowed
+
+As for the provider itself, the `name` attribute is now mandatory.
 
 ### Before
 
