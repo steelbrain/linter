@@ -97,7 +97,7 @@ export function provideLinter() {
   const linter = {
     name: 'Example',
     scope: 'file',
-    lintOnFly: false,
+    lintsOnChange: false,
     grammarScopes: ['source.js'],
     lint() {
       return [{
