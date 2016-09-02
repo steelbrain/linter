@@ -66,7 +66,7 @@ essential elements are still there. The changes in required information are:
 
 *   `selected` is no longer allowed
 
-As for the provider itself, the `name` attribute is now mandatory.
+As for the provider itself, `lintOnFly` is now `lintsOnChange` and the `name` attribute is now mandatory.
 
 ### Before
 
