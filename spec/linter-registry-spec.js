@@ -285,7 +285,7 @@ describe('LinterRegistry', function() {
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(2)
     })
-    it('cries if response is not array and is non-null', async function() {
+    it('shows error notification if response is not array and is non-null', async function() {
       let promise
       let timesBegan = 0
       let timesUpdated = 0

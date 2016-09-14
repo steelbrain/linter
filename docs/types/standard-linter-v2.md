@@ -70,4 +70,4 @@ regardless of the scope of the current file.
 
 **Q**: How do I make linter use last messages for my provider?
 
-**A**: Return `null` from your provider, returning `false` or `undefined` will result in an error.
+**A**: Return `null` from your provider to make it re-use last messages.
