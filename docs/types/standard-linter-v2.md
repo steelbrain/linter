@@ -67,3 +67,7 @@ array.
 
 **A**: Use `['*']` as the `grammarScopes` value, and it'll be triggered
 regardless of the scope of the current file.
+
+**Q**: How do I make linter use last messages for my provider?
+
+**A**: Return `null` from your provider to make it re-use last messages.
