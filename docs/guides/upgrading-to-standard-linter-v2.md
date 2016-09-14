@@ -114,3 +114,7 @@ export function provideLinter() {
   return linter
 }
 ```
+
+## Other Changes
+
+- In Linter 1.x, you could return any non-Array value to make linter re-use last results. In Linter 2.x, you must return either an Array or `null`, returning `false` or `undefined` will be considered an error.
