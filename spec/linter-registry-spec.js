@@ -244,7 +244,8 @@ describe('LinterRegistry', function() {
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(1)
     })
-    it('updates even if non-array response is returned', async function() {
+    it('does not update if null is returned', async function() {
+      let promise
       let timesBegan = 0
       let timesUpdated = 0
       let timesFinished = 0
@@ -262,14 +263,97 @@ describe('LinterRegistry', function() {
       const linter = getLinter()
       const editor = atom.workspace.getActiveTextEditor()
       linterRegistry.addLinter(linter)
-      linter.lint = function() { return false }
-      const promise = linterRegistry.lint({ editor, onChange: false })
+      linter.lint = function() {
+        if (timesBegan === 2) {
+          return null
+        }
+        return []
+      }
+
+      promise = linterRegistry.lint({ editor, onChange: false })
       expect(timesBegan).toBe(1)
       expect(timesUpdated).toBe(0)
       expect(timesFinished).toBe(0)
       expect(await promise).toBe(true)
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(1)
+      promise = linterRegistry.lint({ editor, onChange: false })
+      expect(timesBegan).toBe(2)
+      expect(timesUpdated).toBe(1)
+      expect(timesFinished).toBe(1)
+      expect(await promise).toBe(true)
+      expect(timesUpdated).toBe(1)
+      expect(timesFinished).toBe(2)
+    })
+    it('cries if response is not array and is non-null', async function() {
+      let promise
+      let timesBegan = 0
+      let timesUpdated = 0
+      let timesFinished = 0
+
+      linterRegistry.onDidBeginLinting(function() {
+        timesBegan++
+      })
+      linterRegistry.onDidFinishLinting(function() {
+        timesFinished++
+      })
+      linterRegistry.onDidUpdateMessages(function() {
+        timesUpdated++
+      })
+
+      const linter = getLinter()
+      const editor = atom.workspace.getActiveTextEditor()
+      linterRegistry.addLinter(linter)
+      linter.lint = function() {
+        if (timesBegan === 2) {
+          return false
+        } else if (timesBegan === 3) {
+          return null
+        } else if (timesBegan === 4) {
+          return undefined
+        }
+        return []
+      }
+
+      // with array
+      promise = linterRegistry.lint({ editor, onChange: false })
+      expect(timesBegan).toBe(1)
+      expect(timesUpdated).toBe(0)
+      expect(timesFinished).toBe(0)
+      expect(await promise).toBe(true)
+      expect(timesUpdated).toBe(1)
+      expect(timesFinished).toBe(1)
+      expect(atom.notifications.getNotifications().length).toBe(0)
+
+      // with false
+      promise = linterRegistry.lint({ editor, onChange: false })
+      expect(timesBegan).toBe(2)
+      expect(timesUpdated).toBe(1)
+      expect(timesFinished).toBe(1)
+      expect(await promise).toBe(true)
+      expect(timesUpdated).toBe(1)
+      expect(timesFinished).toBe(2)
+      expect(atom.notifications.getNotifications().length).toBe(1)
+
+      // with null
+      promise = linterRegistry.lint({ editor, onChange: false })
+      expect(timesBegan).toBe(3)
+      expect(timesUpdated).toBe(1)
+      expect(timesFinished).toBe(2)
+      expect(await promise).toBe(true)
+      expect(timesUpdated).toBe(1)
+      expect(timesFinished).toBe(3)
+      expect(atom.notifications.getNotifications().length).toBe(1)
+
+      // with undefined
+      promise = linterRegistry.lint({ editor, onChange: false })
+      expect(timesBegan).toBe(4)
+      expect(timesUpdated).toBe(1)
+      expect(timesFinished).toBe(3)
+      expect(await promise).toBe(true)
+      expect(timesUpdated).toBe(1)
+      expect(timesFinished).toBe(4)
+      expect(atom.notifications.getNotifications().length).toBe(2)
     })
     it('triggers the finish event even when the provider crashes', async function() {
       let timesBegan = 0
