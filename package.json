@@ -51,6 +51,11 @@
     "linter-ui-default"
   ],
   "configSchema": {
+    "installRecommendedPackages": {
+      "description": "Installs recommended packages on startup",
+      "type": "boolean",
+      "default": true
+    },
     "lintOnFly": {
       "title": "Lint As You Type",
       "description": "Lint files while typing, without the need to save",
