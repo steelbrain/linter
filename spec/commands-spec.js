@@ -3,6 +3,7 @@
 import Path from 'path'
 import { it } from 'jasmine-fix'
 import Commands from '../lib/commands'
+
 let commands
 
 describe('Linter Commands', function() {
