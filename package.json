@@ -62,16 +62,16 @@
       "default": true,
       "order": 2
     },
-    "lintOnFly": {
-      "title": "Lint As You Type",
-      "description": "Lint files while typing, without the need to save",
+    "lintOnChange": {
+      "title": "Lint on Change",
+      "description": "Lint files while typing, without the need to save (only for supported providers)",
       "type": "boolean",
       "default": true,
       "order": 3
     },
-    "lintOnFlyInterval": {
-      "title": "Lint As You Type Interval",
-      "description": "Interval at which providers are triggered as you type (in ms)",
+    "lintOnChangeInterval": {
+      "title": "Lint on Change Interval",
+      "description": "Interval at which linting is done as you type (in ms)",
       "type": "integer",
       "default": 300,
       "order": 4
