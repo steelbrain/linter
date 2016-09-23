@@ -86,12 +86,12 @@ describe('LinterRegistry', function() {
     })
     it('does not lint onChange if onChange is disabled by config', async function() {
       try {
-        atom.config.set('linter.lintOnFly', false)
+        atom.config.set('linter.lintOnChange', false)
         await atom.workspace.open(getFixturesPath('file.txt'))
         const editor = atom.workspace.getActiveTextEditor()
         expect(await linterRegistry.lint({ editor, onChange: true })).toBe(false)
       } finally {
-        atom.config.set('linter.lintOnFly', true)
+        atom.config.set('linter.lintOnChange', true)
         atom.workspace.destroyActivePane()
       }
     })
