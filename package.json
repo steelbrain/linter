@@ -54,28 +54,33 @@
     "installRecommendedPackages": {
       "description": "Installs recommended packages on startup",
       "type": "boolean",
-      "default": true
+      "default": true,
+      "order": 1
+    },
+    "lintPreviewTabs": {
+      "type": "boolean",
+      "default": true,
+      "order": 2
     },
     "lintOnFly": {
       "title": "Lint As You Type",
       "description": "Lint files while typing, without the need to save",
       "type": "boolean",
-      "default": true
+      "default": true,
+      "order": 3
     },
     "lintOnFlyInterval": {
       "title": "Lint As You Type Interval",
       "description": "Interval at which providers are triggered as you type (in ms)",
       "type": "integer",
-      "default": 300
+      "default": 300,
+      "order": 4
     },
     "ignoreGlob": {
       "title": "Ignore files matching this Glob",
       "type": "string",
-      "default": "**/*.min.{js,css}"
-    },
-    "lintPreviewTabs": {
-      "type": "boolean",
-      "default": true
+      "default": "**/*.min.{js,css}",
+      "order": 5
     }
   }
 }
