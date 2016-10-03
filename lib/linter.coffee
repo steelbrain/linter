@@ -23,7 +23,7 @@ class Linter
     @indieLinters = new IndieRegistry()
     @editors = new EditorRegistry
     @messages = new MessageRegistry()
-    @views = new LinterViews(state.scope, @editors)
+    @views = new LinterViews(@state.scope, @editors)
     @commands = new Commands(this)
 
     @subscriptions = new CompositeDisposable(@views, @editors, @linters, @messages, @commands, @indieLinters)
