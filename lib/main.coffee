@@ -1,5 +1,5 @@
 {Disposable} = require('atom')
-module.exports =
+module.exports = Linter =
   instance: null
   config:
     lintOnFly:
@@ -126,12 +126,13 @@ module.exports =
       default: 'Left'
       order: 5
 
-  activate: (@state) ->
+  activate: (state) ->
+    Linter.state = state
     LinterPlus = require('./linter.coffee')
     @instance = new LinterPlus state
 
   serialize: ->
-    @state
+    Linter.state
 
   consumeLinter: (linters) ->
     unless linters instanceof Array
