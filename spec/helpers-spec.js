@@ -279,6 +279,14 @@ describe('Helpers', function() {
         expect(typeof message.severity).toBe('string')
         expect(message.severity).toBe('warning')
       })
+      it('adds info to traces', function() {
+        const message = getMessageLegacy(false)
+        message.type = 'Trace'
+        expect(typeof message.severity).toBe('undefined')
+        Helpers.normalizeMessagesLegacy('Some Linter', [message])
+        expect(typeof message.severity).toBe('string')
+        expect(message.severity).toBe('info')
+      })
       it('adds error for anything else', function() {
         {
           const message = getMessageLegacy(false)
@@ -313,6 +321,17 @@ describe('Helpers', function() {
       Helpers.normalizeMessagesLegacy('Some Linter', [message])
       expect(Array.isArray(message.fix.range)).toBe(false)
       expect(message.fix.range.constructor.name).toBe('Range')
+    })
+    it('processes traces on messages', function() {
+      const message = getMessageLegacy(false)
+      message.type = 'asdasd'
+      const trace = getMessageLegacy(false)
+      trace.type = 'Trace'
+      message.trace = [trace]
+      expect(typeof trace.severity).toBe('undefined')
+      Helpers.normalizeMessagesLegacy('Some Linter', [message])
+      expect(typeof trace.severity).toBe('string')
+      expect(trace.severity).toBe('info')
     })
   })
 })
