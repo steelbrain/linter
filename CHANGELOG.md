@@ -1,3 +1,7 @@
+## 1.11.19
+
+- Make linter css future safe for v1.13 compatibility
+
 ## 1.11.16
 
 - Follow up to last fix

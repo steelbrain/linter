@@ -128,7 +128,7 @@ linter-bottom-tab {
   }
 }
 
-atom-text-editor::shadow .linter-row {
+atom-text-editor.editor .linter-row {
   /* Take up the full allowed width */
   left: 0;
   right: 0;
@@ -138,14 +138,14 @@ atom-text-editor::shadow .linter-row {
   justify-content: center;
 }
 
-atom-text-editor::shadow .linter-gutter {
-  height: 0.5em !important;
+atom-text-editor.editor .linter-gutter {
   width: 0.5em;
+  margin-top: 50%;
   border-radius: 50%;
 }
 
 // Styling Error Types
-atom-text-editor::shadow .linter-highlight, .linter-highlight{
+atom-text-editor.editor .linter-highlight, .linter-highlight{
   &.badge {
     border-radius: @component-border-radius;
     overflow: hidden;
