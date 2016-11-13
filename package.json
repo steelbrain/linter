@@ -10,7 +10,7 @@
     "lint": "coffeelint lib && eslint lib"
   },
   "engines": {
-    "atom": ">=0.174.0 <2.0.0"
+    "atom": ">=1.13.0 <2.0.0"
   },
   "consumedServices": {
     "linter": {
