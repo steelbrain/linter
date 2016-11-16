@@ -1,3 +1,7 @@
+## 1.11.20
+
+- Fix a bug in linter css for Atom v1.13+
+
 ## 1.11.19
 
 - Make linter css future safe for v1.13 compatibility
