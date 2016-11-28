@@ -1,6 +1,6 @@
 # Indie Linter v2
 
-The [Indie Linter API v2](../types/indie-linter-v2.md) demoed below supports [Messages v2](../types/linter-message-v2.md) only.
+The [Indie Linter API v2][] demoed below supports [Messages v2][] only.
 
 ## package.json
 
@@ -99,3 +99,6 @@ export function consumeIndie(registerIndie) {
   linter.clearMessages()
 }
 ```
+
+[Indie Linter API v2]: ../types/indie-linter-v2.md
+[Messages v2]: ../types/linter-message-v2.md

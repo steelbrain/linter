@@ -1,7 +1,6 @@
 # Standard Linter v2
 
-The [Standard Linter API v2](../types/standard-linter-v2.md) demoed below
-supports [Messages v2](../types/linter-message-v2.md) only.
+The [Standard Linter API v2][] demoed below supports [Messages v2][] only.
 
 ## package.json
 
@@ -78,3 +77,6 @@ export function provideLinter() {
   }
 }
 ```
+
+[Standard Linter API v2]: ../types/standard-linter-v2.md
+[Messages v2]: ../types/linter-message-v2.md

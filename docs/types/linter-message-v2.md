@@ -1,6 +1,7 @@
 # Linter Message v2
 
-This document describes the type of Linter Message v2. It's supported in [`Indie Linter v2`](indie-linter-v2.md) and [`Standard Linter v2`](standard-linter-v2.md).
+This document describes the type of Linter Message v2. It's supported in
+[`Indie Linter v2`][] and [`Standard Linter v2`][].
 
 ## Type
 
@@ -41,7 +42,7 @@ type Message = {
 
 **Q**: Which properties are optional?
 
-**A**: The type above uses [`flowtype`](https://flowtype.org/), `?` with the key
+**A**: The type above uses [`flowtype`][], `?` with the key
 indicates that it's optional and can be falsy.
 
 **Q**: What type of value to add in `description`?
@@ -59,9 +60,16 @@ the other solution type that was specifically built for text replacement.
 **Q**: What's the purpose of the `title` in a solution?
 
 **A**: Depends on the UI provider, the default Linter UI uses this attribute as
-it's title for [Intentions](https://atom.io/packages/intentions) package,
+it's title for [Intentions][] package,
 `Fix linter error` is the default one used at the time of writing this document.
 
 **Q**: What is `Point` and `Range`?
 
-**A**: These are references to built in [`Point`](https://atom.io/docs/api/latest/Point) and [`Range`](https://atom.io/docs/api/latest/Range) classes.
+**A**: These are references to built in [`Point`][] and [`Range`][] classes.
+
+[`Indie Linter v2`]: indie-linter-v2.md
+[`Standard Linter v2`]: standard-linter-v2.md
+[`flowtype`]: https://flowtype.org/
+[Intentions]: https://atom.io/packages/intentions
+[`Point`]: https://atom.io/docs/api/latest/Point
+[`Range`]: https://atom.io/docs/api/latest/Range

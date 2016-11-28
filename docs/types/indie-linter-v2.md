@@ -1,7 +1,7 @@
 # Indie Linter v2
 
 This document describes the type of Indie Linter v2, for an example in how to
-implement this in your own package see the see the [Example Usage](../examples/indie-linter-v2.md) document.
+implement this in your own package see the see the [Example Usage][] document.
 
 ## Types
 
@@ -45,3 +45,5 @@ class IndieDelegate {
 *   `setAllMessages` replaces the list of messages Linter has stored for your
     provider. Any existing messages, regardless of the file they are associated
     with, are discarded.
+
+[Example Usage]: ../examples/indie-linter-v2.md

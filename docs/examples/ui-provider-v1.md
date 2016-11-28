@@ -1,6 +1,6 @@
 # UI Provider v1
 
-This example demonstrates usage of [UI Provider v1 API](../types/ui-provider-v1.md)
+This example demonstrates usage of [UI Provider v1 API][]
 
 **Note**: Linter fills the messages with `version` and `key` keys to make
 telling the difference between `Message`s easy for UI providers.
@@ -78,3 +78,5 @@ export function provideUI() {
   }
 }
 ```
+
+[UI Provider v1 API]: ../types/ui-provider-v1.md
