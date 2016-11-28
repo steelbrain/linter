@@ -1,6 +1,7 @@
 # Upgrading to Indie Linter v2
 
-This upgrade guide assumes your package current implements [Indie Linter API v1](https://github.com/steelbrain/linter/wiki/Linter-Indie-API) and [Message API v1](https://github.com/steelbrain/linter/wiki/Linter-API#messages).
+This upgrade guide assumes your package current implements [Indie Linter API v1][]
+and [Message API v1][].
 
 ## package.json
 
@@ -86,4 +87,6 @@ export function consumeIndie(registerIndie) {
 }
 ```
 
+[Indie Linter API v1]: https://github.com/steelbrain/linter/blob/v1/docs/types/indie-linter-v1.md
+[Message API v1]: https://github.com/steelbrain/linter/blob/v1/docs/types/linter-message-v1.md
 [Message API v2]: ../types/linter-message-v2.md
