@@ -48,7 +48,8 @@ upgrade from the old `IndieDelegate::setMessages` to
 `IndieDelegate::setAllMessages` because these two methods are functionally
 identical.
 
-The Message format used also needs to be updated to match the new [Messages v2](../types/linter-message-v2.md) format.
+The Message format used also needs to be updated to match the new
+[Message API v2][] format.
 
 ### Before
 
@@ -88,3 +89,4 @@ export function consumeIndie(registerIndie) {
 
 [Indie Linter API v1]: https://github.com/steelbrain/linter/blob/v1/docs/types/indie-linter-v1.md
 [Message API v1]: https://github.com/steelbrain/linter/blob/v1/docs/types/linter-message-v1.md
+[Message API v2]: ../types/linter-message-v2.md

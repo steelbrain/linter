@@ -1,7 +1,7 @@
 # Standard Linter v2
 
 This document describes the type of Standard Linter v2, for an example in how to
-implement this in your own package see the see the [Example Usage](../examples/standard-linter-v2.md) document.
+implement this in your own package see the see the [Example Usage][] document.
 
 ## Type
 
@@ -71,3 +71,5 @@ regardless of the scope of the current file.
 **Q**: How do I make linter use last messages for my provider?
 
 **A**: Return `null` from your provider to make it re-use last messages.
+
+[Example Usage]: ../examples/standard-linter-v2.md

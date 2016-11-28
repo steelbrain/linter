@@ -1,7 +1,7 @@
 # UI Provider v1
 
 This document describes the type of UI Provider v1, for an example in how to
-implement this in your own package see the see the [Example Usage](../examples/ui-provider-v1.md) document.
+implement this in your own package see the see the [Example Usage][] document.
 
 ## Type
 
@@ -38,3 +38,5 @@ UI object is the best place to run the activation logic.
 **A**: It is triggered when either your package or the linter package is
 deactivated. It's useful for destroying any Panels you might have registered for
 the UI.
+
+[Example Usage]: ../examples/ui-provider-v1.md
