@@ -1,6 +1,7 @@
 # Upgrading to Standard Linter v2
 
-This upgrade guide assumes your package currently implements [Standard Linter API v1](https://github.com/steelbrain/linter/wiki/Linter-API) and [Message API v1](https://github.com/steelbrain/linter/wiki/Linter-API#messages).
+This upgrade guide assumes your package currently implements [Standard Linter API v1][]
+and [Message API v1][].
 
 ## package.json
 
@@ -117,4 +118,9 @@ export function provideLinter() {
 
 ## Other Changes
 
-- In Linter 1.x, you could return any non-Array value to make linter re-use last results. In Linter 2.x, you must return either an Array or `null`, returning `false` or `undefined` will be considered an error.
+-   In Linter 1.x, you could return any non-Array value to make linter re-use
+    last results. In Linter 2.x, you must return either an Array or `null`,
+    returning `false` or `undefined` will be considered an error.
+
+[Standard Linter API v1]: https://github.com/steelbrain/linter/blob/v1/docs/types/standard-linter-v1.md
+[Message API v1]: https://github.com/steelbrain/linter/blob/v1/docs/types/linter-message-v1.md

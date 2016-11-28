@@ -1,6 +1,6 @@
 # Linter Documentation
 
-⚠️⚠️⚠️ Linter v2 is currently unreleased, use Wiki docs are valid for v1 ⚠️⚠️⚠️
+⚠️⚠️⚠️ Linter v2 is currently unreleased, use [the v1 docs][v1 docs]. ⚠️⚠️⚠️
 
 Welcome to the official Linter docs.
 
@@ -21,3 +21,5 @@ Welcome to the official Linter docs.
 
 *   [Upgrading to Indie Linter v2](guides/upgrading-to-indie-linter-v2.md)
 *   [Upgrading to Standard Linter v2](guides/upgrading-to-standard-linter-v2.md)
+
+[v1 docs]: https://github.com/steelbrain/linter/tree/v1/docs
