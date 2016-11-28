@@ -17,13 +17,16 @@ type Message = {
   type: string,
   text?: string,
   html?: string,
-  name?: string, // Only specify this if you want the name to be something other than your linterProvider.name
+  name?: string,
+  // ^ Only specify this if you want the name to be something other than your linterProvider.name
+  // WARNING: There is NO replacement for this in v2
   filePath?: string,
   range?: Range,
   trace?: Array<Trace>,
   fix?: Fix,
   severity?: 'error' | 'warning' | 'info',
   selected?: Function
+  // ^ WARNING: There is NO replacement for this in v2
 }
 ```
 
@@ -43,7 +46,9 @@ type Trace = {
   type: 'Trace',
   text?: string,
   html?: string,
-  name?: string, // Only specify this if you want the name to be something other than your linterProvider.name
+  name?: string,
+  // ^ Only specify this if you want the name to be something other than your linterProvider.name
+  // WARNING: There is NO replacement for this in v2
   filePath?: string,
   range?: Range,
   class?: string,
@@ -98,6 +103,8 @@ atom-text-editor::shadow .linter-highlight, .linter-highlight {
 
 __Note:__ Spaces in Types are converted to dashes for CSS classes.
 
+__Warning:__ Custom File Types have been dropped in v2 in favor of three severities. Providers can still provide custom severity labels in message markups.
+
 ## FAQs
 
 **Q**: Which properties are optional?
@@ -117,7 +124,10 @@ it in an `html` message.
 
 **A**: That's entirely up to you, you can manipulate the editor text or do
 something else.
-**FIXME**: When is this called?
+
+**Q**: When is this called?
+
+**A**: It is called whenever a user visits the message by either clicking on a trace or visiting the next message from their keyboard shortcuts.
 
 **Q**: Where does `Range` come from?
 

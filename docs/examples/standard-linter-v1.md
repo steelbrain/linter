@@ -55,7 +55,7 @@ export function provideLinter() {
       return [{
         type: 'Error',
         text: 'Something went wrong',
-        range:[[0,0], [0,1]],
+        range: [[0,0], [0,1]],
         filePath: editorPath
       }]
     }

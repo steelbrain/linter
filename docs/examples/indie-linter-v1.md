@@ -46,28 +46,20 @@ export function deactivate() {
 }
 
 export function consumeLinter(indieRegistry) {
-  const linter = registerIndie({
+  const linter = indieRegistry.register({
     name: 'Example',
   })
   subscriptions.add(linter)
 
-  // Example using ::setMessages
-  subscriptions.add(atom.workspace.observeTextEditors(function(textEditor) {
-    const editorPath = textEditor.getPath()
-    if (!editorPath) {
-      return
-    }
+  // Set messages on linter (overwrites previous ones)
+  linter.setMessages([{
+    type: 'Error',
+    text: 'Something went wrong',
+    filePath: '/tmp/example',
+    // ^ This filePath is just an example, gather these from text editors
+  }])
 
-    linter.setMessages(editorPath, [{
-      type: 'Error',
-      text: 'Something went wrong'
-    }])
-
-    const subscription = textEditor.onDidDestroy(function() {
-      subscriptions.remove(subscription)
-      linter.setMessages(editorPath, [])
-    })
-    subscriptions.add(subscription)
-  }))
+  // Remove all messages
+  linter.deleteMessages()
 }
 ```

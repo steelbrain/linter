@@ -7,8 +7,7 @@ configuration file.
 
 ## Configurable settings
 
-*   `lintOnFly`: Lint files while typing, without the
-    need to save
+*   `lintOnFly`: Lint files while typing, without the need to save
 
 *   `lintOnFlyInterval`: Interval at which providers are triggered as you type
     (in ms)

@@ -6,15 +6,23 @@ implement this in your own package see the see the
 
 ## Types
 
-There are two different types in the Indie Linter v1 API. `IndieRegistry`
-is the value you input to `register` (the param of your `consumeLinter`
+There are two different types in the Indie Linter v1 API. `Config`
+is the value you input to `IndieRegistry.register` (the param of your `consumeLinter`
 function), it's return value is an `Indie`.
+
+### Config
+
+```js
+{
+  name: string
+}
+```
 
 ### Indie
 
 ```js
 class IndieRegistry {
-  register({name: string}): Indie,
+  register(config: Config): Indie,
 }
 ```
 
