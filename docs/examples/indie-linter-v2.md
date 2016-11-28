@@ -51,7 +51,7 @@ export function consumeIndie(registerIndie) {
   })
   subscriptions.add(linter)
 
-  // Example using ::setMessages
+  // Setting and clearing messages per filePath
   subscriptions.add(atom.workspace.observeTextEditors(function(textEditor) {
     const editorPath = textEditor.getPath()
     if (!editorPath) {
@@ -75,7 +75,7 @@ export function consumeIndie(registerIndie) {
     subscriptions.add(subscription)
   })))
 
-  // Example using ::setAllMessages
+  // Setting and replacing all messages
   linter.setAllMessages([
     {
       severity: 'info',
@@ -94,5 +94,8 @@ export function consumeIndie(registerIndie) {
       excerpt: 'This is an error message on a different file',
     }
   ])
+
+  // Clear all messages
+  linter.clearMessages()
 }
 ```

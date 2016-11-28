@@ -5,11 +5,11 @@ implement this in your own package see the see the [Example Usage](../examples/i
 
 ## Types
 
-There are two different types in the Indie Linter v2 API. `Indie` is the value
+There are two different types in the Indie Linter v2 API. `Config` is the value
 you input to `registerIndie` (the param of your `consumeIndie` function), it's
 return value is an `IndieDelegate`.
 
-### Indie
+### Config
 
 ```js
 {
@@ -22,7 +22,7 @@ return value is an `IndieDelegate`.
 ```js
 class IndieDelegate {
   get name(): string;
-  getMessages: Array<Message>;
+  getMessages(): Array<Message>;
   clearMessages(): void;
   setMessages(filePath: string, messages: Array<Message>): void;
   setAllMessages(messages: Array<Message>): void;
