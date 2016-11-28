@@ -1,3 +1,7 @@
+## 1.11.21
+
+- Fix gutter dot alignment issue (#1268)
+
 ## 1.11.20
 
 - Fix a bug in linter css for Atom v1.13+
