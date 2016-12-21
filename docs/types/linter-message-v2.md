@@ -21,6 +21,7 @@ type Message = {
     file: string,
     position?: Point,
   },
+  icon?: string,
   excerpt: string,
   severity: 'error' | 'warning' | 'info',
   reference?: string,
@@ -46,6 +47,11 @@ type Message = {
 
 **A**: The type above uses [`flowtype`][], `?` with the key
 indicates that it's optional and can be falsy.
+
+**Q**: What are the valid values for `icon` attribute?
+
+**A**: Depends on the UI provider, the default Linter UI uses this attribute to
+determine the octicon to show in gutter.
 
 **Q**: What type of value to add in `description`?
 
