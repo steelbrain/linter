@@ -27,11 +27,13 @@ type Message = {
   solutions?: Array<{
     title?: string,
     position: Range,
+    priority?: number,
     currentText?: string,
     replaceWith: string,
   } | {
     title?: string,
     position: Range,
+    priority?: number,
     apply: (() => any),
   }>,
   description?: string | (() => Promise<string> | string)
@@ -62,6 +64,12 @@ the other solution type that was specifically built for text replacement.
 **A**: Depends on the UI provider, the default Linter UI uses this attribute as
 it's title for [Intentions][] package,
 `Fix linter error` is the default one used at the time of writing this document.
+
+**Q**: What is the purpose of the `priority` attribute in a solution?
+
+**A**: This attribute determines the auto-applied solution if the user invokes a
+apply all solutions command. This priority is only relevant to other solutions in
+the same message.
 
 **Q**: What is `Point` and `Range`?
 
