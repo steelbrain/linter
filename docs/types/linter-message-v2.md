@@ -17,7 +17,7 @@ type Message = {
     file: string,
     position: Range,
   },
-  source?: {
+  reference?: {
     file: string,
     position?: Point,
   },

@@ -443,49 +443,49 @@ describe('Validate', function() {
         solutions: 5,
       }], false, 'Message.solutions must be valid')
     })
-    it('cries if message.source is present and invalid', function() {
+    it('cries if message.reference is present and invalid', function() {
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
-        source: 5,
-      }], false, 'Message.source must be valid')
+        reference: 5,
+      }], false, 'Message.reference must be valid')
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
-        source: {},
-      }], false, 'Message.source must be valid')
+        reference: {},
+      }], false, 'Message.reference must be valid')
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
-        source: 'asdasd',
-      }], false, 'Message.source must be valid')
+        reference: 'asdasd',
+      }], false, 'Message.reference must be valid')
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
-        source: { file: __filename },
-      }], false, 'Message.source must be valid')
+        reference: { file: __filename },
+      }], false, 'Message.reference must be valid')
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
-        source: { file: __filename, position: 5 },
-      }], false, 'Message.source must be valid')
+        reference: { file: __filename, position: 5 },
+      }], false, 'Message.reference must be valid')
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
-        source: { file: __filename, position: NaN },
-      }], false, 'Message.source must be valid')
+        reference: { file: __filename, position: NaN },
+      }], false, 'Message.reference must be valid')
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
-        source: { file: __filename, position: null },
-      }], false, 'Message.source must be valid')
+        reference: { file: __filename, position: null },
+      }], false, 'Message.reference must be valid')
     })
-    it('cries if message.source contains NaN', function() {
+    it('cries if message.reference contains NaN', function() {
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
-        source: { file: __filename, position: [NaN, 5] },
-      }], false, 'Message.source.position should not contain NaN coordinates')
+        reference: { file: __filename, position: [NaN, 5] },
+      }], false, 'Message.reference.position should not contain NaN coordinates')
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
-        source: { file: __filename, position: [5, NaN] },
-      }], false, 'Message.source.position should not contain NaN coordinates')
+        reference: { file: __filename, position: [5, NaN] },
+      }], false, 'Message.reference.position should not contain NaN coordinates')
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
-        source: { file: __filename, position: [NaN, NaN] },
-      }], false, 'Message.source.position should not contain NaN coordinates')
+        reference: { file: __filename, position: [NaN, NaN] },
+      }], false, 'Message.reference.position should not contain NaN coordinates')
     })
     it('cries if message.excerpt is not string', function() {
       validateMessages([{
@@ -583,7 +583,7 @@ describe('Validate', function() {
       }], true)
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
-        source: { file: __filename, position: [0, 0] },
+        reference: { file: __filename, position: [0, 0] },
         excerpt: '',
         severity: 'warning',
       }], true)
