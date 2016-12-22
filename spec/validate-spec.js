@@ -541,19 +541,19 @@ describe('Validate', function() {
         severity: 'warningish',
       }], false, "Message.severity must be 'error', 'warning' or 'info'")
     })
-    it('cries if message.reference is present and is not string', function() {
+    it('cries if message.url is present and is not string', function() {
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
         excerpt: '',
         severity: 'error',
-        reference: 5,
-      }], false, 'Message.reference must a string')
+        url: 5,
+      }], false, 'Message.url must a string')
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
         excerpt: '',
         severity: 'error',
-        reference: {},
-      }], false, 'Message.reference must a string')
+        url: {},
+      }], false, 'Message.url must a string')
     })
     it('cries if message.description is present and is invalid', function() {
       validateMessages([{
@@ -590,7 +590,7 @@ describe('Validate', function() {
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
         excerpt: '',
-        reference: 'something',
+        url: 'something',
         severity: 'info',
       }], true)
       validateMessages([{

@@ -61,7 +61,7 @@ essential elements are still there. The changes in required information are:
     property
 
 *   `trace` no longer exists, the functionality has been split into `source`
-    (for the `location` equivalent) and `reference` for the `text` equivalent.
+    (for the `location` equivalent) and `url` for an external http url.
 
 *   `fix` has been replaced with `solutions`, which is far more flexible.
 

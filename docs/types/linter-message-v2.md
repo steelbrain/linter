@@ -24,7 +24,7 @@ type Message = {
   icon?: string,
   excerpt: string,
   severity: 'error' | 'warning' | 'info',
-  reference?: string,
+  url?: string, // external HTTP link
   solutions?: Array<{
     title?: string,
     position: Range,
