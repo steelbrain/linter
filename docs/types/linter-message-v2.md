@@ -23,7 +23,7 @@ type Message = {
     file: string,
     position?: Point,
   },
-  // ^ Reference link to the issue, useful for jumping to classes etc
+  // ^ Reference to a different location in the editor, useful for jumping to classes etc.
   url?: string, // external HTTP link
   // ^ HTTP link to a resource explaining the issue. Default is a google search
   icon?: string,
