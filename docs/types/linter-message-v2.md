@@ -7,24 +7,31 @@ This document describes the type of Linter Message v2. It's supported in
 
 ```js
 type Message = {
-  // Automatically added for UI consumers, do not specify in a provider
+  // NOTE: DO NOT SPECIFY THESE IN PROVIDER
+  // Automatically added by base linter for UI consumers
   key: string,
   version: 2,
   linterName: string,
 
-  // From providers
+  // NOTE: These are given by providers
   location: {
     file: string,
     position: Range,
   },
-  source?: {
+  // ^ Location of the issue (aka where to highlight)
+  reference?: {
     file: string,
     position?: Point,
   },
+  // ^ Reference to a different location in the editor, useful for jumping to classes etc.
+  url?: string, // external HTTP link
+  // ^ HTTP link to a resource explaining the issue. Default is a google search
   icon?: string,
+  // ^ Name of octicon to show in gutter
   excerpt: string,
+  // ^ Error message
   severity: 'error' | 'warning' | 'info',
-  reference?: string,
+  // ^ Severity of error
   solutions?: Array<{
     title?: string,
     position: Range,
@@ -37,7 +44,10 @@ type Message = {
     priority?: number,
     apply: (() => any),
   }>,
+  // ^ Possible solutions to the error (user can invoke them at will)
   description?: string | (() => Promise<string> | string)
+  // ^ Markdown long description of the error, accepts callback so you can do
+  // http requests etc.
 }
 ```
 
@@ -47,17 +57,6 @@ type Message = {
 
 **A**: The type above uses [`flowtype`][], `?` with the key
 indicates that it's optional and can be falsy.
-
-**Q**: What are the valid values for `icon` attribute?
-
-**A**: Depends on the UI provider, the default Linter UI uses this attribute to
-determine the octicon to show in gutter.
-
-**Q**: What type of value to add in `description`?
-
-**A**: The description property uses Markdown, and also accepts a callback that
-resolves to a Markdown string. You can use it to provide in-editor description
-of the error using longer running tasks, such as making an HTTP request.
 
 **Q**: What to do in the `apply` callback of a solution?
 

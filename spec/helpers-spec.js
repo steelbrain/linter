@@ -210,11 +210,11 @@ describe('Helpers', function() {
     })
     it('converts arrays in source->position to points', function() {
       const message = getMessage(false)
-      message.source = { file: __dirname, position: [0, 0] }
-      expect(Array.isArray(message.source.position)).toBe(true)
+      message.reference = { file: __dirname, position: [0, 0] }
+      expect(Array.isArray(message.reference.position)).toBe(true)
       Helpers.normalizeMessages('Some Linter', [message])
-      expect(Array.isArray(message.source.position)).toBe(false)
-      expect(message.source.position.constructor.name).toBe('Point')
+      expect(Array.isArray(message.reference.position)).toBe(false)
+      expect(message.reference.position.constructor.name).toBe('Point')
     })
     it('converts arrays in solution[index]->position to ranges', function() {
       const message = getMessage(false)

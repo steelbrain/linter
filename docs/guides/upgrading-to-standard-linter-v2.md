@@ -60,12 +60,13 @@ essential elements are still there. The changes in required information are:
 *   `filePath` and `range` have been combined into a mandatory `location`
     property
 
-*   `trace` no longer exists, the functionality has been split into `source`
-    (for the `location` equivalent) and `reference` for the `text` equivalent.
+*   `trace` no longer exists, the functionality has been split into `reference`
+    (for the `location` equivalent) and `url` for an external http url.
 
 *   `fix` has been replaced with `solutions`, which is far more flexible.
 
-*   `selected` is no longer allowed
+*   `selected` is no longer allowed (since you can now provide a `reference` and
+    `url`)
 
 As for the provider itself, `lintOnFly` is now `lintsOnChange` and the `name` attribute is now mandatory.
 
