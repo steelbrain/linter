@@ -28,7 +28,7 @@ $ apm install linter
 
 #### API Documentation
 
-[Linter API wiki](https://github.com/steelbrain/linter/wiki/Linter-API)
+[Linter API wiki](https://github.com/steelbrain/linter/tree/v1/docs)
 
 #### Contribute
 
