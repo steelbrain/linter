@@ -59,28 +59,36 @@
     },
     "lintPreviewTabs": {
       "type": "boolean",
+      "description": "Lint tabs while they are still in preview status",
       "default": true,
       "order": 2
+    },
+    "lintOnOpen": {
+      "title": "Lint on Open",
+      "description": "Lint files automatically when they are opened",
+      "type": "boolean",
+      "default": true,
+      "order": 3
     },
     "lintOnChange": {
       "title": "Lint on Change",
       "description": "Lint files while typing, without the need to save (only for supported providers)",
       "type": "boolean",
       "default": true,
-      "order": 3
+      "order": 4
     },
     "lintOnChangeInterval": {
       "title": "Lint on Change Interval",
       "description": "Interval at which linting is done as you type (in ms)",
       "type": "integer",
       "default": 300,
-      "order": 4
+      "order": 5
     },
     "ignoreGlob": {
       "title": "Ignore files matching this Glob",
       "type": "string",
       "default": "**/*.min.{js,css}",
-      "order": 5
+      "order": 6
     }
   }
 }
