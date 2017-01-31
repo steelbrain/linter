@@ -96,7 +96,7 @@ describe('Helpers', function() {
     })
   })
   describe('subscriptiveObserve', function() {
-    it('activates syncly', function() {
+    it('activates synchronously', function() {
       let activated = false
       Helpers.subscriptiveObserve({
         observe(eventName, callback) {
