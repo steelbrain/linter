@@ -47,6 +47,28 @@ describe('EditorRegistry', function() {
       atom.workspace.destroyActivePane()
       expect(editorRegistry.editorLinters.size).toBe(0)
     })
+    it('does not lint instantly if lintOnOpen is off', async function() {
+      editorRegistry.activate()
+      atom.config.set('linter.lintOnOpen', false)
+      let lintCalls = 0
+      editorRegistry.observe(function(editorLinter) {
+        editorLinter.onShouldLint(() => ++lintCalls)
+      })
+      expect(lintCalls).toBe(0)
+      await atom.workspace.open()
+      expect(lintCalls).toBe(0)
+    })
+    it('invokes lint instantly if lintOnOpen is on', async function() {
+      editorRegistry.activate()
+      atom.config.set('linter.lintOnOpen', true)
+      let lintCalls = 0
+      editorRegistry.observe(function(editorLinter) {
+        editorLinter.onShouldLint(() => ++lintCalls)
+      })
+      expect(lintCalls).toBe(0)
+      await atom.workspace.open()
+      expect(lintCalls).toBe(1)
+    })
   })
   describe('::observe', function() {
     it('calls with current editors and updates as new are opened', async function() {

@@ -1,7 +1,7 @@
 /* @flow */
 
 import { Disposable } from 'atom'
-import { it, wait } from 'jasmine-fix'
+import { it } from 'jasmine-fix'
 import * as Helpers from '../lib/helpers'
 import { getFixturesPath, getMessage, getMessageLegacy } from './common'
 
@@ -95,46 +95,22 @@ describe('Helpers', function() {
       }
     })
   })
-  describe('deferredSubscriptiveObserve', function() {
-    it('does not activate if disposed too early', async function() {
+  describe('subscriptiveObserve', function() {
+    it('activates synchronously', function() {
       let activated = false
-      Helpers.deferredSubscriptiveObserve({
-        observe() {
-          activated = true
-        },
-      }, 'someEvent', function() { }).dispose()
-      await wait(0)
-      expect(activated).toBe(false)
-    })
-    it('activates if given enough time', async function() {
-      let activated = false
-      Helpers.deferredSubscriptiveObserve({
+      Helpers.subscriptiveObserve({
         observe(eventName, callback) {
           activated = true
           expect(eventName).toBe('someEvent')
           expect(typeof callback).toBe('function')
         },
       }, 'someEvent', function() { })
-      await wait(0)
       expect(activated).toBe(true)
     })
-    it('activates asyncly', async function() {
-      let activated = false
-      Helpers.deferredSubscriptiveObserve({
-        observe(eventName, callback) {
-          activated = true
-          expect(eventName).toBe('someEvent')
-          expect(typeof callback).toBe('function')
-        },
-      }, 'someEvent', function() { })
-      expect(activated).toBe(false)
-      await wait(0)
-      expect(activated).toBe(true)
-    })
-    it('clears last subscription when value changes', async function() {
+    it('clears last subscription when value changes', function() {
       let disposed = 0
       let activated = false
-      Helpers.deferredSubscriptiveObserve({
+      Helpers.subscriptiveObserve({
         observe(eventName, callback) {
           activated = true
           expect(disposed).toBe(0)
@@ -150,14 +126,13 @@ describe('Helpers', function() {
           disposed++
         })
       })
-      await wait(0)
       expect(activated).toBe(true)
     })
-    it('clears both subscriptions at the end', async function() {
+    it('clears both subscriptions at the end', function() {
       let disposed = 0
       let observeDisposed = 0
       let activated = false
-      const subscription = Helpers.deferredSubscriptiveObserve({
+      const subscription = Helpers.subscriptiveObserve({
         observe(eventName, callback) {
           activated = true
           expect(disposed).toBe(0)
@@ -172,7 +147,6 @@ describe('Helpers', function() {
           disposed++
         })
       })
-      await wait(0)
       expect(activated).toBe(true)
       subscription.dispose()
       expect(disposed).toBe(1)
