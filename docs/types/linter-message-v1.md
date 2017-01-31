@@ -21,6 +21,7 @@ type Message = {
   // ^ Only specify this if you want the name to be something other than your linterProvider.name
   // WARNING: There is NO replacement for this in v2
   filePath?: string,
+  // ^ MUST be an absolute path (relative paths are not supported)
   range?: Range,
   trace?: Array<Trace>,
   fix?: Fix,
@@ -50,6 +51,7 @@ type Trace = {
   // ^ Only specify this if you want the name to be something other than your linterProvider.name
   // WARNING: There is NO replacement for this in v2
   filePath?: string,
+  // ^ MUST be an absolute path (relative paths are not supported)
   range?: Range,
   class?: string,
   severity?: 'error' | 'warning' | 'info'
