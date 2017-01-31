@@ -7,20 +7,16 @@ This document describes the type of Linter Message v2. It's supported in
 
 ```js
 type Message = {
-  // NOTE: DO NOT SPECIFY THESE IN PROVIDER
-  // Automatically added by base linter for UI consumers
-  key: string,
-  version: 2,
-  linterName: string,
-
   // NOTE: These are given by providers
   location: {
     file: string,
+    // ^ MUST be an absolute path (relative paths are not supported)
     position: Range,
   },
   // ^ Location of the issue (aka where to highlight)
   reference?: {
     file: string,
+    // ^ MUST be an absolute path (relative paths are not supported)
     position?: Point,
   },
   // ^ Reference to a different location in the editor, useful for jumping to classes etc.
@@ -48,6 +44,12 @@ type Message = {
   description?: string | (() => Promise<string> | string)
   // ^ Markdown long description of the error, accepts callback so you can do
   // http requests etc.
+
+  // NOTE: DO NOT SPECIFY THESE IN PROVIDER
+  // Automatically added by base linter for UI consumers
+  key: string,
+  version: 2,
+  linterName: string,
 }
 ```
 
