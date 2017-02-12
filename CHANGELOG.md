@@ -1,3 +1,7 @@
+## 1.11.22
+
+- Use contrast colors in inline tooltip instead of hard-coded white (#1317)
+
 ## 1.11.21
 
 - Fix gutter dot alignment issue (#1268)
