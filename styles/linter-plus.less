@@ -153,7 +153,7 @@ atom-text-editor.editor .linter-highlight, .linter-highlight{
   &.error {
     &:not(.line-number){
       background-color: @background-color-error;
-      color: white;
+      color: contrast(@background-color-error);
     }
     .linter-gutter{
       color: @background-color-error;
@@ -165,7 +165,7 @@ atom-text-editor.editor .linter-highlight, .linter-highlight{
   &.warning {
     &:not(.line-number){
       background-color: @background-color-warning;
-      color: white;
+      color: contrast(@background-color-warning);
     }
     .linter-gutter{
       color: @background-color-warning;
@@ -177,7 +177,7 @@ atom-text-editor.editor .linter-highlight, .linter-highlight{
   &.trace, &.info {
     &:not(.line-number){
       background-color: @background-color-info;
-      color: white;
+      color: contrast(@background-color-info);
     }
     .linter-gutter{
       color: @background-color-info;
