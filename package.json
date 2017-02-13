@@ -2,7 +2,7 @@
   "name": "linter",
   "main": "./lib/main",
   "author": "steelbrain",
-  "version": "1.11.22",
+  "version": "1.11.23",
   "description": "A Base Linter with Cow Powers",
   "repository": "https://github.com/steelbrain/linter",
   "license": "MIT",
