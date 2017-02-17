@@ -16,11 +16,13 @@ It provides a top-level API to its consumer so that they can visualize errors an
 
 #### How to / Installation
 
-Install package through Atom or use CLI:
+You can install through the CLI by doing:
 
 ```
 $ apm install linter
 ```
+
+Or you can install from Settings view by searching for `Base Linter`, (this package might not show up when searching for `Linter`).
 
 #### Available linters
 
