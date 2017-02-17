@@ -22,7 +22,7 @@ You can install through the CLI by doing:
 $ apm install linter
 ```
 
-Or you can install from settings view by searching for `Base Linter`, (this package might not show up when searching for `Linter`).
+Or you can install from Settings view by searching for `Base Linter`, (this package might not show up when searching for `Linter`).
 
 #### Available linters
 
