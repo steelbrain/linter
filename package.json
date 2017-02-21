@@ -38,7 +38,7 @@
     }
   },
   "dependencies": {
-    "atom-package-deps": "^4.3.1",
+    "atom-package-deps": "^4.4.1",
     "minimatch": "^3.0.3",
     "sb-debounce": "^1.0.1"
   },
@@ -51,12 +51,6 @@
     "linter-ui-default"
   ],
   "configSchema": {
-    "installRecommendedPackages": {
-      "description": "Installs recommended packages on startup",
-      "type": "boolean",
-      "default": true,
-      "order": 1
-    },
     "lintPreviewTabs": {
       "type": "boolean",
       "description": "Lint tabs while they are still in preview status",
