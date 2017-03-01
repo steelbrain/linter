@@ -3,6 +3,7 @@
 import Path from 'path'
 import { it } from 'jasmine-fix'
 import Commands from '../lib/commands'
+import { getState } from './common'
 
 let commands
 
@@ -11,7 +12,7 @@ describe('Linter Commands', function() {
     if (commands) {
       commands.dispose()
     }
-    commands = new Commands()
+    commands = new Commands(getState())
   })
   it('properly notifies its listeners of command execution', async function() {
     let lintCalled = 0
