@@ -15,7 +15,7 @@
     "test": "(apm test) && (flow check) && (eslint . )"
   },
   "engines": {
-    "atom": ">=1.4.0 <2.0.0"
+    "atom": ">=1.14.0 <2.0.0"
   },
   "consumedServices": {
     "linter": {
