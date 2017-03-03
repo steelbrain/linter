@@ -109,7 +109,8 @@ describe('LinterRegistry', function() {
         atom.config.set('linter.lintPreviewTabs', false)
         await atom.workspace.open(getFixturesPath('file.txt'))
         const editor = atom.workspace.getActiveTextEditor()
-        editor.hasTerminatedPendingState = false
+        const activePane = atom.workspace.getActivePane()
+        spyOn(activePane, 'getPendingItem').andCallFake(() => editor)
         expect(await linterRegistry.lint({ editor, onChange: false })).toBe(false)
       } finally {
         atom.config.set('linter.lintPreviewTabs', true)
