@@ -511,7 +511,7 @@ describe('LinterRegistry', function() {
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(1)
     })
-    it('does not invoke a linter if its ignored', async function() {
+    it("does not invoke a linter if it's ignored", async function() {
       let promise
       let timesBegan = 0
       let timesUpdated = 0
