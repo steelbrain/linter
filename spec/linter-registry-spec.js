@@ -1,6 +1,6 @@
 /* @flow */
 
-import { it, beforeEach } from 'jasmine-fix'
+import { it, wait, beforeEach } from 'jasmine-fix'
 import * as Helpers from '../lib/helpers'
 import LinterRegistry from '../lib/linter-registry'
 import { getLinter, getFixturesPath } from './common'
@@ -183,6 +183,7 @@ describe('LinterRegistry', function() {
       const editor = atom.workspace.getActiveTextEditor()
       linterRegistry.addLinter(linter)
       const promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
       expect(timesBegan).toBe(1)
       expect(timesUpdated).toBe(0)
       expect(timesFinished).toBe(0)
@@ -211,6 +212,7 @@ describe('LinterRegistry', function() {
       linterRegistry.addLinter(linter)
       editor.destroy()
       const promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
       expect(timesBegan).toBe(1)
       expect(timesUpdated).toBe(0)
       expect(timesFinished).toBe(0)
@@ -238,6 +240,7 @@ describe('LinterRegistry', function() {
       linterRegistry.addLinter(linter)
       editor.destroy()
       const promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
       expect(timesBegan).toBe(1)
       expect(timesUpdated).toBe(0)
       expect(timesFinished).toBe(0)
@@ -264,7 +267,8 @@ describe('LinterRegistry', function() {
       const linter = getLinter()
       const editor = atom.workspace.getActiveTextEditor()
       linterRegistry.addLinter(linter)
-      linter.lint = function() {
+      linter.lint = async function() {
+        await wait(50)
         if (timesBegan === 2) {
           return null
         }
@@ -272,6 +276,7 @@ describe('LinterRegistry', function() {
       }
 
       promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
       expect(timesBegan).toBe(1)
       expect(timesUpdated).toBe(0)
       expect(timesFinished).toBe(0)
@@ -279,6 +284,7 @@ describe('LinterRegistry', function() {
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(1)
       promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
       expect(timesBegan).toBe(2)
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(1)
@@ -305,7 +311,8 @@ describe('LinterRegistry', function() {
       const linter = getLinter()
       const editor = atom.workspace.getActiveTextEditor()
       linterRegistry.addLinter(linter)
-      linter.lint = function() {
+      linter.lint = async function() {
+        await wait(50)
         if (timesBegan === 2) {
           return false
         } else if (timesBegan === 3) {
@@ -318,6 +325,7 @@ describe('LinterRegistry', function() {
 
       // with array
       promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
       expect(timesBegan).toBe(1)
       expect(timesUpdated).toBe(0)
       expect(timesFinished).toBe(0)
@@ -328,6 +336,7 @@ describe('LinterRegistry', function() {
 
       // with false
       promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
       expect(timesBegan).toBe(2)
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(1)
@@ -338,6 +347,7 @@ describe('LinterRegistry', function() {
 
       // with null
       promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
       expect(timesBegan).toBe(3)
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(2)
@@ -348,6 +358,7 @@ describe('LinterRegistry', function() {
 
       // with undefined
       promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
       expect(timesBegan).toBe(4)
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(3)
@@ -374,8 +385,9 @@ describe('LinterRegistry', function() {
       const linter = getLinter()
       const editor = atom.workspace.getActiveTextEditor()
       linterRegistry.addLinter(linter)
-      linter.lint = function() { throw new Error('Boom') }
+      linter.lint = async function() { await wait(50); throw new Error('Boom') }
       const promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
       expect(timesBegan).toBe(1)
       expect(timesUpdated).toBe(0)
       expect(timesFinished).toBe(0)
@@ -404,6 +416,7 @@ describe('LinterRegistry', function() {
       linter.scope = 'file'
       linterRegistry.addLinter(linter)
       const promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
       expect(timesBegan).toBe(1)
       expect(timesUpdated).toBe(0)
       expect(timesFinished).toBe(0)
@@ -431,6 +444,7 @@ describe('LinterRegistry', function() {
       const editor = atom.workspace.getActiveTextEditor()
       linterRegistry.addLinter(linter)
       const promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
       expect(timesBegan).toBe(1)
       expect(timesUpdated).toBe(0)
       expect(timesFinished).toBe(0)
@@ -460,6 +474,7 @@ describe('LinterRegistry', function() {
       linter.scope = 'file'
       linterRegistry.addLinter(linter)
       const promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
       expect(timesBegan).toBe(1)
       expect(timesUpdated).toBe(0)
       expect(timesFinished).toBe(0)
@@ -488,12 +503,68 @@ describe('LinterRegistry', function() {
       const editor = atom.workspace.getActiveTextEditor()
       linterRegistry.addLinter(linter)
       const promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
       expect(timesBegan).toBe(1)
       expect(timesUpdated).toBe(0)
       expect(timesFinished).toBe(0)
       expect(await promise).toBe(true)
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(1)
+    })
+    it("does not invoke a linter if it's ignored", async function() {
+      let promise
+      let timesBegan = 0
+      let timesUpdated = 0
+      let timesFinished = 0
+
+      linterRegistry.onDidBeginLinting(() => timesBegan++)
+      linterRegistry.onDidFinishLinting(() => timesFinished++)
+      linterRegistry.onDidUpdateMessages(() => timesUpdated++)
+
+      const linter = getLinter()
+      const config = await linterRegistry.getConfig()
+      const disabled = await config.get('disabled')
+      const editor = atom.workspace.getActiveTextEditor()
+      linter.name = 'Some Linter'
+      linterRegistry.addLinter(linter)
+
+      promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
+      expect(timesBegan).toBe(1)
+      expect(timesUpdated).toBe(0)
+      expect(timesFinished).toBe(0)
+      expect(await promise).toBe(true)
+      expect(timesBegan).toBe(1)
+      expect(timesUpdated).toBe(1)
+      expect(timesFinished).toBe(1)
+
+      disabled.push(linter.name)
+      await config.set('disabled', disabled)
+      await wait(100)
+
+      promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
+      expect(timesBegan).toBe(1)
+      expect(timesUpdated).toBe(1)
+      expect(timesFinished).toBe(1)
+      expect(await promise).toBe(true)
+      expect(timesBegan).toBe(1)
+      expect(timesUpdated).toBe(1)
+      expect(timesFinished).toBe(1)
+
+      disabled.splice(disabled.indexOf(linter.name), 1)
+      await config.set('disabled', disabled)
+      await wait(100)
+
+      promise = linterRegistry.lint({ editor, onChange: false })
+      await wait(20)
+      expect(timesBegan).toBe(2)
+      expect(timesUpdated).toBe(1)
+      expect(timesFinished).toBe(1)
+      expect(await promise).toBe(true)
+      expect(timesBegan).toBe(2)
+      expect(timesUpdated).toBe(2)
+      expect(timesFinished).toBe(2)
     })
   })
 })

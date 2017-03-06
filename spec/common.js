@@ -11,7 +11,11 @@ export function getLinter(): Object {
     lintsOnChange: false,
     grammarScopes: ['source.js'],
     lint() {
-      return []
+      return new Promise(function(resolve) {
+        setTimeout(function() {
+          resolve([])
+        }, 50)
+      })
     },
   }
 }
