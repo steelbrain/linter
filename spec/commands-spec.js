@@ -13,6 +13,8 @@ describe('Linter Commands', function() {
       commands.dispose()
     }
     commands = new Commands(getState())
+    // Initial workspace view
+    atom.views.getView(atom.workspace)
   })
   it('properly notifies its listeners of command execution', async function() {
     let lintCalled = 0
@@ -25,6 +27,7 @@ describe('Linter Commands', function() {
 
     await atom.workspace.open(Path.join(__dirname, 'fixtures', 'file.txt'))
     const textEditor = atom.views.getView(atom.workspace.getActiveTextEditor())
+
     expect(lintCalled).toBe(0)
     expect(debugCalled).toBe(0)
     expect(toggleCalled).toBe(0)
