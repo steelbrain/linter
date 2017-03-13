@@ -40,6 +40,7 @@
   "dependencies": {
     "atom-package-deps": "^4.4.1",
     "atom-select-list": "0.0.16",
+    "cool-trim": "^1.1.1",
     "lodash.uniq": "^4.5.0",
     "minimatch": "^3.0.3",
     "sb-config-file": "^3.0.2",

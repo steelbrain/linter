@@ -2,7 +2,6 @@
 
 import Path from 'path'
 import { normalizeMessages, normalizeMessagesLegacy } from '../lib/helpers'
-import type { State } from '../lib/types'
 
 export function getLinter(): Object {
   return {
@@ -17,11 +16,6 @@ export function getLinter(): Object {
         }, 50)
       })
     },
-  }
-}
-export function getState(): State {
-  return {
-    version: 2,
   }
 }
 export function getMessage(param: ?(boolean | string)): Object {

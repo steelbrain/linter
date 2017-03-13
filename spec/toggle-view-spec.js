@@ -1,19 +1,15 @@
 /* @flow */
 
 import FS from 'fs'
-import ConfigFile from 'sb-config-file'
 import { it, wait, beforeEach, afterEach } from 'jasmine-fix'
 
 import ToggleView from '../lib/toggle-view'
-import { LINTER_CONFIG_FILE_PATH, LINTER_CONFIG_FILE_DEFAULT } from '../lib/helpers'
+import { LINTER_CONFIG_FILE_PATH, getConfigFile } from '../lib/helpers'
 
 describe('Toggle View', function() {
   let oldConfig
   beforeEach(async function() {
-    oldConfig = await (await ConfigFile.get(LINTER_CONFIG_FILE_PATH, LINTER_CONFIG_FILE_DEFAULT, {
-      prettyPrint: true,
-      createIfNonExistent: false,
-    })).get()
+    oldConfig = await (await getConfigFile()).get()
   })
   afterEach(async function() {
     await new Promise(resolve => FS.writeFile(LINTER_CONFIG_FILE_PATH, JSON.stringify(oldConfig, null, 2), resolve))
