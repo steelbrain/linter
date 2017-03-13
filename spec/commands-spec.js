@@ -3,7 +3,6 @@
 import Path from 'path'
 import { it } from 'jasmine-fix'
 import Commands from '../lib/commands'
-import { getState } from './common'
 
 let commands
 
@@ -12,7 +11,7 @@ describe('Linter Commands', function() {
     if (commands) {
       commands.dispose()
     }
-    commands = new Commands(getState())
+    commands = new Commands()
     // Initial workspace view
     atom.views.getView(atom.workspace)
   })
