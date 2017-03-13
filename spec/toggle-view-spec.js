@@ -1,7 +1,6 @@
 /* @flow */
 
 import FS from 'fs'
-import ConfigFile from 'sb-config-file'
 import { it, wait, beforeEach, afterEach } from 'jasmine-fix'
 
 import ToggleView from '../lib/toggle-view'
