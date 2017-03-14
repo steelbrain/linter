@@ -123,5 +123,5 @@ export function provideLinter() {
     last results. In Linter 2.x, you must return either an Array or `null`,
     returning `false` or `undefined` will be considered an error.
 
-[Standard Linter API v1]: https://github.com/steelbrain/linter/blob/v1/docs/types/standard-linter-v1.md
-[Message API v1]: https://github.com/steelbrain/linter/blob/v1/docs/types/linter-message-v1.md
+[Standard Linter API v1]: ../types/standard-linter-v1.md
+[Message API v1]: ../types/linter-message-v1.md
