@@ -1,4 +1,4 @@
-## 2.1.0
+## Upcoming
 
 * Add support for Legacy Indie Providers v1
 
