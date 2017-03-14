@@ -1,6 +1,7 @@
 ## Upcoming
 
 * Add support for Legacy Indie Providers v1
+* Move docs to GitHub pages, docs can now be found at [`steelbrain.me/linter`](http://steelbrain.me/linter)
 
 ## 2.0.0
 
