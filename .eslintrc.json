@@ -1,10 +1,9 @@
 {
   "extends": "steelbrain",
   "rules": {
-    "no-shadow": 0,
-    "no-param-reassign": 0,
-    "no-duplicate-imports": 0,
-    "no-underscore-dangle": 0,
-    "import/prefer-default-export": 0
+    "no-param-reassign": "off",
+    "no-underscore-dangle": "off",
+    "no-duplicate-imports": "off",
+    "import/prefer-default-export": "off"
   }
 }
