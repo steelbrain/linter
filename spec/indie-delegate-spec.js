@@ -96,7 +96,16 @@ describe('IndieDelegate', function() {
         indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(__filename), getMessage(false)])
       }).toThrow('message.location.file does not match the given filePath')
     })
-    // TODO: Feed some invalid messages
+    it('does not add invalid messages', function() {
+      expect(indieDelegate.getMessages().length).toBe(0)
+      expect(atom.notifications.getNotifications().length).toBe(0)
+      indieDelegate.setMessages(__filename, [{}])
+      expect(indieDelegate.getMessages().length).toBe(0)
+      expect(atom.notifications.getNotifications().length).toBe(1)
+      indieDelegate.setMessages(__filename, [getMessage(__filename)])
+      expect(indieDelegate.getMessages().length).toBe(1)
+      expect(atom.notifications.getNotifications().length).toBe(1)
+    })
   })
   describe('::clearMessages', function() {
     it('does not update if disposed', function() {
@@ -124,7 +133,6 @@ describe('IndieDelegate', function() {
     })
   })
   describe('::setAllMessages', function() {
-    // TODO: Feed some invalid messages
     it('automatically splits messages into filePath groups', function() {
       const messageA = getMessage(false)
       const messageB = getMessage(false)
@@ -167,6 +175,16 @@ describe('IndieDelegate', function() {
       indieDelegate.setAllMessages([])
       expect(timesUpdated).toBe(2)
     })
+    it('does not add invalid messages', function() {
+      expect(indieDelegate.getMessages().length).toBe(0)
+      expect(atom.notifications.getNotifications().length).toBe(0)
+      indieDelegate.setAllMessages([{}])
+      expect(indieDelegate.getMessages().length).toBe(0)
+      expect(atom.notifications.getNotifications().length).toBe(1)
+      indieDelegate.setAllMessages([getMessage(__filename)])
+      expect(indieDelegate.getMessages().length).toBe(1)
+      expect(atom.notifications.getNotifications().length).toBe(1)
+    })
   })
   describe('::dispose', function() {
     it('clears messages', function() {
@@ -202,6 +220,17 @@ describe('IndieDelegate', function() {
       indieDelegateLegacy.deleteMessages()
       expect(indieDelegateLegacy.getMessages().length).toBe(0)
     })
+    it('does not add invalid messages', function() {
+      expect(indieDelegateLegacy.getMessages().length).toBe(0)
+      expect(atom.notifications.getNotifications().length).toBe(0)
+
+      indieDelegateLegacy.setMessages([{}])
+      expect(indieDelegateLegacy.getMessages().length).toBe(0)
+      expect(atom.notifications.getNotifications().length).toBe(1)
+
+      indieDelegateLegacy.setMessages([getMessageLegacy(false)])
+      expect(indieDelegateLegacy.getMessages().length).toBe(1)
+      expect(atom.notifications.getNotifications().length).toBe(1)
+    })
   })
-  // TODO: Give it some invalid ones to check validator
 })
