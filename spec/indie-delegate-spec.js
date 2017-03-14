@@ -1,18 +1,23 @@
 /* @flow */
 
 import IndieDelegate from '../lib/indie-delegate'
-import { getMessage } from './common'
+import { getMessage, getMessageLegacy } from './common'
 
 describe('IndieDelegate', function() {
   let indieDelegate
+  let indieDelegateLegacy
 
   beforeEach(function() {
     indieDelegate = new IndieDelegate({
       name: 'Indie',
     }, 2)
+    indieDelegateLegacy = new IndieDelegate({
+      name: 'Indie Legacy',
+    }, 1)
   })
   afterEach(function() {
     indieDelegate.dispose()
+    indieDelegateLegacy.dispose()
   })
 
   it('has the basic linter properties', function() {
@@ -23,7 +28,7 @@ describe('IndieDelegate', function() {
   })
   describe('::setMessages && ::getMessages && ::clearMessages', function() {
     it('works as expected', function() {
-      const message = getMessage()
+      const message = getMessage(false)
       expect(indieDelegate.getMessages()).toEqual([])
       indieDelegate.setMessages(message.location.file, [message])
       expect(indieDelegate.getMessages()).toEqual([message])
@@ -33,9 +38,9 @@ describe('IndieDelegate', function() {
   })
   describe('::setMessages', function() {
     it('overwrites previous messages for that file', function() {
-      const messageA = getMessage()
-      const messageB = getMessage()
-      const messageC = getMessage()
+      const messageA = getMessage(false)
+      const messageB = getMessage(false)
+      const messageC = getMessage(false)
       expect(indieDelegate.getMessages()).toEqual([])
       indieDelegate.setMessages(messageA.location.file, [messageA, messageB])
       expect(indieDelegate.getMessages()).toEqual([messageA, messageB])
@@ -79,16 +84,16 @@ describe('IndieDelegate', function() {
         indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(__filename), getMessage(__filename)])
       }).not.toThrow()
       expect(function() {
-        indieDelegate.setMessages(__filename, [getMessage()])
+        indieDelegate.setMessages(__filename, [getMessage(false)])
       }).toThrow('message.location.file does not match the given filePath')
       expect(function() {
-        indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage()])
+        indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(false)])
       }).toThrow('message.location.file does not match the given filePath')
       expect(function() {
-        indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(), getMessage(__filename)])
+        indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(false), getMessage(__filename)])
       }).toThrow('message.location.file does not match the given filePath')
       expect(function() {
-        indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(__filename), getMessage()])
+        indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(__filename), getMessage(false)])
       }).toThrow('message.location.file does not match the given filePath')
     })
     // TODO: Feed some invalid messages
@@ -121,10 +126,10 @@ describe('IndieDelegate', function() {
   describe('::setAllMessages', function() {
     // TODO: Feed some invalid messages
     it('automatically splits messages into filePath groups', function() {
-      const messageA = getMessage()
-      const messageB = getMessage()
-      const messageC = getMessage()
-      const messageD = getMessage()
+      const messageA = getMessage(false)
+      const messageB = getMessage(false)
+      const messageC = getMessage(false)
+      const messageD = getMessage(false)
 
       messageC.location.file = messageD.location.file = __filename
       expect(indieDelegate.messages.size).toBe(0)
@@ -145,7 +150,7 @@ describe('IndieDelegate', function() {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
-      indieDelegate.setAllMessages([getMessage()])
+      indieDelegate.setAllMessages([getMessage(false)])
       expect(timesUpdated).toBe(1)
       indieDelegate.dispose()
       indieDelegate.setAllMessages([])
@@ -157,7 +162,7 @@ describe('IndieDelegate', function() {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
-      indieDelegate.setAllMessages([getMessage()])
+      indieDelegate.setAllMessages([getMessage(false)])
       expect(timesUpdated).toBe(1)
       indieDelegate.setAllMessages([])
       expect(timesUpdated).toBe(2)
@@ -165,7 +170,7 @@ describe('IndieDelegate', function() {
   })
   describe('::dispose', function() {
     it('clears messages', function() {
-      indieDelegate.setAllMessages([getMessage()])
+      indieDelegate.setAllMessages([getMessage(false)])
       expect(indieDelegate.messages.size).toBe(1)
       indieDelegate.dispose()
       expect(indieDelegate.messages.size).toBe(0)
@@ -180,4 +185,23 @@ describe('IndieDelegate', function() {
       expect(didDestroy).toBe(true)
     })
   })
+  describe('Legacy features', function() {
+    it('has a deleteMessages() has throws on newer version', function() {
+      expect(function() {
+        indieDelegate.deleteMessages()
+      }).toThrow('Call to depreciated method deleteMessages(). Use clearMessages() insead')
+    })
+    it('has a setMessages() that throws when called with old signature', function() {
+      expect(function() {
+        indieDelegate.setMessages([])
+      }).toThrow('Invalid Parameters to setMessages()')
+    })
+    it('sets and clears messages properly on legacy version', function() {
+      indieDelegateLegacy.setMessages([getMessageLegacy(false)])
+      expect(indieDelegateLegacy.getMessages().length).toBe(1)
+      indieDelegateLegacy.deleteMessages()
+      expect(indieDelegateLegacy.getMessages().length).toBe(0)
+    })
+  })
+  // TODO: Give it some invalid ones to check validator
 })
