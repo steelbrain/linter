@@ -21,32 +21,6 @@ describe('IndieDelegate', function() {
     expect(typeof indieDelegate.scope).toBe('string')
     expect(indieDelegate.scope).toBe('project')
   })
-  describe('::normalizeMessages', function() {
-    it('returns true if messages are valid', function() {
-      expect(IndieDelegate.normalizeMessages(indieDelegate.name, [getMessage(false)])).toBe(true)
-    })
-    it('returns false if messages are invalid', function() {
-      // $FlowIgnore: Invalid message type on purpose
-      expect(IndieDelegate.normalizeMessages(indieDelegate.name, [{}])).toBe(false)
-    })
-    it('only normalizes when messages are valid', function() {
-      {
-        // scenario: valid
-        const message = getMessage(false)
-        expect(message.location.position.constructor.name).toBe('Array')
-        expect(IndieDelegate.normalizeMessages(indieDelegate.name, [message])).toBe(true)
-        expect(message.location.position.constructor.name).toBe('Range')
-        expect(message.version).toBe(2)
-      }
-      {
-        // scenario: invalid
-        const message: Object = { }
-        expect(message.version).not.toBeDefined()
-        expect(IndieDelegate.normalizeMessages(indieDelegate.name, [message])).toBe(false)
-        expect(message.version).not.toBeDefined()
-      }
-    })
-  })
   describe('::setMessages && ::getMessages && ::clearMessages', function() {
     it('works as expected', function() {
       const message = getMessage()
@@ -106,17 +80,18 @@ describe('IndieDelegate', function() {
       }).not.toThrow()
       expect(function() {
         indieDelegate.setMessages(__filename, [getMessage()])
-      }).toThrow('messages[0].location.file does not match the given filePath')
+      }).toThrow('message.location.file does not match the given filePath')
       expect(function() {
         indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage()])
-      }).toThrow('messages[1].location.file does not match the given filePath')
+      }).toThrow('message.location.file does not match the given filePath')
       expect(function() {
         indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(), getMessage(__filename)])
-      }).toThrow('messages[1].location.file does not match the given filePath')
+      }).toThrow('message.location.file does not match the given filePath')
       expect(function() {
         indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(__filename), getMessage()])
-      }).toThrow('messages[2].location.file does not match the given filePath')
+      }).toThrow('message.location.file does not match the given filePath')
     })
+    // TODO: Feed some invalid messages
   })
   describe('::clearMessages', function() {
     it('does not update if disposed', function() {
@@ -144,6 +119,7 @@ describe('IndieDelegate', function() {
     })
   })
   describe('::setAllMessages', function() {
+    // TODO: Feed some invalid messages
     it('automatically splits messages into filePath groups', function() {
       const messageA = getMessage()
       const messageB = getMessage()
