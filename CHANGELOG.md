@@ -1,4 +1,4 @@
-## Upcoming
+## 2.0.0
 
 * Rewrite entire package
 * Add support for Linter Messages v2
