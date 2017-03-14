@@ -233,4 +233,19 @@ describe('IndieDelegate', function() {
       expect(atom.notifications.getNotifications().length).toBe(1)
     })
   })
+  describe('::onDidUpdate', function() {
+    it('includes all of the messages', function() {
+      const messagesA = [getMessage('a'), getMessage('a'), getMessage('a'), getMessage('a'), getMessage('a')]
+      const messagesB = [getMessage('b'), getMessage('b'), getMessage('b'), getMessage('b'), getMessage('b')]
+      const spyCallback = jasmine.createSpy('onDidUpdate')
+      indieDelegate.onDidUpdate(spyCallback)
+      indieDelegate.setMessages('a', messagesA)
+      indieDelegate.setMessages('b', messagesB)
+      indieDelegate.clearMessages()
+      expect(spyCallback.calls.length).toBe(3)
+      expect(spyCallback.calls[0].args[0]).toEqual(messagesA)
+      expect(spyCallback.calls[1].args[0]).toEqual(messagesA.concat(messagesB))
+      expect(spyCallback.calls[2].args[0]).toEqual([])
+    })
+  })
 })
