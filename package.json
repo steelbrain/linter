@@ -1,6 +1,6 @@
 {
   "name": "linter",
-  "main": "./lib/index",
+  "main": "./lib/index.js",
   "author": "steelbrain",
   "readme": "./README.md",
   "version": "1.99.0",
