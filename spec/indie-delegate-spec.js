@@ -9,7 +9,7 @@ describe('IndieDelegate', function() {
   beforeEach(function() {
     indieDelegate = new IndieDelegate({
       name: 'Indie',
-    })
+    }, 2)
   })
   afterEach(function() {
     indieDelegate.dispose()
