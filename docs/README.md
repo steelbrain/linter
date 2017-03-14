@@ -1,7 +1,5 @@
 # Linter Documentation
 
-⚠️⚠️⚠️ Linter v2 is currently unreleased, use [the v1 docs][v1 docs]. ⚠️⚠️⚠️
-
 Welcome to the official Linter docs.
 
 ## Linter Provider Examples
