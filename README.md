@@ -26,7 +26,7 @@ Or you can install from Settings view by searching for `Base Linter`, (this pack
 
 #### API Documentation
 
-Please navigate to [/docs](https://github.com/steelbrain/linter/tree/master/docs) for Linter v2 documentation.
+Please navigate to [steelbrain.me/linter](http://steelbrain.me/linter/) for Linter v2 documentation.
 
 #### Contribute
 
