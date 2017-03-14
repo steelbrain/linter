@@ -61,7 +61,7 @@ export function consumeIndie(registerIndie) {
     linter.setMessages(editorPath, [{
       severity: 'info',
       location: {
-        path: editorPath,
+        file: editorPath,
         position: [[0, 0], [0, 1]],
       },
       excerpt: `A random value is ${Math.random()}`,
