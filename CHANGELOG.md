@@ -1,3 +1,7 @@
+## 2.1.0
+
+* Add support for Legacy Indie Providers v1
+
 ## 2.0.0
 
 * Rewrite entire package
