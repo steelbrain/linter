@@ -1,7 +1,7 @@
 # Linter Message v2
 
 This document describes the type of Linter Message v2. It's supported in
-[`Indie Linter v2`][] and [`Standard Linter v2`][].
+[Indie Linter v2][] and [Standard Linter v2][].
 
 ## Type
 
@@ -82,8 +82,8 @@ the same message.
 
 **A**: These are references to built in [`Point`][] and [`Range`][] classes.
 
-[`Indie Linter v2`]: indie-linter-v2.md
-[`Standard Linter v2`]: standard-linter-v2.md
+[Indie Linter v2]: indie-linter-v2.md
+[Standard Linter v2]: standard-linter-v2.md
 [`flowtype`]: https://flowtype.org/
 [Intentions]: https://atom.io/packages/intentions
 [`Point`]: https://atom.io/docs/api/latest/Point
