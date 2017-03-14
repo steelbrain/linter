@@ -39,7 +39,7 @@ class IndieDelegate {
 **A**:
 
 *   `setMessages` replaces the last stored messages for the given `filePath` for
-    your delegate. All messages provided must have the same `location.path` as
+    your delegate. All messages provided must have the same `location.file` as
     the given `filePath`.
 
 *   `setAllMessages` replaces the list of messages Linter has stored for your
