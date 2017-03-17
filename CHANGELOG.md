@@ -1,3 +1,7 @@
+## Upcoming
+
+* Make `linter.name` optional for v1 again
+
 ## 2.1.0
 
 * Add support for Legacy Indie Providers v1

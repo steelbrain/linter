@@ -157,19 +157,27 @@ describe('Validate', function() {
       validateLinter(NaN, false, 'Linter must be an object', 1)
       validateLinter(undefined, false, 'Linter must be an object', 1)
     })
+    it('does not cry if linter.name is not a string on v1', function() {
+      validateLinter({
+        lint() {},
+        scope: 'file',
+        lintOnFly: true,
+        grammarScopes: [],
+      }, true, '', 1)
+    })
     it('cries if linter.name is not a string', function() {
       validateLinter({
         name: undefined,
-      }, false, 'Linter.name must be a string', 1)
+      }, false, 'Linter.name must be a string', 2)
       validateLinter({
         name: NaN,
-      }, false, 'Linter.name must be a string', 1)
+      }, false, 'Linter.name must be a string', 2)
       validateLinter({
         name: null,
-      }, false, 'Linter.name must be a string', 1)
+      }, false, 'Linter.name must be a string', 2)
       validateLinter({
         name: 5,
-      }, false, 'Linter.name must be a string', 1)
+      }, false, 'Linter.name must be a string', 2)
     })
     it('cries if linter.scope is not valid', function() {
       validateLinter({
