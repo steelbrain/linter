@@ -49,7 +49,7 @@
     "sb-debounce": "^1.0.1"
   },
   "devDependencies": {
-    "eslint-config-steelbrain": "^2.0.0",
+    "eslint-config-steelbrain": "^3.0.0",
     "flow-bin": "^0.42.0",
     "jasmine-fix": "^1.0.0"
   },
