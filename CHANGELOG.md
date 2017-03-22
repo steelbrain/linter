@@ -1,4 +1,4 @@
-## Upcoming
+## 2.1.1
 
 * Unset no longer available v1 configs
 * Make `linter.name` optional for v1 again
