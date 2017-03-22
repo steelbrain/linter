@@ -23,13 +23,9 @@ describe('Greeter', function() {
     await new Promise(resolve => FS.writeFile(LINTER_CONFIG_FILE_PATH, JSON.stringify(oldConfig, null, 2), resolve))
   })
 
-  it('Lifecycle (::activate && ::dispose)', async function() {
+  it('Lifecycle (::activate && ::dispose)', function() {
     expect(atom.notifications.getNotifications().length).toBe(0)
-    await greeter.activate()
+    greeter.showWelcome()
     expect(atom.notifications.getNotifications().length).toBe(1)
-    expect(await configFile.get('greeter.shown')).toEqual(['V2_WELCOME_MESSAGE'])
-    await greeter.activate()
-    expect(atom.notifications.getNotifications().length).toBe(1)
-    expect(await configFile.get('greeter.shown')).toEqual(['V2_WELCOME_MESSAGE'])
   })
 })
