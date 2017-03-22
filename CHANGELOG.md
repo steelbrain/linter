@@ -2,6 +2,7 @@
 
 * Unset no longer available v1 configs
 * Make `linter.name` optional for v1 again
+* Fix a bug where disabling and reenabling `linter-ui-default` would not add previously existent issues to the UI
 
 ## 2.1.0
 
