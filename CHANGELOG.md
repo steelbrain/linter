@@ -1,3 +1,7 @@
+## 2.1.2
+
+- Hotfix release for a regression introduced in last version
+
 ## 2.1.1
 
 * Unset no longer available v1 configs

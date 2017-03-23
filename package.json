@@ -45,6 +45,7 @@
     "eslint-config-steelbrain": "^2.0.0",
     "lodash.uniq": "^4.5.0",
     "minimatch": "^3.0.3",
+    "sb-config-file": "^3.0.2",
     "sb-debounce": "^1.0.1"
   },
   "devDependencies": {
