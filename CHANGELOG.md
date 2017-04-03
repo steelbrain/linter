@@ -1,3 +1,7 @@
+## Upcoming
+
+- Enhance linter provider error message to include opening instructions for dev tools
+
 ## 2.1.2
 
 - Hotfix release for a regression introduced in last version
