@@ -402,13 +402,16 @@ describe('LinterRegistry', function() {
 
       linterRegistry.onDidBeginLinting(function() {
         timesBegan++
+        expect(timesFinished).toBe(0)
       })
       linterRegistry.onDidFinishLinting(function() {
         timesFinished++
+        expect(timesBegan).toBe(1)
       })
       linterRegistry.onDidUpdateMessages(function({ buffer }) {
         timesUpdated++
         expect(buffer.constructor.name).toBe('TextBuffer')
+        expect(timesFinished).toBe(1)
       })
 
       const linter = getLinter()
@@ -416,11 +419,11 @@ describe('LinterRegistry', function() {
       linter.scope = 'file'
       linterRegistry.addLinter(linter)
       const promise = linterRegistry.lint({ editor, onChange: false })
-      await wait(20)
-      expect(timesBegan).toBe(1)
+      expect(timesBegan).toBe(0)
       expect(timesUpdated).toBe(0)
       expect(timesFinished).toBe(0)
       expect(await promise).toBe(true)
+      expect(timesBegan).toBe(1)
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(1)
     })
