@@ -3,7 +3,7 @@
   "main": "./lib/index.js",
   "author": "steelbrain",
   "readme": "./README.md",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "description": "A Base Linter with Cow Powers",
   "repository": "https://github.com/steelbrain/linter",
   "license": "MIT",
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "atom-package-deps": "^4.4.1",
-    "atom-select-list": "0.0.16",
+    "atom-select-list": "0.1.0",
     "cool-trim": "^1.1.1",
     "eslint-config-steelbrain": "^2.0.0",
     "lodash.uniq": "^4.5.0",
@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "eslint-config-steelbrain": "^3.0.0",
-    "flow-bin": "^0.42.0",
+    "flow-bin": "^0.43.0",
     "jasmine-fix": "^1.0.0"
   },
   "package-deps": [

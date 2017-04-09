@@ -8,6 +8,9 @@ Linter
 [![Plugin installs!](https://img.shields.io/apm/dm/linter.svg?style=flat-square)](https://atom.io/packages/linter)
 [![Package version!](https://img.shields.io/apm/v/linter.svg?style=flat-square)](https://atom.io/packages/linter)
 [![Dependencies!](https://img.shields.io/david/steelbrain/Linter.svg?style=flat-square)](https://david-dm.org/steelbrain/linter)
+[![OpenCollective](https://opencollective.com/linter/backers/badge.svg)](#backers) 
+[![OpenCollective](https://opencollective.com/linter/sponsors/badge.svg)](#sponsors)
+
 
 Linter is a base linter provider for the hackable [Atom Editor](http://atom.io). Additionally, you need to install a specific linter for your language. You will find a full list on [atomlinter.github.io](http://atomlinter.github.io/).
 
@@ -36,3 +39,73 @@ Stick to imposed codestyle:
 
 * `$ npm i`
 * `$ npm test`
+
+#### Backers
+
+Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/linter#backer)]
+
+<a href="https://opencollective.com/linter/backer/0/website" target="_blank"><img src="https://opencollective.com/linter/backer/0/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/1/website" target="_blank"><img src="https://opencollective.com/linter/backer/1/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/2/website" target="_blank"><img src="https://opencollective.com/linter/backer/2/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/3/website" target="_blank"><img src="https://opencollective.com/linter/backer/3/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/4/website" target="_blank"><img src="https://opencollective.com/linter/backer/4/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/5/website" target="_blank"><img src="https://opencollective.com/linter/backer/5/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/6/website" target="_blank"><img src="https://opencollective.com/linter/backer/6/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/7/website" target="_blank"><img src="https://opencollective.com/linter/backer/7/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/8/website" target="_blank"><img src="https://opencollective.com/linter/backer/8/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/9/website" target="_blank"><img src="https://opencollective.com/linter/backer/9/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/10/website" target="_blank"><img src="https://opencollective.com/linter/backer/10/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/11/website" target="_blank"><img src="https://opencollective.com/linter/backer/11/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/12/website" target="_blank"><img src="https://opencollective.com/linter/backer/12/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/13/website" target="_blank"><img src="https://opencollective.com/linter/backer/13/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/14/website" target="_blank"><img src="https://opencollective.com/linter/backer/14/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/15/website" target="_blank"><img src="https://opencollective.com/linter/backer/15/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/16/website" target="_blank"><img src="https://opencollective.com/linter/backer/16/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/17/website" target="_blank"><img src="https://opencollective.com/linter/backer/17/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/18/website" target="_blank"><img src="https://opencollective.com/linter/backer/18/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/19/website" target="_blank"><img src="https://opencollective.com/linter/backer/19/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/20/website" target="_blank"><img src="https://opencollective.com/linter/backer/20/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/21/website" target="_blank"><img src="https://opencollective.com/linter/backer/21/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/22/website" target="_blank"><img src="https://opencollective.com/linter/backer/22/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/23/website" target="_blank"><img src="https://opencollective.com/linter/backer/23/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/24/website" target="_blank"><img src="https://opencollective.com/linter/backer/24/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/25/website" target="_blank"><img src="https://opencollective.com/linter/backer/25/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/26/website" target="_blank"><img src="https://opencollective.com/linter/backer/26/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/27/website" target="_blank"><img src="https://opencollective.com/linter/backer/27/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/28/website" target="_blank"><img src="https://opencollective.com/linter/backer/28/avatar.svg"></a>
+<a href="https://opencollective.com/linter/backer/29/website" target="_blank"><img src="https://opencollective.com/linter/backer/29/avatar.svg"></a>
+
+#### Sponsors
+
+Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/linter#sponsor)]
+
+<a href="https://opencollective.com/linter/sponsor/0/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/1/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/2/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/3/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/4/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/5/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/6/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/7/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/8/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/9/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/9/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/10/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/10/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/11/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/11/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/12/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/12/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/13/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/13/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/14/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/14/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/15/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/15/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/16/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/16/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/17/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/17/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/18/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/18/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/19/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/19/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/20/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/20/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/21/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/21/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/22/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/22/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/23/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/23/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/24/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/24/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/25/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/25/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/26/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/26/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/27/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/27/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/28/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/28/avatar.svg"></a>
+<a href="https://opencollective.com/linter/sponsor/29/website" target="_blank"><img src="https://opencollective.com/linter/sponsor/29/avatar.svg"></a>
