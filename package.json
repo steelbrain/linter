@@ -57,6 +57,39 @@
     "linter-ui-default"
   ],
   "configSchema": {
+    "lintPreviewTabs": {
+      "type": "boolean",
+      "description": "Lint tabs while they are still in preview status",
+      "default": true,
+      "order": 1
+    },
+    "lintOnOpen": {
+      "title": "Lint on Open",
+      "description": "Lint files automatically when they are opened",
+      "type": "boolean",
+      "default": true,
+      "order": 2
+    },
+    "lintOnChange": {
+      "title": "Lint on Change",
+      "description": "Lint files while typing, without the need to save (only for supported providers)",
+      "type": "boolean",
+      "default": true,
+      "order": 3
+    },
+    "lintOnChangeInterval": {
+      "title": "Lint on Change Interval",
+      "description": "Interval at which linting is done as you type (in ms)",
+      "type": "integer",
+      "default": 300,
+      "order": 4
+    },
+    "ignoreGlob": {
+      "title": "Ignore files matching this Glob",
+      "type": "string",
+      "default": "**/*.min.{js,css}",
+      "order": 5
+    },
     "disabledProviders": {
       "title": "Disabled providers",
       "type": "array",
@@ -65,39 +98,6 @@
       },
       "description": "Names of disabled linter providers",
       "default": [],
-      "order": 1
-    },
-    "lintPreviewTabs": {
-      "type": "boolean",
-      "description": "Lint tabs while they are still in preview status",
-      "default": true,
-      "order": 2
-    },
-    "lintOnOpen": {
-      "title": "Lint on Open",
-      "description": "Lint files automatically when they are opened",
-      "type": "boolean",
-      "default": true,
-      "order": 3
-    },
-    "lintOnChange": {
-      "title": "Lint on Change",
-      "description": "Lint files while typing, without the need to save (only for supported providers)",
-      "type": "boolean",
-      "default": true,
-      "order": 4
-    },
-    "lintOnChangeInterval": {
-      "title": "Lint on Change Interval",
-      "description": "Interval at which linting is done as you type (in ms)",
-      "type": "integer",
-      "default": 300,
-      "order": 5
-    },
-    "ignoreGlob": {
-      "title": "Ignore files matching this Glob",
-      "type": "string",
-      "default": "**/*.min.{js,css}",
       "order": 6
     }
   }
