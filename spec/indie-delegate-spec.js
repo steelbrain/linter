@@ -139,7 +139,8 @@ describe('IndieDelegate', function() {
       const messageC = getMessage(false)
       const messageD = getMessage(false)
 
-      messageC.location.file = messageD.location.file = __filename
+      messageC.location.file = __filename
+      messageD.location.file = __filename
       expect(indieDelegate.messages.size).toBe(0)
       indieDelegate.setAllMessages([messageA, messageB, messageC, messageD])
       expect(indieDelegate.messages.size).toBe(2)
