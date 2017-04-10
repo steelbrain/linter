@@ -510,8 +510,7 @@ describe('LinterRegistry', function() {
       linterRegistry.onDidUpdateMessages(() => timesUpdated++)
 
       const linter = getLinter()
-      const config = await linterRegistry.getConfig()
-      const disabled = await config.get('disabled')
+      atom.config.set('linter.disabledProviders', [])
       const editor = atom.workspace.getActiveTextEditor()
       linter.name = 'Some Linter'
       linterRegistry.addLinter(linter)
@@ -523,8 +522,7 @@ describe('LinterRegistry', function() {
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(1)
 
-      disabled.push(linter.name)
-      await config.set('disabled', disabled)
+      atom.config.set('linter.disabledProviders', [linter.name])
       await wait(100)
 
       promise = linterRegistry.lint({ editor, onChange: false })
@@ -533,8 +531,7 @@ describe('LinterRegistry', function() {
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(1)
 
-      disabled.splice(disabled.indexOf(linter.name), 1)
-      await config.set('disabled', disabled)
+      atom.config.set('linter.disabledProviders', [])
       await wait(100)
 
       promise = linterRegistry.lint({ editor, onChange: false })

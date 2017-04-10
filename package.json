@@ -45,7 +45,6 @@
     "eslint-config-steelbrain": "^2.0.0",
     "lodash.uniq": "^4.5.0",
     "minimatch": "^3.0.3",
-    "sb-config-file": "^3.0.2",
     "sb-debounce": "^1.0.1"
   },
   "devDependencies": {
@@ -57,6 +56,16 @@
     "linter-ui-default"
   ],
   "configSchema": {
+    "disabledProviders": {
+      "title": "Disabled providers",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Names of disabled linter providers",
+      "default": [],
+      "order": 1
+    },
     "lintPreviewTabs": {
       "type": "boolean",
       "description": "Lint tabs while they are still in preview status",
