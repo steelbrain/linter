@@ -401,9 +401,6 @@ describe('LinterRegistry', function() {
       linter.scope = 'file'
       linterRegistry.addLinter(linter)
       const promise = linterRegistry.lint({ editor, onChange: false })
-      expect(timesBegan).toBe(0)
-      expect(timesUpdated).toBe(0)
-      expect(timesFinished).toBe(0)
       expect(await promise).toBe(true)
       expect(timesBegan).toBe(1)
       expect(timesUpdated).toBe(1)
@@ -432,9 +429,6 @@ describe('LinterRegistry', function() {
       const editor = atom.workspace.getActiveTextEditor()
       linterRegistry.addLinter(linter)
       const promise = linterRegistry.lint({ editor, onChange: false })
-      expect(timesBegan).toBe(0)
-      expect(timesUpdated).toBe(0)
-      expect(timesFinished).toBe(0)
       expect(await promise).toBe(true)
       expect(timesBegan).toBe(1)
       expect(timesUpdated).toBe(1)
@@ -510,8 +504,7 @@ describe('LinterRegistry', function() {
       linterRegistry.onDidUpdateMessages(() => timesUpdated++)
 
       const linter = getLinter()
-      const config = await linterRegistry.getConfig()
-      const disabled = await config.get('disabled')
+      atom.config.set('linter.disabledProviders', [])
       const editor = atom.workspace.getActiveTextEditor()
       linter.name = 'Some Linter'
       linterRegistry.addLinter(linter)
@@ -523,8 +516,7 @@ describe('LinterRegistry', function() {
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(1)
 
-      disabled.push(linter.name)
-      await config.set('disabled', disabled)
+      atom.config.set('linter.disabledProviders', [linter.name])
       await wait(100)
 
       promise = linterRegistry.lint({ editor, onChange: false })
@@ -533,8 +525,7 @@ describe('LinterRegistry', function() {
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(1)
 
-      disabled.splice(disabled.indexOf(linter.name), 1)
-      await config.set('disabled', disabled)
+      atom.config.set('linter.disabledProviders', [])
       await wait(100)
 
       promise = linterRegistry.lint({ editor, onChange: false })

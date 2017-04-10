@@ -1,38 +1,29 @@
 /* @flow */
 
-import FS from 'fs'
-import { it, wait, beforeEach, afterEach } from 'jasmine-fix'
+import { it, wait } from 'jasmine-fix'
 
 import ToggleView from '../lib/toggle-view'
-import { LINTER_CONFIG_FILE_PATH, getConfigFile } from '../lib/helpers'
 
 describe('Toggle View', function() {
-  let oldConfig
-  beforeEach(async function() {
-    oldConfig = await (await getConfigFile()).get()
-  })
-  afterEach(async function() {
-    await new Promise(resolve => FS.writeFile(LINTER_CONFIG_FILE_PATH, JSON.stringify(oldConfig, null, 2), resolve))
+  beforeEach(function() {
+    atom.config.set('linter.disabledProviders', [])
   })
 
   describe('::getItems', function() {
     it('returns disabled when enabling', async function() {
       const toggleView = new ToggleView('enable', ['Package 1', 'Package 2', 'Package 3'])
-      const config = await toggleView.getConfig()
-      await config.set('disabled', ['Package 2'])
+      atom.config.set('linter.disabledProviders', ['Package 2'])
       expect(await toggleView.getItems()).toEqual(['Package 2'])
     })
     it('returns enabled when disabling', async function() {
       const toggleView = new ToggleView('disable', ['Package 1', 'Package 2', 'Package 3'])
-      const config = await toggleView.getConfig()
-      await config.set('disabled', ['Package 2'])
+      atom.config.set('linter.disabledProviders', ['Package 2'])
       expect(await toggleView.getItems()).toEqual(['Package 1', 'Package 3'])
     })
   })
   it('has a working lifecycle', async function() {
     const didDisable = []
     const toggleView = new ToggleView('disable', ['Package 1', 'Package 2', 'Package 3'])
-    const config = await toggleView.getConfig()
 
     spyOn(toggleView, 'process').andCallThrough()
     spyOn(toggleView, 'getItems').andCallThrough()
@@ -60,6 +51,6 @@ describe('Toggle View', function() {
     expect(toggleView.process.calls[0].args[0]).toBe('Package 2')
     await wait(50)
     expect(didDisable).toEqual(['Package 2'])
-    expect(await config.get('disabled')).toEqual(['Package 2'])
+    expect(atom.config.get('linter.disabledProviders')).toEqual(['Package 2'])
   })
 })

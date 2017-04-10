@@ -45,8 +45,8 @@
     "eslint-config-steelbrain": "^2.0.0",
     "lodash.uniq": "^4.5.0",
     "minimatch": "^3.0.3",
-    "sb-config-file": "^3.0.2",
-    "sb-debounce": "^1.0.1"
+    "sb-debounce": "^1.0.1",
+    "sb-fs": "^3.0.0"
   },
   "devDependencies": {
     "eslint-config-steelbrain": "^3.0.0",
@@ -61,33 +61,43 @@
       "type": "boolean",
       "description": "Lint tabs while they are still in preview status",
       "default": true,
-      "order": 2
+      "order": 1
     },
     "lintOnOpen": {
       "title": "Lint on Open",
       "description": "Lint files automatically when they are opened",
       "type": "boolean",
       "default": true,
-      "order": 3
+      "order": 2
     },
     "lintOnChange": {
       "title": "Lint on Change",
       "description": "Lint files while typing, without the need to save (only for supported providers)",
       "type": "boolean",
       "default": true,
-      "order": 4
+      "order": 3
     },
     "lintOnChangeInterval": {
       "title": "Lint on Change Interval",
       "description": "Interval at which linting is done as you type (in ms)",
       "type": "integer",
       "default": 300,
-      "order": 5
+      "order": 4
     },
     "ignoreGlob": {
       "title": "Ignore files matching this Glob",
       "type": "string",
       "default": "**/*.min.{js,css}",
+      "order": 5
+    },
+    "disabledProviders": {
+      "title": "Disabled providers",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Names of disabled linter providers",
+      "default": [],
       "order": 6
     }
   }
