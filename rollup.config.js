@@ -6,7 +6,7 @@ export default {
   dest: 'lib.bundle.js',
   plugins: [
     babel({
-      exclude: ['node_modules/**']
+      exclude: ['node_modules/**'],
     }),
     commonJS(),
   ],
