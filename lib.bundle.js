@@ -2,11 +2,9 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var FS = _interopDefault(require('sb-fs'));
 var Path = _interopDefault(require('path'));
 var atom$1 = require('atom');
 var arrayUnique = _interopDefault(require('lodash.uniq'));
-var SelectListView = _interopDefault(require('atom-select-list'));
 var debounce = _interopDefault(require('sb-debounce'));
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
@@ -494,6 +492,8 @@ var UIRegistry = function () {
   return UIRegistry;
 }();
 
+var SelectListView = void 0;
+
 var ToggleProviders = function () {
   function ToggleProviders(action, providers) {
     var _this = this;
@@ -558,6 +558,10 @@ var ToggleProviders = function () {
     value: function () {
       var _ref3 = asyncToGenerator(function* () {
         var _this3 = this;
+
+        if (!SelectListView) {
+          SelectListView = require('atom-select-list');
+        }
 
         var selectListView = new SelectListView({
           items: yield this.getItems(),
@@ -1561,6 +1565,7 @@ var Linter = function () {
     this.registryLinters = new LinterRegistry();
     this.registryMessages = new MessageRegistry();
 
+    this.idleCallbacks = new Set();
     this.subscriptions = new atom$1.CompositeDisposable();
 
     this.subscriptions.add(this.commands);
@@ -1675,21 +1680,28 @@ var Linter = function () {
       _this.registryUI.render(difference);
     });
 
-    this.registryEditors.activate();
+    var mainCallbackId = window.requestIdleCallback(function linterMainIdleCallback() {
+      var _this2 = this;
 
-    setTimeout(function () {
-      // NOTE: Atom triggers this on boot so wait a while
-      if (!_this.subscriptions.disposed) {
-        _this.subscriptions.add(atom.project.onDidChangePaths(function () {
-          _this.commands.lint();
+      // NOTE: Atom triggers this on boot so we wait a while
+      if (!this.subscriptions.disposed) {
+        this.subscriptions.add(atom.project.onDidChangePaths(function () {
+          _this2.commands.lint();
         }));
       }
-    }, 100);
+      this.registryEditors.activate();
+    }.bind(this));
+    this.idleCallbacks.add(mainCallbackId);
   }
 
   createClass(Linter, [{
     key: 'dispose',
     value: function dispose() {
+      this.idleCallbacks.forEach(function (id) {
+        return window.cancelIdleCallback(id);
+      });
+      this.idleCallbacks.clear();
+
       this.subscriptions.dispose();
     }
 
@@ -1783,7 +1795,6 @@ var Greeter = function () {
   return Greeter;
 }();
 
-// Internal variables
 var instance = void 0;
 
 var idleCallbacks = new Set();
@@ -1815,6 +1826,7 @@ var index = {
           atom.config.unset('linter.' + e);
         });
 
+        var FS = require('sb-fs');
         // There was an external config file in use briefly, migrate any use of that to settings
         var oldConfigFile = Path.join(atom.getConfigDirPath(), 'linter-config.json');
         if (yield FS.exists(oldConfigFile)) {
