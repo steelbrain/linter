@@ -2,8 +2,10 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var arrayUnique = _interopDefault(require('lodash.uniq'));
+var FS = _interopDefault(require('sb-fs'));
+var Path = _interopDefault(require('path'));
 var atom$1 = require('atom');
+var arrayUnique = _interopDefault(require('lodash.uniq'));
 var SelectListView = _interopDefault(require('atom-select-list'));
 var debounce = _interopDefault(require('sb-debounce'));
 
@@ -73,6 +75,44 @@ var createClass = function () {
     return Constructor;
   };
 }();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var taggedTemplateLiteral = function (strings, raw) {
+  return Object.freeze(Object.defineProperties(strings, {
+    raw: {
+      value: Object.freeze(raw)
+    }
+  }));
+};
 
 var Commands = function () {
   function Commands() {
@@ -1697,4 +1737,300 @@ var Linter = function () {
   return Linter;
 }();
 
-module.exports = Linter;
+var _templateObject = taggedTemplateLiteral(['\n      Hi Linter user! \uD83D\uDC4B\n\n      Linter has been upgraded to v2.\n\n      Packages compatible with v1 will keep working on v2 for a long time.\n      If you are a package author, I encourage you to upgrade your package to the Linter v2 API.\n\n      You can read [the announcement post on my blog](http://steelbrain.me/2017/03/13/linter-v2-released.html).\n    '], ['\n      Hi Linter user! \uD83D\uDC4B\n\n      Linter has been upgraded to v2.\n\n      Packages compatible with v1 will keep working on v2 for a long time.\n      If you are a package author, I encourage you to upgrade your package to the Linter v2 API.\n\n      You can read [the announcement post on my blog](http://steelbrain.me/2017/03/13/linter-v2-released.html).\n    ']);
+
+var coolTrim = void 0;
+
+function greet() {
+  if (!coolTrim) {
+    coolTrim = require('cool-trim');
+  }
+
+  return atom.notifications.addInfo('Welcome to Linter v2', {
+    dismissable: true,
+    description: coolTrim(_templateObject)
+  });
+}
+
+// Greets
+var Greeter = function () {
+  function Greeter() {
+    classCallCheck(this, Greeter);
+
+    this.notifications = new Set();
+  }
+
+  createClass(Greeter, [{
+    key: 'showWelcome',
+    value: function showWelcome() {
+      var _this = this;
+
+      var notification = greet();
+      notification.onDidDismiss(function () {
+        return _this.notifications.delete(notification);
+      });
+      this.notifications.add(notification);
+    }
+  }, {
+    key: 'dispose',
+    value: function dispose() {
+      this.notifications.forEach(function (n) {
+        return n.dismiss();
+      });
+      this.notifications.clear();
+    }
+  }]);
+  return Greeter;
+}();
+
+// Internal variables
+var instance = void 0;
+
+var idleCallbacks = new Set();
+
+var index = {
+  activate: function activate() {
+    this.subscriptions = new atom$1.CompositeDisposable();
+
+    instance = new Linter();
+    this.subscriptions.add(instance);
+
+    // TODO: Remove this after a few version bumps
+    var oldConfigCallbackID = window.requestIdleCallback(function () {
+      var _ref = asyncToGenerator(function* () {
+        idleCallbacks.delete(oldConfigCallbackID);
+
+        // Greet the user if they are coming from Linter v1
+        var greeter = new Greeter();
+        this.subscriptions.add(greeter);
+        var linterConfigs = atom.config.get('linter');
+        // Unset v1 configs
+        var removedV1Configs = ['lintOnFly', 'lintOnFlyInterval', 'ignoredMessageTypes', 'ignoreVCSIgnoredFiles', 'ignoreMatchedFiles', 'showErrorInline', 'inlineTooltipInterval', 'gutterEnabled', 'gutterPosition', 'underlineIssues', 'showProviderName', 'showErrorPanel', 'errorPanelHeight', 'alwaysTakeMinimumSpace', 'displayLinterInfo', 'displayLinterStatus', 'showErrorTabLine', 'showErrorTabFile', 'showErrorTabProject', 'statusIconScope', 'statusIconPosition'];
+        if (removedV1Configs.some(function (config) {
+          return {}.hasOwnProperty.call(linterConfigs, config);
+        })) {
+          greeter.showWelcome();
+        }
+        removedV1Configs.forEach(function (e) {
+          atom.config.unset('linter.' + e);
+        });
+
+        // There was an external config file in use briefly, migrate any use of that to settings
+        var oldConfigFile = Path.join(atom.getConfigDirPath(), 'linter-config.json');
+        if (yield FS.exists(oldConfigFile)) {
+          var disabledProviders = atom.config.get('linter.disabledProviders');
+          try {
+            var oldConfigFileContents = yield FS.readFile(oldConfigFile, 'utf8');
+            disabledProviders = disabledProviders.concat(JSON.parse(oldConfigFileContents).disabled);
+          } catch (_) {
+            console.error('[Linter] Error reading old state file', _);
+          }
+          atom.config.set('linter.disabledProviders', disabledProviders);
+          try {
+            yield FS.unlink(oldConfigFile);
+          } catch (_) {/* No Op */}
+        }
+      });
+
+      function linterOldConfigs() {
+        return _ref.apply(this, arguments);
+      }
+
+      return linterOldConfigs;
+    }().bind(this));
+    idleCallbacks.add(oldConfigCallbackID);
+
+    if (!atom.inSpecMode()) {
+      var linterDepsCallback = window.requestIdleCallback(function linterDepsInstall() {
+        idleCallbacks.delete(linterDepsCallback);
+        require('atom-package-deps').install('linter', true);
+      });
+      idleCallbacks.add(linterDepsCallback);
+    }
+  },
+  consumeLinter: function consumeLinter(linter) {
+    var linters = [].concat(linter);
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = linters[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var entry = _step.value;
+
+        instance.addLinter(entry);
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return) {
+          _iterator.return();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    return new atom$1.Disposable(function () {
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = linters[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var _entry = _step2.value;
+
+          instance.deleteLinter(_entry);
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+    });
+  },
+  consumeLinterLegacy: function consumeLinterLegacy(linter) {
+    var linters = [].concat(linter);
+    var _iteratorNormalCompletion3 = true;
+    var _didIteratorError3 = false;
+    var _iteratorError3 = undefined;
+
+    try {
+      for (var _iterator3 = linters[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+        var entry = _step3.value;
+
+        linter.name = linter.name || 'Unknown';
+        linter.lintOnFly = Boolean(linter.lintOnFly);
+        instance.addLinter(entry, true);
+      }
+    } catch (err) {
+      _didIteratorError3 = true;
+      _iteratorError3 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion3 && _iterator3.return) {
+          _iterator3.return();
+        }
+      } finally {
+        if (_didIteratorError3) {
+          throw _iteratorError3;
+        }
+      }
+    }
+
+    return new atom$1.Disposable(function () {
+      var _iteratorNormalCompletion4 = true;
+      var _didIteratorError4 = false;
+      var _iteratorError4 = undefined;
+
+      try {
+        for (var _iterator4 = linters[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+          var _entry2 = _step4.value;
+
+          instance.deleteLinter(_entry2);
+        }
+      } catch (err) {
+        _didIteratorError4 = true;
+        _iteratorError4 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion4 && _iterator4.return) {
+            _iterator4.return();
+          }
+        } finally {
+          if (_didIteratorError4) {
+            throw _iteratorError4;
+          }
+        }
+      }
+    });
+  },
+  consumeUI: function consumeUI(ui) {
+    var uis = [].concat(ui);
+    var _iteratorNormalCompletion5 = true;
+    var _didIteratorError5 = false;
+    var _iteratorError5 = undefined;
+
+    try {
+      for (var _iterator5 = uis[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+        var entry = _step5.value;
+
+        instance.addUI(entry);
+      }
+    } catch (err) {
+      _didIteratorError5 = true;
+      _iteratorError5 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion5 && _iterator5.return) {
+          _iterator5.return();
+        }
+      } finally {
+        if (_didIteratorError5) {
+          throw _iteratorError5;
+        }
+      }
+    }
+
+    return new atom$1.Disposable(function () {
+      var _iteratorNormalCompletion6 = true;
+      var _didIteratorError6 = false;
+      var _iteratorError6 = undefined;
+
+      try {
+        for (var _iterator6 = uis[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+          var _entry3 = _step6.value;
+
+          instance.deleteUI(_entry3);
+        }
+      } catch (err) {
+        _didIteratorError6 = true;
+        _iteratorError6 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion6 && _iterator6.return) {
+            _iterator6.return();
+          }
+        } finally {
+          if (_didIteratorError6) {
+            throw _iteratorError6;
+          }
+        }
+      }
+    });
+  },
+  provideIndie: function provideIndie() {
+    return function (indie) {
+      return instance.addIndie(indie);
+    };
+  },
+  provideIndieLegacy: function provideIndieLegacy() {
+    return {
+      register: function register(indie) {
+        return instance.addLegacyIndie(indie);
+      }
+    };
+  },
+  deactivate: function deactivate() {
+    idleCallbacks.forEach(function (callbackID) {
+      return window.cancelIdleCallback(callbackID);
+    });
+    idleCallbacks.clear();
+    this.subscriptions.dispose();
+  }
+};
+
+module.exports = index;

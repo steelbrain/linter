@@ -13,7 +13,8 @@
   "private": true,
   "scripts": {
     "test": "(apm test) && (flow check) && (eslint . )",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "watch": "rollup -c -w"
   },
   "engines": {
     "atom": ">=1.14.0 <2.0.0"
@@ -57,7 +58,8 @@
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.0.2",
-    "rollup-plugin-node-resolve": "^3.0.0"
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-watch": "^3.2.2"
   },
   "package-deps": [
     "linter-ui-default"
