@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-babili": "0.0.12",
     "babel-preset-steelbrain": "^5.0.2",
     "eslint-config-steelbrain": "^3.0.0",
     "flow-bin": "^0.43.0",

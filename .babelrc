@@ -1,6 +1,9 @@
 {
-  "presets": [["steelbrain", {
-    "modules": false
-  }]],
+  "presets": [
+    ["steelbrain", {
+      "modules": false
+    }],
+    "babili"
+  ],
   "plugins": ["external-helpers"]
 }
