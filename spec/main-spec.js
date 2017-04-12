@@ -29,6 +29,9 @@ describe('Atom Linter', function() {
       },
       dispose() {},
     }
+    // Force the MessageRegistry to initialze, note that this is handled under
+    // normal usage!
+    atomLinter.registryMessagesInit()
     atomLinter.registryMessages.messages.push(message)
     atomLinter.addUI(uiProvider)
     expect(patchCalled).toBe(1)
