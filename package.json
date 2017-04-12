@@ -1,6 +1,6 @@
 {
   "name": "linter",
-  "main": "./lib/index.js",
+  "main": "index.js",
   "author": "steelbrain",
   "readme": "./README.md",
   "version": "2.1.2",
@@ -12,7 +12,8 @@
   ],
   "private": true,
   "scripts": {
-    "test": "(apm test) && (flow check) && (eslint . )"
+    "test": "(apm test) && (flow check) && (eslint . )",
+    "build": "rollup -c"
   },
   "engines": {
     "atom": ">=1.14.0 <2.0.0"
@@ -48,9 +49,15 @@
     "sb-fs": "^3.0.0"
   },
   "devDependencies": {
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-steelbrain": "^5.0.2",
     "eslint-config-steelbrain": "^3.0.0",
     "flow-bin": "^0.43.0",
-    "jasmine-fix": "^1.0.0"
+    "jasmine-fix": "^1.0.0",
+    "rollup": "^0.41.6",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^3.0.0"
   },
   "package-deps": [
     "linter-ui-default"

@@ -1,0 +1,6 @@
+{
+  "presets": [["steelbrain", {
+    "modules": false
+  }]],
+  "plugins": ["external-helpers"]
+}
