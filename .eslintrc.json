@@ -1,6 +1,7 @@
 {
   "extends": "steelbrain",
   "rules": {
+    "global-require": "off",
     "no-param-reassign": "off",
     "no-underscore-dangle": "off",
     "no-duplicate-imports": "off",
