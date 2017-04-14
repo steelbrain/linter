@@ -1,4 +1,4 @@
-## Upcoming
+## 2.1.3
 
 - Add `disabledProviders` config that tracks the list of disabled linter providers
 - Enhance linter provider error message to include opening instructions for dev tools
