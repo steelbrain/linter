@@ -1,3 +1,7 @@
+## 2.1.4
+
+* Hotfix release for a regression introduced in last version (sorry everyone)
+
 ## 2.1.3
 
 * Add `disabledProviders` config that tracks the list of disabled linter providers
