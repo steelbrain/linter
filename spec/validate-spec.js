@@ -555,13 +555,13 @@ describe('Validate', function() {
         excerpt: '',
         severity: 'error',
         url: 5,
-      }], false, 'Message.url must a string')
+      }], false, 'Message.url must be a string')
       validateMessages([{
         location: { file: __filename, position: [[0, 0], [0, 0]] },
         excerpt: '',
         severity: 'error',
         url: {},
-      }], false, 'Message.url must a string')
+      }], false, 'Message.url must be a string')
     })
     it('cries if message.description is present and is invalid', function() {
       validateMessages([{
@@ -613,6 +613,15 @@ describe('Validate', function() {
         description() { },
         severity: 'warning',
       }], true)
+    })
+    it('cries if message.linterName is present and is invalid', function() {
+      validateMessages([{
+        location: { file: __filename, position: [[0, 0], [0, 0]] },
+        excerpt: '',
+        severity: 'error',
+        description: '',
+        linterName: 1,
+      }], false, 'Message.linterName must be a string')
     })
   })
   describe('::messagesLegacy', function() {

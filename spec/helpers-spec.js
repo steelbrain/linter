@@ -174,6 +174,13 @@ describe('Helpers', function() {
       expect(typeof message.linterName).toBe('string')
       expect(message.linterName).toBe('Some Linter')
     })
+    it('preserves linterName if provided', function() {
+      const message = getMessage(false)
+      message.linterName = 'Some Linter 2'
+      Helpers.normalizeMessages('Some Linter', [message])
+      expect(typeof message.linterName).toBe('string')
+      expect(message.linterName).toBe('Some Linter 2')
+    })
     it('converts arrays in location->position to ranges', function() {
       const message = getMessage(false)
       message.location.position = [[0, 0], [0, 0]]
