@@ -44,12 +44,13 @@ type Message = {
   description?: string | (() => Promise<string> | string)
   // ^ Markdown long description of the error, accepts callback so you can do
   // http requests etc.
+  linterName?: string,
+  // ^ Optionally override the displayed linter name. Defaults to provider name.
 
   // NOTE: DO NOT SPECIFY THESE IN PROVIDER
   // Automatically added by base linter for UI consumers
   key: string,
   version: 2,
-  linterName: string,
 }
 ```
 
