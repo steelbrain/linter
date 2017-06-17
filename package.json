@@ -3,7 +3,7 @@
   "main": "./lib/index.js",
   "author": "steelbrain",
   "readme": "./README.md",
-  "version": "2.1.4",
+  "version": "2.2.0",
   "description": "A Base Linter with Cow Powers",
   "repository": "https://github.com/steelbrain/linter",
   "license": "MIT",
