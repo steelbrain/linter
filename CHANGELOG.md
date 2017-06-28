@@ -1,3 +1,7 @@
+## Upcoming
+
+* Include `description` in message key (when string rather than promise)
+
 ## 2.2.0
 
 * `linter:debug` overhaul with more debug information
