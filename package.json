@@ -44,7 +44,6 @@
     "chokidar": "^1.7.0",
     "cool-trim": "^1.1.1",
     "lodash.uniq": "^4.5.0",
-    "minimatch": "^3.0.3",
     "sb-debounce": "^1.0.1",
     "sb-fs": "^3.0.0"
   },
@@ -83,12 +82,6 @@
       "type": "integer",
       "default": 300,
       "order": 4
-    },
-    "ignoreGlob": {
-      "title": "Ignore files matching this Glob",
-      "type": "string",
-      "default": "**/*.min.{js,css}",
-      "order": 5
     },
     "disabledProviders": {
       "title": "Disabled providers",
