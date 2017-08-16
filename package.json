@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "eslint-config-steelbrain": "^3.0.0",
-    "flow-bin": "^0.51.1",
+    "flow-bin": "^0.53.0",
     "jasmine-fix": "^1.0.0"
   },
   "package-deps": [
