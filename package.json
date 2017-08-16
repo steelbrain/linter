@@ -41,6 +41,7 @@
   "dependencies": {
     "atom-package-deps": "^4.4.1",
     "atom-select-list": "0.2.0",
+    "chokidar": "^1.7.0",
     "cool-trim": "^1.1.1",
     "lodash.uniq": "^4.5.0",
     "minimatch": "^3.0.3",
