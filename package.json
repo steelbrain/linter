@@ -46,6 +46,7 @@
     "lodash.difference": "^4.5.0",
     "lodash.uniq": "^4.5.0",
     "minimatch": "^3.0.3",
+    "p-map": "^1.1.1",
     "sb-debounce": "^1.0.1",
     "sb-fs": "^3.0.0"
   },
