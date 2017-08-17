@@ -43,6 +43,7 @@
     "atom-select-list": "0.2.0",
     "chokidar": "^1.7.0",
     "cool-trim": "^1.1.1",
+    "lodash.difference": "^4.5.0",
     "lodash.uniq": "^4.5.0",
     "minimatch": "^3.0.3",
     "sb-debounce": "^1.0.1",
