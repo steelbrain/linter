@@ -84,15 +84,6 @@
       "default": 300,
       "order": 4
     },
-    "ignoreFileSources": {
-      "title": "Filetypes to read for list of ignored files",
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "default": [".gitignore", ".hgignore"],
-      "order": 5
-    },
     "disabledProviders": {
       "title": "Disabled providers",
       "type": "array",
