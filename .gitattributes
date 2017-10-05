@@ -12,6 +12,4 @@
 /appveyor.yml export-ignore
 /circle.yml export-ignore
 /package-lock.json export-ignore
-/CHANGELOG.md export-ignore
 /CONTRIBUTING.md export-ignore
-/README.md export-ignore
