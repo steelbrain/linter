@@ -50,7 +50,8 @@
   "devDependencies": {
     "eslint-config-steelbrain": "^3.0.0",
     "flow-bin": "^0.53.0",
-    "jasmine-fix": "^1.0.0"
+    "jasmine-fix": "^1.0.0",
+    "rimraf": "^2.6.2"
   },
   "package-deps": [
     "linter-ui-default"
