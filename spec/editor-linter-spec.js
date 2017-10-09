@@ -140,6 +140,6 @@ describe('EditorLinter', function() {
       expect(timesTriggered).toBe(2)
 
       rimraf.sync(tempDir)
-    })
+    }, { timeout: 1500 })
   })
 })
