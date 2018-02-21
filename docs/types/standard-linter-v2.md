@@ -21,9 +21,9 @@ type Linter = {
   lint(
     textEditor: TextEditor
   ):
-    | Array<Message | MessageLegacy>
+    | Array<Message>
     | null
-    | Promise<Array<Message | MessageLegacy> | null>
+    | Promise<Array<Message> | null>
 };
 ```
 
