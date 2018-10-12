@@ -40,6 +40,15 @@ describe('EditorLinter', function() {
       textEditor.destroy()
       expect(triggered).toBe(true)
     })
+    it('signals that there is another editor for the same file', async function() {
+      atom.workspace.getActivePane().splitLeft({ copyActiveItem: true, items: [] })
+      let editor = new EditorLinter(textEditor)
+      textEditor = atom.workspace.getActiveTextEditor()
+      editor = new EditorLinter(textEditor)
+      spyOn(editor.emitter, 'emit')
+      textEditor.destroy()
+      expect(editor.emitter.emit).toHaveBeenCalledWith('did-destroy', true)
+    })
   })
 
   describe('onShouldLint', function() {
