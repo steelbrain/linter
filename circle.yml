@@ -12,6 +12,7 @@ dependencies:
 
 test:
   override:
+    - npm lint
     - npm test
 
 machine:
