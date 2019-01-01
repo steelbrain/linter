@@ -13,7 +13,7 @@
   "private": true,
   "scripts": {
     "test": "apm test",
-    "lint": "(flow check) && (eslint . ) && (prettier --list-different src/*.js)"
+    "lint": "(flow check) && (eslint . ) && (prettier --list-different lib/*.js)"
   },
   "engines": {
     "atom": ">=1.14.0 <2.0.0"
