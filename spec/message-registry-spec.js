@@ -1,7 +1,7 @@
 /* @flow */
 
 import MessageRegistry from '../lib/message-registry'
-import { getMessageLegacy } from './common'
+import { getMessage } from './common'
 
 describe('Message Registry', function() {
   let messageRegistry
@@ -15,9 +15,9 @@ describe('Message Registry', function() {
 
   describe('::set', function() {
     it('stores results using both buffer and linter', function() {
-      const messageFirst = getMessageLegacy()
-      const messageSecond = getMessageLegacy()
-      const messageThird = getMessageLegacy()
+      const messageFirst = getMessage()
+      const messageSecond = getMessage()
+      const messageThird = getMessage()
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
       let info
@@ -88,7 +88,7 @@ describe('Message Registry', function() {
     it('notifies on changes', function() {
       let called = 0
       const linter: Object = { name: 'any' }
-      const message = getMessageLegacy()
+      const message = getMessage()
       messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
         called++
         expect(added.length).toBe(1)
@@ -105,9 +105,9 @@ describe('Message Registry', function() {
       const buffer: Object = {}
       const linterFirst: Object = { name: 'any' }
       const linterSecond: Object = {}
-      const messageFirst = getMessageLegacy()
-      const messageSecond = getMessageLegacy()
-      const messageThird = getMessageLegacy()
+      const messageFirst = getMessage()
+      const messageSecond = getMessage()
+      const messageThird = getMessage()
       let called = 0
 
       messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
@@ -172,9 +172,9 @@ describe('Message Registry', function() {
     it('sets key, severity on messages', function() {
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
-      const messageFirst = getMessageLegacy()
-      const messageSecond = getMessageLegacy()
-      const messageThird = getMessageLegacy()
+      const messageFirst = getMessage()
+      const messageSecond = getMessage()
+      const messageThird = getMessage()
 
       let called = 0
 
@@ -212,7 +212,7 @@ describe('Message Registry', function() {
 
     it('checks if an old message has updated, if so invalidates it properly', function() {
       let called = 0
-      const messageFirst = getMessageLegacy()
+      const messageFirst = getMessage()
       const messageSecond = Object.assign({}, messageFirst)
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
@@ -267,9 +267,9 @@ describe('Message Registry', function() {
 
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
-      const messageRealFirst = getMessageLegacy()
+      const messageRealFirst = getMessage()
       const messageDupeFirst = Object.assign({}, messageRealFirst)
-      const messageRealSecond = getMessageLegacy()
+      const messageRealSecond = getMessage()
       const messageDupeSecond = Object.assign({}, messageRealSecond)
 
       expect(called).toBe(0)
@@ -298,7 +298,7 @@ describe('Message Registry', function() {
 
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
-      const messageA = getMessageLegacy()
+      const messageA = getMessage()
       const messageB = Object.assign({}, messageA)
       const messageC = Object.assign({}, messageA)
 
@@ -336,8 +336,8 @@ describe('Message Registry', function() {
     it('deletes the messages and sends them in an event', function() {
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
-      const messageFirst = getMessageLegacy()
-      const messageSecond = getMessageLegacy()
+      const messageFirst = getMessage()
+      const messageSecond = getMessage()
 
       let called = 0
 
@@ -379,8 +379,8 @@ describe('Message Registry', function() {
     it('deletes the messages and sends them in an event', function() {
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
-      const messageFirst = getMessageLegacy()
-      const messageSecond = getMessageLegacy()
+      const messageFirst = getMessage()
+      const messageSecond = getMessage()
 
       let called = 0
 

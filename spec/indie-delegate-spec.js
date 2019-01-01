@@ -1,7 +1,7 @@
 /* @flow */
 
 import IndieDelegate from '../lib/indie-delegate'
-import { getMessage, getMessageLegacy } from './common'
+import { getMessage } from './common'
 
 describe('IndieDelegate', function() {
   let indieDelegate
@@ -208,36 +208,6 @@ describe('IndieDelegate', function() {
       expect(didDestroy).toBe(false)
       indieDelegate.dispose()
       expect(didDestroy).toBe(true)
-    })
-  })
-  describe('Legacy features', function() {
-    it('has a deleteMessages() has throws on newer version', function() {
-      expect(function() {
-        indieDelegate.deleteMessages()
-      }).toThrow('Call to depreciated method deleteMessages(). Use clearMessages() insead')
-    })
-    it('has a setMessages() that throws when called with old signature', function() {
-      expect(function() {
-        indieDelegate.setMessages([])
-      }).toThrow('Invalid Parameters to setMessages()')
-    })
-    it('sets and clears messages properly on legacy version', function() {
-      indieDelegateLegacy.setMessages([getMessageLegacy(false)])
-      expect(indieDelegateLegacy.getMessages().length).toBe(1)
-      indieDelegateLegacy.deleteMessages()
-      expect(indieDelegateLegacy.getMessages().length).toBe(0)
-    })
-    it('does not add invalid messages', function() {
-      expect(indieDelegateLegacy.getMessages().length).toBe(0)
-      expect(atom.notifications.getNotifications().length).toBe(0)
-
-      indieDelegateLegacy.setMessages([{}])
-      expect(indieDelegateLegacy.getMessages().length).toBe(0)
-      expect(atom.notifications.getNotifications().length).toBe(1)
-
-      indieDelegateLegacy.setMessages([getMessageLegacy(false)])
-      expect(indieDelegateLegacy.getMessages().length).toBe(1)
-      expect(atom.notifications.getNotifications().length).toBe(1)
     })
   })
   describe('::onDidUpdate', function() {

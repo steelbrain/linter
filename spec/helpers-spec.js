@@ -3,7 +3,7 @@
 import { Disposable } from 'atom'
 import { it } from 'jasmine-fix'
 import * as Helpers from '../lib/helpers'
-import { getFixturesPath, getMessage, getMessageLegacy } from './common'
+import { getFixturesPath, getMessage } from './common'
 
 describe('Helpers', function() {
   // NOTE: Did *not* add specs for messageKey and messageKeyLegacy on purpose
@@ -258,115 +258,6 @@ describe('Helpers', function() {
       Helpers.normalizeMessages('Some Linter', [message])
       expect(Array.isArray(message.solutions[0].position)).toBe(false)
       expect(message.solutions[0].position.constructor.name).toBe('Range')
-    })
-  })
-  describe('normalizeMessagesLegacy', function() {
-    it('adds a key to the message', function() {
-      const message = getMessageLegacy(false)
-      expect(typeof message.key).toBe('undefined')
-      Helpers.normalizeMessagesLegacy('Some Linter', [message])
-      expect(typeof message.key).toBe('string')
-    })
-    it('adds a version to the message', function() {
-      const message = getMessageLegacy(false)
-      expect(typeof message.version).toBe('undefined')
-      Helpers.normalizeMessagesLegacy('Some Linter', [message])
-      expect(typeof message.version).toBe('number')
-      expect(message.version).toBe(1)
-    })
-    it('adds a linterName to the message', function() {
-      const message = getMessageLegacy(false)
-      expect(typeof message.linterName).toBe('undefined')
-      Helpers.normalizeMessagesLegacy('Some Linter', [message])
-      expect(typeof message.linterName).toBe('string')
-      expect(message.linterName).toBe('Some Linter')
-    })
-    describe('adds a severity to the message', function() {
-      it('adds info correctly', function() {
-        const message = getMessageLegacy(false)
-        message.type = 'Info'
-        expect(typeof message.severity).toBe('undefined')
-        Helpers.normalizeMessagesLegacy('Some Linter', [message])
-        expect(typeof message.severity).toBe('string')
-        expect(message.severity).toBe('info')
-      })
-      it('adds info and is not case sensitive', function() {
-        const message = getMessageLegacy(false)
-        message.type = 'info'
-        expect(typeof message.severity).toBe('undefined')
-        Helpers.normalizeMessagesLegacy('Some Linter', [message])
-        expect(typeof message.severity).toBe('string')
-        expect(message.severity).toBe('info')
-      })
-      it('adds warning correctly', function() {
-        const message = getMessageLegacy(false)
-        message.type = 'Warning'
-        expect(typeof message.severity).toBe('undefined')
-        Helpers.normalizeMessagesLegacy('Some Linter', [message])
-        expect(typeof message.severity).toBe('string')
-        expect(message.severity).toBe('warning')
-      })
-      it('adds warning and is not case sensitive', function() {
-        const message = getMessageLegacy(false)
-        message.type = 'warning'
-        expect(typeof message.severity).toBe('undefined')
-        Helpers.normalizeMessagesLegacy('Some Linter', [message])
-        expect(typeof message.severity).toBe('string')
-        expect(message.severity).toBe('warning')
-      })
-      it('adds info to traces', function() {
-        const message = getMessageLegacy(false)
-        message.type = 'Trace'
-        expect(typeof message.severity).toBe('undefined')
-        Helpers.normalizeMessagesLegacy('Some Linter', [message])
-        expect(typeof message.severity).toBe('string')
-        expect(message.severity).toBe('info')
-      })
-      it('adds error for anything else', function() {
-        {
-          const message = getMessageLegacy(false)
-          message.type = 'asdasd'
-          expect(typeof message.severity).toBe('undefined')
-          Helpers.normalizeMessagesLegacy('Some Linter', [message])
-          expect(typeof message.severity).toBe('string')
-          expect(message.severity).toBe('error')
-        }
-        {
-          const message = getMessageLegacy(false)
-          message.type = 'AsdSDasdasd'
-          expect(typeof message.severity).toBe('undefined')
-          Helpers.normalizeMessagesLegacy('Some Linter', [message])
-          expect(typeof message.severity).toBe('string')
-          expect(message.severity).toBe('error')
-        }
-      })
-    })
-    it('converts arrays in range to Range', function() {
-      const message = getMessageLegacy(false)
-      message.range = [[0, 0], [0, 0]]
-      expect(Array.isArray(message.range)).toBe(true)
-      Helpers.normalizeMessagesLegacy('Some Linter', [message])
-      expect(Array.isArray(message.range)).toBe(false)
-      expect(message.range.constructor.name).toBe('Range')
-    })
-    it('converts arrays in fix->range to Range', function() {
-      const message = getMessageLegacy(false)
-      message.fix = { range: [[0, 0], [0, 0]], newText: 'fair' }
-      expect(Array.isArray(message.fix.range)).toBe(true)
-      Helpers.normalizeMessagesLegacy('Some Linter', [message])
-      expect(Array.isArray(message.fix.range)).toBe(false)
-      expect(message.fix.range.constructor.name).toBe('Range')
-    })
-    it('processes traces on messages', function() {
-      const message = getMessageLegacy(false)
-      message.type = 'asdasd'
-      const trace = getMessageLegacy(false)
-      trace.type = 'Trace'
-      message.trace = [trace]
-      expect(typeof trace.severity).toBe('undefined')
-      Helpers.normalizeMessagesLegacy('Some Linter', [message])
-      expect(typeof trace.severity).toBe('string')
-      expect(trace.severity).toBe('info')
     })
   })
 })
