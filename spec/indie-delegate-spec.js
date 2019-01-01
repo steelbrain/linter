@@ -5,7 +5,6 @@ import { getMessage } from './common'
 
 describe('IndieDelegate', function() {
   let indieDelegate
-  let indieDelegateLegacy
 
   beforeEach(function() {
     indieDelegate = new IndieDelegate(
@@ -14,16 +13,9 @@ describe('IndieDelegate', function() {
       },
       2,
     )
-    indieDelegateLegacy = new IndieDelegate(
-      {
-        name: 'Indie Legacy',
-      },
-      1,
-    )
   })
   afterEach(function() {
     indieDelegate.dispose()
-    indieDelegateLegacy.dispose()
   })
 
   it('has the basic linter properties', function() {

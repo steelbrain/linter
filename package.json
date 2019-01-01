@@ -21,7 +21,6 @@
   "consumedServices": {
     "linter": {
       "versions": {
-        "^1.0.0": "consumeLinterLegacy",
         "2.0.0": "consumeLinter"
       }
     },
@@ -34,7 +33,6 @@
   "providedServices": {
     "linter-indie": {
       "versions": {
-        "1.0.0": "provideIndieLegacy",
         "2.0.0": "provideIndie"
       }
     }

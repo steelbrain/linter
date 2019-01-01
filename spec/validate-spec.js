@@ -223,31 +223,18 @@ describe('Validate', function() {
     })
   })
   describe('::linter', function() {
-    function validateLinter(linter: any, expectedValue: boolean, message: string = '', version: 1 | 2) {
-      expect(Validate.linter(linter, version)).toBe(expectedValue)
+    function validateLinter(linter: any, expectedValue: boolean, message: string = '') {
+      expect(Validate.linter(linter)).toBe(expectedValue)
       if (!expectedValue) {
         expectNotification(message)
       }
     }
 
     it('cries if params is not an object', function() {
-      validateLinter(null, false, 'Linter must be an object', 1)
-      validateLinter(5, false, 'Linter must be an object', 1)
-      validateLinter(NaN, false, 'Linter must be an object', 1)
-      validateLinter(undefined, false, 'Linter must be an object', 1)
-    })
-    it('does not cry if linter.name is not a string on v1', function() {
-      validateLinter(
-        {
-          lint() {},
-          scope: 'file',
-          lintOnFly: true,
-          grammarScopes: [],
-        },
-        true,
-        '',
-        1,
-      )
+      validateLinter(null, false, 'Linter must be an object')
+      validateLinter(5, false, 'Linter must be an object')
+      validateLinter(NaN, false, 'Linter must be an object')
+      validateLinter(undefined, false, 'Linter must be an object')
     })
     it('cries if linter.name is not a string', function() {
       validateLinter(
@@ -256,7 +243,6 @@ describe('Validate', function() {
         },
         false,
         'Linter.name must be a string',
-        2,
       )
       validateLinter(
         {
@@ -264,7 +250,6 @@ describe('Validate', function() {
         },
         false,
         'Linter.name must be a string',
-        2,
       )
       validateLinter(
         {
@@ -272,7 +257,6 @@ describe('Validate', function() {
         },
         false,
         'Linter.name must be a string',
-        2,
       )
       validateLinter(
         {
@@ -280,7 +264,6 @@ describe('Validate', function() {
         },
         false,
         'Linter.name must be a string',
-        2,
       )
     })
     it('cries if linter.scope is not valid', function() {
@@ -291,7 +274,6 @@ describe('Validate', function() {
         },
         false,
         "Linter.scope must be either 'file' or 'project'",
-        1,
       )
       validateLinter(
         {
@@ -300,7 +282,6 @@ describe('Validate', function() {
         },
         false,
         "Linter.scope must be either 'file' or 'project'",
-        1,
       )
       validateLinter(
         {
@@ -309,7 +290,6 @@ describe('Validate', function() {
         },
         false,
         "Linter.scope must be either 'file' or 'project'",
-        1,
       )
       validateLinter(
         {
@@ -318,7 +298,6 @@ describe('Validate', function() {
         },
         false,
         "Linter.scope must be either 'file' or 'project'",
-        1,
       )
       validateLinter(
         {
@@ -327,7 +306,6 @@ describe('Validate', function() {
         },
         false,
         "Linter.scope must be either 'file' or 'project'",
-        1,
       )
       validateLinter(
         {
@@ -336,49 +314,6 @@ describe('Validate', function() {
         },
         false,
         "Linter.scope must be either 'file' or 'project'",
-        1,
-      )
-    })
-    it('cries if v is 1 and linter.lintOnFly is not boolean', function() {
-      validateLinter(
-        {
-          name: 'Linter',
-          scope: 'file',
-          lintOnFly: {},
-        },
-        false,
-        'Linter.lintOnFly must be a boolean',
-        1,
-      )
-      validateLinter(
-        {
-          name: 'Linter',
-          scope: 'file',
-          lintOnFly: [],
-        },
-        false,
-        'Linter.lintOnFly must be a boolean',
-        1,
-      )
-      validateLinter(
-        {
-          name: 'Linter',
-          scope: 'file',
-          lintOnFly: '',
-        },
-        false,
-        'Linter.lintOnFly must be a boolean',
-        1,
-      )
-      validateLinter(
-        {
-          name: 'Linter',
-          scope: 'file',
-          lintOnFly() {},
-        },
-        false,
-        'Linter.lintOnFly must be a boolean',
-        1,
       )
     })
     it('cries if v is 2 and linter.lintsOnChange is not boolean', function() {
@@ -390,7 +325,6 @@ describe('Validate', function() {
         },
         false,
         'Linter.lintsOnChange must be a boolean',
-        2,
       )
       validateLinter(
         {
@@ -400,7 +334,6 @@ describe('Validate', function() {
         },
         false,
         'Linter.lintsOnChange must be a boolean',
-        2,
       )
       validateLinter(
         {
@@ -410,7 +343,6 @@ describe('Validate', function() {
         },
         false,
         'Linter.lintsOnChange must be a boolean',
-        2,
       )
       validateLinter(
         {
@@ -420,7 +352,6 @@ describe('Validate', function() {
         },
         false,
         'Linter.lintsOnChange must be a boolean',
-        2,
       )
     })
     it('cries if linter.grammarScopes is not an array', function() {
@@ -428,56 +359,51 @@ describe('Validate', function() {
         {
           name: 'Linter',
           scope: 'file',
-          lintOnFly: false,
+          lintsOnChange: false,
           grammarScopes: undefined,
         },
         false,
         'Linter.grammarScopes must be an Array',
-        1,
       )
       validateLinter(
         {
           name: 'Linter',
           scope: 'file',
-          lintOnFly: false,
+          lintsOnChange: false,
           grammarScopes: null,
         },
         false,
         'Linter.grammarScopes must be an Array',
-        1,
       )
       validateLinter(
         {
           name: 'Linter',
           scope: 'file',
-          lintOnFly: false,
+          lintsOnChange: false,
           grammarScopes: 5,
         },
         false,
         'Linter.grammarScopes must be an Array',
-        1,
       )
       validateLinter(
         {
           name: 'Linter',
           scope: 'file',
-          lintOnFly: false,
+          lintsOnChange: false,
           grammarScopes: NaN,
         },
         false,
         'Linter.grammarScopes must be an Array',
-        1,
       )
       validateLinter(
         {
           name: 'Linter',
           scope: 'file',
-          lintOnFly: false,
+          lintsOnChange: false,
           grammarScopes: {},
         },
         false,
         'Linter.grammarScopes must be an Array',
-        1,
       )
     })
     it('cries if linter.lint is not a function', function() {
@@ -485,61 +411,56 @@ describe('Validate', function() {
         {
           name: 'Linter',
           scope: 'file',
-          lintOnFly: false,
+          lintsOnChange: false,
           grammarScopes: ['source.js'],
           lint: undefined,
         },
         false,
         'Linter.lint must be a function',
-        1,
       )
       validateLinter(
         {
           name: 'Linter',
           scope: 'file',
-          lintOnFly: false,
+          lintsOnChange: false,
           grammarScopes: ['source.js'],
           lint: 5,
         },
         false,
         'Linter.lint must be a function',
-        1,
       )
       validateLinter(
         {
           name: 'Linter',
           scope: 'file',
-          lintOnFly: false,
+          lintsOnChange: false,
           grammarScopes: ['source.js'],
           lint: NaN,
         },
         false,
         'Linter.lint must be a function',
-        1,
       )
       validateLinter(
         {
           name: 'Linter',
           scope: 'file',
-          lintOnFly: false,
+          lintsOnChange: false,
           grammarScopes: ['source.js'],
           lint: {},
         },
         false,
         'Linter.lint must be a function',
-        1,
       )
       validateLinter(
         {
           name: 'Linter',
           scope: 'file',
-          lintOnFly: false,
+          lintsOnChange: false,
           grammarScopes: ['source.js'],
           lint: 'something',
         },
         false,
         'Linter.lint must be a function',
-        1,
       )
     })
     it('does not cry if everything is valid', function() {
@@ -547,13 +468,12 @@ describe('Validate', function() {
         {
           name: 'Linter',
           scope: 'file',
-          lintOnFly: false,
+          lintsOnChange: false,
           grammarScopes: ['source.js'],
           lint() {},
         },
         true,
         '',
-        1,
       )
       validateLinter(
         {
@@ -565,7 +485,6 @@ describe('Validate', function() {
         },
         true,
         '',
-        2,
       )
     })
   })

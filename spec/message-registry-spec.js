@@ -172,9 +172,9 @@ describe('Message Registry', function() {
     it('sets key, severity on messages', function() {
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
-      const messageFirst = getMessage()
-      const messageSecond = getMessage()
-      const messageThird = getMessage()
+      const messageFirst = getMessage(true)
+      const messageSecond = getMessage(true)
+      const messageThird = getMessage(true)
 
       let called = 0
 
@@ -212,8 +212,8 @@ describe('Message Registry', function() {
 
     it('checks if an old message has updated, if so invalidates it properly', function() {
       let called = 0
-      const messageFirst = getMessage()
-      const messageSecond = Object.assign({}, messageFirst)
+      const messageFirst = getMessage(true)
+      const messageSecond = { ...messageFirst }
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
 
@@ -239,7 +239,7 @@ describe('Message Registry', function() {
       messageRegistry.set({ buffer, linter, messages: [messageSecond] })
       messageRegistry.update()
       expect(called).toBe(1)
-      messageFirst.text = 'Hellow'
+      messageFirst.excerpt = 'Hellow'
       messageRegistry.set({ buffer, linter, messages: [messageSecond] })
       messageRegistry.update()
       expect(called).toBe(2)
@@ -267,9 +267,9 @@ describe('Message Registry', function() {
 
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
-      const messageRealFirst = getMessage()
+      const messageRealFirst = getMessage(true)
       const messageDupeFirst = Object.assign({}, messageRealFirst)
-      const messageRealSecond = getMessage()
+      const messageRealSecond = getMessage(true)
       const messageDupeSecond = Object.assign({}, messageRealSecond)
 
       expect(called).toBe(0)
@@ -298,7 +298,7 @@ describe('Message Registry', function() {
 
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
-      const messageA = getMessage()
+      const messageA = getMessage(true)
       const messageB = Object.assign({}, messageA)
       const messageC = Object.assign({}, messageA)
 
@@ -323,7 +323,7 @@ describe('Message Registry', function() {
       })
       messageRegistry.set({ buffer, linter, messages: [messageA] })
       messageRegistry.update()
-      messageA.text = 'MURICAAA'
+      messageA.excerpt = 'MURICAAA'
       messageRegistry.set({ buffer, linter, messages: [messageB] })
       messageRegistry.update()
       messageRegistry.set({ buffer, linter, messages: [messageC] })

@@ -28,7 +28,7 @@ describe('Helpers', function() {
       expect(
         shouldTriggerLinter(
           {
-            lintOnFly: true,
+            lintsOnChange: true,
             grammarScopes: ['source.js', 'source.coffee'],
           },
           true,

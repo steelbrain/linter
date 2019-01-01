@@ -42,21 +42,6 @@ describe('LinterRegistry', function() {
       expect(linter[Helpers.$requestLatest]).toBe(0)
       expect(linter[Helpers.$requestLastReceived]).toBe(0)
     })
-    it('sets version based on legacy param', function() {
-      {
-        // scenario: 2
-        const linter = getLinter()
-        linterRegistry.addLinter(linter)
-        expect(linter[Helpers.$version]).toBe(2)
-      }
-      {
-        // scenario: 1
-        const linter = getLinter()
-        linter.lintOnFly = linter.lintsOnChange
-        linterRegistry.addLinter(linter, true)
-        expect(linter[Helpers.$version]).toBe(1)
-      }
-    })
     it('deactivates the attributes on delete', function() {
       const linter = getLinter()
       linterRegistry.addLinter(linter)
