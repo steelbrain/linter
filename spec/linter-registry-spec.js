@@ -313,9 +313,11 @@ describe('LinterRegistry', function() {
         await wait(50)
         if (timesBegan === 2) {
           return false
-        } else if (timesBegan === 3) {
+        }
+        if (timesBegan === 3) {
           return null
-        } else if (timesBegan === 4) {
+        }
+        if (timesBegan === 4) {
           return undefined
         }
         return []
@@ -370,7 +372,10 @@ describe('LinterRegistry', function() {
       const linter = getLinter()
       const editor = atom.workspace.getActiveTextEditor()
       linterRegistry.addLinter(linter)
-      linter.lint = async function() { await wait(50); throw new Error('Boom') }
+      linter.lint = async function() {
+        await wait(50)
+        throw new Error('Boom')
+      }
       const promise = linterRegistry.lint({ editor, onChange: false })
       expect(await promise).toBe(true)
       expect(timesBegan).toBe(1)

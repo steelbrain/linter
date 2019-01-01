@@ -25,7 +25,7 @@ describe('Message Registry', function() {
       messageRegistry.set({ linter, buffer: null, messages: [messageFirst] })
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(1)
       expect(messageRegistry.messagesMap.size).toBe(1)
-      info = Array.from(messageRegistry.messagesMap)[0]
+      ;[info] = Array.from(messageRegistry.messagesMap)
 
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
@@ -37,7 +37,7 @@ describe('Message Registry', function() {
       messageRegistry.set({ linter, buffer: null, messages: [messageFirst] })
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(2)
       expect(messageRegistry.messagesMap.size).toBe(1)
-      info = Array.from(messageRegistry.messagesMap)[0]
+      ;[info] = Array.from(messageRegistry.messagesMap)
 
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
@@ -48,15 +48,14 @@ describe('Message Registry', function() {
       messageRegistry.set({ linter, buffer, messages: [messageThird] })
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(3)
       expect(messageRegistry.messagesMap.size).toBe(2)
-      info = Array.from(messageRegistry.messagesMap)[0]
+      ;[info] = Array.from(messageRegistry.messagesMap)
 
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
       expect(info.buffer).toBe(null)
       expect(info.messages.length).toBe(1)
       expect(info.messages[0]).toBe(messageFirst)
-
-      info = Array.from(messageRegistry.messagesMap)[1]
+      ;[, info] = Array.from(messageRegistry.messagesMap)
 
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
@@ -67,7 +66,7 @@ describe('Message Registry', function() {
       messageRegistry.set({ linter, buffer: null, messages: [messageFirst, messageSecond] })
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(4)
       expect(messageRegistry.messagesMap.size).toBe(2)
-      info = Array.from(messageRegistry.messagesMap)[0]
+      ;[info] = Array.from(messageRegistry.messagesMap)
 
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
@@ -75,8 +74,7 @@ describe('Message Registry', function() {
       expect(info.messages.length).toBe(2)
       expect(info.messages[0]).toBe(messageFirst)
       expect(info.messages[1]).toBe(messageSecond)
-
-      info = Array.from(messageRegistry.messagesMap)[1]
+      ;[, info] = Array.from(messageRegistry.messagesMap)
 
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)

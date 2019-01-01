@@ -50,7 +50,7 @@ describe('EditorLinter', function() {
         const editorLinter = new EditorLinter(textEditor)
         // Trigger a (async) save
         textEditor.save()
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
           editorLinter.onShouldLint(() => {
             timesTriggered++
             // Dispose of the current registration as it is finished

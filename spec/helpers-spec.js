@@ -13,40 +13,82 @@ describe('Helpers', function() {
     }
 
     it('works does not trigger non-fly ones on fly', function() {
-      expect(shouldTriggerLinter({
-        lintOnFly: false,
-        grammarScopes: ['source.js'],
-      }, true, ['source.js'])).toBe(false)
+      expect(
+        shouldTriggerLinter(
+          {
+            lintOnFly: false,
+            grammarScopes: ['source.js'],
+          },
+          true,
+          ['source.js'],
+        ),
+      ).toBe(false)
     })
     it('triggers on fly ones on fly', function() {
-      expect(shouldTriggerLinter({
-        lintOnFly: true,
-        grammarScopes: ['source.js', 'source.coffee'],
-      }, true, ['source.js', 'source.js.emebdded'])).toBe(true)
+      expect(
+        shouldTriggerLinter(
+          {
+            lintOnFly: true,
+            grammarScopes: ['source.js', 'source.coffee'],
+          },
+          true,
+          ['source.js', 'source.js.emebdded'],
+        ),
+      ).toBe(true)
     })
     it('triggers all on non-fly', function() {
-      expect(shouldTriggerLinter({
-        lintOnFly: false,
-        grammarScopes: ['source.js'],
-      }, false, ['source.js'])).toBe(true)
-      expect(shouldTriggerLinter({
-        lintOnFly: true,
-        grammarScopes: ['source.js'],
-      }, false, ['source.js'])).toBe(true)
+      expect(
+        shouldTriggerLinter(
+          {
+            lintOnFly: false,
+            grammarScopes: ['source.js'],
+          },
+          false,
+          ['source.js'],
+        ),
+      ).toBe(true)
+      expect(
+        shouldTriggerLinter(
+          {
+            lintOnFly: true,
+            grammarScopes: ['source.js'],
+          },
+          false,
+          ['source.js'],
+        ),
+      ).toBe(true)
     })
     it('does not trigger if grammarScopes does not match', function() {
-      expect(shouldTriggerLinter({
-        lintOnFly: true,
-        grammarScopes: ['source.coffee'],
-      }, true, ['source.js'])).toBe(false)
-      expect(shouldTriggerLinter({
-        lintOnFly: true,
-        grammarScopes: ['source.coffee', 'source.go'],
-      }, false, ['source.js'])).toBe(false)
-      expect(shouldTriggerLinter({
-        lintOnFly: false,
-        grammarScopes: ['source.coffee', 'source.rust'],
-      }, false, ['source.js', 'source.hell'])).toBe(false)
+      expect(
+        shouldTriggerLinter(
+          {
+            lintOnFly: true,
+            grammarScopes: ['source.coffee'],
+          },
+          true,
+          ['source.js'],
+        ),
+      ).toBe(false)
+      expect(
+        shouldTriggerLinter(
+          {
+            lintOnFly: true,
+            grammarScopes: ['source.coffee', 'source.go'],
+          },
+          false,
+          ['source.js'],
+        ),
+      ).toBe(false)
+      expect(
+        shouldTriggerLinter(
+          {
+            lintOnFly: false,
+            grammarScopes: ['source.coffee', 'source.rust'],
+          },
+          false,
+          ['source.js', 'source.hell'],
+        ),
+      ).toBe(false)
     })
   })
   describe('isPathIgnored', function() {
@@ -98,55 +140,67 @@ describe('Helpers', function() {
   describe('subscriptiveObserve', function() {
     it('activates synchronously', function() {
       let activated = false
-      Helpers.subscriptiveObserve({
-        observe(eventName, callback) {
-          activated = true
-          expect(eventName).toBe('someEvent')
-          expect(typeof callback).toBe('function')
+      Helpers.subscriptiveObserve(
+        {
+          observe(eventName, callback) {
+            activated = true
+            expect(eventName).toBe('someEvent')
+            expect(typeof callback).toBe('function')
+          },
         },
-      }, 'someEvent', function() { })
+        'someEvent',
+        function() {},
+      )
       expect(activated).toBe(true)
     })
     it('clears last subscription when value changes', function() {
       let disposed = 0
       let activated = false
-      Helpers.subscriptiveObserve({
-        observe(eventName, callback) {
-          activated = true
-          expect(disposed).toBe(0)
-          callback()
-          expect(disposed).toBe(0)
-          callback()
-          expect(disposed).toBe(1)
-          callback()
-          expect(disposed).toBe(2)
+      Helpers.subscriptiveObserve(
+        {
+          observe(eventName, callback) {
+            activated = true
+            expect(disposed).toBe(0)
+            callback()
+            expect(disposed).toBe(0)
+            callback()
+            expect(disposed).toBe(1)
+            callback()
+            expect(disposed).toBe(2)
+          },
         },
-      }, 'someEvent', function() {
-        return new Disposable(function() {
-          disposed++
-        })
-      })
+        'someEvent',
+        function() {
+          return new Disposable(function() {
+            disposed++
+          })
+        },
+      )
       expect(activated).toBe(true)
     })
     it('clears both subscriptions at the end', function() {
       let disposed = 0
       let observeDisposed = 0
       let activated = false
-      const subscription = Helpers.subscriptiveObserve({
-        observe(eventName, callback) {
-          activated = true
-          expect(disposed).toBe(0)
-          callback()
-          expect(disposed).toBe(0)
+      const subscription = Helpers.subscriptiveObserve(
+        {
+          observe(eventName, callback) {
+            activated = true
+            expect(disposed).toBe(0)
+            callback()
+            expect(disposed).toBe(0)
+            return new Disposable(function() {
+              observeDisposed++
+            })
+          },
+        },
+        'someEvent',
+        function() {
           return new Disposable(function() {
-            observeDisposed++
+            disposed++
           })
         },
-      }, 'someEvent', function() {
-        return new Disposable(function() {
-          disposed++
-        })
-      })
+      )
       expect(activated).toBe(true)
       subscription.dispose()
       expect(disposed).toBe(1)
@@ -199,7 +253,7 @@ describe('Helpers', function() {
     })
     it('converts arrays in solution[index]->position to ranges', function() {
       const message = getMessage(false)
-      message.solutions = [{ position: [[0, 0], [0, 0]], apply() { } }]
+      message.solutions = [{ position: [[0, 0], [0, 0]], apply() {} }]
       expect(Array.isArray(message.solutions[0].position)).toBe(true)
       Helpers.normalizeMessages('Some Linter', [message])
       expect(Array.isArray(message.solutions[0].position)).toBe(false)

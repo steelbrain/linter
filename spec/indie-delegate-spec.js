@@ -8,12 +8,18 @@ describe('IndieDelegate', function() {
   let indieDelegateLegacy
 
   beforeEach(function() {
-    indieDelegate = new IndieDelegate({
-      name: 'Indie',
-    }, 2)
-    indieDelegateLegacy = new IndieDelegate({
-      name: 'Indie Legacy',
-    }, 1)
+    indieDelegate = new IndieDelegate(
+      {
+        name: 'Indie',
+      },
+      2,
+    )
+    indieDelegateLegacy = new IndieDelegate(
+      {
+        name: 'Indie Legacy',
+      },
+      1,
+    )
   })
   afterEach(function() {
     indieDelegate.dispose()
