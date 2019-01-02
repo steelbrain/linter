@@ -1,8 +1,6 @@
 Linter
 ======
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/steelbrain/linter.svg)](https://greenkeeper.io/)
-
 [![Slack Badge](https://img.shields.io/badge/chat-atom.io%20slack-blue.svg?style=flat-square)](http://atom-slack.herokuapp.com/)
 [![Build Status](https://img.shields.io/circleci/project/steelbrain/linter.svg?style=flat-square)](https://circleci.com/gh/steelbrain/linter)
 [![Plugin installs!](https://img.shields.io/apm/dm/linter.svg?style=flat-square)](https://atom.io/packages/linter)
@@ -38,4 +36,5 @@ Please navigate to [steelbrain.me/linter](http://steelbrain.me/linter/) for Lint
 Stick to imposed codestyle:
 
 * `$ npm i`
+* `$ npm lint`
 * `$ npm test`
