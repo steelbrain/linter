@@ -15,4 +15,5 @@ declare module 'atom' {
   declare var Emitter: any;
   declare var Disposable: any;
   declare var CompositeDisposable: any;
+  declare var Notification: any;
 }
