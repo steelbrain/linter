@@ -1,6 +1,9 @@
 ## Upcoming
 
+* Remove support for legacy linter APIs
+* Add a button to open developer console on Linter error messages
 * Include `description` in message key (when string rather than promise)
+* Fix a bug where linter messages (file-scoped) would disappear when same buffer is opened in two editors and one of them is closed
 
 ## 2.2.0
 

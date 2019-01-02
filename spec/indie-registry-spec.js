@@ -50,6 +50,5 @@ describe('IndieRegistry', function() {
   })
   it('passes on version correctly to the delegates', function() {
     expect(indieRegistry.register({ name: 'Ola' }, 2).version).toBe(2)
-    expect(indieRegistry.register({ name: 'Hello' }, 1).version).toBe(1)
   })
 })

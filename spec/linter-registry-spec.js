@@ -42,21 +42,6 @@ describe('LinterRegistry', function() {
       expect(linter[Helpers.$requestLatest]).toBe(0)
       expect(linter[Helpers.$requestLastReceived]).toBe(0)
     })
-    it('sets version based on legacy param', function() {
-      {
-        // scenario: 2
-        const linter = getLinter()
-        linterRegistry.addLinter(linter)
-        expect(linter[Helpers.$version]).toBe(2)
-      }
-      {
-        // scenario: 1
-        const linter = getLinter()
-        linter.lintOnFly = linter.lintsOnChange
-        linterRegistry.addLinter(linter, true)
-        expect(linter[Helpers.$version]).toBe(1)
-      }
-    })
     it('deactivates the attributes on delete', function() {
       const linter = getLinter()
       linterRegistry.addLinter(linter)
@@ -313,9 +298,11 @@ describe('LinterRegistry', function() {
         await wait(50)
         if (timesBegan === 2) {
           return false
-        } else if (timesBegan === 3) {
+        }
+        if (timesBegan === 3) {
           return null
-        } else if (timesBegan === 4) {
+        }
+        if (timesBegan === 4) {
           return undefined
         }
         return []
@@ -370,7 +357,10 @@ describe('LinterRegistry', function() {
       const linter = getLinter()
       const editor = atom.workspace.getActiveTextEditor()
       linterRegistry.addLinter(linter)
-      linter.lint = async function() { await wait(50); throw new Error('Boom') }
+      linter.lint = async function() {
+        await wait(50)
+        throw new Error('Boom')
+      }
       const promise = linterRegistry.lint({ editor, onChange: false })
       expect(await promise).toBe(true)
       expect(timesBegan).toBe(1)

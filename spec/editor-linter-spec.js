@@ -48,9 +48,8 @@ describe('EditorLinter', function() {
       function waitForShouldLint() {
         // Register on the textEditor
         const editorLinter = new EditorLinter(textEditor)
-        // Trigger a (async) save
-        textEditor.save()
-        return new Promise((resolve) => {
+
+        const promise = new Promise(resolve => {
           editorLinter.onShouldLint(() => {
             timesTriggered++
             // Dispose of the current registration as it is finished
@@ -58,6 +57,32 @@ describe('EditorLinter', function() {
             resolve()
           })
         })
+        // Trigger a (async) save
+        textEditor.save()
+        return promise
+      }
+      expect(timesTriggered).toBe(0)
+      await waitForShouldLint()
+      await waitForShouldLint()
+      expect(timesTriggered).toBe(2)
+    })
+    it('is triggered on reload', async function() {
+      let timesTriggered = 0
+      function waitForShouldLint() {
+        // Register on the textEditor
+        const editorLinter = new EditorLinter(textEditor)
+
+        const promise = new Promise(resolve => {
+          editorLinter.onShouldLint(() => {
+            timesTriggered++
+            // Dispose of the current registration as it is finished
+            editorLinter.dispose()
+            resolve()
+          })
+        })
+        // Trigger a (async) save
+        textEditor.getBuffer().reload()
+        return promise
       }
       expect(timesTriggered).toBe(0)
       await waitForShouldLint()

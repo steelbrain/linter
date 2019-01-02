@@ -1,7 +1,7 @@
 /* @flow */
 
 import MessageRegistry from '../lib/message-registry'
-import { getMessageLegacy } from './common'
+import { getMessage } from './common'
 
 describe('Message Registry', function() {
   let messageRegistry
@@ -15,9 +15,9 @@ describe('Message Registry', function() {
 
   describe('::set', function() {
     it('stores results using both buffer and linter', function() {
-      const messageFirst = getMessageLegacy()
-      const messageSecond = getMessageLegacy()
-      const messageThird = getMessageLegacy()
+      const messageFirst = getMessage()
+      const messageSecond = getMessage()
+      const messageThird = getMessage()
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
       let info
@@ -25,7 +25,7 @@ describe('Message Registry', function() {
       messageRegistry.set({ linter, buffer: null, messages: [messageFirst] })
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(1)
       expect(messageRegistry.messagesMap.size).toBe(1)
-      info = Array.from(messageRegistry.messagesMap)[0]
+      ;[info] = Array.from(messageRegistry.messagesMap)
 
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
@@ -37,7 +37,7 @@ describe('Message Registry', function() {
       messageRegistry.set({ linter, buffer: null, messages: [messageFirst] })
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(2)
       expect(messageRegistry.messagesMap.size).toBe(1)
-      info = Array.from(messageRegistry.messagesMap)[0]
+      ;[info] = Array.from(messageRegistry.messagesMap)
 
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
@@ -48,15 +48,14 @@ describe('Message Registry', function() {
       messageRegistry.set({ linter, buffer, messages: [messageThird] })
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(3)
       expect(messageRegistry.messagesMap.size).toBe(2)
-      info = Array.from(messageRegistry.messagesMap)[0]
+      ;[info] = Array.from(messageRegistry.messagesMap)
 
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
       expect(info.buffer).toBe(null)
       expect(info.messages.length).toBe(1)
       expect(info.messages[0]).toBe(messageFirst)
-
-      info = Array.from(messageRegistry.messagesMap)[1]
+      ;[, info] = Array.from(messageRegistry.messagesMap)
 
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
@@ -67,7 +66,7 @@ describe('Message Registry', function() {
       messageRegistry.set({ linter, buffer: null, messages: [messageFirst, messageSecond] })
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(4)
       expect(messageRegistry.messagesMap.size).toBe(2)
-      info = Array.from(messageRegistry.messagesMap)[0]
+      ;[info] = Array.from(messageRegistry.messagesMap)
 
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
@@ -75,8 +74,7 @@ describe('Message Registry', function() {
       expect(info.messages.length).toBe(2)
       expect(info.messages[0]).toBe(messageFirst)
       expect(info.messages[1]).toBe(messageSecond)
-
-      info = Array.from(messageRegistry.messagesMap)[1]
+      ;[, info] = Array.from(messageRegistry.messagesMap)
 
       expect(info.changed).toBe(true)
       expect(info.linter).toBe(linter)
@@ -90,7 +88,7 @@ describe('Message Registry', function() {
     it('notifies on changes', function() {
       let called = 0
       const linter: Object = { name: 'any' }
-      const message = getMessageLegacy()
+      const message = getMessage()
       messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
         called++
         expect(added.length).toBe(1)
@@ -107,9 +105,9 @@ describe('Message Registry', function() {
       const buffer: Object = {}
       const linterFirst: Object = { name: 'any' }
       const linterSecond: Object = {}
-      const messageFirst = getMessageLegacy()
-      const messageSecond = getMessageLegacy()
-      const messageThird = getMessageLegacy()
+      const messageFirst = getMessage()
+      const messageSecond = getMessage()
+      const messageThird = getMessage()
       let called = 0
 
       messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
@@ -174,9 +172,9 @@ describe('Message Registry', function() {
     it('sets key, severity on messages', function() {
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
-      const messageFirst = getMessageLegacy()
-      const messageSecond = getMessageLegacy()
-      const messageThird = getMessageLegacy()
+      const messageFirst = getMessage(true)
+      const messageSecond = getMessage(true)
+      const messageThird = getMessage(true)
 
       let called = 0
 
@@ -214,8 +212,8 @@ describe('Message Registry', function() {
 
     it('checks if an old message has updated, if so invalidates it properly', function() {
       let called = 0
-      const messageFirst = getMessageLegacy()
-      const messageSecond = Object.assign({}, messageFirst)
+      const messageFirst = getMessage(true)
+      const messageSecond = { ...messageFirst }
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
 
@@ -241,7 +239,7 @@ describe('Message Registry', function() {
       messageRegistry.set({ buffer, linter, messages: [messageSecond] })
       messageRegistry.update()
       expect(called).toBe(1)
-      messageFirst.text = 'Hellow'
+      messageFirst.excerpt = 'Hellow'
       messageRegistry.set({ buffer, linter, messages: [messageSecond] })
       messageRegistry.update()
       expect(called).toBe(2)
@@ -269,9 +267,9 @@ describe('Message Registry', function() {
 
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
-      const messageRealFirst = getMessageLegacy()
+      const messageRealFirst = getMessage(true)
       const messageDupeFirst = Object.assign({}, messageRealFirst)
-      const messageRealSecond = getMessageLegacy()
+      const messageRealSecond = getMessage(true)
       const messageDupeSecond = Object.assign({}, messageRealSecond)
 
       expect(called).toBe(0)
@@ -300,7 +298,7 @@ describe('Message Registry', function() {
 
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
-      const messageA = getMessageLegacy()
+      const messageA = getMessage(true)
       const messageB = Object.assign({}, messageA)
       const messageC = Object.assign({}, messageA)
 
@@ -325,7 +323,7 @@ describe('Message Registry', function() {
       })
       messageRegistry.set({ buffer, linter, messages: [messageA] })
       messageRegistry.update()
-      messageA.text = 'MURICAAA'
+      messageA.excerpt = 'MURICAAA'
       messageRegistry.set({ buffer, linter, messages: [messageB] })
       messageRegistry.update()
       messageRegistry.set({ buffer, linter, messages: [messageC] })
@@ -338,8 +336,8 @@ describe('Message Registry', function() {
     it('deletes the messages and sends them in an event', function() {
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
-      const messageFirst = getMessageLegacy()
-      const messageSecond = getMessageLegacy()
+      const messageFirst = getMessage()
+      const messageSecond = getMessage()
 
       let called = 0
 
@@ -381,8 +379,8 @@ describe('Message Registry', function() {
     it('deletes the messages and sends them in an event', function() {
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
-      const messageFirst = getMessageLegacy()
-      const messageSecond = getMessageLegacy()
+      const messageFirst = getMessage()
+      const messageSecond = getMessage()
 
       let called = 0
 

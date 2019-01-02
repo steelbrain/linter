@@ -1,0 +1,102 @@
+version: 2
+
+defaults: &defaults
+  working_directory: /tmp/project
+  docker:
+    - image: arcanemagus/atom-docker-ci:stable
+  steps:
+    # Restore project state
+    - attach_workspace:
+        at: /tmp
+    - run:
+        name: Create VFB for Atom to run in
+        command: /usr/local/bin/xvfb_start
+    - run:
+        name: Atom version
+        command: ${ATOM_SCRIPT_PATH} --version
+    - run:
+        name: APM version
+        command: ${APM_SCRIPT_PATH} --version
+    - run:
+        name: Package APM package dependencies
+        command: |
+          if [ -n "${APM_TEST_PACKAGES}" ]; then
+            for pack in ${APM_TEST_PACKAGES}; do
+            ${APM_SCRIPT_PATH} install "${pack}"
+            done
+          fi;
+    - run:
+        name: Package dependencies
+        command: ${APM_SCRIPT_PATH} install
+    - run:
+        name: Cleaning package
+        command: ${APM_SCRIPT_PATH} clean
+    - run:
+        name: Package specs
+        command: ${ATOM_SCRIPT_PATH} --test spec
+    # Cache node_modules
+    - save_cache:
+        paths:
+          - node_modules
+        key: v2-dependencies-{{ checksum "package-lock.json" }}
+
+jobs:
+  checkout_code:
+    <<: *defaults
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      # Restore node_modules from the last build
+      - restore_cache:
+          keys:
+          # Get latest cache for this package.json
+          - v2-dependencies-{{ checksum "package.json" }}
+          # Fallback to the last available cache
+          - v2-dependencies
+      # Save project state for next steps
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - project
+  lint:
+    <<: *defaults
+    docker:
+      - image: circleci/node:latest
+    steps:
+      # Restore project state
+      - attach_workspace:
+          at: /tmp
+      - run:
+          name: Node.js Version
+          command: node --version
+      - run:
+          name: NPM Version
+          command: npm --version
+      - run:
+          name: Install any remaining dependencies
+          command: npm ci
+      - run:
+          name: Lint code
+          command: npm run lint
+  stable:
+    <<: *defaults
+  beta:
+    <<: *defaults
+    docker:
+      - image: arcanemagus/atom-docker-ci:beta
+
+workflows:
+  version: 2
+  test_package:
+    jobs:
+      - checkout_code
+      - lint:
+          requires:
+            - checkout_code
+      - stable:
+          requires:
+            - lint
+      - beta:
+          requires:
+            - lint
