@@ -8,7 +8,8 @@
   "repository": "https://github.com/steelbrain/linter",
   "license": "MIT",
   "keywords": [
-    "linter"
+    "linter",
+    "base linter"
   ],
   "private": true,
   "scripts": {
