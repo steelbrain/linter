@@ -1,4 +1,4 @@
-## Upcoming
+## 2.3.0
 
 * Remove support for legacy linter APIs
 * Add a button to open developer console on Linter error messages
