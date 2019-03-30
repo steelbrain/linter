@@ -45,7 +45,7 @@
     "minimatch": "^3.0.3"
   },
   "devDependencies": {
-    "eslint-config-steelbrain": "^6.0.0",
+    "eslint-config-steelbrain": "^7.0.0",
     "flow-bin": "^0.95.1",
     "jasmine-fix": "^1.3.1"
   },
