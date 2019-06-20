@@ -23,6 +23,7 @@ describe('Message Registry', function() {
       let info
 
       messageRegistry.set({ linter, buffer: null, messages: [messageFirst] })
+      // $FlowIgnore: Jasmine spy'ed function
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(1)
       expect(messageRegistry.messagesMap.size).toBe(1)
       ;[info] = Array.from(messageRegistry.messagesMap)
@@ -35,6 +36,7 @@ describe('Message Registry', function() {
       expect(info.messages[0]).toBe(messageFirst)
 
       messageRegistry.set({ linter, buffer: null, messages: [messageFirst] })
+      // $FlowIgnore: Jasmine spy'ed function
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(2)
       expect(messageRegistry.messagesMap.size).toBe(1)
       ;[info] = Array.from(messageRegistry.messagesMap)
@@ -46,6 +48,7 @@ describe('Message Registry', function() {
       expect(info.messages[0]).toBe(messageFirst)
 
       messageRegistry.set({ linter, buffer, messages: [messageThird] })
+      // $FlowIgnore: Jasmine spy'ed function
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(3)
       expect(messageRegistry.messagesMap.size).toBe(2)
       ;[info] = Array.from(messageRegistry.messagesMap)
@@ -64,6 +67,7 @@ describe('Message Registry', function() {
       expect(info.messages[0]).toBe(messageThird)
 
       messageRegistry.set({ linter, buffer: null, messages: [messageFirst, messageSecond] })
+      // $FlowIgnore: Jasmine spy'ed function
       expect(messageRegistry.debouncedUpdate.calls.length).toBe(4)
       expect(messageRegistry.messagesMap.size).toBe(2)
       ;[info] = Array.from(messageRegistry.messagesMap)
