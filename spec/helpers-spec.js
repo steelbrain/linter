@@ -136,6 +136,11 @@ describe('Helpers', function() {
         atom.workspace.destroyActivePane()
       }
     })
+    it('returns true if no path is given', function() {
+      expect(isPathIgnored(undefined)).toBe(true)
+      expect(isPathIgnored(null)).toBe(true)
+      expect(isPathIgnored('')).toBe(true)
+    })
   })
   describe('subscriptiveObserve', function() {
     it('activates synchronously', function() {
