@@ -18,13 +18,13 @@ export function getLinter(): Object {
     },
   }
 }
-export function getMessage(filePathOrNormalized: ?(boolean | string)): Object {
+export function getMessage(filePathOrNormalized: ?(boolean | string) = undefined): Object {
   const message: Object = {
     severity: 'error',
     excerpt: String(Math.random()),
     location: { file: __filename, position: [[0, 0], [0, 0]] },
   }
-  if (typeof filePathOrNormalized === 'boolean' && filePathOrNormalized) {
+  if ((typeof filePathOrNormalized === 'boolean' && filePathOrNormalized) || filePathOrNormalized === undefined) {
     normalizeMessages('Some Linter', [message])
   } else if (typeof filePathOrNormalized === 'string') {
     message.location.file = filePathOrNormalized
