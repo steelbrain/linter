@@ -14,7 +14,8 @@
   "private": true,
   "scripts": {
     "test": "apm test",
-    "lint": "(flow check) && (eslint . ) && (prettier --list-different lib/*.js)"
+    "lint": "(flow check) && (eslint . ) && (prettier --list-different lib/*.js)",
+    "lint:fix": "eslint . --fix && prettier --write lib/**/*.js"
   },
   "engines": {
     "atom": ">=1.14.0 <2.0.0"
