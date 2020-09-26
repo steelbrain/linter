@@ -2,12 +2,36 @@
 
 import MessageRegistry from '../lib/message-registry'
 import { getMessage } from './common'
+import { normalizeMessages } from '../lib/helpers'
 
 describe('Message Registry', function() {
   let messageRegistry
   beforeEach(function() {
     messageRegistry = new MessageRegistry()
     messageRegistry.debouncedUpdate = jasmine.createSpy('debouncedUpdate')
+
+    // object compare
+    this.addMatchers({
+      toInclude(expected) {
+        let failed: any
+        /* eslint-disable no-restricted-syntax */
+        for (const i in expected) {
+          /* eslint-disable no-prototype-builtins */
+          if (expected.hasOwnProperty(i) && !this.actual.hasOwnProperty(i)) {
+            failed = [i, expected[i]]
+            break
+          }
+        }
+        if (undefined !== failed) {
+          this.message = function() {
+            return `Failed asserting that array includes element "${failed[0]} => ${failed[1]}"`
+          }
+          return false
+        }
+
+        return true
+      },
+    })
   })
   afterEach(function() {
     messageRegistry.dispose()
@@ -214,12 +238,18 @@ describe('Message Registry', function() {
       expect(called).toBe(2)
     })
 
-    it('checks if an old message has updated, if so invalidates it properly', function() {
+    // this test was changed in https://github.com/steelbrain/linter/pull/1706
+    it('does not perform redundant updates if the message is the same', function() {
       let called = 0
       const messageFirst = getMessage(true)
       const messageSecond = { ...messageFirst }
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
+
+      const messageSecondChanged = Object.assign({}, messageSecond)
+      messageSecondChanged.excerpt = 'Hellow'
+      console.log({ messageFirst, messageSecondChanged })
+      normalizeMessages('Some Linter', [messageSecondChanged])
 
       messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
         called++
@@ -232,36 +262,37 @@ describe('Message Registry', function() {
           expect(messages.length).toBe(1)
           expect(removed.length).toBe(1)
           expect(added.length).toBe(1)
-          expect(added[0]).toBe(messageSecond)
-          expect(removed[0]).toBe(messageFirst)
+          expect(added[0]).toInclude(messageSecondChanged)
+          expect(removed[0]).toBe(messageSecond)
         }
       })
 
       expect(called).toBe(0)
       messageRegistry.set({ buffer, linter, messages: [messageFirst] })
       messageRegistry.update()
+      expect(called).toBe(1)
       messageRegistry.set({ buffer, linter, messages: [messageSecond] })
       messageRegistry.update()
-      expect(called).toBe(1)
-      messageFirst.excerpt = 'Hellow'
-      messageRegistry.set({ buffer, linter, messages: [messageSecond] })
+      expect(called).toBe(1) // messageSecond has the same properties as messageFirst, so update is not called
+      // cloning a changed messageSecond
+      messageRegistry.set({ buffer, linter, messages: [messageSecondChanged] })
       messageRegistry.update()
       expect(called).toBe(2)
     })
 
     it('sends the same object each time even in complicated scenarios', function() {
       let called = 0
-      const knownMessages = new Set()
+      const knownMessages = new Map()
       messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
         called++
         for (const entry of added) {
           if (knownMessages.has(entry)) {
             throw new Error('Message already exists')
-          } else knownMessages.add(entry)
+          } else knownMessages.set(entry.key, entry)
         }
         for (const entry of removed) {
-          if (knownMessages.has(entry)) {
-            knownMessages.delete(entry)
+          if (knownMessages.has(entry.key)) {
+            knownMessages.delete(entry.key)
           } else throw new Error('Message does not exist')
         }
         if (messages.length !== knownMessages.size) {
@@ -297,43 +328,45 @@ describe('Message Registry', function() {
       expect(called).toBe(2)
       expect(knownMessages.size).toBe(0)
     })
-    it('notices changes on last messages instead of relying on their keys and invaildates them', function() {
-      let called = 0
 
-      const linter: Object = { name: 'any' }
-      const buffer: Object = {}
-      const messageA = getMessage(true)
-      const messageB = Object.assign({}, messageA)
-      const messageC = Object.assign({}, messageA)
-
-      messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
-        called++
-        if (called === 1) {
-          expect(added.length).toBe(1)
-          expect(removed.length).toBe(0)
-          expect(messages.length).toBe(1)
-          expect(added).toEqual(messages)
-          expect(added[0]).toBe(messageA)
-        } else if (called === 2) {
-          expect(added.length).toBe(1)
-          expect(removed.length).toBe(1)
-          expect(messages.length).toBe(1)
-          expect(added).toEqual(messages)
-          expect(added[0]).toBe(messageB)
-          expect(removed[0]).toBe(messageA)
-        } else {
-          throw new Error('Should not have been triggered')
-        }
-      })
-      messageRegistry.set({ buffer, linter, messages: [messageA] })
-      messageRegistry.update()
-      messageA.excerpt = 'MURICAAA'
-      messageRegistry.set({ buffer, linter, messages: [messageB] })
-      messageRegistry.update()
-      messageRegistry.set({ buffer, linter, messages: [messageC] })
-      messageRegistry.update()
-      expect(called).toBe(2)
-    })
+    // This functionality was removed in https://github.com/steelbrain/linter/pull/1706 due to performance reasons
+    //   it('notices changes on last messages instead of relying on their keys and invaildates them', function() {
+    //     let called = 0
+    //
+    //     const linter: Object = { name: 'any' }
+    //     const buffer: Object = {}
+    //     const messageA = getMessage(true)
+    //     const messageB = Object.assign({}, messageA)
+    //     const messageC = Object.assign({}, messageA)
+    //
+    //     messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
+    //       called++
+    //       if (called === 1) {
+    //         expect(added.length).toBe(1)
+    //         expect(removed.length).toBe(0)
+    //         expect(messages.length).toBe(1)
+    //         expect(added).toEqual(messages)
+    //         expect(added[0]).toBe(messageA)
+    //       } else if (called === 2) {
+    //         expect(added.length).toBe(1)
+    //         expect(removed.length).toBe(1)
+    //         expect(messages.length).toBe(1)
+    //         expect(added).toEqual(messages)
+    //         expect(added[0]).toBe(messageB)
+    //         expect(removed[0]).toBe(messageA)
+    //       } else {
+    //         throw new Error('Should not have been triggered')
+    //       }
+    //     })
+    //     messageRegistry.set({ buffer, linter, messages: [messageA] })
+    //     messageRegistry.update()
+    //     messageA.excerpt = 'MURICAAA'
+    //     messageRegistry.set({ buffer, linter, messages: [messageB] })
+    //     messageRegistry.update()
+    //     messageRegistry.set({ buffer, linter, messages: [messageC] })
+    //     messageRegistry.update()
+    //     expect(called).toBe(2)
+    //   })
   })
 
   describe('::deleteByBuffer', function() {
