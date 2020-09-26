@@ -46,6 +46,9 @@
       }
     }
   },
+  "activationHooks": [
+    "core:loaded-shell-environment"
+  ],
   "dependencies": {
     "atom-package-deps": "^6.0.0",
     "atom-select-list": "^0.7.2",
