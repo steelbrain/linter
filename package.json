@@ -17,9 +17,9 @@
     "lint": "(flow check) && (eslint . ) && (prettier --list-different lib/*.js)",
     "lint:fix": "eslint . --fix && prettier --write lib/**/*.js",
     "clean": "shx rm -rf dist",
-    "babel": "npm run clean && shx cp -r lib dist && cross-env NODE_ENV=development cross-env BABEL_ENV=development babel dist --out-dir dist",
-    "dev": "npm run clean && cross-env NODE_ENV=development cross-env BABEL_ENV=production rollup -c -w",
-    "build": "npm run clean && cross-env NODE_ENV=production cross-env BABEL_ENV=production rollup -c ",
+    "babel": "npm run clean && shx cp -r lib dist && cross-env NODE_ENV=development cross-env BABEL_KEEP_MODULES=false babel dist --out-dir dist",
+    "dev": "npm run clean && cross-env NODE_ENV=development cross-env BABEL_KEEP_MODULES=true rollup -c -w",
+    "build": "npm run clean && cross-env NODE_ENV=production cross-env BABEL_KEEP_MODULES=true rollup -c",
     "build-commit": "build-commit -o dist",
     "prepare": "npm run build",
     "prepublishOnly": "npm run build-commit"
@@ -61,9 +61,9 @@
     "rollup-plugin-atomic": "^1.0.2",
     "shx": "^0.3.2",
     "cross-env": "^7.0.2",
-    "@babel/cli": "7.10.5",
-    "@babel/core": "7.10.5",
-    "babel-preset-atomic": "^0.1.0",
+    "@babel/cli": "7.11.6",
+    "@babel/core": "7.11.6",
+    "babel-preset-atomic": "^2.4.2",
     "build-commit": "0.1.1"
   },
   "package-deps": [
