@@ -282,17 +282,17 @@ describe('Message Registry', function() {
 
     it('sends the same object each time even in complicated scenarios', function() {
       let called = 0
-      const knownMessages = new Set()
+      const knownMessages = new Map()
       messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
         called++
         for (const entry of added) {
           if (knownMessages.has(entry)) {
             throw new Error('Message already exists')
-          } else knownMessages.add(entry)
+          } else knownMessages.set(entry.key, entry)
         }
         for (const entry of removed) {
-          if (knownMessages.has(entry)) {
-            knownMessages.delete(entry)
+          if (knownMessages.has(entry.key)) {
+            knownMessages.delete(entry.key)
           } else throw new Error('Message does not exist')
         }
         if (messages.length !== knownMessages.size) {
