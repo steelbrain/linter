@@ -1,6 +1,6 @@
 {
   "name": "linter",
-  "main": "./lib/index.js",
+  "main": "./dist/index.js",
   "author": "steelbrain",
   "readme": "./README.md",
   "version": "3.0.0",
@@ -13,9 +13,16 @@
   ],
   "private": true,
   "scripts": {
-    "test": "apm test",
+    "test": "npm run build && apm test",
     "lint": "(flow check) && (eslint . ) && (prettier --list-different lib/*.js)",
-    "lint:fix": "eslint . --fix && prettier --write lib/**/*.js"
+    "lint:fix": "eslint . --fix && prettier --write lib/**/*.js",
+    "clean": "shx rm -rf dist",
+    "babel": "npm run clean && shx cp -r lib dist && cross-env NODE_ENV=development cross-env BABEL_KEEP_MODULES=false babel dist --out-dir dist",
+    "dev": "npm run clean && cross-env NODE_ENV=development cross-env BABEL_KEEP_MODULES=true rollup -c -w",
+    "build": "npm run clean && cross-env NODE_ENV=production cross-env BABEL_KEEP_MODULES=true rollup -c",
+    "build-commit": "build-commit -o dist",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build-commit"
   },
   "engines": {
     "atom": ">=1.14.0 <2.0.0"
@@ -39,19 +46,31 @@
       }
     }
   },
+  "activationHooks": [
+    "core:loaded-shell-environment"
+  ],
   "dependencies": {
-    "atom-package-deps": "^5.1.0",
+    "atom-package-deps": "^6.0.0",
     "atom-select-list": "^0.7.2",
-    "lodash": "^4.17.15",
-    "minimatch": "^3.0.3"
+    "lodash": "^4.17.20",
+    "minimatch": "^3.0.4"
   },
   "devDependencies": {
     "eslint-config-steelbrain": "^7.0.0",
     "flow-bin": "^0.123.0",
-    "jasmine-fix": "^1.3.1"
+    "jasmine-fix": "^1.3.1",
+    "@types/atom": "^1.40.4",
+    "rollup": "^2.28.2",
+    "rollup-plugin-atomic": "^1.2.0",
+    "shx": "^0.3.2",
+    "cross-env": "^7.0.2",
+    "@babel/cli": "7.11.6",
+    "@babel/core": "7.11.6",
+    "babel-preset-atomic": "^2.4.2",
+    "build-commit": "0.1.1"
   },
   "package-deps": [
-    "linter-ui-default"
+    "linter-ui-default:2.0.1"
   ],
   "configSchema": {
     "lintPreviewTabs": {
