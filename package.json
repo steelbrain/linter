@@ -49,8 +49,8 @@
   "dependencies": {
     "atom-package-deps": "^5.1.0",
     "atom-select-list": "^0.7.2",
-    "lodash": "^4.17.19",
-    "minimatch": "^3.0.3"
+    "lodash": "^4.17.20",
+    "minimatch": "^3.0.4"
   },
   "devDependencies": {
     "eslint-config-steelbrain": "^7.0.0",
