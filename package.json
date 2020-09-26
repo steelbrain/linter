@@ -67,7 +67,7 @@
     "build-commit": "0.1.1"
   },
   "package-deps": [
-    "linter-ui-default"
+    "linter-ui-default:2.0.1"
   ],
   "configSchema": {
     "lintPreviewTabs": {
