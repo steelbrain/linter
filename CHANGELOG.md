@@ -10,6 +10,8 @@
 - Rewrite diff check algorithm (#1706)
 - Fix linter fixes (#1706)
 
+In case you maintain a linter-ui packages (e.g. linter-ui-default, linter-minimap), see this guide for upgrading: https://github.com/steelbrain/linter/blob/master/docs/guides/upgrading-to-linter-v3.md
+
 ## 2.3.1
 
 - Upgrade dependencies to fix vulns
