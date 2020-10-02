@@ -1,3 +1,15 @@
+### 3.1.1
+- Minor optimizations
+
+## 3.1.0
+- Now linter loads 13 times faster! (#1695)
+
+
+## 3.0.0
+- Improve performance (#1706)
+- Rewrite diff check algorithm (#1706)
+- Fix linter fixes (#1706)
+
 ## 2.3.1
 
 - Upgrade dependencies to fix vulns
