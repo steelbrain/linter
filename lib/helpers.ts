@@ -1,7 +1,5 @@
-/* @flow */
-
 import arrayUnique from 'lodash/uniq'
-import { Disposable, Range, Point } from 'atom'
+import { Range, Point } from 'atom'
 import type { TextEditor } from 'atom'
 import type { Linter, Message } from './types'
 
@@ -14,7 +12,7 @@ export function shouldTriggerLinter(linter: Linter, wasTriggeredOnChange: boolea
   if (wasTriggeredOnChange && !linter.lintsOnChange) {
     return false
   }
-  return scopes.some(function(scope) {
+  return scopes.some(function (scope) {
     return linter.grammarScopes.includes(scope)
   })
 }
@@ -25,8 +23,8 @@ export function getEditorCursorScopes(textEditor: TextEditor): Array<string> {
   )
 }
 
-let minimatch
-export function isPathIgnored(filePath: ?string, ignoredGlob: string, ignoredVCS: boolean): boolean {
+let minimatch: typeof import('minimatch')
+export function isPathIgnored(filePath: string | null | undefined, ignoredGlob: string, ignoredVCS: boolean): boolean {
   if (!filePath) {
     return true
   }
@@ -52,30 +50,12 @@ export function isPathIgnored(filePath: ?string, ignoredGlob: string, ignoredVCS
   return minimatch(normalizedFilePath, ignoredGlob)
 }
 
-export function subscriptiveObserve(object: Object, eventName: string, callback: Function): Disposable {
-  let subscription = null
-  const eventSubscription = object.observe(eventName, function(props) {
-    if (subscription) {
-      subscription.dispose()
-    }
-    subscription = callback.call(this, props)
-  })
-
-  return new Disposable(function() {
-    eventSubscription.dispose()
-    if (subscription) {
-      subscription.dispose()
-    }
-  })
-}
 
 export function updateMessageKey(message: Message) {
   const { reference, location } = message
   message.key = [
     `$LINTER:${message.linterName}`,
-    `$LOCATION:${location.file}$${location.position.start.row}$${location.position.start.column}$${
-      location.position.end.row
-    }$${location.position.end.column}`,
+    `$LOCATION:${location.file}$${location.position.start.row}$${location.position.start.column}$${location.position.end.row}$${location.position.end.column}`,
     reference
       ? `$REFERENCE:${reference.file}$${reference.position ? `${reference.position.row}$${reference.position.column}` : ''}`
       : '$REFERENCE:null',
@@ -98,7 +78,7 @@ export function normalizeMessages(linterName: string, messages: Array<Message>) 
       reference.position = Point.fromObject(reference.position)
     }
     if (message.solutions && message.solutions.length) {
-      for (let j = 0, _length = message.solutions.length, solution; j < _length; j++) {
+      for (let j = 0, _length = message.solutions.length, solution: Message['solutions'][0]; j < _length; j++) {
         solution = message.solutions[j]
         if (Array.isArray(solution.position)) {
           solution.position = Range.fromObject(solution.position)
@@ -131,9 +111,9 @@ export function createKeyMessageMap(messages: Array<Message>): Map<string, Messa
 }
 
 interface FlaggedMessages {
-  oldKept: Array<Message>;
-  oldRemoved: Array<Message>;
-  newAdded: Array<Message>;
+  oldKept: Array<Message>
+  oldRemoved: Array<Message>
+  newAdded: Array<Message>
 }
 
 // This fast function returns the new messages and old messages by comparing their key against the cache.
@@ -181,7 +161,7 @@ export function flagMessages(inputs: Array<Message>, oldMessages: Array<Message>
 
   const oldRemovedKeys = cacheKeys.filter(x => !oldKeptKeys.includes(x))
 
-  const oldRemoved = new Set()
+  const oldRemoved: Set<Message> = new Set()
   for (let iRemoved = 0, RemovedKeysLen = oldRemovedKeys.length; iRemoved < RemovedKeysLen; iRemoved++) {
     oldRemoved.add(cache.get(oldRemovedKeys[iRemoved]))
   }

@@ -2,7 +2,7 @@
 
 import { it, wait } from 'jasmine-fix'
 
-import ToggleView from '../lib/toggle-view'
+import ToggleView from '../dist/toggle-view'
 
 describe('Toggle View', function() {
   beforeEach(function() {

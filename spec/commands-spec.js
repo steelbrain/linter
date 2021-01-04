@@ -2,7 +2,7 @@
 
 import Path from 'path'
 import { it } from 'jasmine-fix'
-import Commands from '../lib/commands'
+import Commands from '../dist/commands'
 
 let commands
 

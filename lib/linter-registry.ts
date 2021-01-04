@@ -1,6 +1,3 @@
-/* @flow */
-/* eslint-disable import/no-duplicates */
-
 import { Emitter, CompositeDisposable } from 'atom'
 import type { TextEditor, Disposable, Notification } from 'atom'
 
@@ -80,7 +77,7 @@ class LinterRegistry {
     linter[$activated] = false
     this.linters.delete(linter)
   }
-  async lint({ onChange, editor }: { onChange: boolean, editor: TextEditor }): Promise<boolean> {
+  async lint({ onChange, editor }: { onChange: boolean; editor: TextEditor }): Promise<boolean> {
     const filePath = editor.getPath()
 
     if (
@@ -108,11 +105,10 @@ class LinterRegistry {
 
       this.emitter.emit('did-begin-linting', { number, linter, filePath: statusFilePath })
       promises.push(
-        new Promise(function(resolve) {
-          // $FlowIgnore: Type too complex, duh
+        new Promise(function (resolve: (editor: ReturnType<Linter['lint']>) => void) {
           resolve(linter.lint(editor))
         }).then(
-          messages => {
+          (messages) => {
             this.emitter.emit('did-finish-linting', { number, linter, filePath: statusFilePath })
             if (linter[$requestLastReceived] >= number || !linter[$activated] || (statusBuffer && !statusBuffer.isAlive())) {
               return
@@ -176,13 +172,13 @@ class LinterRegistry {
     await Promise.all(promises)
     return true
   }
-  onDidUpdateMessages(callback: Function): Disposable {
+  onDidUpdateMessages(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-update-messages', callback)
   }
-  onDidBeginLinting(callback: Function): Disposable {
+  onDidBeginLinting(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-begin-linting', callback)
   }
-  onDidFinishLinting(callback: Function): Disposable {
+  onDidFinishLinting(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-finish-linting', callback)
   }
   dispose() {

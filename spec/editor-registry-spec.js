@@ -1,7 +1,7 @@
 /* @flow */
 
 import { it, beforeEach } from 'jasmine-fix'
-import EditorRegistry from '../lib/editor-registry'
+import EditorRegistry from '../dist/editor-registry'
 
 describe('EditorRegistry', function() {
   let editorRegistry

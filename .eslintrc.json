@@ -1,17 +1,8 @@
 {
-  "root": true,
-  "globals": {
-    "atom": true
-  },
-  "extends": "steelbrain",
+  "extends": "eslint-config-atomic/react",
+  "ignorePatterns": ["dist/", "node_modules/"],
   "rules": {
-    "global-require": "off",
-    "no-param-reassign": "off",
-    "no-underscore-dangle": "off",
-    "no-duplicate-imports": "off",
-    "import/prefer-default-export": "off",
-    "import/no-unresolved": ["error", {
-      "ignore": ["atom"]
-    }]
+    "@typescript-eslint/no-inferrable-types": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   }
 }

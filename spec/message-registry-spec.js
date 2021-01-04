@@ -1,8 +1,8 @@
 /* @flow */
 
-import MessageRegistry from '../lib/message-registry'
+import MessageRegistry from '../dist/message-registry'
 import { getMessage } from './common'
-import { normalizeMessages } from '../lib/helpers'
+import { normalizeMessages } from '../dist/helpers'
 
 describe('Message Registry', function() {
   let messageRegistry
@@ -14,7 +14,6 @@ describe('Message Registry', function() {
     this.addMatchers({
       toInclude(expected) {
         let failed: any
-        /* eslint-disable no-restricted-syntax */
         for (const i in expected) {
           /* eslint-disable no-prototype-builtins */
           if (expected.hasOwnProperty(i) && !this.actual.hasOwnProperty(i)) {

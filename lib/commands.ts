@@ -1,5 +1,3 @@
-/* @flow */
-
 import { CompositeDisposable, Emitter } from 'atom'
 import type { Disposable } from 'atom'
 
@@ -7,10 +5,10 @@ import * as Helpers from './helpers'
 import type { Linter, UI } from './types'
 import type IndieDelegate from './indie-delegate'
 
-let manifest
+let manifest: {version: number}
 
-function formatItem(item) {
-  let itemName
+function formatItem(item: {name: string} | string) {
+  let itemName: string
   if (item && typeof item === 'object' && typeof item.name === 'string') {
     itemName = item.name
   } else if (typeof item === 'string') {
@@ -20,7 +18,7 @@ function formatItem(item) {
   }
   return `  - ${itemName}`
 }
-function sortByName(item1, item2) {
+function sortByName(item1: {name: string}, item2: {name: string}) {
   return item1.name.localeCompare(item2.name)
 }
 
@@ -84,10 +82,7 @@ export default class Commands {
 
     const ignoreGlob = atom.config.get('linter.ignoreGlob')
     const ignoreVCSIgnoredPaths = atom.config.get('core.excludeVcsIgnoredPaths')
-    const disabledLinters = atom.config
-      .get('linter.disabledProviders')
-      .map(formatItem)
-      .join('\n')
+    const disabledLinters = atom.config.get('linter.disabledProviders').map(formatItem).join('\n')
     const filePathIgnored = Helpers.isPathIgnored(textEditor.getPath(), ignoreGlob, ignoreVCSIgnoredPaths)
 
     atom.notifications.addInfo('Linter Debug Info', {
@@ -108,16 +103,16 @@ export default class Commands {
       dismissable: true,
     })
   }
-  onShouldLint(callback: Function): Disposable {
+  onShouldLint(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('should-lint', callback)
   }
-  onShouldDebug(callback: Function): Disposable {
+  onShouldDebug(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('should-debug', callback)
   }
-  onShouldToggleActiveEditor(callback: Function): Disposable {
+  onShouldToggleActiveEditor(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('should-toggle-active-editor', callback)
   }
-  onShouldToggleLinter(callback: Function): Disposable {
+  onShouldToggleLinter(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('should-toggle-linter', callback)
   }
   dispose() {

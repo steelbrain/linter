@@ -1,5 +1,3 @@
-/* @flow */
-
 import { Emitter, CompositeDisposable } from 'atom'
 import type { Disposable } from 'atom'
 
@@ -12,7 +10,7 @@ export default class IndieDelegate {
   scope: 'project'
   emitter: Emitter
   version: 2
-  messages: Map<?string, Array<Message>>
+  messages: Map<string | null | undefined, Array<Message>>
   subscriptions: CompositeDisposable
 
   constructor(indie: Indie, version: 2) {
@@ -29,7 +27,7 @@ export default class IndieDelegate {
     return this.indie.name
   }
   getMessages(): Array<Message> {
-    const out = []
+    const out: Array<Message> = []
     this.messages.forEach(m => {
       mergeArray(out, m)
     })
@@ -41,7 +39,10 @@ export default class IndieDelegate {
       this.messages.clear()
     }
   }
-  setMessages(filePath: string | Array<Object>, messages: ?Array<Object> = null): void {
+  setMessages(
+    filePath: string | Array<Record<string, any>>,
+    messages: Array<Message> | null | undefined = null,
+  ): void {
     // v2 Support from here on
     if (typeof filePath !== 'string' || !Array.isArray(messages)) {
       throw new Error('Invalid Parameters to setMessages()')
@@ -49,7 +50,7 @@ export default class IndieDelegate {
     if (this.subscriptions.disposed || !Validate.messages(this.name, messages)) {
       return
     }
-    messages.forEach(function(message) {
+    messages.forEach(function (message) {
       if (message.location.file !== filePath) {
         console.debug('[Linter-UI-Default] Expected File', filePath, 'Message', message)
         throw new Error('message.location.file does not match the given filePath')
@@ -60,7 +61,7 @@ export default class IndieDelegate {
     this.messages.set(filePath, messages)
     this.emitter.emit('did-update', this.getMessages())
   }
-  setAllMessages(messages: Array<Object>): void {
+  setAllMessages(messages: Array<Message>): void {
     if (this.subscriptions.disposed) {
       return
     }
@@ -82,10 +83,10 @@ export default class IndieDelegate {
     }
     this.emitter.emit('did-update', this.getMessages())
   }
-  onDidUpdate(callback: Function): Disposable {
+  onDidUpdate(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-update', callback)
   }
-  onDidDestroy(callback: Function): Disposable {
+  onDidDestroy(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-destroy', callback)
   }
   dispose(): void {

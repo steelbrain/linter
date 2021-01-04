@@ -1,9 +1,7 @@
-/* @flow */
-
 import { CompositeDisposable, Disposable } from 'atom'
 
 import Linter from './main'
-import type { UI, Linter as LinterProvider } from './types'
+import type { UI, Linter as LinterProvider, Indie } from './types'
 
 // Internal variables
 let instance: Linter
@@ -16,7 +14,7 @@ export function activate() {
   subscriptions.add(instance)
 
   subscriptions.add(
-    atom.packages.onDidActivateInitialPackages(function() {
+    atom.packages.onDidActivateInitialPackages(function () {
       if (!atom.inSpecMode()) {
         require('atom-package-deps').install('linter', true)
       }
@@ -45,8 +43,8 @@ export function consumeUI(ui: UI): Disposable {
     }
   })
 }
-export function provideIndie(): Object {
-  return indie => instance.addIndie(indie)
+export function provideIndie() {
+  return (indie: Indie) => instance.addIndie(indie)
 }
 export function deactivate() {
   subscriptions.dispose()

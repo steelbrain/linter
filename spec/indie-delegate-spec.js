@@ -1,6 +1,6 @@
 /* @flow */
 
-import IndieDelegate from '../lib/indie-delegate'
+import IndieDelegate from '../dist/indie-delegate'
 import { getMessage } from './common'
 
 describe('IndieDelegate', function() {

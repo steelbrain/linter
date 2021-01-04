@@ -1,6 +1,6 @@
 /* @flow */
 
-import UIRegistry from '../lib/ui-registry'
+import UIRegistry from '../dist/ui-registry'
 
 let uiRegistry
 let uiProvider: Object

@@ -1,5 +1,3 @@
-/* @flow */
-
 import { Emitter, CompositeDisposable } from 'atom'
 import type { Disposable } from 'atom'
 
@@ -39,11 +37,11 @@ class IndieRegistry {
   getProviders(): Array<IndieDelegate> {
     return Array.from(this.delegates)
   }
-  observe(callback: Function): Disposable {
+  observe(callback: (...args: Array<any>) => any): Disposable {
     this.delegates.forEach(callback)
     return this.emitter.on('observe', callback)
   }
-  onDidUpdate(callback: Function): Disposable {
+  onDidUpdate(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-update', callback)
   }
   dispose() {

@@ -1,5 +1,3 @@
-/* @flow */
-
 import { Range, Point } from 'atom'
 import { showError } from './helpers'
 import type { UI, Linter, Message, Indie } from '../types'

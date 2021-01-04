@@ -1,6 +1,6 @@
 /* @flow */
 
-import * as Validate from '../lib/validate'
+import * as Validate from '../dist/validate'
 
 describe('Validate', function() {
   function expectNotification(message: string) {

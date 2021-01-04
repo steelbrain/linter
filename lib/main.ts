@@ -1,5 +1,3 @@
-/* @flow */
-
 import arrayUnique from 'lodash/uniq'
 import { CompositeDisposable } from 'atom'
 
@@ -10,7 +8,7 @@ import LinterRegistry from './linter-registry'
 import EditorsRegistry from './editor-registry'
 import Commands from './commands'
 import ToggleView from './toggle-view'
-import type { UI, Linter as LinterProvider } from './types'
+import type { UI, Linter as LinterProvider, Indie } from './types'
 
 class Linter {
   commands: Commands
@@ -74,7 +72,7 @@ class Linter {
     })
 
     const projectPathChangeCallbackID = window.requestIdleCallback(
-      function projectPathChange() {
+      /* projectPathChange */ () => {
         this.idleCallbacks.delete(projectPathChangeCallbackID)
         // NOTE: Atom triggers this on boot so wait a while
         this.subscriptions.add(
@@ -82,17 +80,17 @@ class Linter {
             this.commands.lint()
           }),
         )
-      }.bind(this),
+      },
     )
     this.idleCallbacks.add(projectPathChangeCallbackID)
 
     const registryEditorsInitCallbackID = window.requestIdleCallback(
-      function registryEditorsIdleInit() {
+      /* registryEditorsIdleInit */ () => {
         this.idleCallbacks.delete(registryEditorsInitCallbackID)
         // This will be called on the fly if needed, but needs to run on it's
         // own at some point or linting on open or on change will never trigger
         this.registryEditorsInit()
-      }.bind(this),
+      },
     )
     this.idleCallbacks.add(registryEditorsInitCallbackID)
   }
@@ -205,7 +203,7 @@ class Linter {
     this.registryMessages.deleteByLinter(linter)
   }
   // Indie Linter
-  addIndie(indie: Object) {
+  addIndie(indie: Indie) {
     this.registryIndieInit()
     return this.registryIndie.register(indie, 2)
   }

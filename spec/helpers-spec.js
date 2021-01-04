@@ -1,8 +1,7 @@
 /* @flow */
 
-import { Disposable } from 'atom'
 import { it } from 'jasmine-fix'
-import * as Helpers from '../lib/helpers'
+import * as Helpers from '../dist/helpers'
 import { getFixturesPath, getMessage } from './common'
 
 describe('Helpers', function() {
@@ -142,76 +141,7 @@ describe('Helpers', function() {
       expect(isPathIgnored('')).toBe(true)
     })
   })
-  describe('subscriptiveObserve', function() {
-    it('activates synchronously', function() {
-      let activated = false
-      Helpers.subscriptiveObserve(
-        {
-          observe(eventName, callback) {
-            activated = true
-            expect(eventName).toBe('someEvent')
-            expect(typeof callback).toBe('function')
-          },
-        },
-        'someEvent',
-        function() {},
-      )
-      expect(activated).toBe(true)
-    })
-    it('clears last subscription when value changes', function() {
-      let disposed = 0
-      let activated = false
-      Helpers.subscriptiveObserve(
-        {
-          observe(eventName, callback) {
-            activated = true
-            expect(disposed).toBe(0)
-            callback()
-            expect(disposed).toBe(0)
-            callback()
-            expect(disposed).toBe(1)
-            callback()
-            expect(disposed).toBe(2)
-          },
-        },
-        'someEvent',
-        function() {
-          return new Disposable(function() {
-            disposed++
-          })
-        },
-      )
-      expect(activated).toBe(true)
-    })
-    it('clears both subscriptions at the end', function() {
-      let disposed = 0
-      let observeDisposed = 0
-      let activated = false
-      const subscription = Helpers.subscriptiveObserve(
-        {
-          observe(eventName, callback) {
-            activated = true
-            expect(disposed).toBe(0)
-            callback()
-            expect(disposed).toBe(0)
-            return new Disposable(function() {
-              observeDisposed++
-            })
-          },
-        },
-        'someEvent',
-        function() {
-          return new Disposable(function() {
-            disposed++
-          })
-        },
-      )
-      expect(activated).toBe(true)
-      subscription.dispose()
-      expect(disposed).toBe(1)
-      expect(observeDisposed).toBe(1)
-    })
-  })
+
   describe('normalizeMessages', function() {
     it('adds a key to the message', function() {
       const message = getMessage(false)
