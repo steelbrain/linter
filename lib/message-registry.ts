@@ -29,7 +29,7 @@ class MessageRegistry {
 
     this.subscriptions.add(this.emitter)
   }
-  set({ messages, linter, buffer }: { messages: Array<Message>; linter: Linter; buffer: TextBuffer }) {
+  set({ messages, linter, buffer }: { messages: Array<Message>; linter: Linter; buffer: TextBuffer | null }) {
     // check if the linter has been already set
     let found = null
     for (const entry of this.messagesMap) {
