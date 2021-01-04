@@ -1,7 +1,7 @@
 import arrayUnique from 'lodash/uniq'
 import { Range, Point } from 'atom'
 import type { TextEditor } from 'atom'
-import type { Linter, Message } from './types'
+import type { Linter, Message, MessageSolution } from './types'
 
 export const $version = '__$sb_linter_version'
 export const $activated = '__$sb_linter_activated'
@@ -77,7 +77,7 @@ export function normalizeMessages(linterName: string, messages: Array<Message>) 
       reference.position = Point.fromObject(reference.position)
     }
     if (message.solutions && message.solutions.length) {
-      for (let j = 0, _length = message.solutions.length, solution: Message['solutions'][0]; j < _length; j++) {
+      for (let j = 0, _length = message.solutions.length, solution: MessageSolution; j < _length; j++) {
         solution = message.solutions[j]
         if (Array.isArray(solution.position)) {
           solution.position = Range.fromObject(solution.position)
