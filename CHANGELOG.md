@@ -1,3 +1,6 @@
+### 3.2.0
+- Convert the codebase to TypeScript (#1718)
+
 ### 3.1.1
 - Minor optimizations
 
