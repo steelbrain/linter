@@ -24,7 +24,7 @@
     "dev": "npm run clean && cross-env NODE_ENV=development cross-env BABEL_KEEP_MODULES=true rollup -c -w",
     "build": "cross-env NODE_ENV=production cross-env BABEL_KEEP_MODULES=true rollup -c",
     "build-commit": "npm run clean && build-commit -o dist",
-    "prepare": "npm run build",
+    "prepare": "npm run clean && npm run build",
     "prepublishOnly": "npm run build-commit"
   },
   "engines": {
