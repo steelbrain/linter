@@ -7,8 +7,8 @@ import type IndieDelegate from './indie-delegate'
 
 let manifest: {version: number}
 
-function formatItem(item) {
-  let itemName
+function formatItem(item: {name: string} | string) {
+  let itemName: string
   if (item && typeof item === 'object' && typeof item.name === 'string') {
     itemName = item.name
   } else if (typeof item === 'string') {
@@ -18,7 +18,7 @@ function formatItem(item) {
   }
   return `  - ${itemName}`
 }
-function sortByName(item1, item2) {
+function sortByName(item1: {name: string}, item2: {name: string}) {
   return item1.name.localeCompare(item2.name)
 }
 
