@@ -1,6 +1,6 @@
 import { Emitter, CompositeDisposable, Disposable } from 'atom'
 import debounce from 'lodash/debounce'
-import { TextEditor } from 'atom'
+import type { TextEditor } from 'atom'
 import { subscriptiveObserve } from './helpers'
 
 export default class EditorLinter {

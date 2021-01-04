@@ -69,7 +69,7 @@ class ToggleProviders {
 
     selectListView.focus()
     this.subscriptions.add(
-      new Disposable(function() {
+      new Disposable(function () {
         panel.destroy()
       }),
     )

@@ -8,7 +8,7 @@ import LinterRegistry from './linter-registry'
 import EditorsRegistry from './editor-registry'
 import Commands from './commands'
 import ToggleView from './toggle-view'
-import { UI, Linter as LinterProvider } from './types'
+import type { UI, Linter as LinterProvider } from './types'
 
 class Linter {
   commands: Commands

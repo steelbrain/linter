@@ -1,7 +1,7 @@
 import { CompositeDisposable, Disposable } from 'atom'
 
 import Linter from './main'
-import { UI, Linter as LinterProvider } from './types'
+import type { UI, Linter as LinterProvider } from './types'
 
 // Internal variables
 let instance: Linter
@@ -14,7 +14,7 @@ export function activate() {
   subscriptions.add(instance)
 
   subscriptions.add(
-    atom.packages.onDidActivateInitialPackages(function() {
+    atom.packages.onDidActivateInitialPackages(function () {
       if (!atom.inSpecMode()) {
         require('atom-package-deps').install('linter', true)
       }

@@ -1,8 +1,8 @@
 import { CompositeDisposable, Emitter } from 'atom'
 import debounce from 'lodash/debounce'
-import { Disposable, TextBuffer } from 'atom'
+import type { Disposable, TextBuffer } from 'atom'
 import { flagMessages, mergeArray } from './helpers'
-import { MessagesPatch, Message, Linter } from './types'
+import type { MessagesPatch, Message, Linter } from './types'
 
 type Linter$Message$Map = {
   buffer: TextBuffer | null | undefined

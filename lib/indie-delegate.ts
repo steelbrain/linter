@@ -1,9 +1,9 @@
 import { Emitter, CompositeDisposable } from 'atom'
-import { Disposable } from 'atom'
+import type { Disposable } from 'atom'
 
 import * as Validate from './validate'
 import { normalizeMessages, mergeArray } from './helpers'
-import { Indie, Message } from './types'
+import type { Indie, Message } from './types'
 
 export default class IndieDelegate {
   indie: Indie
@@ -59,7 +59,7 @@ export default class IndieDelegate {
     if (this.subscriptions.disposed || !Validate.messages(this.name, messages)) {
       return
     }
-    messages.forEach(function(message) {
+    messages.forEach(function (message) {
       if (message.location.file !== filePath) {
         console.debug('[Linter-UI-Default] Expected File', filePath, 'Message', message)
         throw new Error('message.location.file does not match the given filePath')

@@ -1,9 +1,9 @@
 import { CompositeDisposable, Emitter } from 'atom'
-import { Disposable } from 'atom'
+import type { Disposable } from 'atom'
 
 import * as Helpers from './helpers'
-import { Linter, UI } from './types'
-import IndieDelegate from './indie-delegate'
+import type { Linter, UI } from './types'
+import type IndieDelegate from './indie-delegate'
 
 let manifest
 
@@ -82,10 +82,7 @@ export default class Commands {
 
     const ignoreGlob = atom.config.get('linter.ignoreGlob')
     const ignoreVCSIgnoredPaths = atom.config.get('core.excludeVcsIgnoredPaths')
-    const disabledLinters = atom.config
-      .get('linter.disabledProviders')
-      .map(formatItem)
-      .join('\n')
+    const disabledLinters = atom.config.get('linter.disabledProviders').map(formatItem).join('\n')
     const filePathIgnored = Helpers.isPathIgnored(textEditor.getPath(), ignoreGlob, ignoreVCSIgnoredPaths)
 
     atom.notifications.addInfo('Linter Debug Info', {

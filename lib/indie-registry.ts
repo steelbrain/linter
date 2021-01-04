@@ -1,9 +1,9 @@
 import { Emitter, CompositeDisposable } from 'atom'
-import { Disposable } from 'atom'
+import type { Disposable } from 'atom'
 
 import IndieDelegate from './indie-delegate'
 import { indie as validateIndie } from './validate'
-import { Indie } from './types'
+import type { Indie } from './types'
 
 class IndieRegistry {
   emitter: Emitter

@@ -1,6 +1,6 @@
 import { Range, Point } from 'atom'
 import { showError } from './helpers'
-import { UI, Linter, Message, Indie } from '../types'
+import type { UI, Linter, Message, Indie } from '../types'
 
 const VALID_SEVERITY = new Set(['error', 'warning', 'info'])
 

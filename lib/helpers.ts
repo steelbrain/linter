@@ -1,7 +1,7 @@
 import arrayUnique from 'lodash/uniq'
 import { Disposable, Range, Point } from 'atom'
-import { TextEditor } from 'atom'
-import { Linter, Message } from './types'
+import type { TextEditor } from 'atom'
+import type { Linter, Message } from './types'
 
 export const $version = '__$sb_linter_version'
 export const $activated = '__$sb_linter_activated'
@@ -12,7 +12,7 @@ export function shouldTriggerLinter(linter: Linter, wasTriggeredOnChange: boolea
   if (wasTriggeredOnChange && !linter.lintsOnChange) {
     return false
   }
-  return scopes.some(function(scope) {
+  return scopes.some(function (scope) {
     return linter.grammarScopes.includes(scope)
   })
 }
@@ -58,14 +58,14 @@ export function subscriptiveObserve(
   callback: (...args: Array<any>) => any,
 ): Disposable {
   let subscription = null
-  const eventSubscription = object.observe(eventName, function(props) {
+  const eventSubscription = object.observe(eventName, function (props) {
     if (subscription) {
       subscription.dispose()
     }
     subscription = callback.call(this, props)
   })
 
-  return new Disposable(function() {
+  return new Disposable(function () {
     eventSubscription.dispose()
     if (subscription) {
       subscription.dispose()

@@ -1,5 +1,5 @@
 import { Emitter, CompositeDisposable } from 'atom'
-import { Disposable, TextEditor } from 'atom'
+import type { Disposable, TextEditor } from 'atom'
 import EditorLinter from './editor-linter'
 
 class EditorRegistry {
