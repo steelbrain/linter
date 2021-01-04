@@ -1,9 +1,7 @@
-/* @flow */
-
 import { CompositeDisposable, Disposable } from 'atom'
 
 import Linter from './main'
-import type { UI, Linter as LinterProvider } from './types'
+import { UI, Linter as LinterProvider } from './types'
 
 // Internal variables
 let instance: Linter
@@ -45,7 +43,9 @@ export function consumeUI(ui: UI): Disposable {
     }
   })
 }
-export function provideIndie(): Object {
+export function provideIndie(): {
+  [key: string]: any
+} {
   return indie => instance.addIndie(indie)
 }
 export function deactivate() {

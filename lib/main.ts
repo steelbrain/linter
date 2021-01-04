@@ -1,5 +1,3 @@
-/* @flow */
-
 import arrayUnique from 'lodash/uniq'
 import { CompositeDisposable } from 'atom'
 
@@ -10,7 +8,7 @@ import LinterRegistry from './linter-registry'
 import EditorsRegistry from './editor-registry'
 import Commands from './commands'
 import ToggleView from './toggle-view'
-import type { UI, Linter as LinterProvider } from './types'
+import { UI, Linter as LinterProvider } from './types'
 
 class Linter {
   commands: Commands
@@ -205,7 +203,7 @@ class Linter {
     this.registryMessages.deleteByLinter(linter)
   }
   // Indie Linter
-  addIndie(indie: Object) {
+  addIndie(indie: { [key: string]: any }) {
     this.registryIndieInit()
     return this.registryIndie.register(indie, 2)
   }

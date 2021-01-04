@@ -1,18 +1,16 @@
-/* @flow */
-
 import { Emitter, CompositeDisposable } from 'atom'
-import type { Disposable } from 'atom'
+import { Disposable } from 'atom'
 
 import * as Validate from './validate'
 import { normalizeMessages, mergeArray } from './helpers'
-import type { Indie, Message } from './types'
+import { Indie, Message } from './types'
 
 export default class IndieDelegate {
   indie: Indie
   scope: 'project'
   emitter: Emitter
   version: 2
-  messages: Map<?string, Array<Message>>
+  messages: Map<string | null | undefined, Array<Message>>
   subscriptions: CompositeDisposable
 
   constructor(indie: Indie, version: 2) {
@@ -41,7 +39,19 @@ export default class IndieDelegate {
       this.messages.clear()
     }
   }
-  setMessages(filePath: string | Array<Object>, messages: ?Array<Object> = null): void {
+  setMessages(
+    filePath:
+      | string
+      | Array<{
+          [key: string]: any
+        }>,
+    messages:
+      | Array<{
+          [key: string]: any
+        }>
+      | null
+      | undefined = null,
+  ): void {
     // v2 Support from here on
     if (typeof filePath !== 'string' || !Array.isArray(messages)) {
       throw new Error('Invalid Parameters to setMessages()')
@@ -60,7 +70,11 @@ export default class IndieDelegate {
     this.messages.set(filePath, messages)
     this.emitter.emit('did-update', this.getMessages())
   }
-  setAllMessages(messages: Array<Object>): void {
+  setAllMessages(
+    messages: Array<{
+      [key: string]: any
+    }>,
+  ): void {
     if (this.subscriptions.disposed) {
       return
     }
@@ -82,10 +96,10 @@ export default class IndieDelegate {
     }
     this.emitter.emit('did-update', this.getMessages())
   }
-  onDidUpdate(callback: Function): Disposable {
+  onDidUpdate(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-update', callback)
   }
-  onDidDestroy(callback: Function): Disposable {
+  onDidDestroy(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-destroy', callback)
   }
   dispose(): void {

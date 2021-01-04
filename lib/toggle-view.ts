@@ -1,5 +1,3 @@
-/* @flow */
-
 import { CompositeDisposable, Emitter, Disposable } from 'atom'
 
 let SelectListView

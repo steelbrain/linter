@@ -1,8 +1,6 @@
-/* @flow */
-
 import { CompositeDisposable } from 'atom'
 import { ui as validateUI } from './validate'
-import type { Linter, UI, MessagesPatch } from './types'
+import { Linter, UI, MessagesPatch } from './types'
 
 class UIRegistry {
   providers: Set<UI>
@@ -32,12 +30,12 @@ class UIRegistry {
       provider.render(messages)
     })
   }
-  didBeginLinting(linter: Linter, filePath: ?string = null) {
+  didBeginLinting(linter: Linter, filePath: string | null | undefined = null) {
     this.providers.forEach(function(provider) {
       provider.didBeginLinting(linter, filePath)
     })
   }
-  didFinishLinting(linter: Linter, filePath: ?string = null) {
+  didFinishLinting(linter: Linter, filePath: string | null | undefined = null) {
     this.providers.forEach(function(provider) {
       provider.didFinishLinting(linter, filePath)
     })

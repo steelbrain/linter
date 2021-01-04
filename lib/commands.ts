@@ -1,11 +1,9 @@
-/* @flow */
-
 import { CompositeDisposable, Emitter } from 'atom'
-import type { Disposable } from 'atom'
+import { Disposable } from 'atom'
 
 import * as Helpers from './helpers'
-import type { Linter, UI } from './types'
-import type IndieDelegate from './indie-delegate'
+import { Linter, UI } from './types'
+import IndieDelegate from './indie-delegate'
 
 let manifest
 
@@ -108,16 +106,16 @@ export default class Commands {
       dismissable: true,
     })
   }
-  onShouldLint(callback: Function): Disposable {
+  onShouldLint(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('should-lint', callback)
   }
-  onShouldDebug(callback: Function): Disposable {
+  onShouldDebug(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('should-debug', callback)
   }
-  onShouldToggleActiveEditor(callback: Function): Disposable {
+  onShouldToggleActiveEditor(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('should-toggle-active-editor', callback)
   }
-  onShouldToggleLinter(callback: Function): Disposable {
+  onShouldToggleLinter(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('should-toggle-linter', callback)
   }
   dispose() {

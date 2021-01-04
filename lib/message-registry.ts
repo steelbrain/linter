@@ -1,18 +1,16 @@
-/* @flow */
-
 import { CompositeDisposable, Emitter } from 'atom'
 import debounce from 'lodash/debounce'
-import type { Disposable, TextBuffer } from 'atom'
+import { Disposable, TextBuffer } from 'atom'
 import { flagMessages, mergeArray } from './helpers'
-import type { MessagesPatch, Message, Linter } from './types'
+import { MessagesPatch, Message, Linter } from './types'
 
 type Linter$Message$Map = {
-  buffer: ?TextBuffer,
-  linter: Linter,
-  changed: boolean,
-  deleted: boolean,
-  messages: Array<Message>,
-  oldMessages: Array<Message>,
+  buffer: TextBuffer | null | undefined
+  linter: Linter
+  changed: boolean
+  deleted: boolean
+  messages: Array<Message>
+  oldMessages: Array<Message>
 }
 
 class MessageRegistry {
@@ -31,7 +29,7 @@ class MessageRegistry {
 
     this.subscriptions.add(this.emitter)
   }
-  set({ messages, linter, buffer }: { messages: Array<Message>, linter: Linter, buffer: TextBuffer }) {
+  set({ messages, linter, buffer }: { messages: Array<Message>; linter: Linter; buffer: TextBuffer }) {
     // check if the linter has been already set
     let found = null
     for (const entry of this.messagesMap) {

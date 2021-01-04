@@ -1,9 +1,7 @@
-/* @flow */
-
 import arrayUnique from 'lodash/uniq'
 import { Disposable, Range, Point } from 'atom'
-import type { TextEditor } from 'atom'
-import type { Linter, Message } from './types'
+import { TextEditor } from 'atom'
+import { Linter, Message } from './types'
 
 export const $version = '__$sb_linter_version'
 export const $activated = '__$sb_linter_activated'
@@ -26,7 +24,7 @@ export function getEditorCursorScopes(textEditor: TextEditor): Array<string> {
 }
 
 let minimatch
-export function isPathIgnored(filePath: ?string, ignoredGlob: string, ignoredVCS: boolean): boolean {
+export function isPathIgnored(filePath: string | null | undefined, ignoredGlob: string, ignoredVCS: boolean): boolean {
   if (!filePath) {
     return true
   }
@@ -52,7 +50,13 @@ export function isPathIgnored(filePath: ?string, ignoredGlob: string, ignoredVCS
   return minimatch(normalizedFilePath, ignoredGlob)
 }
 
-export function subscriptiveObserve(object: Object, eventName: string, callback: Function): Disposable {
+export function subscriptiveObserve(
+  object: {
+    [key: string]: any
+  },
+  eventName: string,
+  callback: (...args: Array<any>) => any,
+): Disposable {
   let subscription = null
   const eventSubscription = object.observe(eventName, function(props) {
     if (subscription) {
@@ -73,9 +77,7 @@ export function updateMessageKey(message: Message) {
   const { reference, location } = message
   message.key = [
     `$LINTER:${message.linterName}`,
-    `$LOCATION:${location.file}$${location.position.start.row}$${location.position.start.column}$${
-      location.position.end.row
-    }$${location.position.end.column}`,
+    `$LOCATION:${location.file}$${location.position.start.row}$${location.position.start.column}$${location.position.end.row}$${location.position.end.column}`,
     reference
       ? `$REFERENCE:${reference.file}$${reference.position ? `${reference.position.row}$${reference.position.column}` : ''}`
       : '$REFERENCE:null',
@@ -131,9 +133,9 @@ export function createKeyMessageMap(messages: Array<Message>): Map<string, Messa
 }
 
 interface FlaggedMessages {
-  oldKept: Array<Message>;
-  oldRemoved: Array<Message>;
-  newAdded: Array<Message>;
+  oldKept: Array<Message>
+  oldRemoved: Array<Message>
+  newAdded: Array<Message>
 }
 
 // This fast function returns the new messages and old messages by comparing their key against the cache.

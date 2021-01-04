@@ -1,7 +1,5 @@
-/* @flow */
-
 import { Emitter, CompositeDisposable } from 'atom'
-import type { Disposable, TextEditor } from 'atom'
+import { Disposable, TextEditor } from 'atom'
 import EditorLinter from './editor-linter'
 
 class EditorRegistry {
@@ -29,7 +27,7 @@ class EditorRegistry {
       }),
     )
   }
-  get(textEditor: TextEditor): ?EditorLinter {
+  get(textEditor: TextEditor): EditorLinter | null | undefined {
     return this.editorLinters.get(textEditor)
   }
   createFromTextEditor(textEditor: TextEditor): EditorLinter {

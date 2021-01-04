@@ -1,8 +1,6 @@
-/* @flow */
-
 import { Emitter, CompositeDisposable, Disposable } from 'atom'
 import debounce from 'lodash/debounce'
-import type { TextEditor } from 'atom'
+import { TextEditor } from 'atom'
 import { subscriptiveObserve } from './helpers'
 
 export default class EditorLinter {
@@ -51,10 +49,10 @@ export default class EditorLinter {
   lint(onChange: boolean = false) {
     this.emitter.emit('should-lint', onChange)
   }
-  onShouldLint(callback: Function): Disposable {
+  onShouldLint(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('should-lint', callback)
   }
-  onDidDestroy(callback: Function): Disposable {
+  onDidDestroy(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-destroy', callback)
   }
   dispose() {
