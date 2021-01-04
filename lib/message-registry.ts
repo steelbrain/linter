@@ -51,7 +51,11 @@ class MessageRegistry {
   }
   update() {
     // the final object sent to UI that contains the messages tagged for adding/removeal. messages is all the kept + added messages
-    const result = { added: [], removed: [], messages: [] }
+    const result: { added: Array<Message>; removed: Array<Message>; messages: Array<Message> } = {
+      added: [],
+      removed: [],
+      messages: [],
+    }
 
     // looping over each linter
     for (const entry of this.messagesMap) {
