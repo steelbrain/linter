@@ -50,7 +50,6 @@ export function isPathIgnored(filePath: string | null | undefined, ignoredGlob: 
   return minimatch(normalizedFilePath, ignoredGlob)
 }
 
-
 export function updateMessageKey(message: Message) {
   const { reference, location } = message
   message.key = [

@@ -38,12 +38,12 @@ class IndieDelegate {
 
 **A**:
 
-*   `setMessages` replaces the last stored messages for the given `filePath` for
-    your delegate. All messages provided must have the same `location.file` as
-    the given `filePath`.
+- `setMessages` replaces the last stored messages for the given `filePath` for
+  your delegate. All messages provided must have the same `location.file` as
+  the given `filePath`.
 
-*   `setAllMessages` replaces the list of messages Linter has stored for your
-    provider. Any existing messages, regardless of the file they are associated
-    with, are discarded.
+- `setAllMessages` replaces the list of messages Linter has stored for your
+  provider. Any existing messages, regardless of the file they are associated
+  with, are discarded.
 
-[Example Usage]: ../examples/indie-linter-v2.md
+[example usage]: ../examples/indie-linter-v2.md

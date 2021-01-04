@@ -1,5 +1,4 @@
-Linter
-======
+# Linter
 
 [![Slack Badge](https://img.shields.io/badge/chat-atom.io%20slack-blue.svg?style=flat-square)](http://atom-slack.herokuapp.com/)
 [![Build Status](https://img.shields.io/circleci/project/steelbrain/linter.svg?style=flat-square)](https://circleci.com/gh/steelbrain/linter)
@@ -9,11 +8,9 @@ Linter
 [![OpenCollective](https://opencollective.com/linter/backers/badge.svg)](#backers)
 [![OpenCollective](https://opencollective.com/linter/sponsors/badge.svg)](#sponsors)
 
-
 Linter is a base linter provider for the hackable [Atom Editor](http://atom.io). Additionally, you need to install a specific linter for your language. You will find a full list on [atomlinter.github.io](http://atomlinter.github.io/).
 
 It provides a top-level API to its consumer so that they can visualize errors and other types of messages with ease.
-
 
 ![Preview](https://cloud.githubusercontent.com/assets/4278113/23879933/1ab17e2a-0872-11e7-803d-3fe0ccfc6790.gif)
 
@@ -35,6 +32,6 @@ Please navigate to [steelbrain.me/linter](http://steelbrain.me/linter/) for Lint
 
 Stick to imposed codestyle:
 
-* `$ npm i`
-* `$ npm lint`
-* `$ npm test`
+- `$ npm i`
+- `$ npm lint`
+- `$ npm test`

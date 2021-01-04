@@ -2,7 +2,7 @@
 
 import * as Validate from '../dist/validate'
 
-describe('Validate', function() {
+describe('Validate', function () {
   function expectNotification(message: string) {
     const notifications = atom.notifications.getNotifications()
     expect(notifications.length).toBe(1)
@@ -12,7 +12,7 @@ describe('Validate', function() {
     atom.notifications.clear()
   }
 
-  describe('::ui', function() {
+  describe('::ui', function () {
     function validateUI(ui: any, expectedValue: boolean, message: string = '') {
       expect(Validate.ui(ui)).toBe(expectedValue)
       if (!expectedValue) {
@@ -20,13 +20,13 @@ describe('Validate', function() {
       }
     }
 
-    it('cries if param is not an object', function() {
+    it('cries if param is not an object', function () {
       validateUI(undefined, false, 'UI must be an object')
       validateUI(null, false, 'UI must be an object')
       validateUI(2, false, 'UI must be an object')
       validateUI(NaN, false, 'UI must be an object')
     })
-    it('cries if ui.name is not a string', function() {
+    it('cries if ui.name is not a string', function () {
       validateUI(
         {
           name: NaN,
@@ -49,7 +49,7 @@ describe('Validate', function() {
         'UI.name must be a string',
       )
     })
-    it('cries if ui.didBeginLinting is not a function', function() {
+    it('cries if ui.didBeginLinting is not a function', function () {
       validateUI(
         {
           name: 'Some',
@@ -83,7 +83,7 @@ describe('Validate', function() {
         'UI.didBeginLinting must be a function',
       )
     })
-    it('cries if ui.didFinishLinting is not a function', function() {
+    it('cries if ui.didFinishLinting is not a function', function () {
       validateUI(
         {
           name: 'Some',
@@ -121,7 +121,7 @@ describe('Validate', function() {
         'UI.didFinishLinting must be a function',
       )
     })
-    it('cries if ui.render is not a function', function() {
+    it('cries if ui.render is not a function', function () {
       validateUI(
         {
           name: 'Some',
@@ -163,7 +163,7 @@ describe('Validate', function() {
         'UI.render must be a function',
       )
     })
-    it('cries if ui.dispose is not a function', function() {
+    it('cries if ui.dispose is not a function', function () {
       validateUI(
         {
           name: 'Some',
@@ -209,7 +209,7 @@ describe('Validate', function() {
         'UI.dispose must be a function',
       )
     })
-    it('does not cry if everything is good', function() {
+    it('does not cry if everything is good', function () {
       validateUI(
         {
           name: 'Some',
@@ -222,7 +222,7 @@ describe('Validate', function() {
       )
     })
   })
-  describe('::linter', function() {
+  describe('::linter', function () {
     function validateLinter(linter: any, expectedValue: boolean, message: string = '') {
       expect(Validate.linter(linter)).toBe(expectedValue)
       if (!expectedValue) {
@@ -230,13 +230,13 @@ describe('Validate', function() {
       }
     }
 
-    it('cries if params is not an object', function() {
+    it('cries if params is not an object', function () {
       validateLinter(null, false, 'Linter must be an object')
       validateLinter(5, false, 'Linter must be an object')
       validateLinter(NaN, false, 'Linter must be an object')
       validateLinter(undefined, false, 'Linter must be an object')
     })
-    it('cries if linter.name is not a string', function() {
+    it('cries if linter.name is not a string', function () {
       validateLinter(
         {
           name: undefined,
@@ -266,7 +266,7 @@ describe('Validate', function() {
         'Linter.name must be a string',
       )
     })
-    it('cries if linter.scope is not valid', function() {
+    it('cries if linter.scope is not valid', function () {
       validateLinter(
         {
           name: 'Linter',
@@ -316,7 +316,7 @@ describe('Validate', function() {
         "Linter.scope must be either 'file' or 'project'",
       )
     })
-    it('cries if v is 2 and linter.lintsOnChange is not boolean', function() {
+    it('cries if v is 2 and linter.lintsOnChange is not boolean', function () {
       validateLinter(
         {
           name: 'Linter',
@@ -354,7 +354,7 @@ describe('Validate', function() {
         'Linter.lintsOnChange must be a boolean',
       )
     })
-    it('cries if linter.grammarScopes is not an array', function() {
+    it('cries if linter.grammarScopes is not an array', function () {
       validateLinter(
         {
           name: 'Linter',
@@ -406,7 +406,7 @@ describe('Validate', function() {
         'Linter.grammarScopes must be an Array',
       )
     })
-    it('cries if linter.lint is not a function', function() {
+    it('cries if linter.lint is not a function', function () {
       validateLinter(
         {
           name: 'Linter',
@@ -463,7 +463,7 @@ describe('Validate', function() {
         'Linter.lint must be a function',
       )
     })
-    it('does not cry if everything is valid', function() {
+    it('does not cry if everything is valid', function () {
       validateLinter(
         {
           name: 'Linter',
@@ -488,7 +488,7 @@ describe('Validate', function() {
       )
     })
   })
-  describe('::indie', function() {
+  describe('::indie', function () {
     function validateIndie(linter: any, expectedValue: boolean, message: string = '') {
       expect(Validate.indie(linter)).toBe(expectedValue)
       if (!expectedValue) {
@@ -496,13 +496,13 @@ describe('Validate', function() {
       }
     }
 
-    it('cries if params is not an object', function() {
+    it('cries if params is not an object', function () {
       validateIndie(null, false, 'Indie must be an object')
       validateIndie(5, false, 'Indie must be an object')
       validateIndie(NaN, false, 'Indie must be an object')
       validateIndie(undefined, false, 'Indie must be an object')
     })
-    it('cries if indie.name is not a string', function() {
+    it('cries if indie.name is not a string', function () {
       validateIndie(
         {
           name: undefined,
@@ -532,7 +532,7 @@ describe('Validate', function() {
         'Indie.name must be a string',
       )
     })
-    it('does not cry if everything is valid', function() {
+    it('does not cry if everything is valid', function () {
       validateIndie(
         {
           name: 'Indie',
@@ -541,7 +541,7 @@ describe('Validate', function() {
       )
     })
   })
-  describe('::messages', function() {
+  describe('::messages', function () {
     function validateMessages(linter: any, expectedValue: boolean, message: string = '') {
       expect(Validate.messages('Some Linter', linter)).toBe(expectedValue)
       if (!expectedValue) {
@@ -549,13 +549,13 @@ describe('Validate', function() {
       }
     }
 
-    it('cries if results are not array', function() {
+    it('cries if results are not array', function () {
       validateMessages(undefined, false, 'Linter Result must be an Array')
       validateMessages({}, false, 'Linter Result must be an Array')
       validateMessages(5, false, 'Linter Result must be an Array')
       validateMessages(NaN, false, 'Linter Result must be an Array')
     })
-    it('cries if message.icon is present and invalid', function() {
+    it('cries if message.icon is present and invalid', function () {
       validateMessages(
         [
           {
@@ -584,7 +584,7 @@ describe('Validate', function() {
         'Message.icon must be a string',
       )
     })
-    it('cries if message.location is invalid', function() {
+    it('cries if message.location is invalid', function () {
       validateMessages(
         [
           {
@@ -658,11 +658,17 @@ describe('Validate', function() {
         'Message.location must be valid',
       )
     })
-    it('cries if message.location contains NaN', function() {
+    it('cries if message.location contains NaN', function () {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[NaN, NaN], [NaN, NaN]] },
+            location: {
+              file: __filename,
+              position: [
+                [NaN, NaN],
+                [NaN, NaN],
+              ],
+            },
           },
         ],
         false,
@@ -671,7 +677,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, NaN]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, NaN],
+              ],
+            },
           },
         ],
         false,
@@ -680,7 +692,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [NaN, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [NaN, 0],
+              ],
+            },
           },
         ],
         false,
@@ -689,7 +707,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, NaN], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, NaN],
+                [0, 0],
+              ],
+            },
           },
         ],
         false,
@@ -698,18 +722,30 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[NaN, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [NaN, 0],
+                [0, 0],
+              ],
+            },
           },
         ],
         false,
         'Message.location.position should not contain NaN coordinates',
       )
     })
-    it('cries if message.solutions is present and is not array', function() {
+    it('cries if message.solutions is present and is not array', function () {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             solutions: {},
           },
         ],
@@ -719,7 +755,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             solutions: 'asdsad',
           },
         ],
@@ -729,7 +771,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             solutions: 5,
           },
         ],
@@ -737,11 +785,17 @@ describe('Validate', function() {
         'Message.solutions must be valid',
       )
     })
-    it('cries if message.reference is present and invalid', function() {
+    it('cries if message.reference is present and invalid', function () {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             reference: 5,
           },
         ],
@@ -751,7 +805,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             reference: {},
           },
         ],
@@ -761,7 +821,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             reference: 'asdasd',
           },
         ],
@@ -771,7 +837,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             reference: { file: __filename },
           },
         ],
@@ -781,7 +853,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             reference: { file: __filename, position: 5 },
           },
         ],
@@ -791,7 +869,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             reference: { file: __filename, position: NaN },
           },
         ],
@@ -801,7 +885,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             reference: { file: __filename, position: null },
           },
         ],
@@ -809,11 +899,17 @@ describe('Validate', function() {
         'Message.reference must be valid',
       )
     })
-    it('cries if message.reference contains NaN', function() {
+    it('cries if message.reference contains NaN', function () {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             reference: { file: __filename, position: [NaN, 5] },
           },
         ],
@@ -823,7 +919,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             reference: { file: __filename, position: [5, NaN] },
           },
         ],
@@ -833,7 +935,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             reference: { file: __filename, position: [NaN, NaN] },
           },
         ],
@@ -841,11 +949,17 @@ describe('Validate', function() {
         'Message.reference.position should not contain NaN coordinates',
       )
     })
-    it('cries if message.excerpt is not string', function() {
+    it('cries if message.excerpt is not string', function () {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: undefined,
           },
         ],
@@ -855,7 +969,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: {},
           },
         ],
@@ -865,7 +985,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: null,
           },
         ],
@@ -875,7 +1001,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: NaN,
           },
         ],
@@ -885,7 +1017,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: 5,
           },
         ],
@@ -893,11 +1031,17 @@ describe('Validate', function() {
         'Message.excerpt must be a string',
       )
     })
-    it('cries if message.severity is invalid', function() {
+    it('cries if message.severity is invalid', function () {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             severity: '',
           },
@@ -908,7 +1052,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             severity: NaN,
           },
@@ -919,7 +1069,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             severity: 5,
           },
@@ -930,7 +1086,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             severity: {},
           },
@@ -941,7 +1103,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             severity: 'errorish',
           },
@@ -952,7 +1120,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             severity: 'warningish',
           },
@@ -961,11 +1135,17 @@ describe('Validate', function() {
         "Message.severity must be 'error', 'warning' or 'info'",
       )
     })
-    it('cries if message.url is present and is not string', function() {
+    it('cries if message.url is present and is not string', function () {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             severity: 'error',
             url: 5,
@@ -977,7 +1157,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             severity: 'error',
             url: {},
@@ -987,11 +1173,17 @@ describe('Validate', function() {
         'Message.url must be a string',
       )
     })
-    it('cries if message.description is present and is invalid', function() {
+    it('cries if message.description is present and is invalid', function () {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             severity: 'error',
             description: 5,
@@ -1003,7 +1195,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             severity: 'error',
             description: {},
@@ -1013,11 +1211,17 @@ describe('Validate', function() {
         'Message.description must be a function or string',
       )
     })
-    it('does not cry if provided with valid values', function() {
+    it('does not cry if provided with valid values', function () {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             severity: 'error',
           },
@@ -1027,7 +1231,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             severity: 'error',
             solutions: [],
@@ -1038,7 +1248,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             reference: { file: __filename, position: [0, 0] },
             excerpt: '',
             severity: 'warning',
@@ -1049,7 +1265,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             url: 'something',
             severity: 'info',
@@ -1060,7 +1282,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             description: 'something',
             severity: 'warning',
@@ -1071,7 +1299,13 @@ describe('Validate', function() {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             description() {},
             severity: 'warning',
@@ -1080,11 +1314,17 @@ describe('Validate', function() {
         true,
       )
     })
-    it('cries if message.linterName is present and is invalid', function() {
+    it('cries if message.linterName is present and is invalid', function () {
       validateMessages(
         [
           {
-            location: { file: __filename, position: [[0, 0], [0, 0]] },
+            location: {
+              file: __filename,
+              position: [
+                [0, 0],
+                [0, 0],
+              ],
+            },
             excerpt: '',
             severity: 'error',
             description: '',

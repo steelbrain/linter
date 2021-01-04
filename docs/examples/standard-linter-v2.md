@@ -51,32 +51,42 @@ export function provideLinter() {
       const editorPath = textEditor.getPath()
 
       // Do something sync
-      return [{
-        severity: 'info',
-        location: {
-          file: editorPath,
-          position: [[0, 0], [0, 1]],
-        },
-        excerpt: `A random value is ${Math.random()}`,
-        description: `### What is this?\nThis is a randomly generated value`
-      }]
-
-      // Do something async
-      return new Promise(function(resolve) {
-        resolve([{
+      return [
+        {
           severity: 'info',
           location: {
             file: editorPath,
-            position: [[0, 0], [0, 1]],
+            position: [
+              [0, 0],
+              [0, 1],
+            ],
           },
           excerpt: `A random value is ${Math.random()}`,
-          description: `### What is this?\nThis is a randomly generated value`
-        }])
+          description: `### What is this?\nThis is a randomly generated value`,
+        },
+      ]
+
+      // Do something async
+      return new Promise(function (resolve) {
+        resolve([
+          {
+            severity: 'info',
+            location: {
+              file: editorPath,
+              position: [
+                [0, 0],
+                [0, 1],
+              ],
+            },
+            excerpt: `A random value is ${Math.random()}`,
+            description: `### What is this?\nThis is a randomly generated value`,
+          },
+        ])
       })
-    }
+    },
   }
 }
 ```
 
-[Standard Linter API v2]: ../types/standard-linter-v2.md
-[Messages v2]: ../types/linter-message-v2.md
+[standard linter api v2]: ../types/standard-linter-v2.md
+[messages v2]: ../types/linter-message-v2.md

@@ -4,9 +4,9 @@ import MessageRegistry from '../dist/message-registry'
 import { getMessage } from './common'
 import { normalizeMessages } from '../dist/helpers'
 
-describe('Message Registry', function() {
+describe('Message Registry', function () {
   let messageRegistry
-  beforeEach(function() {
+  beforeEach(function () {
     messageRegistry = new MessageRegistry()
     messageRegistry.debouncedUpdate = jasmine.createSpy('debouncedUpdate')
 
@@ -22,7 +22,7 @@ describe('Message Registry', function() {
           }
         }
         if (undefined !== failed) {
-          this.message = function() {
+          this.message = function () {
             return `Failed asserting that array includes element "${failed[0]} => ${failed[1]}"`
           }
           return false
@@ -32,12 +32,12 @@ describe('Message Registry', function() {
       },
     })
   })
-  afterEach(function() {
+  afterEach(function () {
     messageRegistry.dispose()
   })
 
-  describe('::set', function() {
-    it('stores results using both buffer and linter', function() {
+  describe('::set', function () {
+    it('stores results using both buffer and linter', function () {
       const messageFirst = getMessage()
       const messageSecond = getMessage()
       const messageThird = getMessage()
@@ -111,12 +111,12 @@ describe('Message Registry', function() {
     })
   })
 
-  describe('updates (::update & ::onDidUpdateMessages)', function() {
-    it('notifies on changes', function() {
+  describe('updates (::update & ::onDidUpdateMessages)', function () {
+    it('notifies on changes', function () {
       let called = 0
       const linter: Object = { name: 'any' }
       const message = getMessage()
-      messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
+      messageRegistry.onDidUpdateMessages(function ({ added, removed, messages }) {
         called++
         expect(added.length).toBe(1)
         expect(removed.length).toBe(0)
@@ -128,7 +128,7 @@ describe('Message Registry', function() {
       messageRegistry.update()
       expect(called).toBe(1)
     })
-    it('notifies properly for as many linters as you want', function() {
+    it('notifies properly for as many linters as you want', function () {
       const buffer: Object = {}
       const linterFirst: Object = { name: 'any' }
       const linterSecond: Object = {}
@@ -137,7 +137,7 @@ describe('Message Registry', function() {
       const messageThird = getMessage()
       let called = 0
 
-      messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
+      messageRegistry.onDidUpdateMessages(function ({ added, removed, messages }) {
         called++
 
         if (called === 1) {
@@ -196,7 +196,7 @@ describe('Message Registry', function() {
       expect(called).toBe(4)
     })
 
-    it('sets key, severity on messages', function() {
+    it('sets key, severity on messages', function () {
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
       const messageFirst = getMessage(true)
@@ -205,7 +205,7 @@ describe('Message Registry', function() {
 
       let called = 0
 
-      messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
+      messageRegistry.onDidUpdateMessages(function ({ added, removed, messages }) {
         called++
         if (called === 1) {
           // All messages are new
@@ -238,7 +238,7 @@ describe('Message Registry', function() {
     })
 
     // this test was changed in https://github.com/steelbrain/linter/pull/1706
-    it('does not perform redundant updates if the message is the same', function() {
+    it('does not perform redundant updates if the message is the same', function () {
       let called = 0
       const messageFirst = getMessage(true)
       const messageSecond = { ...messageFirst }
@@ -250,7 +250,7 @@ describe('Message Registry', function() {
       console.log({ messageFirst, messageSecondChanged })
       normalizeMessages('Some Linter', [messageSecondChanged])
 
-      messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
+      messageRegistry.onDidUpdateMessages(function ({ added, removed, messages }) {
         called++
         if (called === 1) {
           expect(messages.length).toBe(1)
@@ -279,10 +279,10 @@ describe('Message Registry', function() {
       expect(called).toBe(2)
     })
 
-    it('sends the same object each time even in complicated scenarios', function() {
+    it('sends the same object each time even in complicated scenarios', function () {
       let called = 0
       const knownMessages = new Map()
-      messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
+      messageRegistry.onDidUpdateMessages(function ({ added, removed, messages }) {
         called++
         for (const entry of added) {
           if (knownMessages.has(entry)) {
@@ -368,8 +368,8 @@ describe('Message Registry', function() {
     //   })
   })
 
-  describe('::deleteByBuffer', function() {
-    it('deletes the messages and sends them in an event', function() {
+  describe('::deleteByBuffer', function () {
+    it('deletes the messages and sends them in an event', function () {
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
       const messageFirst = getMessage()
@@ -377,7 +377,7 @@ describe('Message Registry', function() {
 
       let called = 0
 
-      messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
+      messageRegistry.onDidUpdateMessages(function ({ added, removed, messages }) {
         called++
         if (called === 1) {
           expect(added.length).toBe(2)
@@ -411,8 +411,8 @@ describe('Message Registry', function() {
     })
   })
 
-  describe('::deleteByLinter', function() {
-    it('deletes the messages and sends them in an event', function() {
+  describe('::deleteByLinter', function () {
+    it('deletes the messages and sends them in an event', function () {
       const linter: Object = { name: 'any' }
       const buffer: Object = {}
       const messageFirst = getMessage()
@@ -420,7 +420,7 @@ describe('Message Registry', function() {
 
       let called = 0
 
-      messageRegistry.onDidUpdateMessages(function({ added, removed, messages }) {
+      messageRegistry.onDidUpdateMessages(function ({ added, removed, messages }) {
         called++
         if (called === 1) {
           expect(added.length).toBe(2)

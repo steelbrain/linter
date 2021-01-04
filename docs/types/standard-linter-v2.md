@@ -15,16 +15,11 @@ type Linter = {
 
   // From providers
   name: string,
-  scope: "file" | "project",
+  scope: 'file' | 'project',
   lintsOnChange: boolean,
   grammarScopes: Array<string>,
-  lint(
-    textEditor: TextEditor
-  ):
-    | Array<Message>
-    | null
-    | Promise<Array<Message> | null>
-};
+  lint(textEditor: TextEditor): Array<Message> | null | Promise<Array<Message> | null>,
+}
 ```
 
 ## FAQs

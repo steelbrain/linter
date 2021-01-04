@@ -108,7 +108,7 @@ class LinterRegistry {
         new Promise(function (resolve: (editor: ReturnType<Linter['lint']>) => void) {
           resolve(linter.lint(editor))
         }).then(
-          (messages) => {
+          messages => {
             this.emitter.emit('did-finish-linting', { number, linter, filePath: statusFilePath })
             if (linter[$requestLastReceived] >= number || !linter[$activated] || (statusBuffer && !statusBuffer.isAlive())) {
               return

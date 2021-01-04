@@ -100,5 +100,5 @@ export function consumeIndie(registerIndie) {
 }
 ```
 
-[Indie Linter API v2]: ../types/indie-linter-v2.md
-[Messages v2]: ../types/linter-message-v2.md
+[indie linter api v2]: ../types/indie-linter-v2.md
+[messages v2]: ../types/linter-message-v2.md

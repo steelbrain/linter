@@ -4,24 +4,24 @@ import { it, wait } from 'jasmine-fix'
 
 import ToggleView from '../dist/toggle-view'
 
-describe('Toggle View', function() {
-  beforeEach(function() {
+describe('Toggle View', function () {
+  beforeEach(function () {
     atom.config.set('linter.disabledProviders', [])
   })
 
-  describe('::getItems', function() {
-    it('returns disabled when enabling', async function() {
+  describe('::getItems', function () {
+    it('returns disabled when enabling', async function () {
       const toggleView = new ToggleView('enable', ['Package 1', 'Package 2', 'Package 3'])
       atom.config.set('linter.disabledProviders', ['Package 2'])
       expect(await toggleView.getItems()).toEqual(['Package 2'])
     })
-    it('returns enabled when disabling', async function() {
+    it('returns enabled when disabling', async function () {
       const toggleView = new ToggleView('disable', ['Package 1', 'Package 2', 'Package 3'])
       atom.config.set('linter.disabledProviders', ['Package 2'])
       expect(await toggleView.getItems()).toEqual(['Package 1', 'Package 3'])
     })
   })
-  it('has a working lifecycle', async function() {
+  it('has a working lifecycle', async function () {
     const didDisable = []
     const toggleView = new ToggleView('disable', ['Package 1', 'Package 2', 'Package 3'])
 

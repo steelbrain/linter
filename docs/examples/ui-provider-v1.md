@@ -79,4 +79,4 @@ export function provideUI() {
 }
 ```
 
-[UI Provider v1 API]: ../types/ui-provider-v1.md
+[ui provider v1 api]: ../types/ui-provider-v1.md

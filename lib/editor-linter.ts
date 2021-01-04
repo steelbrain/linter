@@ -60,12 +60,7 @@ export default class EditorLinter {
     this.emitter.dispose()
   }
 
-
-  subscriptiveObserve(
-    object: Record<string, any>,
-    eventName: string,
-    callback: (...args: Array<any>) => any,
-  ): Disposable {
+  subscriptiveObserve(object: Record<string, any>, eventName: string, callback: (...args: Array<any>) => any): Disposable {
     let subscription: Disposable | null = null
     const eventSubscription = object.observe(eventName, (props: Record<string, any>) => {
       if (subscription) {

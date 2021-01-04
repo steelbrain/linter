@@ -39,10 +39,7 @@ export default class IndieDelegate {
       this.messages.clear()
     }
   }
-  setMessages(
-    filePath: string | Array<Record<string, any>>,
-    messages: Array<Message> | null | undefined = null,
-  ): void {
+  setMessages(filePath: string | Array<Record<string, any>>, messages: Array<Message> | null | undefined = null): void {
     // v2 Support from here on
     if (typeof filePath !== 'string' || !Array.isArray(messages)) {
       throw new Error('Invalid Parameters to setMessages()')

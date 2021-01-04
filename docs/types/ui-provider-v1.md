@@ -11,7 +11,7 @@ type UI = {
   didBeginLinting(linter: Linter, filePath: ?string): void,
   didFinishLinting(linter: Linter, filePath: ?string): void,
   render(patch: MessagesPatch): void,
-  dispose(): void
+  dispose(): void,
 }
 ```
 
@@ -39,4 +39,4 @@ UI object is the best place to run the activation logic.
 deactivated. It's useful for destroying any Panels you might have registered for
 the UI.
 
-[Example Usage]: ../examples/ui-provider-v1.md
+[example usage]: ../examples/ui-provider-v1.md

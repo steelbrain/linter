@@ -5,9 +5,9 @@ import * as Helpers from './helpers'
 import type { Linter, UI } from './types'
 import type IndieDelegate from './indie-delegate'
 
-let manifest: {version: number}
+let manifest: { version: number }
 
-function formatItem(item: {name: string} | string) {
+function formatItem(item: { name: string } | string) {
   let itemName: string
   if (item && typeof item === 'object' && typeof item.name === 'string') {
     itemName = item.name
@@ -18,7 +18,7 @@ function formatItem(item: {name: string} | string) {
   }
   return `  - ${itemName}`
 }
-function sortByName(item1: {name: string}, item2: {name: string}) {
+function sortByName(item1: { name: string }, item2: { name: string }) {
   return item1.name.localeCompare(item2.name)
 }
 

@@ -3,10 +3,10 @@
 import IndieDelegate from '../dist/indie-delegate'
 import { getMessage } from './common'
 
-describe('IndieDelegate', function() {
+describe('IndieDelegate', function () {
   let indieDelegate
 
-  beforeEach(function() {
+  beforeEach(function () {
     indieDelegate = new IndieDelegate(
       {
         name: 'Indie',
@@ -14,18 +14,18 @@ describe('IndieDelegate', function() {
       2,
     )
   })
-  afterEach(function() {
+  afterEach(function () {
     indieDelegate.dispose()
   })
 
-  it('has the basic linter properties', function() {
+  it('has the basic linter properties', function () {
     expect(typeof indieDelegate.name).toBe('string')
     expect(indieDelegate.name).toBe('Indie')
     expect(typeof indieDelegate.scope).toBe('string')
     expect(indieDelegate.scope).toBe('project')
   })
-  describe('::setMessages && ::getMessages && ::clearMessages', function() {
-    it('works as expected', function() {
+  describe('::setMessages && ::getMessages && ::clearMessages', function () {
+    it('works as expected', function () {
       const message = getMessage(false)
       expect(indieDelegate.getMessages()).toEqual([])
       indieDelegate.setMessages(message.location.file, [message])
@@ -34,8 +34,8 @@ describe('IndieDelegate', function() {
       expect(indieDelegate.getMessages()).toEqual([])
     })
   })
-  describe('::setMessages', function() {
-    it('overwrites previous messages for that file', function() {
+  describe('::setMessages', function () {
+    it('overwrites previous messages for that file', function () {
       const messageA = getMessage(false)
       const messageB = getMessage(false)
       const messageC = getMessage(false)
@@ -51,9 +51,9 @@ describe('IndieDelegate', function() {
       indieDelegate.setMessages(messageA.location.file, [])
       expect(indieDelegate.getMessages()).toEqual([])
     })
-    it('does not update if is disposed', function() {
+    it('does not update if is disposed', function () {
       let timesUpdated = 0
-      indieDelegate.onDidUpdate(function() {
+      indieDelegate.onDidUpdate(function () {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
@@ -63,9 +63,9 @@ describe('IndieDelegate', function() {
       indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(1)
     })
-    it('does update if not disposed', function() {
+    it('does update if not disposed', function () {
       let timesUpdated = 0
-      indieDelegate.onDidUpdate(function() {
+      indieDelegate.onDidUpdate(function () {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
@@ -74,27 +74,27 @@ describe('IndieDelegate', function() {
       indieDelegate.setMessages(__filename, [getMessage(__filename)])
       expect(timesUpdated).toBe(2)
     })
-    it('cries if message has a different filePath', function() {
-      expect(function() {
+    it('cries if message has a different filePath', function () {
+      expect(function () {
         indieDelegate.setMessages(__filename, [getMessage(__filename)])
       }).not.toThrow()
-      expect(function() {
+      expect(function () {
         indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(__filename), getMessage(__filename)])
       }).not.toThrow()
-      expect(function() {
+      expect(function () {
         indieDelegate.setMessages(__filename, [getMessage(false)])
       }).toThrow('message.location.file does not match the given filePath')
-      expect(function() {
+      expect(function () {
         indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(false)])
       }).toThrow('message.location.file does not match the given filePath')
-      expect(function() {
+      expect(function () {
         indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(false), getMessage(__filename)])
       }).toThrow('message.location.file does not match the given filePath')
-      expect(function() {
+      expect(function () {
         indieDelegate.setMessages(__filename, [getMessage(__filename), getMessage(__filename), getMessage(false)])
       }).toThrow('message.location.file does not match the given filePath')
     })
-    it('does not add invalid messages', function() {
+    it('does not add invalid messages', function () {
       expect(indieDelegate.getMessages().length).toBe(0)
       expect(atom.notifications.getNotifications().length).toBe(0)
       indieDelegate.setMessages(__filename, [{}])
@@ -105,10 +105,10 @@ describe('IndieDelegate', function() {
       expect(atom.notifications.getNotifications().length).toBe(1)
     })
   })
-  describe('::clearMessages', function() {
-    it('does not update if disposed', function() {
+  describe('::clearMessages', function () {
+    it('does not update if disposed', function () {
       let timesUpdated = 0
-      indieDelegate.onDidUpdate(function() {
+      indieDelegate.onDidUpdate(function () {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
@@ -118,9 +118,9 @@ describe('IndieDelegate', function() {
       indieDelegate.clearMessages()
       expect(timesUpdated).toBe(1)
     })
-    it('does update if not disposed', function() {
+    it('does update if not disposed', function () {
       let timesUpdated = 0
-      indieDelegate.onDidUpdate(function() {
+      indieDelegate.onDidUpdate(function () {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
@@ -130,8 +130,8 @@ describe('IndieDelegate', function() {
       expect(timesUpdated).toBe(2)
     })
   })
-  describe('::setAllMessages', function() {
-    it('automatically splits messages into filePath groups', function() {
+  describe('::setAllMessages', function () {
+    it('automatically splits messages into filePath groups', function () {
       const messageA = getMessage(false)
       const messageB = getMessage(false)
       const messageC = getMessage(false)
@@ -151,9 +151,9 @@ describe('IndieDelegate', function() {
       expect(Array.isArray(messagesB)).toBe(true)
       expect(messagesB).toEqual([messageC, messageD])
     })
-    it('does not update if disposed', function() {
+    it('does not update if disposed', function () {
       let timesUpdated = 0
-      indieDelegate.onDidUpdate(function() {
+      indieDelegate.onDidUpdate(function () {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
@@ -163,9 +163,9 @@ describe('IndieDelegate', function() {
       indieDelegate.setAllMessages([])
       expect(timesUpdated).toBe(1)
     })
-    it('does update if not disposed', function() {
+    it('does update if not disposed', function () {
       let timesUpdated = 0
-      indieDelegate.onDidUpdate(function() {
+      indieDelegate.onDidUpdate(function () {
         timesUpdated++
       })
       expect(timesUpdated).toBe(0)
@@ -174,7 +174,7 @@ describe('IndieDelegate', function() {
       indieDelegate.setAllMessages([])
       expect(timesUpdated).toBe(2)
     })
-    it('does not add invalid messages', function() {
+    it('does not add invalid messages', function () {
       expect(indieDelegate.getMessages().length).toBe(0)
       expect(atom.notifications.getNotifications().length).toBe(0)
       indieDelegate.setAllMessages([{}])
@@ -185,16 +185,16 @@ describe('IndieDelegate', function() {
       expect(atom.notifications.getNotifications().length).toBe(1)
     })
   })
-  describe('::dispose', function() {
-    it('clears messages', function() {
+  describe('::dispose', function () {
+    it('clears messages', function () {
       indieDelegate.setAllMessages([getMessage(false)])
       expect(indieDelegate.messages.size).toBe(1)
       indieDelegate.dispose()
       expect(indieDelegate.messages.size).toBe(0)
     })
-    it('emits did-destroy event', function() {
+    it('emits did-destroy event', function () {
       let didDestroy = false
-      indieDelegate.onDidDestroy(function() {
+      indieDelegate.onDidDestroy(function () {
         didDestroy = true
       })
       expect(didDestroy).toBe(false)
@@ -202,8 +202,8 @@ describe('IndieDelegate', function() {
       expect(didDestroy).toBe(true)
     })
   })
-  describe('::onDidUpdate', function() {
-    it('includes all of the messages', function() {
+  describe('::onDidUpdate', function () {
+    it('includes all of the messages', function () {
       const messagesA = [getMessage('a'), getMessage('a'), getMessage('a'), getMessage('a'), getMessage('a')]
       const messagesB = [getMessage('b'), getMessage('b'), getMessage('b'), getMessage('b'), getMessage('b')]
       const spyCallback = jasmine.createSpy('onDidUpdate')

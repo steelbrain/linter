@@ -83,9 +83,9 @@ the same message.
 
 **A**: These are references to built in [`Point`][] and [`Range`][] classes.
 
-[Indie Linter v2]: indie-linter-v2.md
-[Standard Linter v2]: standard-linter-v2.md
+[indie linter v2]: indie-linter-v2.md
+[standard linter v2]: standard-linter-v2.md
 [`flowtype`]: https://flowtype.org/
-[Intentions]: https://atom.io/packages/intentions
-[`Point`]: https://atom.io/docs/api/latest/Point
-[`Range`]: https://atom.io/docs/api/latest/Range
+[intentions]: https://atom.io/packages/intentions
+[`point`]: https://atom.io/docs/api/latest/Point
+[`range`]: https://atom.io/docs/api/latest/Range

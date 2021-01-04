@@ -59,12 +59,17 @@ export function consumeIndie(registry) {
     name: 'Example',
   })
 
-  indie.setMessages([{
-    type: 'Error',
-    filePath: '/etc/passwd',
-    range: [[0, 0], [0, 1]],
-    text: 'MURICAA! F YEAH!',
-  }])
+  indie.setMessages([
+    {
+      type: 'Error',
+      filePath: '/etc/passwd',
+      range: [
+        [0, 0],
+        [0, 1],
+      ],
+      text: 'MURICAA! F YEAH!',
+    },
+  ])
 }
 ```
 
@@ -76,17 +81,22 @@ export function consumeIndie(registerIndie) {
     name: 'Example',
   })
 
-  indie.setAllMessages([{
-    severity: 'error',
-    location: {
-      file: '/etc/passwd',
-      position: [[0, 0], [0, 1]]
+  indie.setAllMessages([
+    {
+      severity: 'error',
+      location: {
+        file: '/etc/passwd',
+        position: [
+          [0, 0],
+          [0, 1],
+        ],
+      },
+      excerpt: 'MURICAA! F YEAH!',
     },
-    excerpt: 'MURICAA! F YEAH!',
-  }])
+  ])
 }
 ```
 
-[Indie Linter API v1]: https://github.com/steelbrain/linter/blob/v1/docs/types/indie-linter-v1.md
-[Message API v1]: https://github.com/steelbrain/linter/blob/v1/docs/types/linter-message-v1.md
-[Message API v2]: ../types/linter-message-v2.md
+[indie linter api v1]: https://github.com/steelbrain/linter/blob/v1/docs/types/indie-linter-v1.md
+[message api v1]: https://github.com/steelbrain/linter/blob/v1/docs/types/linter-message-v1.md
+[message api v2]: ../types/linter-message-v2.md

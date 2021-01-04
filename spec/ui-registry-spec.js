@@ -5,8 +5,8 @@ import UIRegistry from '../dist/ui-registry'
 let uiRegistry
 let uiProvider: Object
 
-describe('UI Registry', function() {
-  beforeEach(function() {
+describe('UI Registry', function () {
+  beforeEach(function () {
     if (uiRegistry) {
       uiRegistry.dispose()
     }
@@ -20,7 +20,7 @@ describe('UI Registry', function() {
     }
   })
 
-  it('works in a lifecycle', function() {
+  it('works in a lifecycle', function () {
     const testObjA: Object = {}
     const testObjB: Object = {}
     const testObjC: Object = {}
