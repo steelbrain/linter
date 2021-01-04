@@ -168,8 +168,8 @@ export function flagMessages(inputs: Array<Message>, oldMessages: Array<Message>
 
   return {
     oldKept: Array.from(oldKept.values()),
-    oldRemoved: oldRemoved ? Array.from(oldRemoved) : [],
-    newAdded: Array.from(newAdded),
+    oldRemoved: [...oldRemoved],
+    newAdded: [...newAdded],
   }
 }
 
