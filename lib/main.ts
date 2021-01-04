@@ -16,7 +16,7 @@ class Linter {
   registryIndie?: IndieRegistry
   registryEditors?: EditorsRegistry
   registryLinters?: LinterRegistry
-  registryMessages: MessageRegistry
+  registryMessages?: MessageRegistry
   subscriptions: CompositeDisposable
   idleCallbacks: Set<number>
 
@@ -75,7 +75,8 @@ class Linter {
         const linter = this.registryLinters!.getProviders().find(entry => entry.name === name)
         if (linter) {
           this.registryMessagesInit()
-          this.registryMessages.deleteByLinter(linter)
+          // this.registryMessages becomes valid inside registryMessagesInit
+          this.registryMessages!.deleteByLinter(linter)
         }
       })
       toggleView.show()
@@ -126,7 +127,8 @@ class Linter {
       editorLinter.onDidDestroy(() => {
         this.registryMessagesInit()
         if (!this.registryEditors!.hasSibling(editorLinter)) {
-          this.registryMessages.deleteByBuffer(editorLinter.getEditor().getBuffer())
+          // this.registryMessages becomes valid inside registryMessagesInit
+          this.registryMessages!.deleteByBuffer(editorLinter.getEditor().getBuffer())
         }
       })
     })
@@ -140,7 +142,8 @@ class Linter {
     this.subscriptions.add(this.registryLinters)
     this.registryLinters.onDidUpdateMessages(({ linter, messages, buffer }) => {
       this.registryMessagesInit()
-      this.registryMessages.set({ linter, messages, buffer })
+      // this.registryMessages becomes valid inside registryMessagesInit
+      this.registryMessages!.set({ linter, messages, buffer })
     })
     this.registryLinters.onDidBeginLinting(({ linter, filePath }) => {
       this.registryUIInit()
@@ -162,12 +165,14 @@ class Linter {
     this.registryIndie.observe(indieLinter => {
       indieLinter.onDidDestroy(() => {
         this.registryMessagesInit()
-        this.registryMessages.deleteByLinter(indieLinter)
+        // this.registryMessages becomes valid inside registryMessagesInit
+        this.registryMessages!.deleteByLinter(indieLinter)
       })
     })
     this.registryIndie.onDidUpdate(({ linter, messages }) => {
       this.registryMessagesInit()
-      this.registryMessages.set({ linter, messages, buffer: null })
+      // this.registryMessages becomes valid inside registryMessagesInit
+      this.registryMessages!.set({ linter, messages, buffer: null })
     })
   }
   registryMessagesInit() {
@@ -197,7 +202,8 @@ class Linter {
     // this.registryUI becomes valid inside registryUIInit
     this.registryUI!.add(ui)
     this.registryMessagesInit()
-    const { messages } = this.registryMessages
+    // this.registryMessages becomes valid inside registryMessagesInit
+    const messages = this.registryMessages!.messages
     if (messages.length) {
       ui.render({ added: messages, messages, removed: [] })
     }
@@ -218,7 +224,8 @@ class Linter {
     // this.registryLinters becomes valid inside registryLintersInit
     this.registryLinters!.deleteLinter(linter)
     this.registryMessagesInit()
-    this.registryMessages.deleteByLinter(linter)
+    // this.registryMessages becomes valid inside registryMessagesInit
+    this.registryMessages!.deleteByLinter(linter)
   }
   // Indie Linter
   addIndie(indie: Indie) {
