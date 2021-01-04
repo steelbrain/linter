@@ -1,7 +1,7 @@
 /* @flow */
 
 import Path from 'path'
-import { normalizeMessages } from '../lib/helpers'
+import { normalizeMessages } from '../dist/helpers'
 
 export function getLinter(): Object {
   return {

@@ -2,7 +2,7 @@
 
 import { Disposable } from 'atom'
 import { it } from 'jasmine-fix'
-import * as Helpers from '../lib/helpers'
+import * as Helpers from '../dist/helpers'
 import { getFixturesPath, getMessage } from './common'
 
 describe('Helpers', function() {

@@ -1,8 +1,8 @@
 /* @flow */
 
-import MessageRegistry from '../lib/message-registry'
+import MessageRegistry from '../dist/message-registry'
 import { getMessage } from './common'
-import { normalizeMessages } from '../lib/helpers'
+import { normalizeMessages } from '../dist/helpers'
 
 describe('Message Registry', function() {
   let messageRegistry

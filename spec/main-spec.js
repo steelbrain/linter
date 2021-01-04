@@ -1,6 +1,6 @@
 /* @flow */
 
-import AtomLinter from '../lib/main'
+import AtomLinter from '../dist/main'
 import { getMessage } from './common'
 
 describe('Atom Linter', function() {

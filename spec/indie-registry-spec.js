@@ -1,6 +1,6 @@
 /* @flow */
 
-import IndieRegistry from '../lib/indie-registry'
+import IndieRegistry from '../dist/indie-registry'
 import { getMessage } from './common'
 
 describe('IndieRegistry', function() {

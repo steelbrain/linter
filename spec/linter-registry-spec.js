@@ -1,8 +1,8 @@
 /* @flow */
 
 import { it, wait, beforeEach } from 'jasmine-fix'
-import * as Helpers from '../lib/helpers'
-import LinterRegistry from '../lib/linter-registry'
+import * as Helpers from '../dist/helpers'
+import LinterRegistry from '../dist/linter-registry'
 import { getLinter, getFixturesPath } from './common'
 
 describe('LinterRegistry', function() {

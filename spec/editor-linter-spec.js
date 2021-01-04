@@ -1,7 +1,7 @@
 'use babel'
 
 import { it, beforeEach } from 'jasmine-fix'
-import EditorLinter from '../lib/editor-linter'
+import EditorLinter from '../dist/editor-linter'
 
 describe('EditorLinter', function() {
   let textEditor
