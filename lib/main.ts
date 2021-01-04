@@ -15,7 +15,7 @@ class Linter {
   registryUI: UIRegistry
   registryIndie?: IndieRegistry
   registryEditors: EditorsRegistry
-  registryLinters: LinterRegistry
+  registryLinters?: LinterRegistry
   registryMessages: MessageRegistry
   subscriptions: CompositeDisposable
   idleCallbacks: Set<number>
@@ -52,7 +52,8 @@ class Linter {
       this.registryIndieInit()
       this.registryLintersInit()
       this.commands.showDebug(
-        this.registryLinters.getProviders(),
+        // this.registryLinters becomes valid inside registryLintersInit
+        this.registryLinters!.getProviders(),
         // this.registryIndie becomes valid inside registryIndieInit
         this.registryIndie!.getProviders(),
         this.registryUI.getProviders(),
@@ -60,12 +61,14 @@ class Linter {
     })
     this.commands.onShouldToggleLinter(action => {
       this.registryLintersInit()
-      const toggleView = new ToggleView(action, arrayUnique(this.registryLinters.getProviders().map(linter => linter.name)))
+      // this.registryLinters becomes valid inside registryLintersInit
+      const toggleView = new ToggleView(action, arrayUnique(this.registryLinters!.getProviders().map(linter => linter.name)))
       toggleView.onDidDispose(() => {
         this.subscriptions.remove(toggleView)
       })
       toggleView.onDidDisable(name => {
-        const linter = this.registryLinters.getProviders().find(entry => entry.name === name)
+        // this.registryLinters becomes valid inside registryLintersInit
+        const linter = this.registryLinters!.getProviders().find(entry => entry.name === name)
         if (linter) {
           this.registryMessagesInit()
           this.registryMessages.deleteByLinter(linter)
@@ -113,7 +116,8 @@ class Linter {
     this.registryEditors.observe(editorLinter => {
       editorLinter.onShouldLint(onChange => {
         this.registryLintersInit()
-        this.registryLinters.lint({ onChange, editor: editorLinter.getEditor() })
+        // this.registryLinters becomes valid inside registryLintersInit
+        this.registryLinters!.lint({ onChange, editor: editorLinter.getEditor() })
       })
       editorLinter.onDidDestroy(() => {
         this.registryMessagesInit()
@@ -126,7 +130,7 @@ class Linter {
     this.registryEditors.activate()
   }
   registryLintersInit() {
-    if (this.registryLinters) {
+    if (this.registryLinters !== undefined) {
       return
     }
     this.registryLinters = new LinterRegistry()
@@ -198,11 +202,13 @@ class Linter {
   // Standard Linter
   addLinter(linter: LinterProvider) {
     this.registryLintersInit()
-    this.registryLinters.addLinter(linter)
+    // this.registryLinters becomes valid inside registryLintersInit
+    this.registryLinters!.addLinter(linter)
   }
   deleteLinter(linter: LinterProvider) {
     this.registryLintersInit()
-    this.registryLinters.deleteLinter(linter)
+    // this.registryLinters becomes valid inside registryLintersInit
+    this.registryLinters!.deleteLinter(linter)
     this.registryMessagesInit()
     this.registryMessages.deleteByLinter(linter)
   }
