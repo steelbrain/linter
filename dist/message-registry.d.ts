@@ -19,7 +19,7 @@ declare class MessageRegistry {
     set({ messages, linter, buffer }: {
         messages: Array<Message>;
         linter: Linter;
-        buffer: TextBuffer;
+        buffer: TextBuffer | null;
     }): void;
     update(): void;
     onDidUpdateMessages(callback: (difference: MessagesPatch) => void): Disposable;

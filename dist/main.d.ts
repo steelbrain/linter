@@ -8,11 +8,11 @@ import Commands from './commands';
 import type { UI, Linter as LinterProvider, Indie } from './types';
 declare class Linter {
     commands: Commands;
-    registryUI: UIRegistry;
-    registryIndie: IndieRegistry;
-    registryEditors: EditorsRegistry;
-    registryLinters: LinterRegistry;
-    registryMessages: MessageRegistry;
+    registryUI?: UIRegistry;
+    registryIndie?: IndieRegistry;
+    registryEditors?: EditorsRegistry;
+    registryLinters?: LinterRegistry;
+    registryMessages?: MessageRegistry;
     subscriptions: CompositeDisposable;
     idleCallbacks: Set<number>;
     constructor();

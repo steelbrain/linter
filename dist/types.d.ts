@@ -1,4 +1,16 @@
-import { Range, Point, TextEditor } from 'atom';
+import { Range, Point, TextEditor, CompositeDisposable } from 'atom';
+export declare type MessageSolution = {
+    title?: string;
+    position: Range;
+    priority?: number;
+    currentText?: string;
+    replaceWith: string;
+} | {
+    title?: string;
+    priority?: number;
+    position: Range;
+    apply: () => any;
+};
 export declare type Message = {
     key: string;
     version: 2;
@@ -15,18 +27,7 @@ export declare type Message = {
     icon?: string;
     excerpt: string;
     severity: 'error' | 'warning' | 'info';
-    solutions?: Array<{
-        title?: string;
-        position: Range;
-        priority?: number;
-        currentText?: string;
-        replaceWith: string;
-    } | {
-        title?: string;
-        priority?: number;
-        position: Range;
-        apply: () => any;
-    }>;
+    solutions?: Array<MessageSolution>;
     description?: string | (() => Promise<string> | string);
 };
 export declare type LinterResult = Array<Message> | null;
@@ -52,6 +53,8 @@ export declare type MessagesPatch = {
 };
 export declare type UI = {
     name: string;
+    subscriptions: CompositeDisposable;
+    idleCallbacks: Set<number>;
     didBeginLinting(linter: Linter, filePath: string | null | undefined): void;
     didFinishLinting(linter: Linter, filePath: string | null | undefined): void;
     render(patch: MessagesPatch): void;

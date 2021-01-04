@@ -457,8 +457,8 @@
         "affectsGlobalScope": false
       },
       "../lib/types.ts": {
-        "version": "e137727328ae358fb3c76a8b74426445de5019e79387aceb5869ed2ea0293793",
-        "signature": "e9203bbe87de7e5fa0ec7cc26307577e350b74a9168e2dd7e7e180cba75e80ce",
+        "version": "23abf10507540647947b0adc34e1bcab4ef7a39e537b9564f9a8a8a73294552e",
+        "signature": "144b1bcc64d94f22e29e2b17120d46451ef5576f47f117fbf46b44e9670796d0",
         "affectsGlobalScope": true
       },
       "../node_modules/@types/minimatch/index.d.ts": {
@@ -467,7 +467,7 @@
         "affectsGlobalScope": false
       },
       "../lib/helpers.ts": {
-        "version": "ec4c290283b53495be3b2416205529304173cd28dfb40ce68e388b31477405c4",
+        "version": "761749240e2df65dee27474e25916a4397012dc30a206bb33af115550044f25f",
         "signature": "7d5a9285c1bc0727f253471068001e60de47536cd3def6bed5b98786a1bd2816",
         "affectsGlobalScope": false
       },
@@ -477,7 +477,7 @@
         "affectsGlobalScope": false
       },
       "../lib/validate/index.ts": {
-        "version": "accb53ffda6247af4830953c09c8644bfa501e8f3c0238e64550e1dbdb5c3e5d",
+        "version": "4d01b93dbf3b5d3a9b90665209f9495bfb3f59f6f4d8a95de4a274905e6fc0ee",
         "signature": "778fca88a531fe304adca3712b75b721e5139086ee05d6caca5052f49085bdf2",
         "affectsGlobalScope": false
       },
@@ -487,7 +487,7 @@
         "affectsGlobalScope": false
       },
       "../lib/commands.ts": {
-        "version": "591c5c94e3de192991030584ca359ec82a8e5e61eeec4884c5fb426e75ea8e6e",
+        "version": "1ad619c8c2b44795718b6b3b3f12e058cfc1abc54f8688c49348acaeea2a3b5f",
         "signature": "90a942f5509659aa3292ae768cc1526afc7ce6ed2070f428e346d1457b885461",
         "affectsGlobalScope": false
       },
@@ -502,7 +502,7 @@
         "affectsGlobalScope": false
       },
       "../lib/editor-registry.ts": {
-        "version": "88c8af7f6c8f2d4463b57a2d857fec5a0b955aefd29771ead98220112c238ff6",
+        "version": "5e954a45563f7ec3f065cb05ce1d3a361e1e24723ee3db7f35b0e800eece5969",
         "signature": "9f99df3d734265f0c2cd70dc01621223e957e1d02a72de6f76342b800e5f670d",
         "affectsGlobalScope": false
       },
@@ -517,28 +517,28 @@
         "affectsGlobalScope": false
       },
       "../lib/message-registry.ts": {
-        "version": "b39389f25cd05ebd77627b9d616fa852485e1591abd0f4b90ed8519e310d3df9",
-        "signature": "ae000efd14fdd3c941ead7c898d3db7bfa527da22e8618ae63c4d5e0bc3e9d95",
+        "version": "0f63473efc25452719d75ad17b83bd647a1ff2ea2ef4c94b4be2e7614d0e5b06",
+        "signature": "16f557cbb7ce530e1dfa86c6cf88d509ce3f03773039351e4431bcfb2888f75b",
         "affectsGlobalScope": false
       },
       "../lib/linter-registry.ts": {
-        "version": "6b2d948a8b4cfa29a7aa53b684dd5fcd2f42065f53c8a2225bf35697eb0cdcbb",
+        "version": "f16513616178a9a79979442ed87ed09135611051f8285a6ac26e89c625943d4f",
         "signature": "31a65e29c1ce1ee3b286c04e53164b87a3a5b03e121301897dea38f546e48722",
         "affectsGlobalScope": false
       },
       "../lib/toggle-view.ts": {
-        "version": "c36a66e56714c583b97312dd7f9168c5dbe32abe9d8301264c23ffc97e0b0ecd",
+        "version": "e749fa7a7947a83a41b5f5535000792d9ceda49ee0bd494b7e8a63a8f78ea78b",
         "signature": "187b11645e6fa668aa067a7153a4ca345b11b62ac0d7ba3cdf6a9f24bd505fd4",
         "affectsGlobalScope": false
       },
       "../lib/main.ts": {
-        "version": "71ccf5916884ca67d0213cd1724d4fc4d33021bdd2ddbaa3d12577a57bd5fa6b",
-        "signature": "2c96c93216a6aa4a8f6030c96bebbdfa8762f3e927ea5f21637230321d8ac59a",
+        "version": "f5f2bc02ad49580b4260db9e52e679aace0136d75937146cbcec1a3c5bd4d6b6",
+        "signature": "86acb08fa4354d4b1fb578fac888ed537eaf02e127b7427da5b910b8b0cf3876",
         "affectsGlobalScope": false
       },
       "../lib/index.ts": {
-        "version": "1013e7048e04e7807cbdf38e6dc9f36b8ba9ae0ad2425a3ec4aa08f2d5af2ddf",
-        "signature": "1d0604ab5db6da8895f3953dc66bc7ede5ffac1101e4470640763ebec443658b",
+        "version": "96fd3228230358ffeff0695f5801fe8e27818fd3cdc4cf462618931896c361d4",
+        "signature": "d7627c79d7c45864ffee11b9c307cab882a2d1214758401aa79882173f76a5e5",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/estree/index.d.ts": {
@@ -577,7 +577,7 @@
       "noEmitOnError": false,
       "skipLibCheck": true,
       "strict": true,
-      "strictNullChecks": false,
+      "strictNullChecks": true,
       "noUnusedLocals": true,
       "noUnusedParameters": true,
       "noImplicitReturns": true,
