@@ -32,8 +32,14 @@ export function consumeLinter(linter: LinterProvider): Disposable {
     }
   })
 }
-export function consumeUI(ui: UI): Disposable {
-  const uis = [].concat(ui)
+export function consumeUI(ui: UI | Array<UI>): Disposable {
+  let uis: Array<UI>
+  if (Array.isArray(ui)) {
+    uis = ui
+  } else {
+    uis = [ui]
+  }
+
   for (const entry of uis) {
     instance.addUI(entry)
   }
