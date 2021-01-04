@@ -1,5 +1,5 @@
 import arrayUnique from 'lodash/uniq'
-import { Disposable, Range, Point } from 'atom'
+import { Range, Point } from 'atom'
 import type { TextEditor } from 'atom'
 import type { Linter, Message } from './types'
 
@@ -50,26 +50,6 @@ export function isPathIgnored(filePath: string | null | undefined, ignoredGlob: 
   return minimatch(normalizedFilePath, ignoredGlob)
 }
 
-export function subscriptiveObserve(
-  object: Record<string, any>,
-  eventName: string,
-  callback: (...args: Array<any>) => any,
-): Disposable {
-  let subscription: Disposable | null = null
-  const eventSubscription = object.observe(eventName, function (props: Record<string, any>) {
-    if (subscription) {
-      subscription.dispose()
-    }
-    subscription = callback.call(this, props)
-  })
-
-  return new Disposable(function () {
-    eventSubscription.dispose()
-    if (subscription) {
-      subscription.dispose()
-    }
-  })
-}
 
 export function updateMessageKey(message: Message) {
   const { reference, location } = message

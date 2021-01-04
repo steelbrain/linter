@@ -1,7 +1,6 @@
 import { Emitter, CompositeDisposable, Disposable } from 'atom'
 import debounce from 'lodash/debounce'
 import type { TextEditor } from 'atom'
-import { subscriptiveObserve } from './helpers'
 
 export default class EditorLinter {
   editor: TextEditor
@@ -34,7 +33,7 @@ export default class EditorLinter {
     // NOTE: TextEditor::onDidChange immediately invokes the callback if the text editor was *just* created
     // Using TextBuffer::onDidChange doesn't have the same behavior so using it instead.
     this.subscriptions.add(
-      subscriptiveObserve(atom.config, 'linter.lintOnChangeInterval', interval =>
+      this.subscriptiveObserve(atom.config, 'linter.lintOnChangeInterval', interval =>
         editorBuffer.onDidChange(
           debounce(() => {
             this.emitter.emit('should-lint', true)
@@ -59,5 +58,28 @@ export default class EditorLinter {
     this.emitter.emit('did-destroy')
     this.subscriptions.dispose()
     this.emitter.dispose()
+  }
+
+
+  subscriptiveObserve(
+    object: Record<string, any>,
+    eventName: string,
+    callback: (...args: Array<any>) => any,
+  ): Disposable {
+    let subscription: Disposable | null = null
+    const eventSubscription = object.observe(eventName, (props: Record<string, any>) => {
+      if (subscription) {
+        subscription.dispose()
+      }
+      // TODO what is this?!
+      subscription = callback.call(this, props)
+    })
+
+    return new Disposable(function () {
+      eventSubscription.dispose()
+      if (subscription) {
+        subscription.dispose()
+      }
+    })
   }
 }
