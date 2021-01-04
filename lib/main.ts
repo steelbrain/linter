@@ -12,7 +12,7 @@ import type { UI, Linter as LinterProvider, Indie } from './types'
 
 class Linter {
   commands: Commands
-  registryUI: UIRegistry
+  registryUI?: UIRegistry
   registryIndie?: IndieRegistry
   registryEditors: EditorsRegistry
   registryLinters?: LinterRegistry
@@ -56,7 +56,8 @@ class Linter {
         this.registryLinters!.getProviders(),
         // this.registryIndie becomes valid inside registryIndieInit
         this.registryIndie!.getProviders(),
-        this.registryUI.getProviders(),
+        // this.registryUI becomes valid inside registryUIInit
+        this.registryUI!.getProviders(),
       )
     })
     this.commands.onShouldToggleLinter(action => {
@@ -141,11 +142,13 @@ class Linter {
     })
     this.registryLinters.onDidBeginLinting(({ linter, filePath }) => {
       this.registryUIInit()
-      this.registryUI.didBeginLinting(linter, filePath)
+      // this.registryUI becomes valid inside registryUIInit
+      this.registryUI!.didBeginLinting(linter, filePath)
     })
     this.registryLinters.onDidFinishLinting(({ linter, filePath }) => {
       this.registryUIInit()
-      this.registryUI.didFinishLinting(linter, filePath)
+      // this.registryUI becomes valid inside registryUIInit
+      this.registryUI!.didFinishLinting(linter, filePath)
     })
   }
   registryIndieInit() {
@@ -173,11 +176,12 @@ class Linter {
     this.subscriptions.add(this.registryMessages)
     this.registryMessages.onDidUpdateMessages(difference => {
       this.registryUIInit()
-      this.registryUI.render(difference)
+      // this.registryUI becomes valid inside registryUIInit
+      this.registryUI!.render(difference)
     })
   }
   registryUIInit() {
-    if (this.registryUI) {
+    if (this.registryUI !== undefined) {
       return
     }
     this.registryUI = new UIRegistry()
@@ -188,7 +192,8 @@ class Linter {
   // UI
   addUI(ui: UI) {
     this.registryUIInit()
-    this.registryUI.add(ui)
+    // this.registryUI becomes valid inside registryUIInit
+    this.registryUI!.add(ui)
     this.registryMessagesInit()
     const { messages } = this.registryMessages
     if (messages.length) {
@@ -197,7 +202,8 @@ class Linter {
   }
   deleteUI(ui: UI) {
     this.registryUIInit()
-    this.registryUI.delete(ui)
+    // this.registryUI becomes valid inside registryUIInit
+    this.registryUI!.delete(ui)
   }
   // Standard Linter
   addLinter(linter: LinterProvider) {
