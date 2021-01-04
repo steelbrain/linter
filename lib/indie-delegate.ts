@@ -41,7 +41,7 @@ export default class IndieDelegate {
   }
   setMessages(
     filePath: string | Array<Record<string, any>>,
-    messages: Array<Record<string, any>> | null | undefined = null,
+    messages: Array<Message> | null | undefined = null,
   ): void {
     // v2 Support from here on
     if (typeof filePath !== 'string' || !Array.isArray(messages)) {
@@ -61,7 +61,7 @@ export default class IndieDelegate {
     this.messages.set(filePath, messages)
     this.emitter.emit('did-update', this.getMessages())
   }
-  setAllMessages(messages: Array<Record<string, any>>): void {
+  setAllMessages(messages: Array<Message>): void {
     if (this.subscriptions.disposed) {
       return
     }
