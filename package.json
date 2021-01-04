@@ -17,7 +17,6 @@
     "lint": "(eslint . ) && (prettier --list-different lib/*.js)",
     "lint:fix": "eslint . --fix && prettier --write lib/**/*.js",
     "clean": "shx rm -rf dist",
-    "babel": "npm run clean && shx cp -r lib dist && cross-env NODE_ENV=development cross-env BABEL_KEEP_MODULES=false babel dist --out-dir dist",
     "dev": "npm run clean && cross-env NODE_ENV=development cross-env BABEL_KEEP_MODULES=true rollup -c -w",
     "build": "npm run clean && cross-env NODE_ENV=production cross-env BABEL_KEEP_MODULES=true rollup -c",
     "build-commit": "build-commit -o dist",
@@ -56,12 +55,9 @@
     "minimatch": "^3.0.4"
   },
   "devDependencies": {
-    "@babel/cli": "7.11.6",
-    "@babel/core": "7.11.6",
     "@types/atom": "^1.40.5",
     "@types/jasmine": "^3.6.2",
     "@types/node": "^14.14.19",
-    "babel-preset-atomic": "^2.4.2",
     "build-commit": "0.1.1",
     "cross-env": "^7.0.2",
     "eslint-config-steelbrain": "^7.0.0",
