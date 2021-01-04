@@ -1,0 +1,31 @@
+import { CompositeDisposable } from 'atom';
+import UIRegistry from './ui-registry';
+import IndieRegistry from './indie-registry';
+import MessageRegistry from './message-registry';
+import LinterRegistry from './linter-registry';
+import EditorsRegistry from './editor-registry';
+import Commands from './commands';
+import type { UI, Linter as LinterProvider, Indie } from './types';
+declare class Linter {
+    commands: Commands;
+    registryUI: UIRegistry;
+    registryIndie: IndieRegistry;
+    registryEditors: EditorsRegistry;
+    registryLinters: LinterRegistry;
+    registryMessages: MessageRegistry;
+    subscriptions: CompositeDisposable;
+    idleCallbacks: Set<number>;
+    constructor();
+    dispose(): void;
+    registryEditorsInit(): void;
+    registryLintersInit(): void;
+    registryIndieInit(): void;
+    registryMessagesInit(): void;
+    registryUIInit(): void;
+    addUI(ui: UI): void;
+    deleteUI(ui: UI): void;
+    addLinter(linter: LinterProvider): void;
+    deleteLinter(linter: LinterProvider): void;
+    addIndie(indie: Indie): import("./indie-delegate").default;
+}
+export default Linter;
