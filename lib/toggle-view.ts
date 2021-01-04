@@ -1,6 +1,7 @@
 import { CompositeDisposable, Emitter, Disposable } from 'atom'
 
-let SelectListView
+// https://github.com/atom/atom-select-list/pull/28
+let SelectListView: any
 type ToggleAction = 'enable' | 'disable'
 
 class ToggleProviders {
@@ -48,12 +49,12 @@ class ToggleProviders {
     const selectListView = new SelectListView({
       items: await this.getItems(),
       emptyMessage: 'No matches found',
-      elementForItem: item => {
+      elementForItem: (item: any) => {
         const li = document.createElement('li')
         li.textContent = item
         return li
       },
-      didConfirmSelection: item => {
+      didConfirmSelection: (item: any) => {
         this.process(item)
           .catch(e => console.error('[Linter] Unable to process toggle:', e))
           .then(() => this.dispose())
