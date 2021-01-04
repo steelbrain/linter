@@ -72,7 +72,6 @@ export type UI = {
   dispose(): void
 }
 
-
 // Missing Atom API
 declare module 'atom' {
   interface CompositeDisposable {
@@ -81,8 +80,10 @@ declare module 'atom' {
   interface Pane {
     getPendingItem(): TextEditor
   }
+  interface Notification {
+    getOptions(): { detail: string }
+  }
 }
-
 
 // windows requestIdleCallback types
 export type RequestIdleCallbackHandle = any
