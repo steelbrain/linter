@@ -22,8 +22,8 @@
     "tsc.dev": "npm run clean && cross-env NODE_ENV=development tsc --watch -p lib/tsconfig.json || echo done",
     "tsc.build": "npm run clean && cross-env NODE_ENV=production tsc -p lib/tsconfig.json || echo done",
     "dev": "npm run clean && cross-env NODE_ENV=development cross-env BABEL_KEEP_MODULES=true rollup -c -w",
-    "build": "npm run clean && cross-env NODE_ENV=production cross-env BABEL_KEEP_MODULES=true rollup -c",
-    "build-commit": "build-commit -o dist",
+    "build": "cross-env NODE_ENV=production cross-env BABEL_KEEP_MODULES=true rollup -c",
+    "build-commit": "npm run clean && build-commit -o dist",
     "prepare": "npm run build",
     "prepublishOnly": "npm run build-commit"
   },
