@@ -1,10 +1,10 @@
 import { createPlugins } from 'rollup-plugin-atomic'
 
-const plugins = createPlugins(['js', 'babel'])
+const plugins = createPlugins(['js', ['ts', { tsconfig: './lib/tsconfig.json', noEmitOnError: false, module: 'ESNext' }]])
 
 export default [
   {
-    input: 'lib/index.js',
+    input: 'lib/index.ts',
     output: [
       {
         dir: 'dist',

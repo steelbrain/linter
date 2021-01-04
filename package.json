@@ -17,6 +17,8 @@
     "lint": "(eslint . ) && (prettier --list-different lib/*.js)",
     "lint:fix": "eslint . --fix && prettier --write lib/**/*.js",
     "clean": "shx rm -rf dist",
+    "tsc.dev": "npm run clean && cross-env NODE_ENV=development tsc --watch -p lib/tsconfig.json || echo done",
+    "tsc.build": "npm run clean && cross-env NODE_ENV=production tsc -p lib/tsconfig.json || echo done",
     "dev": "npm run clean && cross-env NODE_ENV=development cross-env BABEL_KEEP_MODULES=true rollup -c -w",
     "build": "npm run clean && cross-env NODE_ENV=production cross-env BABEL_KEEP_MODULES=true rollup -c",
     "build-commit": "build-commit -o dist",
