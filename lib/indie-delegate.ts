@@ -27,7 +27,7 @@ export default class IndieDelegate {
     return this.indie.name
   }
   getMessages(): Array<Message> {
-    const out = []
+    const out: Array<Message> = []
     this.messages.forEach(m => {
       mergeArray(out, m)
     })
