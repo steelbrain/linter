@@ -9,7 +9,7 @@ class ToggleProviders {
   emitter: Emitter
   providers: Array<string>
   subscriptions: CompositeDisposable
-  disabledProviders: Array<string>
+  disabledProviders: Array<string> = []
 
   constructor(action: ToggleAction, providers: Array<string>) {
     this.action = action
