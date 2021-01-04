@@ -181,7 +181,7 @@ export function flagMessages(inputs: Array<Message>, oldMessages: Array<Message>
 
   const oldRemovedKeys = cacheKeys.filter(x => !oldKeptKeys.includes(x))
 
-  const oldRemoved = new Set()
+  const oldRemoved: Set<Message> = new Set()
   for (let iRemoved = 0, RemovedKeysLen = oldRemovedKeys.length; iRemoved < RemovedKeysLen; iRemoved++) {
     oldRemoved.add(cache.get(oldRemovedKeys[iRemoved]))
   }
