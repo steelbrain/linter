@@ -4,7 +4,7 @@ import EditorLinter from './editor-linter'
 
 class EditorRegistry {
   emitter: Emitter
-  lintOnOpen: boolean
+  lintOnOpen: boolean = true
   subscriptions: CompositeDisposable
   editorLinters: Map<TextEditor, EditorLinter>
 
