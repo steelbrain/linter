@@ -5,7 +5,7 @@ import * as Helpers from './helpers'
 import type { Linter, UI } from './types'
 import type IndieDelegate from './indie-delegate'
 
-let manifest
+let manifest: {version: number}
 
 function formatItem(item) {
   let itemName
