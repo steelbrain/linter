@@ -23,7 +23,7 @@ export function getEditorCursorScopes(textEditor: TextEditor): Array<string> {
   )
 }
 
-let minimatch
+let minimatch: typeof import('minimatch')
 export function isPathIgnored(filePath: string | null | undefined, ignoredGlob: string, ignoredVCS: boolean): boolean {
   if (!filePath) {
     return true
