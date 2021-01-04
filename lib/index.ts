@@ -1,7 +1,7 @@
 import { CompositeDisposable, Disposable } from 'atom'
 
 import Linter from './main'
-import type { UI, Linter as LinterProvider } from './types'
+import type { UI, Linter as LinterProvider, Indie } from './types'
 
 // Internal variables
 let instance: Linter
@@ -43,8 +43,8 @@ export function consumeUI(ui: UI): Disposable {
     }
   })
 }
-export function provideIndie(): Record<string, any> {
-  return indie => instance.addIndie(indie)
+export function provideIndie() {
+  return (indie: Indie) => instance.addIndie(indie)
 }
 export function deactivate() {
   subscriptions.dispose()

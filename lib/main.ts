@@ -8,7 +8,7 @@ import LinterRegistry from './linter-registry'
 import EditorsRegistry from './editor-registry'
 import Commands from './commands'
 import ToggleView from './toggle-view'
-import type { UI, Linter as LinterProvider } from './types'
+import type { UI, Linter as LinterProvider, Indie } from './types'
 
 class Linter {
   commands: Commands
@@ -203,7 +203,7 @@ class Linter {
     this.registryMessages.deleteByLinter(linter)
   }
   // Indie Linter
-  addIndie(indie: Record<string, any>) {
+  addIndie(indie: Indie) {
     this.registryIndieInit()
     return this.registryIndie.register(indie, 2)
   }
