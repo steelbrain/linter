@@ -1,7 +1,23 @@
-import { Range, Point, TextEditor } from 'atom'
+import { Range, Point, TextEditor, CompositeDisposable } from 'atom'
+
+// https://github.com/steelbrain/linter-ui-default/blob/2f71befa78718018f444456706b1ea810531572d/lib/types.d.ts#L4-L57
+export type MessageSolution =
+  | {
+      title?: string
+      position: Range
+      priority?: number
+      currentText?: string
+      replaceWith: string
+    }
+  | {
+      title?: string
+      priority?: number
+      position: Range
+      apply: () => any
+    }
 
 export type Message = {
-  // Automatically added
+  // Automatically added by linter
   key: string
   version: 2
   linterName: string
@@ -19,21 +35,7 @@ export type Message = {
   icon?: string
   excerpt: string
   severity: 'error' | 'warning' | 'info'
-  solutions?: Array<
-    | {
-        title?: string
-        position: Range
-        priority?: number
-        currentText?: string
-        replaceWith: string
-      }
-    | {
-        title?: string
-        priority?: number
-        position: Range
-        apply: () => any
-      }
-  >
+  solutions?: Array<MessageSolution>
   description?: string | (() => Promise<string> | string)
 }
 
@@ -66,6 +68,17 @@ export type MessagesPatch = {
 
 export type UI = {
   name: string
+  // panel?: Panel
+  // signal: BusySignal
+  // editors: Editors | null | undefined
+  // treeview?: TreeView
+  // commands: Commands
+  // messages: Array<Message>
+  // statusBar: StatusBar
+  // intentions: Intentions
+  subscriptions: CompositeDisposable
+  idleCallbacks: Set<number>
+  // constructor();
   didBeginLinting(linter: Linter, filePath: string | null | undefined): void
   didFinishLinting(linter: Linter, filePath: string | null | undefined): void
   render(patch: MessagesPatch): void
