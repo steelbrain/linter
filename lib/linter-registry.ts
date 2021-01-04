@@ -6,7 +6,7 @@ import type { TextEditor, Disposable, Notification } from 'atom'
 import * as Helpers from './helpers'
 import * as Validate from './validate'
 import { $version, $activated, $requestLatest, $requestLastReceived } from './helpers'
-import type { Linter, Message } from './types'
+import type { Linter } from './types'
 
 class LinterRegistry {
   emitter: Emitter
@@ -107,11 +107,10 @@ class LinterRegistry {
 
       this.emitter.emit('did-begin-linting', { number, linter, filePath: statusFilePath })
       promises.push(
-        new Promise(function (resolve) {
-          // $FlowIgnore: Type too complex, duh
+        new Promise(function (resolve: (editor: ReturnType<Linter['lint']>) => void) {
           resolve(linter.lint(editor))
         }).then(
-          (messages: Array<Message>) => {
+          (messages) => {
             this.emitter.emit('did-finish-linting', { number, linter, filePath: statusFilePath })
             if (linter[$requestLastReceived] >= number || !linter[$activated] || (statusBuffer && !statusBuffer.isAlive())) {
               return
