@@ -1,3 +1,6 @@
+### 3.2.1
+- Use strict-null check in TypeScript and fix some bugs (#1719)
+
 ### 3.2.0
 - Convert the codebase to TypeScript (#1718)
 
