@@ -13,7 +13,7 @@ import type { UI, Linter as LinterProvider, Indie } from './types'
 class Linter {
   commands: Commands
   registryUI: UIRegistry
-  registryIndie: IndieRegistry
+  registryIndie?: IndieRegistry
   registryEditors: EditorsRegistry
   registryLinters: LinterRegistry
   registryMessages: MessageRegistry
@@ -53,7 +53,8 @@ class Linter {
       this.registryLintersInit()
       this.commands.showDebug(
         this.registryLinters.getProviders(),
-        this.registryIndie.getProviders(),
+        // this.registryIndie becomes valid inside registryIndieInit
+        this.registryIndie!.getProviders(),
         this.registryUI.getProviders(),
       )
     })
@@ -144,7 +145,7 @@ class Linter {
     })
   }
   registryIndieInit() {
-    if (this.registryIndie) {
+    if (this.registryIndie !== undefined) {
       return
     }
     this.registryIndie = new IndieRegistry()
@@ -208,7 +209,8 @@ class Linter {
   // Indie Linter
   addIndie(indie: Indie) {
     this.registryIndieInit()
-    return this.registryIndie.register(indie, 2)
+    // this.registryIndie becomes valid inside registryIndieInit
+    return this.registryIndie!.register(indie, 2)
   }
 }
 
