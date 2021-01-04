@@ -14,7 +14,7 @@ class Linter {
   commands: Commands
   registryUI?: UIRegistry
   registryIndie?: IndieRegistry
-  registryEditors: EditorsRegistry
+  registryEditors?: EditorsRegistry
   registryLinters?: LinterRegistry
   registryMessages: MessageRegistry
   subscriptions: CompositeDisposable
@@ -31,7 +31,8 @@ class Linter {
       this.registryEditorsInit()
       const textEditor = atom.workspace.getActiveTextEditor()
       if (textEditor === undefined) return
-      const editorLinter = this.registryEditors.get(textEditor)
+      // this.registryEditors becomes valid inside registryEditorsInit
+      const editorLinter = this.registryEditors!.get(textEditor)
       if (editorLinter) {
         editorLinter.lint()
       }
@@ -40,11 +41,13 @@ class Linter {
       const textEditor = atom.workspace.getActiveTextEditor()
       if (textEditor === undefined) return
       this.registryEditorsInit()
-      const editor = this.registryEditors.get(textEditor)
+      // this.registryEditors becomes valid inside registryEditorsInit
+      const editor = this.registryEditors!.get(textEditor)
       if (editor) {
         editor.dispose()
       } else if (textEditor) {
-        this.registryEditors.createFromTextEditor(textEditor)
+        // this.registryEditors becomes valid inside registryEditorsInit
+        this.registryEditors!.createFromTextEditor(textEditor)
       }
     })
     this.commands.onShouldDebug(async () => {
@@ -109,7 +112,7 @@ class Linter {
   }
 
   registryEditorsInit() {
-    if (this.registryEditors) {
+    if (this.registryEditors !== undefined) {
       return
     }
     this.registryEditors = new EditorsRegistry()
@@ -122,8 +125,7 @@ class Linter {
       })
       editorLinter.onDidDestroy(() => {
         this.registryMessagesInit()
-
-        if (!this.registryEditors.hasSibling(editorLinter)) {
+        if (!this.registryEditors!.hasSibling(editorLinter)) {
           this.registryMessages.deleteByBuffer(editorLinter.getEditor().getBuffer())
         }
       })
