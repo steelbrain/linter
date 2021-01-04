@@ -1,5 +1,3 @@
-/* eslint-disable import/no-duplicates */
-
 import { Emitter, CompositeDisposable } from 'atom'
 import type { TextEditor, Disposable, Notification } from 'atom'
 

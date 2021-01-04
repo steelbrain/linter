@@ -14,7 +14,6 @@ describe('Message Registry', function() {
     this.addMatchers({
       toInclude(expected) {
         let failed: any
-        /* eslint-disable no-restricted-syntax */
         for (const i in expected) {
           /* eslint-disable no-prototype-builtins */
           if (expected.hasOwnProperty(i) && !this.actual.hasOwnProperty(i)) {
