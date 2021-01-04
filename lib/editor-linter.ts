@@ -66,7 +66,6 @@ export default class EditorLinter {
       if (subscription) {
         subscription.dispose()
       }
-      // TODO what is this?!
       subscription = callback.call(this, props)
     })
 
