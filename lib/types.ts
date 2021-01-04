@@ -71,3 +71,10 @@ export type UI = {
   render(patch: MessagesPatch): void
   dispose(): void
 }
+
+
+declare module 'atom' {
+  interface CompositeDisposable {
+    disposed: boolean
+  }
+}
