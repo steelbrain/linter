@@ -73,9 +73,13 @@ export type UI = {
 }
 
 
+// Missing Atom API
 declare module 'atom' {
   interface CompositeDisposable {
     disposed: boolean
+  }
+  interface Pane {
+    getPendingItem(): TextEditor
   }
 }
 
