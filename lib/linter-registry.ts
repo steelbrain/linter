@@ -6,7 +6,7 @@ import type { TextEditor, Disposable, Notification } from 'atom'
 import * as Helpers from './helpers'
 import * as Validate from './validate'
 import { $version, $activated, $requestLatest, $requestLastReceived } from './helpers'
-import type { Linter } from './types'
+import type { Linter, Message } from './types'
 
 class LinterRegistry {
   emitter: Emitter
@@ -111,7 +111,7 @@ class LinterRegistry {
           // $FlowIgnore: Type too complex, duh
           resolve(linter.lint(editor))
         }).then(
-          messages => {
+          (messages: Array<Message>) => {
             this.emitter.emit('did-finish-linting', { number, linter, filePath: statusFilePath })
             if (linter[$requestLastReceived] >= number || !linter[$activated] || (statusBuffer && !statusBuffer.isAlive())) {
               return
