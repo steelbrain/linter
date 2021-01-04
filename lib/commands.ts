@@ -66,6 +66,7 @@ export default class Commands {
     }
 
     const textEditor = atom.workspace.getActiveTextEditor()
+    if (textEditor === undefined) return
     const textEditorScopes = Helpers.getEditorCursorScopes(textEditor)
     const sortedLinters = standardLinters.slice().sort(sortByName)
     const sortedIndieLinters = indieLinters.slice().sort(sortByName)

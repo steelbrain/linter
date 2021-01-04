@@ -29,13 +29,16 @@ class Linter {
 
     this.commands.onShouldLint(() => {
       this.registryEditorsInit()
-      const editorLinter = this.registryEditors.get(atom.workspace.getActiveTextEditor())
+      const textEditor = atom.workspace.getActiveTextEditor()
+      if (textEditor === undefined) return
+      const editorLinter = this.registryEditors.get(textEditor)
       if (editorLinter) {
         editorLinter.lint()
       }
     })
     this.commands.onShouldToggleActiveEditor(() => {
       const textEditor = atom.workspace.getActiveTextEditor()
+      if (textEditor === undefined) return
       this.registryEditorsInit()
       const editor = this.registryEditors.get(textEditor)
       if (editor) {
