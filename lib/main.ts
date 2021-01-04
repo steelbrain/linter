@@ -203,7 +203,7 @@ class Linter {
     this.registryMessages.deleteByLinter(linter)
   }
   // Indie Linter
-  addIndie(indie: { [key: string]: any }) {
+  addIndie(indie: Record<string, any>) {
     this.registryIndieInit()
     return this.registryIndie.register(indie, 2)
   }

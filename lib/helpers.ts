@@ -51,9 +51,7 @@ export function isPathIgnored(filePath: string | null | undefined, ignoredGlob: 
 }
 
 export function subscriptiveObserve(
-  object: {
-    [key: string]: any
-  },
+  object: Record<string, any>,
   eventName: string,
   callback: (...args: Array<any>) => any,
 ): Disposable {

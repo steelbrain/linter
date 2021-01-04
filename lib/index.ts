@@ -43,9 +43,7 @@ export function consumeUI(ui: UI): Disposable {
     }
   })
 }
-export function provideIndie(): {
-  [key: string]: any
-} {
+export function provideIndie(): Record<string, any> {
   return indie => instance.addIndie(indie)
 }
 export function deactivate() {
