@@ -162,7 +162,8 @@ export function flagMessages(inputs: Array<Message>, oldMessages: Array<Message>
 
   const oldRemoved: Set<Message> = new Set()
   for (let iRemoved = 0, RemovedKeysLen = oldRemovedKeys.length; iRemoved < RemovedKeysLen; iRemoved++) {
-    oldRemoved.add(cache.get(oldRemovedKeys[iRemoved]))
+    // cache is created from oldMessages and oldRemovedKeys is a subset of oldMessages. So this will not be undefined
+    oldRemoved.add(cache.get(oldRemovedKeys[iRemoved]) as Message)
   }
 
   return {
