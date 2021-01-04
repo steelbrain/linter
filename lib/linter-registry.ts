@@ -9,12 +9,12 @@ import type { Linter } from './types'
 class LinterRegistry {
   emitter: Emitter
   linters: Set<Linter>
-  lintOnChange: boolean
-  ignoreVCS: boolean
-  ignoreGlob: string
-  lintPreviewTabs: boolean
+  lintOnChange: boolean = true
+  ignoreVCS: boolean = true
+  ignoreGlob: string = '**/*.min.{js,css}'
+  lintPreviewTabs: boolean = true
   subscriptions: CompositeDisposable
-  disabledProviders: Array<string>
+  disabledProviders: Array<string> = []
   activeNotifications: Set<Notification>
 
   constructor() {

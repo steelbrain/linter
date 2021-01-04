@@ -1,7 +1,7 @@
 import arrayUnique from 'lodash/uniq'
 import { Range, Point } from 'atom'
 import type { TextEditor } from 'atom'
-import type { Linter, Message } from './types'
+import type { Linter, Message, MessageSolution } from './types'
 
 export const $version = '__$sb_linter_version'
 export const $activated = '__$sb_linter_activated'
@@ -77,7 +77,7 @@ export function normalizeMessages(linterName: string, messages: Array<Message>) 
       reference.position = Point.fromObject(reference.position)
     }
     if (message.solutions && message.solutions.length) {
-      for (let j = 0, _length = message.solutions.length, solution: Message['solutions'][0]; j < _length; j++) {
+      for (let j = 0, _length = message.solutions.length, solution: MessageSolution; j < _length; j++) {
         solution = message.solutions[j]
         if (Array.isArray(solution.position)) {
           solution.position = Range.fromObject(solution.position)
@@ -162,13 +162,14 @@ export function flagMessages(inputs: Array<Message>, oldMessages: Array<Message>
 
   const oldRemoved: Set<Message> = new Set()
   for (let iRemoved = 0, RemovedKeysLen = oldRemovedKeys.length; iRemoved < RemovedKeysLen; iRemoved++) {
-    oldRemoved.add(cache.get(oldRemovedKeys[iRemoved]))
+    // cache is created from oldMessages and oldRemovedKeys is a subset of oldMessages. So this will not be undefined
+    oldRemoved.add(cache.get(oldRemovedKeys[iRemoved]) as Message)
   }
 
   return {
     oldKept: Array.from(oldKept.values()),
-    oldRemoved: oldRemoved ? Array.from(oldRemoved) : [],
-    newAdded: Array.from(newAdded),
+    oldRemoved: [...oldRemoved],
+    newAdded: [...newAdded],
   }
 }
 

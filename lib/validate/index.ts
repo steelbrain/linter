@@ -156,7 +156,7 @@ function validateMessages(linterName: string, entries: Array<Message>): boolean 
       ) {
         invalidReference = true
         messages.push('Message.reference must be valid')
-      } else if (!invalidReference && reference) {
+      } else if (!invalidReference && reference && reference.position !== undefined) {
         const position = Point.fromObject(reference.position)
         if (Number.isNaN(position.row) || Number.isNaN(position.column)) {
           invalidReference = true

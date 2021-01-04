@@ -21,8 +21,14 @@ export function activate() {
     }),
   )
 }
-export function consumeLinter(linter: LinterProvider): Disposable {
-  const linters = [].concat(linter)
+export function consumeLinter(linter: LinterProvider | Array<LinterProvider>): Disposable {
+  let linters: Array<LinterProvider>
+  if (Array.isArray(linter)) {
+    linters = linter
+  } else {
+    linters = [linter]
+  }
+
   for (const entry of linters) {
     instance.addLinter(entry)
   }
@@ -32,8 +38,14 @@ export function consumeLinter(linter: LinterProvider): Disposable {
     }
   })
 }
-export function consumeUI(ui: UI): Disposable {
-  const uis = [].concat(ui)
+export function consumeUI(ui: UI | Array<UI>): Disposable {
+  let uis: Array<UI>
+  if (Array.isArray(ui)) {
+    uis = ui
+  } else {
+    uis = [ui]
+  }
+
   for (const entry of uis) {
     instance.addUI(entry)
   }

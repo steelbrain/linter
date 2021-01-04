@@ -12,11 +12,11 @@ import type { UI, Linter as LinterProvider, Indie } from './types'
 
 class Linter {
   commands: Commands
-  registryUI: UIRegistry
-  registryIndie: IndieRegistry
-  registryEditors: EditorsRegistry
-  registryLinters: LinterRegistry
-  registryMessages: MessageRegistry
+  registryUI?: UIRegistry
+  registryIndie?: IndieRegistry
+  registryEditors?: EditorsRegistry
+  registryLinters?: LinterRegistry
+  registryMessages?: MessageRegistry
   subscriptions: CompositeDisposable
   idleCallbacks: Set<number>
 
@@ -29,19 +29,25 @@ class Linter {
 
     this.commands.onShouldLint(() => {
       this.registryEditorsInit()
-      const editorLinter = this.registryEditors.get(atom.workspace.getActiveTextEditor())
+      const textEditor = atom.workspace.getActiveTextEditor()
+      if (textEditor === undefined) return
+      // this.registryEditors becomes valid inside registryEditorsInit
+      const editorLinter = this.registryEditors!.get(textEditor)
       if (editorLinter) {
         editorLinter.lint()
       }
     })
     this.commands.onShouldToggleActiveEditor(() => {
       const textEditor = atom.workspace.getActiveTextEditor()
+      if (textEditor === undefined) return
       this.registryEditorsInit()
-      const editor = this.registryEditors.get(textEditor)
+      // this.registryEditors becomes valid inside registryEditorsInit
+      const editor = this.registryEditors!.get(textEditor)
       if (editor) {
         editor.dispose()
       } else if (textEditor) {
-        this.registryEditors.createFromTextEditor(textEditor)
+        // this.registryEditors becomes valid inside registryEditorsInit
+        this.registryEditors!.createFromTextEditor(textEditor)
       }
     })
     this.commands.onShouldDebug(async () => {
@@ -49,22 +55,28 @@ class Linter {
       this.registryIndieInit()
       this.registryLintersInit()
       this.commands.showDebug(
-        this.registryLinters.getProviders(),
-        this.registryIndie.getProviders(),
-        this.registryUI.getProviders(),
+        // this.registryLinters becomes valid inside registryLintersInit
+        this.registryLinters!.getProviders(),
+        // this.registryIndie becomes valid inside registryIndieInit
+        this.registryIndie!.getProviders(),
+        // this.registryUI becomes valid inside registryUIInit
+        this.registryUI!.getProviders(),
       )
     })
     this.commands.onShouldToggleLinter(action => {
       this.registryLintersInit()
-      const toggleView = new ToggleView(action, arrayUnique(this.registryLinters.getProviders().map(linter => linter.name)))
+      // this.registryLinters becomes valid inside registryLintersInit
+      const toggleView = new ToggleView(action, arrayUnique(this.registryLinters!.getProviders().map(linter => linter.name)))
       toggleView.onDidDispose(() => {
         this.subscriptions.remove(toggleView)
       })
       toggleView.onDidDisable(name => {
-        const linter = this.registryLinters.getProviders().find(entry => entry.name === name)
+        // this.registryLinters becomes valid inside registryLintersInit
+        const linter = this.registryLinters!.getProviders().find(entry => entry.name === name)
         if (linter) {
           this.registryMessagesInit()
-          this.registryMessages.deleteByLinter(linter)
+          // this.registryMessages becomes valid inside registryMessagesInit
+          this.registryMessages!.deleteByLinter(linter)
         }
       })
       toggleView.show()
@@ -101,7 +113,7 @@ class Linter {
   }
 
   registryEditorsInit() {
-    if (this.registryEditors) {
+    if (this.registryEditors !== undefined) {
       return
     }
     this.registryEditors = new EditorsRegistry()
@@ -109,39 +121,43 @@ class Linter {
     this.registryEditors.observe(editorLinter => {
       editorLinter.onShouldLint(onChange => {
         this.registryLintersInit()
-        this.registryLinters.lint({ onChange, editor: editorLinter.getEditor() })
+        // this.registryLinters becomes valid inside registryLintersInit
+        this.registryLinters!.lint({ onChange, editor: editorLinter.getEditor() })
       })
       editorLinter.onDidDestroy(() => {
         this.registryMessagesInit()
-
-        if (!this.registryEditors.hasSibling(editorLinter)) {
-          this.registryMessages.deleteByBuffer(editorLinter.getEditor().getBuffer())
+        if (!this.registryEditors!.hasSibling(editorLinter)) {
+          // this.registryMessages becomes valid inside registryMessagesInit
+          this.registryMessages!.deleteByBuffer(editorLinter.getEditor().getBuffer())
         }
       })
     })
     this.registryEditors.activate()
   }
   registryLintersInit() {
-    if (this.registryLinters) {
+    if (this.registryLinters !== undefined) {
       return
     }
     this.registryLinters = new LinterRegistry()
     this.subscriptions.add(this.registryLinters)
     this.registryLinters.onDidUpdateMessages(({ linter, messages, buffer }) => {
       this.registryMessagesInit()
-      this.registryMessages.set({ linter, messages, buffer })
+      // this.registryMessages becomes valid inside registryMessagesInit
+      this.registryMessages!.set({ linter, messages, buffer })
     })
     this.registryLinters.onDidBeginLinting(({ linter, filePath }) => {
       this.registryUIInit()
-      this.registryUI.didBeginLinting(linter, filePath)
+      // this.registryUI becomes valid inside registryUIInit
+      this.registryUI!.didBeginLinting(linter, filePath)
     })
     this.registryLinters.onDidFinishLinting(({ linter, filePath }) => {
       this.registryUIInit()
-      this.registryUI.didFinishLinting(linter, filePath)
+      // this.registryUI becomes valid inside registryUIInit
+      this.registryUI!.didFinishLinting(linter, filePath)
     })
   }
   registryIndieInit() {
-    if (this.registryIndie) {
+    if (this.registryIndie !== undefined) {
       return
     }
     this.registryIndie = new IndieRegistry()
@@ -149,12 +165,14 @@ class Linter {
     this.registryIndie.observe(indieLinter => {
       indieLinter.onDidDestroy(() => {
         this.registryMessagesInit()
-        this.registryMessages.deleteByLinter(indieLinter)
+        // this.registryMessages becomes valid inside registryMessagesInit
+        this.registryMessages!.deleteByLinter(indieLinter)
       })
     })
     this.registryIndie.onDidUpdate(({ linter, messages }) => {
       this.registryMessagesInit()
-      this.registryMessages.set({ linter, messages, buffer: null })
+      // this.registryMessages becomes valid inside registryMessagesInit
+      this.registryMessages!.set({ linter, messages, buffer: null })
     })
   }
   registryMessagesInit() {
@@ -165,11 +183,12 @@ class Linter {
     this.subscriptions.add(this.registryMessages)
     this.registryMessages.onDidUpdateMessages(difference => {
       this.registryUIInit()
-      this.registryUI.render(difference)
+      // this.registryUI becomes valid inside registryUIInit
+      this.registryUI!.render(difference)
     })
   }
   registryUIInit() {
-    if (this.registryUI) {
+    if (this.registryUI !== undefined) {
       return
     }
     this.registryUI = new UIRegistry()
@@ -180,32 +199,39 @@ class Linter {
   // UI
   addUI(ui: UI) {
     this.registryUIInit()
-    this.registryUI.add(ui)
+    // this.registryUI becomes valid inside registryUIInit
+    this.registryUI!.add(ui)
     this.registryMessagesInit()
-    const { messages } = this.registryMessages
+    // this.registryMessages becomes valid inside registryMessagesInit
+    const messages = this.registryMessages!.messages
     if (messages.length) {
       ui.render({ added: messages, messages, removed: [] })
     }
   }
   deleteUI(ui: UI) {
     this.registryUIInit()
-    this.registryUI.delete(ui)
+    // this.registryUI becomes valid inside registryUIInit
+    this.registryUI!.delete(ui)
   }
   // Standard Linter
   addLinter(linter: LinterProvider) {
     this.registryLintersInit()
-    this.registryLinters.addLinter(linter)
+    // this.registryLinters becomes valid inside registryLintersInit
+    this.registryLinters!.addLinter(linter)
   }
   deleteLinter(linter: LinterProvider) {
     this.registryLintersInit()
-    this.registryLinters.deleteLinter(linter)
+    // this.registryLinters becomes valid inside registryLintersInit
+    this.registryLinters!.deleteLinter(linter)
     this.registryMessagesInit()
-    this.registryMessages.deleteByLinter(linter)
+    // this.registryMessages becomes valid inside registryMessagesInit
+    this.registryMessages!.deleteByLinter(linter)
   }
   // Indie Linter
   addIndie(indie: Indie) {
     this.registryIndieInit()
-    return this.registryIndie.register(indie, 2)
+    // this.registryIndie becomes valid inside registryIndieInit
+    return this.registryIndie!.register(indie, 2)
   }
 }
 
