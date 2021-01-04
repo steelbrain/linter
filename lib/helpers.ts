@@ -55,8 +55,8 @@ export function subscriptiveObserve(
   eventName: string,
   callback: (...args: Array<any>) => any,
 ): Disposable {
-  let subscription = null
-  const eventSubscription = object.observe(eventName, function (props) {
+  let subscription: Disposable | null = null
+  const eventSubscription = object.observe(eventName, function (props: Record<string, any>) {
     if (subscription) {
       subscription.dispose()
     }
