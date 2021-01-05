@@ -1,3 +1,6 @@
+### 3.2.2
+- Use class props and merge subscriptions.add (#1720)
+
 ### 3.2.1
 - Use strict-null check in TypeScript and fix some bugs (#1719)
 
