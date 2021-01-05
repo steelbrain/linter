@@ -27,14 +27,12 @@ export default class Commands {
   subscriptions: CompositeDisposable = new CompositeDisposable()
 
   constructor() {
-    this.subscriptions.add(this.emitter)
     this.subscriptions.add(
+      this.emitter,
       atom.commands.add('atom-workspace', {
         'linter:enable-linter': () => this.enableLinter(),
         'linter:disable-linter': () => this.disableLinter(),
       }),
-    )
-    this.subscriptions.add(
       atom.commands.add('atom-text-editor:not([mini])', {
         'linter:lint': () => this.lint(),
         'linter:debug': () => this.debug(),
