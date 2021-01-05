@@ -55,49 +55,9 @@ export default class Commands {
   toggleActiveEditor() {
     this.emitter.emit('should-toggle-active-editor')
   }
-  showDebug(standardLinters: Array<Linter>, indieLinters: Array<IndieDelegate>, uiProviders: Array<UI>) {
-    if (!manifest) {
-      manifest = require('../package.json')
-    }
-
-    const textEditor = atom.workspace.getActiveTextEditor()
-    if (textEditor === undefined) return
-    const textEditorScopes = Helpers.getEditorCursorScopes(textEditor)
-    const sortedLinters = standardLinters.slice().sort(sortByName)
-    const sortedIndieLinters = indieLinters.slice().sort(sortByName)
-    const sortedUIProviders = uiProviders.slice().sort(sortByName)
-
-    const indieLinterNames = sortedIndieLinters.map(formatItem).join('\n')
-    const standardLinterNames = sortedLinters.map(formatItem).join('\n')
-    const matchingStandardLinters = sortedLinters
-      .filter(linter => Helpers.shouldTriggerLinter(linter, false, textEditorScopes))
-      .map(formatItem)
-      .join('\n')
-    const humanizedScopes = textEditorScopes.map(formatItem).join('\n')
-    const uiProviderNames = sortedUIProviders.map(formatItem).join('\n')
-
-    const ignoreGlob = atom.config.get('linter.ignoreGlob')
-    const ignoreVCSIgnoredPaths = atom.config.get('core.excludeVcsIgnoredPaths')
-    const disabledLinters = atom.config.get('linter.disabledProviders').map(formatItem).join('\n')
-    const filePathIgnored = Helpers.isPathIgnored(textEditor.getPath(), ignoreGlob, ignoreVCSIgnoredPaths)
-
-    atom.notifications.addInfo('Linter Debug Info', {
-      detail: [
-        `Platform: ${process.platform}`,
-        `Atom Version: ${atom.getVersion()}`,
-        `Linter Version: ${manifest.version}`,
-        `Opened file is ignored: ${filePathIgnored ? 'Yes' : 'No'}`,
-        `Matching Linter Providers: \n${matchingStandardLinters}`,
-        `Disabled Linter Providers: \n${disabledLinters}`,
-        `Standard Linter Providers: \n${standardLinterNames}`,
-        `Indie Linter Providers: \n${indieLinterNames}`,
-        `UI Providers: \n${uiProviderNames}`,
-        `Ignore Glob: ${ignoreGlob}`,
-        `VCS Ignored Paths are excluded: ${ignoreVCSIgnoredPaths}`,
-        `Current File Scopes: \n${humanizedScopes}`,
-      ].join('\n'),
-      dismissable: true,
-    })
+  // @deprecated
+  showDebug(...args: Parameters<typeof showDebug>) {
+    showDebug(...args)
   }
   onShouldLint(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('should-lint', callback)
@@ -114,4 +74,49 @@ export default class Commands {
   dispose() {
     this.subscriptions.dispose()
   }
+}
+
+export function showDebug(standardLinters: Array<Linter>, indieLinters: Array<IndieDelegate>, uiProviders: Array<UI>) {
+  if (!manifest) {
+    manifest = require('../package.json')
+  }
+
+  const textEditor = atom.workspace.getActiveTextEditor()
+  if (textEditor === undefined) return
+  const textEditorScopes = Helpers.getEditorCursorScopes(textEditor)
+  const sortedLinters = standardLinters.slice().sort(sortByName)
+  const sortedIndieLinters = indieLinters.slice().sort(sortByName)
+  const sortedUIProviders = uiProviders.slice().sort(sortByName)
+
+  const indieLinterNames = sortedIndieLinters.map(formatItem).join('\n')
+  const standardLinterNames = sortedLinters.map(formatItem).join('\n')
+  const matchingStandardLinters = sortedLinters
+    .filter(linter => Helpers.shouldTriggerLinter(linter, false, textEditorScopes))
+    .map(formatItem)
+    .join('\n')
+  const humanizedScopes = textEditorScopes.map(formatItem).join('\n')
+  const uiProviderNames = sortedUIProviders.map(formatItem).join('\n')
+
+  const ignoreGlob = atom.config.get('linter.ignoreGlob')
+  const ignoreVCSIgnoredPaths = atom.config.get('core.excludeVcsIgnoredPaths')
+  const disabledLinters = atom.config.get('linter.disabledProviders').map(formatItem).join('\n')
+  const filePathIgnored = Helpers.isPathIgnored(textEditor.getPath(), ignoreGlob, ignoreVCSIgnoredPaths)
+
+  atom.notifications.addInfo('Linter Debug Info', {
+    detail: [
+      `Platform: ${process.platform}`,
+      `Atom Version: ${atom.getVersion()}`,
+      `Linter Version: ${manifest.version}`,
+      `Opened file is ignored: ${filePathIgnored ? 'Yes' : 'No'}`,
+      `Matching Linter Providers: \n${matchingStandardLinters}`,
+      `Disabled Linter Providers: \n${disabledLinters}`,
+      `Standard Linter Providers: \n${standardLinterNames}`,
+      `Indie Linter Providers: \n${indieLinterNames}`,
+      `UI Providers: \n${uiProviderNames}`,
+      `Ignore Glob: ${ignoreGlob}`,
+      `VCS Ignored Paths are excluded: ${ignoreVCSIgnoredPaths}`,
+      `Current File Scopes: \n${humanizedScopes}`,
+    ].join('\n'),
+    dismissable: true,
+  })
 }
