@@ -1,7 +1,7 @@
 import { Emitter, CompositeDisposable } from 'atom';
 import type { Disposable, TextEditor } from 'atom';
 import EditorLinter from './editor-linter';
-declare class EditorRegistry {
+export default class EditorRegistry {
     emitter: Emitter;
     lintOnOpen: boolean;
     subscriptions: CompositeDisposable;
@@ -14,4 +14,3 @@ declare class EditorRegistry {
     observe(callback: (editorLinter: EditorLinter) => void): Disposable;
     dispose(): void;
 }
-export default EditorRegistry;

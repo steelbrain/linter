@@ -1,7 +1,7 @@
 import { Emitter, CompositeDisposable } from 'atom';
 import type { TextEditor, Disposable, Notification } from 'atom';
 import type { Linter } from './types';
-declare class LinterRegistry {
+export default class LinterRegistry {
     emitter: Emitter;
     linters: Set<Linter>;
     lintOnChange: boolean;
@@ -25,4 +25,3 @@ declare class LinterRegistry {
     onDidFinishLinting(callback: (...args: Array<any>) => any): Disposable;
     dispose(): void;
 }
-export default LinterRegistry;

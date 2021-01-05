@@ -482,12 +482,12 @@
         "affectsGlobalScope": false
       },
       "../lib/indie-delegate.ts": {
-        "version": "cfbad9aaa8b3efe3527f2facb04123366fcb8f30bbc83581e4064f3678734910",
+        "version": "34abd0e8b51b42f2e4d36865af7fbf05f9a448c330fabafb1cc00bf8d7317b06",
         "signature": "91c82587a8f2a13d64ac4f62cfb9aa7979777dccd8761c48a2ddc98cc3e2f608",
         "affectsGlobalScope": false
       },
       "../lib/commands.ts": {
-        "version": "1ad619c8c2b44795718b6b3b3f12e058cfc1abc54f8688c49348acaeea2a3b5f",
+        "version": "86389c7cc30f463f68adaf32da65f4d0eb564d45f1582be0204e5ae97482fa01",
         "signature": "90a942f5509659aa3292ae768cc1526afc7ce6ed2070f428e346d1457b885461",
         "affectsGlobalScope": false
       },
@@ -497,47 +497,47 @@
         "affectsGlobalScope": false
       },
       "../lib/editor-linter.ts": {
-        "version": "578f124e1b183948337c644e44c0ef968a3aa0ed3c09ae172c4833bb022dc2d8",
+        "version": "7ecdb204b8a1a334d1249175439962c8bf711734830966de787e0551aad11f03",
         "signature": "c63b1169335e397ad4d80eac61de027393ca1b23f155ddc008d649d2191fb2d5",
         "affectsGlobalScope": false
       },
       "../lib/editor-registry.ts": {
-        "version": "5e954a45563f7ec3f065cb05ce1d3a361e1e24723ee3db7f35b0e800eece5969",
-        "signature": "9f99df3d734265f0c2cd70dc01621223e957e1d02a72de6f76342b800e5f670d",
+        "version": "30c94be88d7ec1e1f31ebb922575c68c82d8d039b9797bff00a6929a30f4d309",
+        "signature": "05e72532e12f2bbc07adf36ebba146f641be6c24b922755dca6b0252edcaca62",
         "affectsGlobalScope": false
       },
       "../lib/ui-registry.ts": {
-        "version": "c499c142b7b72483e2d2a194d7e13639e7e79bbffb5c08e0cabab84744c132a1",
-        "signature": "bb70829cbb000600c41a7fd4aa4e9d889f9df91582c366b0255a1e18f4f541c0",
+        "version": "6c90e56964ffeb8bac3d2b85db985106ede9a9f878162cbe4d16fb7cde9b9d76",
+        "signature": "185e18df11979a2f0dbab355d92bba670bd8fdfc3d7940a7a7e8100829348998",
         "affectsGlobalScope": false
       },
       "../lib/indie-registry.ts": {
-        "version": "a121f66475fad3ddde902090b1b7aec90b990e734e45fadf5fc4ce1d065adcef",
-        "signature": "c53aa048707ccc85b8a6079b672292c5888befac887e7e1d7f3f93409dd157bc",
+        "version": "2c9ee57582bcda6dc0019dcc536459f2c82124dad8b644511c42cd5f76b37f9e",
+        "signature": "15c4bdfeb7156f1ac4a00cbd6dfd48fecab332f55e44b8f1f339c5c4a7b04b5a",
         "affectsGlobalScope": false
       },
       "../lib/message-registry.ts": {
-        "version": "0f63473efc25452719d75ad17b83bd647a1ff2ea2ef4c94b4be2e7614d0e5b06",
-        "signature": "16f557cbb7ce530e1dfa86c6cf88d509ce3f03773039351e4431bcfb2888f75b",
+        "version": "0bc244e902462fa6406b177ccaf67e0d440f0fbf121bead15c9ed1ea25b9387d",
+        "signature": "b35f256b69027188b5eb962ba41ff9cd11c8348276c8a2706eda459b4c7e7d50",
         "affectsGlobalScope": false
       },
       "../lib/linter-registry.ts": {
-        "version": "f16513616178a9a79979442ed87ed09135611051f8285a6ac26e89c625943d4f",
-        "signature": "31a65e29c1ce1ee3b286c04e53164b87a3a5b03e121301897dea38f546e48722",
+        "version": "72f7d0ac15e1c61c81a473fd43021cbeb8d9c7f24de61f5813a02429d76aab8e",
+        "signature": "e96eb71560f7147761fe5c3ef5eb0f59b3902b9130f4cd9dc961dcc4487f3b1f",
         "affectsGlobalScope": false
       },
       "../lib/toggle-view.ts": {
-        "version": "e749fa7a7947a83a41b5f5535000792d9ceda49ee0bd494b7e8a63a8f78ea78b",
-        "signature": "187b11645e6fa668aa067a7153a4ca345b11b62ac0d7ba3cdf6a9f24bd505fd4",
+        "version": "a488c3589f2256af7e7027db6fcee5a770bead7372a72590c1df268f9faeccb2",
+        "signature": "1132b55abe55a673ea128e3e741033461fe1db37704f751947d5e218583a9645",
         "affectsGlobalScope": false
       },
       "../lib/main.ts": {
-        "version": "f5f2bc02ad49580b4260db9e52e679aace0136d75937146cbcec1a3c5bd4d6b6",
+        "version": "c92e46b00c550abe25c0215518860d477e97e3f05eb4ab1ff6dc3437d18d995e",
         "signature": "86acb08fa4354d4b1fb578fac888ed537eaf02e127b7427da5b910b8b0cf3876",
         "affectsGlobalScope": false
       },
       "../lib/index.ts": {
-        "version": "96fd3228230358ffeff0695f5801fe8e27818fd3cdc4cf462618931896c361d4",
+        "version": "4bd1e5351bae5bbef4132f11cc34c2a6f65dbaed2b13734603551fcd7067d2dc",
         "signature": "d7627c79d7c45864ffee11b9c307cab882a2d1214758401aa79882173f76a5e5",
         "affectsGlobalScope": false
       },

@@ -1,6 +1,6 @@
 import { CompositeDisposable, Emitter, Disposable } from 'atom';
 declare type ToggleAction = 'enable' | 'disable';
-declare class ToggleProviders {
+export default class ToggleProviders {
     action: ToggleAction;
     emitter: Emitter;
     providers: Array<string>;
@@ -14,4 +14,4 @@ declare class ToggleProviders {
     onDidDisable(callback: (name: string) => any): Disposable;
     dispose(): void;
 }
-export default ToggleProviders;
+export {};

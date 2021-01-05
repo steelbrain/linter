@@ -1,9 +1,8 @@
 import { CompositeDisposable } from 'atom';
 import type { Linter, UI, MessagesPatch } from './types';
-declare class UIRegistry {
+export default class UIRegistry {
     providers: Set<UI>;
     subscriptions: CompositeDisposable;
-    constructor();
     add(ui: UI): void;
     delete(provider: UI): void;
     getProviders(): Array<UI>;
@@ -12,4 +11,3 @@ declare class UIRegistry {
     didFinishLinting(linter: Linter, filePath?: string | null | undefined): void;
     dispose(): void;
 }
-export default UIRegistry;

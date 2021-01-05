@@ -9,7 +9,7 @@ declare type Linter$Message$Map = {
     messages: Array<Message>;
     oldMessages: Array<Message>;
 };
-declare class MessageRegistry {
+export default class MessageRegistry {
     emitter: Emitter;
     messages: Array<Message>;
     messagesMap: Set<Linter$Message$Map>;
@@ -27,4 +27,4 @@ declare class MessageRegistry {
     deleteByLinter(linter: Linter): void;
     dispose(): void;
 }
-export default MessageRegistry;
+export {};
