@@ -22,7 +22,7 @@ function sortByName(item1: { name: string }, item2: { name: string }) {
   return item1.name.localeCompare(item2.name)
 }
 
-export default class Commands {
+export class Commands {
   private emitter: Emitter = new Emitter()
   private subscriptions: CompositeDisposable = new CompositeDisposable()
 

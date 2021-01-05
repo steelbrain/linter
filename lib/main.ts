@@ -6,7 +6,7 @@ import IndieRegistry from './indie-registry'
 import MessageRegistry from './message-registry'
 import LinterRegistry from './linter-registry'
 import EditorsRegistry from './editor-registry'
-import Commands, { showDebug } from './commands'
+import { Commands, showDebug } from './commands'
 import ToggleView from './toggle-view'
 import type { UI, Linter as LinterProvider, Indie } from './types'
 
