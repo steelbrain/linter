@@ -6,49 +6,36 @@ import * as Validate from './validate'
 import { $version, $activated, $requestLatest, $requestLastReceived } from './helpers'
 import type { Linter } from './types'
 
-class LinterRegistry {
-  emitter: Emitter
-  linters: Set<Linter>
+export default class LinterRegistry {
+  emitter: Emitter = new Emitter()
+  linters: Set<Linter> = new Set()
   lintOnChange: boolean = true
   ignoreVCS: boolean = true
   ignoreGlob: string = '**/*.min.{js,css}'
   lintPreviewTabs: boolean = true
-  subscriptions: CompositeDisposable
+  subscriptions: CompositeDisposable = new CompositeDisposable()
   disabledProviders: Array<string> = []
-  activeNotifications: Set<Notification>
+  activeNotifications: Set<Notification> = new Set()
 
   constructor() {
-    this.emitter = new Emitter()
-    this.linters = new Set()
-    this.subscriptions = new CompositeDisposable()
-    this.activeNotifications = new Set()
-
     this.subscriptions.add(
+      this.emitter,
       atom.config.observe('linter.lintOnChange', lintOnChange => {
         this.lintOnChange = lintOnChange
       }),
-    )
-    this.subscriptions.add(
       atom.config.observe('core.excludeVcsIgnoredPaths', ignoreVCS => {
         this.ignoreVCS = ignoreVCS
       }),
-    )
-    this.subscriptions.add(
       atom.config.observe('linter.ignoreGlob', ignoreGlob => {
         this.ignoreGlob = ignoreGlob
       }),
-    )
-    this.subscriptions.add(
       atom.config.observe('linter.lintPreviewTabs', lintPreviewTabs => {
         this.lintPreviewTabs = lintPreviewTabs
       }),
-    )
-    this.subscriptions.add(
       atom.config.observe('linter.disabledProviders', disabledProviders => {
         this.disabledProviders = disabledProviders
       }),
     )
-    this.subscriptions.add(this.emitter)
   }
   hasLinter(linter: Linter): boolean {
     return this.linters.has(linter)
@@ -188,5 +175,3 @@ class LinterRegistry {
     this.subscriptions.dispose()
   }
 }
-
-export default LinterRegistry

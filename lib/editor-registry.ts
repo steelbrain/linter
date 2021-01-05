@@ -2,19 +2,15 @@ import { Emitter, CompositeDisposable } from 'atom'
 import type { Disposable, TextEditor } from 'atom'
 import EditorLinter from './editor-linter'
 
-class EditorRegistry {
-  emitter: Emitter
+export default class EditorRegistry {
+  emitter: Emitter = new Emitter()
   lintOnOpen: boolean = true
-  subscriptions: CompositeDisposable
-  editorLinters: Map<TextEditor, EditorLinter>
+  subscriptions: CompositeDisposable = new CompositeDisposable()
+  editorLinters: Map<TextEditor, EditorLinter> = new Map()
 
   constructor() {
-    this.emitter = new Emitter()
-    this.subscriptions = new CompositeDisposable()
-    this.editorLinters = new Map()
-
-    this.subscriptions.add(this.emitter)
     this.subscriptions.add(
+      this.emitter,
       atom.config.observe('linter.lintOnOpen', lintOnOpen => {
         this.lintOnOpen = lintOnOpen
       }),
@@ -62,5 +58,3 @@ class EditorRegistry {
     this.subscriptions.dispose()
   }
 }
-
-export default EditorRegistry

@@ -4,8 +4,8 @@ import type { TextEditor } from 'atom'
 
 export default class EditorLinter {
   editor: TextEditor
-  emitter: Emitter
-  subscriptions: CompositeDisposable
+  emitter: Emitter = new Emitter()
+  subscriptions: CompositeDisposable = new CompositeDisposable()
 
   constructor(editor: TextEditor) {
     if (!atom.workspace.isTextEditor(editor)) {
@@ -21,18 +21,19 @@ export default class EditorLinter {
     )
 
     this.editor = editor
-    this.emitter = new Emitter()
-    this.subscriptions = new CompositeDisposable()
 
-    this.subscriptions.add(this.editor.onDidDestroy(() => this.dispose()))
-    // This debouncing is for beautifiers, if they change contents of the editor and save
-    // Linter should count that group of events as one.
-    this.subscriptions.add(this.editor.onDidSave(debouncedLint))
-    // This is to relint in case of external changes to the opened file
-    this.subscriptions.add(editorBuffer.onDidReload(debouncedLint))
-    // NOTE: TextEditor::onDidChange immediately invokes the callback if the text editor was *just* created
-    // Using TextBuffer::onDidChange doesn't have the same behavior so using it instead.
     this.subscriptions.add(
+      this.editor.onDidDestroy(() => this.dispose()),
+
+      // This debouncing is for beautifiers, if they change contents of the editor and save
+      // Linter should count that group of events as one.
+      this.editor.onDidSave(debouncedLint),
+
+      // This is to relint in case of external changes to the opened file
+      editorBuffer.onDidReload(debouncedLint),
+
+      // NOTE: TextEditor::onDidChange immediately invokes the callback if the text editor was *just* created
+      // Using TextBuffer::onDidChange doesn't have the same behavior so using it instead.
       this.subscriptiveObserve(atom.config, 'linter.lintOnChangeInterval', interval =>
         editorBuffer.onDidChange(
           debounce(() => {

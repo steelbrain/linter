@@ -23,21 +23,16 @@ function sortByName(item1: { name: string }, item2: { name: string }) {
 }
 
 export default class Commands {
-  emitter: Emitter
-  subscriptions: CompositeDisposable
+  emitter: Emitter = new Emitter()
+  subscriptions: CompositeDisposable = new CompositeDisposable()
 
   constructor() {
-    this.emitter = new Emitter()
-    this.subscriptions = new CompositeDisposable()
-
-    this.subscriptions.add(this.emitter)
     this.subscriptions.add(
+      this.emitter,
       atom.commands.add('atom-workspace', {
         'linter:enable-linter': () => this.enableLinter(),
         'linter:disable-linter': () => this.disableLinter(),
       }),
-    )
-    this.subscriptions.add(
       atom.commands.add('atom-text-editor:not([mini])', {
         'linter:lint': () => this.lint(),
         'linter:debug': () => this.debug(),

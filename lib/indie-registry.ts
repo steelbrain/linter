@@ -5,16 +5,12 @@ import IndieDelegate from './indie-delegate'
 import { indie as validateIndie } from './validate'
 import type { Indie } from './types'
 
-class IndieRegistry {
-  emitter: Emitter
-  delegates: Set<IndieDelegate>
-  subscriptions: CompositeDisposable
+export default class IndieRegistry {
+  emitter: Emitter = new Emitter()
+  delegates: Set<IndieDelegate> = new Set()
+  subscriptions: CompositeDisposable = new CompositeDisposable()
 
   constructor() {
-    this.emitter = new Emitter()
-    this.delegates = new Set()
-    this.subscriptions = new CompositeDisposable()
-
     this.subscriptions.add(this.emitter)
   }
   // Public method
@@ -51,5 +47,3 @@ class IndieRegistry {
     this.subscriptions.dispose()
   }
 }
-
-export default IndieRegistry

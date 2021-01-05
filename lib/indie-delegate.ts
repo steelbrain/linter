@@ -7,20 +7,15 @@ import type { Indie, Message } from './types'
 
 export default class IndieDelegate {
   indie: Indie
-  scope: 'project'
-  emitter: Emitter
+  scope: 'project' = 'project'
+  emitter: Emitter = new Emitter()
   version: 2
-  messages: Map<string | null | undefined, Array<Message>>
-  subscriptions: CompositeDisposable
+  messages: Map<string | null | undefined, Array<Message>> = new Map()
+  subscriptions: CompositeDisposable = new CompositeDisposable()
 
   constructor(indie: Indie, version: 2) {
     this.indie = indie
-    this.scope = 'project'
     this.version = version
-    this.emitter = new Emitter()
-    this.messages = new Map()
-    this.subscriptions = new CompositeDisposable()
-
     this.subscriptions.add(this.emitter)
   }
   get name(): string {

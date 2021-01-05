@@ -4,21 +4,19 @@ import { CompositeDisposable, Emitter, Disposable } from 'atom'
 let SelectListView: any
 type ToggleAction = 'enable' | 'disable'
 
-class ToggleProviders {
+export default class ToggleProviders {
   action: ToggleAction
-  emitter: Emitter
+  emitter: Emitter = new Emitter()
   providers: Array<string>
-  subscriptions: CompositeDisposable
+  subscriptions: CompositeDisposable = new CompositeDisposable()
   disabledProviders: Array<string> = []
 
   constructor(action: ToggleAction, providers: Array<string>) {
     this.action = action
-    this.emitter = new Emitter()
     this.providers = providers
-    this.subscriptions = new CompositeDisposable()
 
-    this.subscriptions.add(this.emitter)
     this.subscriptions.add(
+      this.emitter,
       atom.config.observe('linter.disabledProviders', disabledProviders => {
         this.disabledProviders = disabledProviders
       }),
@@ -86,5 +84,3 @@ class ToggleProviders {
     this.subscriptions.dispose()
   }
 }
-
-export default ToggleProviders
