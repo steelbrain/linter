@@ -9,8 +9,8 @@ class EditorRegistry {
   editorLinters: Map<TextEditor, EditorLinter> = new Map()
 
   constructor() {
-    this.subscriptions.add(this.emitter)
     this.subscriptions.add(
+      this.emitter,
       atom.config.observe('linter.lintOnOpen', lintOnOpen => {
         this.lintOnOpen = lintOnOpen
       }),
