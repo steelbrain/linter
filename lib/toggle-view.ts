@@ -6,16 +6,14 @@ type ToggleAction = 'enable' | 'disable'
 
 class ToggleProviders {
   action: ToggleAction
-  emitter: Emitter
+  emitter: Emitter = new Emitter()
   providers: Array<string>
-  subscriptions: CompositeDisposable
+  subscriptions: CompositeDisposable = new CompositeDisposable()
   disabledProviders: Array<string> = []
 
   constructor(action: ToggleAction, providers: Array<string>) {
     this.action = action
-    this.emitter = new Emitter()
     this.providers = providers
-    this.subscriptions = new CompositeDisposable()
 
     this.subscriptions.add(this.emitter)
     this.subscriptions.add(
