@@ -14,19 +14,13 @@ type Linter$Message$Map = {
 }
 
 class MessageRegistry {
-  emitter: Emitter
-  messages: Array<Message>
-  messagesMap: Set<Linter$Message$Map>
-  subscriptions: CompositeDisposable
-  debouncedUpdate: () => void
+  emitter: Emitter = new Emitter()
+  messages: Array<Message> = []
+  messagesMap: Set<Linter$Message$Map> = new Set()
+  subscriptions: CompositeDisposable = new CompositeDisposable()
+  debouncedUpdate: () => void = debounce(this.update, 100, { leading: true })
 
   constructor() {
-    this.emitter = new Emitter()
-    this.messages = []
-    this.messagesMap = new Set()
-    this.subscriptions = new CompositeDisposable()
-    this.debouncedUpdate = debounce(this.update, 100, { leading: true })
-
     this.subscriptions.add(this.emitter)
   }
   set({ messages, linter, buffer }: { messages: Array<Message>; linter: Linter; buffer: TextBuffer | null }) {
