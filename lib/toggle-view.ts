@@ -15,8 +15,8 @@ class ToggleProviders {
     this.action = action
     this.providers = providers
 
-    this.subscriptions.add(this.emitter)
     this.subscriptions.add(
+      this.emitter,
       atom.config.observe('linter.disabledProviders', disabledProviders => {
         this.disabledProviders = disabledProviders
       }),
