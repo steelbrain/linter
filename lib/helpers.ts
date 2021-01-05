@@ -73,9 +73,10 @@ export function normalizeMessages(linterName: string, messages: Array<Message>) 
     if (reference && Array.isArray(reference.position)) {
       reference.position = Point.fromObject(reference.position)
     }
-    if (message.solutions && message.solutions.length) {
-      for (let j = 0, _length = message.solutions.length, solution: MessageSolution; j < _length; j++) {
-        solution = message.solutions[j]
+    const solutions = message.solutions
+    if (Array.isArray(solutions)) {
+      for (let j = 0, _length = solutions.length, solution: MessageSolution; j < _length; j++) {
+        solution = solutions[j]
         if (Array.isArray(solution.position)) {
           solution.position = Range.fromObject(solution.position)
         }
