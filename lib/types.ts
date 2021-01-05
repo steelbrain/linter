@@ -35,7 +35,7 @@ export type Message = {
   icon?: string
   excerpt: string
   severity: 'error' | 'warning' | 'info'
-  solutions?: Array<MessageSolution>
+  solutions?: Array<MessageSolution> | (() => Promise<Array<MessageSolution>>)
   description?: string | (() => Promise<string> | string)
 }
 
