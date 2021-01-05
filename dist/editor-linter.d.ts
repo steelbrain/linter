@@ -1,9 +1,9 @@
-import { Emitter, CompositeDisposable, Disposable } from 'atom';
+import { Disposable } from 'atom';
 import type { TextEditor } from 'atom';
 export default class EditorLinter {
-    editor: TextEditor;
-    emitter: Emitter;
-    subscriptions: CompositeDisposable;
+    private editor;
+    private emitter;
+    private subscriptions;
     constructor(editor: TextEditor);
     getEditor(): TextEditor;
     lint(onChange?: boolean): void;

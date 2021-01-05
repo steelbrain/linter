@@ -1,11 +1,11 @@
-import { CompositeDisposable, Emitter, Disposable } from 'atom';
+import { Disposable } from 'atom';
 declare type ToggleAction = 'enable' | 'disable';
 export default class ToggleProviders {
-    action: ToggleAction;
-    emitter: Emitter;
-    providers: Array<string>;
-    subscriptions: CompositeDisposable;
-    disabledProviders: Array<string>;
+    private action;
+    private emitter;
+    private providers;
+    private subscriptions;
+    private disabledProviders;
     constructor(action: ToggleAction, providers: Array<string>);
     getItems(): Promise<Array<string>>;
     process(name: string): Promise<void>;

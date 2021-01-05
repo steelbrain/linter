@@ -1,20 +1,11 @@
-import { CompositeDisposable, Emitter } from 'atom';
 import type { Disposable, TextBuffer } from 'atom';
 import type { MessagesPatch, Message, Linter } from './types';
-declare type Linter$Message$Map = {
-    buffer: TextBuffer | null | undefined;
-    linter: Linter;
-    changed: boolean;
-    deleted: boolean;
-    messages: Array<Message>;
-    oldMessages: Array<Message>;
-};
 export default class MessageRegistry {
-    emitter: Emitter;
+    private emitter;
     messages: Array<Message>;
-    messagesMap: Set<Linter$Message$Map>;
-    subscriptions: CompositeDisposable;
-    debouncedUpdate: () => void;
+    private messagesMap;
+    private subscriptions;
+    private debouncedUpdate;
     constructor();
     set({ messages, linter, buffer }: {
         messages: Array<Message>;
@@ -27,4 +18,3 @@ export default class MessageRegistry {
     deleteByLinter(linter: Linter): void;
     dispose(): void;
 }
-export {};

@@ -1,11 +1,10 @@
-import { Emitter, CompositeDisposable } from 'atom';
 import type { Disposable, TextEditor } from 'atom';
 import EditorLinter from './editor-linter';
 export default class EditorRegistry {
-    emitter: Emitter;
-    lintOnOpen: boolean;
-    subscriptions: CompositeDisposable;
-    editorLinters: Map<TextEditor, EditorLinter>;
+    private emitter;
+    private lintOnOpen;
+    private subscriptions;
+    private editorLinters;
     constructor();
     activate(): void;
     get(textEditor: TextEditor): EditorLinter | null | undefined;

@@ -1,8 +1,7 @@
-import { CompositeDisposable } from 'atom';
 import type { Linter, UI, MessagesPatch } from './types';
 export default class UIRegistry {
-    providers: Set<UI>;
-    subscriptions: CompositeDisposable;
+    private providers;
+    private subscriptions;
     add(ui: UI): void;
     delete(provider: UI): void;
     getProviders(): Array<UI>;

@@ -1,16 +1,15 @@
-import { Emitter, CompositeDisposable } from 'atom';
-import type { TextEditor, Disposable, Notification } from 'atom';
+import type { TextEditor, Disposable } from 'atom';
 import type { Linter } from './types';
 export default class LinterRegistry {
-    emitter: Emitter;
-    linters: Set<Linter>;
-    lintOnChange: boolean;
-    ignoreVCS: boolean;
-    ignoreGlob: string;
-    lintPreviewTabs: boolean;
-    subscriptions: CompositeDisposable;
-    disabledProviders: Array<string>;
-    activeNotifications: Set<Notification>;
+    private emitter;
+    private linters;
+    private lintOnChange;
+    private ignoreVCS;
+    private ignoreGlob;
+    private lintPreviewTabs;
+    private subscriptions;
+    private disabledProviders;
+    private activeNotifications;
     constructor();
     hasLinter(linter: Linter): boolean;
     addLinter(linter: Linter): void;

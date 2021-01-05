@@ -1,11 +1,10 @@
-import { Emitter, CompositeDisposable } from 'atom';
 import type { Disposable } from 'atom';
 import IndieDelegate from './indie-delegate';
 import type { Indie } from './types';
 export default class IndieRegistry {
-    emitter: Emitter;
-    delegates: Set<IndieDelegate>;
-    subscriptions: CompositeDisposable;
+    private emitter;
+    private delegates;
+    private subscriptions;
     constructor();
     register(config: Indie, version: 2): IndieDelegate;
     getProviders(): Array<IndieDelegate>;
