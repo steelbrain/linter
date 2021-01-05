@@ -23,13 +23,10 @@ function sortByName(item1: { name: string }, item2: { name: string }) {
 }
 
 export default class Commands {
-  emitter: Emitter
-  subscriptions: CompositeDisposable
+  emitter: Emitter = new Emitter()
+  subscriptions: CompositeDisposable = new CompositeDisposable()
 
   constructor() {
-    this.emitter = new Emitter()
-    this.subscriptions = new CompositeDisposable()
-
     this.subscriptions.add(this.emitter)
     this.subscriptions.add(
       atom.commands.add('atom-workspace', {
