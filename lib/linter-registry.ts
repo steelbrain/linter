@@ -6,7 +6,7 @@ import * as Validate from './validate'
 import { $version, $activated, $requestLatest, $requestLastReceived } from './helpers'
 import type { Linter } from './types'
 
-class LinterRegistry {
+export default class LinterRegistry {
   emitter: Emitter = new Emitter()
   linters: Set<Linter> = new Set()
   lintOnChange: boolean = true
@@ -175,5 +175,3 @@ class LinterRegistry {
     this.subscriptions.dispose()
   }
 }
-
-export default LinterRegistry

@@ -4,7 +4,7 @@ import { CompositeDisposable, Emitter, Disposable } from 'atom'
 let SelectListView: any
 type ToggleAction = 'enable' | 'disable'
 
-class ToggleProviders {
+export default class ToggleProviders {
   action: ToggleAction
   emitter: Emitter = new Emitter()
   providers: Array<string>
@@ -84,5 +84,3 @@ class ToggleProviders {
     this.subscriptions.dispose()
   }
 }
-
-export default ToggleProviders

@@ -2,7 +2,7 @@ import { CompositeDisposable } from 'atom'
 import { ui as validateUI } from './validate'
 import type { Linter, UI, MessagesPatch } from './types'
 
-class UIRegistry {
+export default class UIRegistry {
   providers: Set<UI> = new Set()
   subscriptions: CompositeDisposable = new CompositeDisposable()
 
@@ -41,5 +41,3 @@ class UIRegistry {
     this.subscriptions.dispose()
   }
 }
-
-export default UIRegistry

@@ -13,7 +13,7 @@ type Linter$Message$Map = {
   oldMessages: Array<Message>
 }
 
-class MessageRegistry {
+export default class MessageRegistry {
   emitter: Emitter = new Emitter()
   messages: Array<Message> = []
   messagesMap: Set<Linter$Message$Map> = new Set()
@@ -112,5 +112,3 @@ class MessageRegistry {
     this.subscriptions.dispose()
   }
 }
-
-export default MessageRegistry

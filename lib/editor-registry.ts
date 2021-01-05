@@ -2,7 +2,7 @@ import { Emitter, CompositeDisposable } from 'atom'
 import type { Disposable, TextEditor } from 'atom'
 import EditorLinter from './editor-linter'
 
-class EditorRegistry {
+export default class EditorRegistry {
   emitter: Emitter = new Emitter()
   lintOnOpen: boolean = true
   subscriptions: CompositeDisposable = new CompositeDisposable()
@@ -58,5 +58,3 @@ class EditorRegistry {
     this.subscriptions.dispose()
   }
 }
-
-export default EditorRegistry
