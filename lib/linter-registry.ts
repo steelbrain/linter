@@ -19,31 +19,23 @@ class LinterRegistry {
 
   constructor() {
     this.subscriptions.add(
+      this.emitter,
       atom.config.observe('linter.lintOnChange', lintOnChange => {
         this.lintOnChange = lintOnChange
       }),
-    )
-    this.subscriptions.add(
       atom.config.observe('core.excludeVcsIgnoredPaths', ignoreVCS => {
         this.ignoreVCS = ignoreVCS
       }),
-    )
-    this.subscriptions.add(
       atom.config.observe('linter.ignoreGlob', ignoreGlob => {
         this.ignoreGlob = ignoreGlob
       }),
-    )
-    this.subscriptions.add(
       atom.config.observe('linter.lintPreviewTabs', lintPreviewTabs => {
         this.lintPreviewTabs = lintPreviewTabs
       }),
-    )
-    this.subscriptions.add(
       atom.config.observe('linter.disabledProviders', disabledProviders => {
         this.disabledProviders = disabledProviders
       }),
     )
-    this.subscriptions.add(this.emitter)
   }
   hasLinter(linter: Linter): boolean {
     return this.linters.has(linter)
