@@ -21,12 +21,7 @@ export function activate() {
   )
 }
 export function consumeLinter(linter: LinterProvider | Array<LinterProvider>): Disposable {
-  let linters: Array<LinterProvider>
-  if (Array.isArray(linter)) {
-    linters = linter
-  } else {
-    linters = [linter]
-  }
+  const linters = Array.isArray(linter) ? linter : [linter]
 
   for (const entry of linters) {
     instance.addLinter(entry)
@@ -38,12 +33,7 @@ export function consumeLinter(linter: LinterProvider | Array<LinterProvider>): D
   })
 }
 export function consumeUI(ui: UI | Array<UI>): Disposable {
-  let uis: Array<UI>
-  if (Array.isArray(ui)) {
-    uis = ui
-  } else {
-    uis = [ui]
-  }
+  const uis = Array.isArray(ui) ? ui : [ui]
 
   for (const entry of uis) {
     instance.addUI(entry)
