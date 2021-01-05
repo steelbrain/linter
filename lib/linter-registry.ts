@@ -7,22 +7,17 @@ import { $version, $activated, $requestLatest, $requestLastReceived } from './he
 import type { Linter } from './types'
 
 class LinterRegistry {
-  emitter: Emitter
-  linters: Set<Linter>
+  emitter: Emitter = new Emitter()
+  linters: Set<Linter> = new Set()
   lintOnChange: boolean = true
   ignoreVCS: boolean = true
   ignoreGlob: string = '**/*.min.{js,css}'
   lintPreviewTabs: boolean = true
-  subscriptions: CompositeDisposable
+  subscriptions: CompositeDisposable = new CompositeDisposable()
   disabledProviders: Array<string> = []
-  activeNotifications: Set<Notification>
+  activeNotifications: Set<Notification> = new Set()
 
   constructor() {
-    this.emitter = new Emitter()
-    this.linters = new Set()
-    this.subscriptions = new CompositeDisposable()
-    this.activeNotifications = new Set()
-
     this.subscriptions.add(
       atom.config.observe('linter.lintOnChange', lintOnChange => {
         this.lintOnChange = lintOnChange
