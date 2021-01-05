@@ -142,7 +142,12 @@ function validateMessages(linterName: string, entries: Array<Message>): boolean 
           messages.push('Message.location.position should not contain NaN coordinates')
         }
       }
-      if (!invalidSolution && message.solutions && !Array.isArray(message.solutions)) {
+      if (
+        !invalidSolution &&
+        message.solutions &&
+        !Array.isArray(message.solutions) &&
+        !(message.solutions instanceof Promise)
+      ) {
         invalidSolution = true
         messages.push('Message.solutions must be valid')
       }
