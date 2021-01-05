@@ -11,9 +11,8 @@ export function activate() {
   subscriptions = new CompositeDisposable()
 
   instance = new Linter()
-  subscriptions.add(instance)
-
   subscriptions.add(
+    instance,
     atom.packages.onDidActivateInitialPackages(function () {
       if (!atom.inSpecMode()) {
         require('atom-package-deps').install('linter', true)
