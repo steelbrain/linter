@@ -3,10 +3,10 @@ import type { Disposable, TextEditor } from 'atom'
 import EditorLinter from './editor-linter'
 
 export default class EditorRegistry {
-  emitter: Emitter = new Emitter()
-  lintOnOpen: boolean = true
-  subscriptions: CompositeDisposable = new CompositeDisposable()
-  editorLinters: Map<TextEditor, EditorLinter> = new Map()
+  private emitter: Emitter = new Emitter()
+  private lintOnOpen: boolean = true
+  private subscriptions: CompositeDisposable = new CompositeDisposable()
+  private editorLinters: Map<TextEditor, EditorLinter> = new Map()
 
   constructor() {
     this.subscriptions.add(

@@ -3,8 +3,8 @@ import { ui as validateUI } from './validate'
 import type { Linter, UI, MessagesPatch } from './types'
 
 export default class UIRegistry {
-  providers: Set<UI> = new Set()
-  subscriptions: CompositeDisposable = new CompositeDisposable()
+  private providers: Set<UI> = new Set()
+  private subscriptions: CompositeDisposable = new CompositeDisposable()
 
   add(ui: UI) {
     if (!this.providers.has(ui) && validateUI(ui)) {

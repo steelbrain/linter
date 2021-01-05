@@ -6,9 +6,9 @@ import { indie as validateIndie } from './validate'
 import type { Indie } from './types'
 
 export default class IndieRegistry {
-  emitter: Emitter = new Emitter()
-  delegates: Set<IndieDelegate> = new Set()
-  subscriptions: CompositeDisposable = new CompositeDisposable()
+  private emitter: Emitter = new Emitter()
+  private delegates: Set<IndieDelegate> = new Set()
+  private subscriptions: CompositeDisposable = new CompositeDisposable()
 
   constructor() {
     this.subscriptions.add(this.emitter)

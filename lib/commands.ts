@@ -23,8 +23,8 @@ function sortByName(item1: { name: string }, item2: { name: string }) {
 }
 
 export default class Commands {
-  emitter: Emitter = new Emitter()
-  subscriptions: CompositeDisposable = new CompositeDisposable()
+  private emitter: Emitter = new Emitter()
+  private subscriptions: CompositeDisposable = new CompositeDisposable()
 
   constructor() {
     this.subscriptions.add(

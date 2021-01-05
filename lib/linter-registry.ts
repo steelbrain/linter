@@ -7,15 +7,15 @@ import { $version, $activated, $requestLatest, $requestLastReceived } from './he
 import type { Linter } from './types'
 
 export default class LinterRegistry {
-  emitter: Emitter = new Emitter()
-  linters: Set<Linter> = new Set()
-  lintOnChange: boolean = true
-  ignoreVCS: boolean = true
-  ignoreGlob: string = '**/*.min.{js,css}'
-  lintPreviewTabs: boolean = true
-  subscriptions: CompositeDisposable = new CompositeDisposable()
-  disabledProviders: Array<string> = []
-  activeNotifications: Set<Notification> = new Set()
+  private emitter: Emitter = new Emitter()
+  private linters: Set<Linter> = new Set()
+  private lintOnChange: boolean = true
+  private ignoreVCS: boolean = true
+  private ignoreGlob: string = '**/*.min.{js,css}'
+  private lintPreviewTabs: boolean = true
+  private subscriptions: CompositeDisposable = new CompositeDisposable()
+  private disabledProviders: Array<string> = []
+  private activeNotifications: Set<Notification> = new Set()
 
   constructor() {
     this.subscriptions.add(

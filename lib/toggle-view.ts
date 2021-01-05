@@ -5,11 +5,11 @@ let SelectListView: any
 type ToggleAction = 'enable' | 'disable'
 
 export default class ToggleProviders {
-  action: ToggleAction
-  emitter: Emitter = new Emitter()
-  providers: Array<string>
-  subscriptions: CompositeDisposable = new CompositeDisposable()
-  disabledProviders: Array<string> = []
+  private action: ToggleAction
+  private emitter: Emitter = new Emitter()
+  private providers: Array<string>
+  private subscriptions: CompositeDisposable = new CompositeDisposable()
+  private disabledProviders: Array<string> = []
 
   constructor(action: ToggleAction, providers: Array<string>) {
     this.action = action

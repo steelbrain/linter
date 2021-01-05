@@ -3,9 +3,9 @@ import debounce from 'lodash/debounce'
 import type { TextEditor } from 'atom'
 
 export default class EditorLinter {
-  editor: TextEditor
-  emitter: Emitter = new Emitter()
-  subscriptions: CompositeDisposable = new CompositeDisposable()
+  private editor: TextEditor
+  private emitter: Emitter = new Emitter()
+  private subscriptions: CompositeDisposable = new CompositeDisposable()
 
   constructor(editor: TextEditor) {
     if (!atom.workspace.isTextEditor(editor)) {

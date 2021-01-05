@@ -6,12 +6,12 @@ import { normalizeMessages, mergeArray } from './helpers'
 import type { Indie, Message } from './types'
 
 export default class IndieDelegate {
-  indie: Indie
+  private indie: Indie
   scope: 'project' = 'project'
-  emitter: Emitter = new Emitter()
+  private emitter: Emitter = new Emitter()
   version: 2
-  messages: Map<string | null | undefined, Array<Message>> = new Map()
-  subscriptions: CompositeDisposable = new CompositeDisposable()
+  private messages: Map<string | null | undefined, Array<Message>> = new Map()
+  private subscriptions: CompositeDisposable = new CompositeDisposable()
 
   constructor(indie: Indie, version: 2) {
     this.indie = indie

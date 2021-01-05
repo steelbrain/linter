@@ -11,14 +11,14 @@ import ToggleView from './toggle-view'
 import type { UI, Linter as LinterProvider, Indie } from './types'
 
 class Linter {
-  commands: Commands = new Commands()
-  registryUI?: UIRegistry
-  registryIndie?: IndieRegistry
-  registryEditors?: EditorsRegistry
-  registryLinters?: LinterRegistry
-  registryMessages?: MessageRegistry
-  subscriptions: CompositeDisposable = new CompositeDisposable()
-  idleCallbacks: Set<number> = new Set()
+  private commands: Commands = new Commands()
+  private registryUI?: UIRegistry
+  private registryIndie?: IndieRegistry
+  private registryEditors?: EditorsRegistry
+  private registryLinters?: LinterRegistry
+  private registryMessages?: MessageRegistry
+  private subscriptions: CompositeDisposable = new CompositeDisposable()
+  private idleCallbacks: Set<number> = new Set()
 
   constructor() {
     this.subscriptions.add(this.commands)
