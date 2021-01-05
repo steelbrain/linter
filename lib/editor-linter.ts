@@ -4,8 +4,8 @@ import type { TextEditor } from 'atom'
 
 export default class EditorLinter {
   editor: TextEditor
-  emitter: Emitter
-  subscriptions: CompositeDisposable
+  emitter: Emitter = new Emitter()
+  subscriptions: CompositeDisposable = new CompositeDisposable()
 
   constructor(editor: TextEditor) {
     if (!atom.workspace.isTextEditor(editor)) {
@@ -21,8 +21,6 @@ export default class EditorLinter {
     )
 
     this.editor = editor
-    this.emitter = new Emitter()
-    this.subscriptions = new CompositeDisposable()
 
     this.subscriptions.add(this.editor.onDidDestroy(() => this.dispose()))
     // This debouncing is for beautifiers, if they change contents of the editor and save
