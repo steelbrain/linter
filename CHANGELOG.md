@@ -1,3 +1,6 @@
+### 3.2.3
+- Minor optimizations
+
 ### 3.2.2
 - Use class props and merge subscriptions.add (#1720)
 
