@@ -76,7 +76,7 @@ export class Commands {
   }
 }
 
-export function showDebug(standardLinters: Array<Linter>, indieLinters: Array<IndieDelegate>, uiProviders: Array<UI>) {
+export async function showDebug(standardLinters: Array<Linter>, indieLinters: Array<IndieDelegate>, uiProviders: Array<UI>) {
   if (!manifest) {
     manifest = require('../package.json')
   }
@@ -100,7 +100,7 @@ export function showDebug(standardLinters: Array<Linter>, indieLinters: Array<In
   const ignoreGlob = atom.config.get('linter.ignoreGlob')
   const ignoreVCSIgnoredPaths = atom.config.get('core.excludeVcsIgnoredPaths')
   const disabledLinters = atom.config.get('linter.disabledProviders').map(formatItem).join('\n')
-  const filePathIgnored = Helpers.isPathIgnored(textEditor.getPath(), ignoreGlob, ignoreVCSIgnoredPaths)
+  const filePathIgnored = await Helpers.isPathIgnored(textEditor.getPath(), ignoreGlob, ignoreVCSIgnoredPaths)
 
   atom.notifications.addInfo('Linter Debug Info', {
     detail: [

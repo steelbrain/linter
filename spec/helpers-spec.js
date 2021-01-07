@@ -1,8 +1,12 @@
 /* @flow */
 
+import fs from 'fs-plus'
 import { it } from 'jasmine-fix'
+import * as path from 'path'
+import * as temp from 'temp'
+
 import * as Helpers from '../dist/helpers'
-import { getFixturesPath, getMessage } from './common'
+import { getMessage } from './common'
 
 describe('Helpers', function () {
   // NOTE: Did *not* add specs for messageKey and messageKeyLegacy on purpose
@@ -90,55 +94,71 @@ describe('Helpers', function () {
       ).toBe(false)
     })
   })
-  describe('isPathIgnored', function () {
+  describe('isPathIgnored: ignoredGlob', function () {
     function isPathIgnored(a: any, b: any, c: any) {
       return Helpers.isPathIgnored(a, b || '**/*.min.{js,css}', c || false)
     }
 
-    it('returns false if path does not match glob', function () {
-      expect(isPathIgnored('a.js')).toBe(false)
-      expect(isPathIgnored('a.css')).toBe(false)
-      expect(isPathIgnored('/a.js')).toBe(false)
-      expect(isPathIgnored('/a.css')).toBe(false)
+    it('returns false if path does not match glob', async function () {
+      expect(await isPathIgnored('a.js')).toBe(false)
+      expect(await isPathIgnored('a.css')).toBe(false)
+      expect(await isPathIgnored('/a.js')).toBe(false)
+      expect(await isPathIgnored('/a.css')).toBe(false)
     })
-    it('returns false correctly for windows styled paths', function () {
-      expect(isPathIgnored('a.js')).toBe(false)
-      expect(isPathIgnored('a.css')).toBe(false)
-      expect(isPathIgnored('\\a.js')).toBe(false)
-      expect(isPathIgnored('\\a.css')).toBe(false)
+    it('returns false correctly for windows styled paths', async function () {
+      expect(await isPathIgnored('a.js')).toBe(false)
+      expect(await isPathIgnored('a.css')).toBe(false)
+      expect(await isPathIgnored('\\a.js')).toBe(false)
+      expect(await isPathIgnored('\\a.css')).toBe(false)
     })
-    it('returns true if path matches glob', function () {
-      expect(isPathIgnored('a.min.js')).toBe(true)
-      expect(isPathIgnored('a.min.css')).toBe(true)
-      expect(isPathIgnored('/a.min.js')).toBe(true)
-      expect(isPathIgnored('/a.min.css')).toBe(true)
+    it('returns true if path matches glob', async function () {
+      expect(await isPathIgnored('a.min.js')).toBe(true)
+      expect(await isPathIgnored('a.min.css')).toBe(true)
+      expect(await isPathIgnored('/a.min.js')).toBe(true)
+      expect(await isPathIgnored('/a.min.css')).toBe(true)
     })
-    it('returns true correctly for windows styled paths', function () {
-      expect(isPathIgnored('a.min.js')).toBe(true)
-      expect(isPathIgnored('a.min.css')).toBe(true)
-      expect(isPathIgnored('\\a.min.js')).toBe(true)
-      expect(isPathIgnored('\\a.min.css')).toBe(true)
+    it('returns true correctly for windows styled paths', async function () {
+      expect(await isPathIgnored('a.min.js')).toBe(true)
+      expect(await isPathIgnored('a.min.css')).toBe(true)
+      expect(await isPathIgnored('\\a.min.js')).toBe(true)
+      expect(await isPathIgnored('\\a.min.css')).toBe(true)
     })
-    it('returns true if the path is ignored by VCS', async function () {
-      try {
-        await atom.workspace.open(__filename)
-        expect(isPathIgnored(getFixturesPath('ignored.txt'), null, true)).toBe(true)
-      } finally {
-        atom.workspace.destroyActivePane()
-      }
+    it('returns true if no path is given', async function () {
+      expect(await isPathIgnored(undefined)).toBe(true)
+      expect(await isPathIgnored(null)).toBe(true)
+      expect(await isPathIgnored('')).toBe(true)
     })
-    it('returns false if the path is not ignored by VCS', async function () {
-      try {
-        await atom.workspace.open(__filename)
-        expect(isPathIgnored(getFixturesPath('file.txt'), null, true)).toBe(false)
-      } finally {
-        atom.workspace.destroyActivePane()
-      }
+  })
+
+  describe('isPathIgnored: ignoredVCS', function () {
+    function isPathIgnored(a: any, b: any, c: any) {
+      return Helpers.isPathIgnored(a, b || '**/*.min.{js,css}', c || true)
+    }
+
+    let workingDir
+    beforeEach(() => {
+      workingDir = temp.mkdirSync('helpers-spec')
+      fs.copySync(path.join(__dirname, 'fixtures'), workingDir)
+      fs.moveSync(path.join(workingDir, 'git-dir', 'git.git'), path.join(workingDir, 'git-dir', '.git'))
+
+      waitsForPromise(() => atom.workspace.open(path.join(workingDir, 'git-dir', 'file.txt')))
     })
-    it('returns true if no path is given', function () {
-      expect(isPathIgnored(undefined)).toBe(true)
-      expect(isPathIgnored(null)).toBe(true)
-      expect(isPathIgnored('')).toBe(true)
+
+    it('returns true if the path is ignored by VCS', async () => {
+      atom.project.setPaths([path.join(workingDir, 'git-dir')])
+      expect(await isPathIgnored(path.join(workingDir, 'git-dir', 'ignore.txt'))).toBe(true)
+    })
+    it('returns false if the path is not ignored by VCS', async () => {
+      atom.project.setPaths([path.join(workingDir, 'git-dir')])
+      expect(await isPathIgnored(path.join(workingDir, 'git-dir', 'file.txt'))).toBe(false)
+    })
+    it('returns true if the path is ignored by VCS with the git directory in a subfolder', async () => {
+      atom.project.setPaths([workingDir])
+      expect(await isPathIgnored(path.join(workingDir, 'git-dir', 'ignore.txt'))).toBe(true)
+    })
+    it('returns false if the path is not ignored by VCS with the git directory in a subfolder', async () => {
+      atom.project.setPaths([workingDir])
+      expect(await isPathIgnored(path.join(workingDir, 'git-dir', 'file.txt'))).toBe(false)
     })
   })
 

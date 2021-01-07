@@ -1,5 +1,5 @@
 import arrayUnique from 'lodash/uniq'
-import { Range, Point } from 'atom'
+import { Directory, Range, Point } from 'atom'
 import type { TextEditor } from 'atom'
 import type { Linter, Message, MessageSolution } from './types'
 
@@ -24,21 +24,18 @@ export function getEditorCursorScopes(textEditor: TextEditor): Array<string> {
 }
 
 let minimatch: typeof import('minimatch')
-export function isPathIgnored(filePath: string | null | undefined, ignoredGlob: string, ignoredVCS: boolean): boolean {
+export async function isPathIgnored(
+  filePath: string | null | undefined,
+  ignoredGlob: string,
+  ignoredVCS: boolean,
+): Promise<boolean> {
   if (!filePath) {
     return true
   }
 
   if (ignoredVCS) {
-    let repository = null
-    const projectPaths = atom.project.getPaths()
-    for (let i = 0, { length } = projectPaths; i < length; ++i) {
-      const projectPath = projectPaths[i]
-      if (filePath.indexOf(projectPath) === 0) {
-        repository = atom.project.getRepositories()[i]
-        break
-      }
-    }
+    const directory = new Directory(filePath)
+    const repository = await atom.project.repositoryForDirectory(directory)
     if (repository && repository.isPathIgnored(filePath)) {
       return true
     }
