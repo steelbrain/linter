@@ -1,3 +1,8 @@
+### 3.3.0
+- Fix subfolder git detection (#1715):
+  if you add a project folder which is not a git repo but it contains folders which are git repos, then the repository detection now works correctly. The `repositoryForDirectory` function in `atom.project` is able to detect the repository for any Directory, even if it is in a subfolder.
+It is an async function, so some changes have to be made in up the call chain
+
 ### 3.2.3
 - Minor optimizations
 
