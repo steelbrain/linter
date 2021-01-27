@@ -59,6 +59,8 @@ export class Commands {
   showDebug(...args: Parameters<typeof showDebug>) {
     showDebug(...args)
   }
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   onShouldLint(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('should-lint', callback)
   }
@@ -71,6 +73,8 @@ export class Commands {
   onShouldToggleLinter(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('should-toggle-linter', callback)
   }
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+
   dispose() {
     this.subscriptions.dispose()
   }

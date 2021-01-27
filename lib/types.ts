@@ -99,6 +99,7 @@ declare module 'atom' {
 }
 
 // windows requestIdleCallback types
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export type RequestIdleCallbackHandle = any
 type RequestIdleCallbackOptions = {
   timeout: number

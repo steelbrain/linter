@@ -73,12 +73,16 @@ export default class ToggleProviders {
       }),
     )
   }
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   onDidDispose(callback: () => any): Disposable {
     return this.emitter.on('did-dispose', callback)
   }
   onDidDisable(callback: (name: string) => any): Disposable {
     return this.emitter.on('did-disable', callback)
   }
+  /* eslint-enable @typescript-eslint/no-explicit-any */
+
   dispose() {
     this.emitter.emit('did-dispose')
     this.subscriptions.dispose()

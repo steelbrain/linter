@@ -49,12 +49,16 @@ export default class EditorLinter {
   lint(onChange: boolean = false) {
     this.emitter.emit('should-lint', onChange)
   }
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   onShouldLint(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('should-lint', callback)
   }
   onDidDestroy(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-destroy', callback)
   }
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+
   dispose() {
     this.emitter.emit('did-destroy')
     this.subscriptions.dispose()

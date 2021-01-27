@@ -75,12 +75,16 @@ export default class IndieDelegate {
     }
     this.emitter.emit('did-update', this.getMessages())
   }
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   onDidUpdate(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-update', callback)
   }
   onDidDestroy(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-destroy', callback)
   }
+  /* eslint-enable @typescript-eslint/no-explicit-any */
+
   dispose(): void {
     this.emitter.emit('did-destroy')
     this.subscriptions.dispose()
