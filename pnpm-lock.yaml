@@ -9,7 +9,7 @@ devDependencies:
   '@types/lodash': 4.14.168
   '@types/minimatch': 3.0.3
   '@types/node': 14.14.22
-  build-commit: 0.1.1
+  build-commit: 0.1.4
   cross-env: 7.0.3
   eslint: 7.18.0
   eslint-config-atomic: 1.5.1_eslint@7.18.0
@@ -18,7 +18,7 @@ devDependencies:
   jasmine-fix: 1.3.1
   prettier: 2.2.1
   rollup: 2.38.0
-  rollup-plugin-atomic: 1.9.0_22ce2c661feed355c62fbac9a707e4f9
+  rollup-plugin-atomic: 2.0.1_22ce2c661feed355c62fbac9a707e4f9
   shx: 0.3.3
   temp: 0.9.4
   typescript: 4.1.3
@@ -825,17 +825,17 @@ packages:
     dev: true
     resolution:
       integrity: sha512-MQcXEUbCKtEo7bhqEs6560Hyd4XaovZlO/k9V3hjVUF/zwW7KBVdSK4gIt/bzwS9MbR5qob+F5jusZsb0YQK2A==
-  /build-commit/0.1.1:
+  /build-commit/0.1.4:
     dependencies:
       colors: 1.4.0
-      commander: 5.1.0
+      commander: 7.0.0
       shelljs: 0.8.4
     dev: true
     engines:
       node: '>=6'
     hasBin: true
     resolution:
-      integrity: sha512-XUmXeNsdIj5Izr8FFmsjYxu9SVVaonlmD3THg8Of87A5i/SsFLsY6VGscnfVtlcUl5pHpx691MXKq7B9qkUC+g==
+      integrity: sha512-LpdIncz6SaYSRormDsK2M6hBcCq8ZMpGZnIcZHUCOU4RTjTLgGRch9WK16iWy+9ngQsJGvfsal+aD0tt1vT74g==
   /builtin-modules/2.0.0:
     dev: true
     engines:
@@ -985,12 +985,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
-  /commander/5.1.0:
+  /commander/7.0.0:
     dev: true
     engines:
-      node: '>= 6'
+      node: '>= 10'
     resolution:
-      integrity: sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg==
+      integrity: sha512-ovx/7NkTrnPuIV8sqk/GjUIIM1+iUQeqA3ye2VNpq9sVoiZsooObWlQy+OPWGI17GDaEoybuAGJm6U8yC077BA==
   /commondir/1.0.1:
     dev: true
     resolution:
@@ -2728,7 +2728,7 @@ packages:
       assemblyscript: '*'
     resolution:
       integrity: sha512-RWA5xbRZkIayYW/QzqWloFxUi+Gsiv0wvb3OjzvVFZF0O/7y40dp13ET9a0k1DwOqTOUiruSDhCVK4U73H0dIA==
-  /rollup-plugin-atomic/1.9.0_22ce2c661feed355c62fbac9a707e4f9:
+  /rollup-plugin-atomic/2.0.1_22ce2c661feed355c62fbac9a707e4f9:
     dependencies:
       '@rollup/plugin-babel': 5.2.2_ef0fb8bb075dad5ddd10a028b31f2344
       '@rollup/plugin-commonjs': 17.0.0_rollup@2.38.0
@@ -2759,7 +2759,7 @@ packages:
       '@types/node': '*'
       rollup: ^2
     resolution:
-      integrity: sha512-O5iGq48AwYd9fjK8SglsR9qV/0DDologvZzLDh1Hu14jYBVzyOI9VZr/SNfjrKhpIdMgJNx17L+zvaFvvRTi2w==
+      integrity: sha512-jCHTXVFsUhdZfe3b6T1of5Q7qF0dlqVi4+696R8lCaZz1BRKEzo21xa2SHAKSRrbADGfX8E0/jzrXag1lOwNuw==
   /rollup-plugin-auto-external/2.0.0_rollup@2.38.0:
     dependencies:
       builtins: 2.0.1
@@ -3365,16 +3365,16 @@ packages:
     resolution:
       integrity: sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==
 specifiers:
-  '@types/atom': ^1.40.5
-  '@types/jasmine': ^3.6.2
-  '@types/lodash': ^4.14.167
+  '@types/atom': ^1.40.7
+  '@types/jasmine': ^3.6.3
+  '@types/lodash': ^4.14.168
   '@types/minimatch': ^3.0.3
-  '@types/node': ^14.14.20
+  '@types/node': ^14.14.22
   atom-package-deps: ^6.0.0
   atom-select-list: ^0.7.2
-  build-commit: 0.1.1
+  build-commit: 0.1.4
   cross-env: ^7.0.3
-  eslint: ^7.17.0
+  eslint: ^7.18.0
   eslint-config-atomic: ^1.5.1
   eslint-plugin-react: ^7.22.0
   fs-plus: ^3.1.1
@@ -3382,8 +3382,8 @@ specifiers:
   lodash: ^4.17.20
   minimatch: ^3.0.4
   prettier: ^2
-  rollup: ^2.35.1
-  rollup-plugin-atomic: ^1.6.4
+  rollup: ^2.38.0
+  rollup-plugin-atomic: ^2.0.1
   shx: ^0.3.3
   temp: ^0.9.4
   typescript: ^4.1.3
