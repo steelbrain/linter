@@ -159,6 +159,8 @@ export default class LinterRegistry {
     await Promise.all(promises)
     return true
   }
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   onDidUpdateMessages(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-update-messages', callback)
   }
@@ -168,6 +170,8 @@ export default class LinterRegistry {
   onDidFinishLinting(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-finish-linting', callback)
   }
+  /* eslint-enable @typescript-eslint/no-explicit-any */
+
   dispose() {
     this.activeNotifications.forEach(notification => notification.dismiss())
     this.activeNotifications.clear()

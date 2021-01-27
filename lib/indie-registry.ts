@@ -33,6 +33,8 @@ export default class IndieRegistry {
   getProviders(): Array<IndieDelegate> {
     return Array.from(this.delegates)
   }
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   observe(callback: (...args: Array<any>) => any): Disposable {
     this.delegates.forEach(callback)
     return this.emitter.on('observe', callback)
@@ -40,6 +42,8 @@ export default class IndieRegistry {
   onDidUpdate(callback: (...args: Array<any>) => any): Disposable {
     return this.emitter.on('did-update', callback)
   }
+  /* eslint-enable @typescript-eslint/no-explicit-any */
+
   dispose() {
     for (const entry of this.delegates) {
       entry.dispose()

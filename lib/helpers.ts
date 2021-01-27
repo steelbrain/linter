@@ -175,6 +175,7 @@ export function flagMessages(inputs: Array<Message>, oldMessages: Array<Message>
 
 // fast mergeArray function
 // https://uilicious.com/blog/javascript-array-push-is-945x-faster-than-array-concat/
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export function mergeArray(arr1: Array<any>, arr2: Array<any>) {
   if (!arr2.length) {
     return
