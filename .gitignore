@@ -4,3 +4,4 @@ node_modules
 .idea
 spec/fixtures/ignored.txt
 dist
+package-lock.json
