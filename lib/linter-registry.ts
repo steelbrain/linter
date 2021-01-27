@@ -70,8 +70,8 @@ export default class LinterRegistry {
     if (
       (onChange && !this.lintOnChange) || // Lint-on-change mismatch
       // Ignored by VCS, Glob, or simply not saved anywhere yet
-      Helpers.isPathIgnored(editor.getPath(), this.ignoreGlob, this.ignoreVCS) ||
-      (!this.lintPreviewTabs && atom.workspace.getActivePane().getPendingItem() === editor) // Ignore Preview tabs
+      (!this.lintPreviewTabs && atom.workspace.getActivePane().getPendingItem() === editor) || // Ignore Preview tabs
+      (await Helpers.isPathIgnored(editor.getPath(), this.ignoreGlob, this.ignoreVCS))
     ) {
       return false
     }

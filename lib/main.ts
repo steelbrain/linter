@@ -50,7 +50,7 @@ class Linter {
       this.registryUIInit()
       this.registryIndieInit()
       this.registryLintersInit()
-      showDebug(
+      await showDebug(
         // this.registryLinters becomes valid inside registryLintersInit
         this.registryLinters!.getProviders(),
         // this.registryIndie becomes valid inside registryIndieInit
