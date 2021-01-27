@@ -17,4 +17,4 @@ export declare class Commands {
     onShouldToggleLinter(callback: (...args: Array<any>) => any): Disposable;
     dispose(): void;
 }
-export declare function showDebug(standardLinters: Array<Linter>, indieLinters: Array<IndieDelegate>, uiProviders: Array<UI>): void;
+export declare function showDebug(standardLinters: Array<Linter>, indieLinters: Array<IndieDelegate>, uiProviders: Array<UI>): Promise<void>;
