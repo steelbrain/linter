@@ -55,10 +55,6 @@ export class Commands {
   toggleActiveEditor() {
     this.emitter.emit('should-toggle-active-editor')
   }
-  // @deprecated
-  showDebug(...args: Parameters<typeof showDebug>) {
-    showDebug(...args)
-  }
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
   onShouldLint(callback: (...args: Array<any>) => any): Disposable {
