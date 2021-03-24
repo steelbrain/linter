@@ -38,16 +38,24 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Commit lint ✨
-        uses: wagoid/commitlint-github-action@v1
-      - uses: actions/setup-node@v1
+      - if: "!contains(github.event.head_commit.message, 'Prepare')"
+        name: Commit lint ✨
+        uses: wagoid/commitlint-github-action@v2
+
+      - uses: UziTech/action-setup-atom@v1
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v1.2.1
         with:
-          node-version: '12.x'
-      - name: Install NPM dependencies
-        run: |
-          npm install
+          version: latest
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Format ✨
+        run: pnpm test.format
+
       - name: Lint ✨
-        run: npm run lint
+        run: pnpm test.lint
 
   Release:
     needs: [Test, Lint]
