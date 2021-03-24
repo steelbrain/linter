@@ -1,3 +1,8 @@
+### 3.3.1
+- fix: update dependencies #1729
+  fix: the issue with atom-package-deps not installing the linter dependency #1729
+- minor optimizations #1729
+
 ### 3.3.0
 - Fix subfolder git detection (#1715):
   if you add a project folder which is not a git repo but it contains folders which are git repos, then the repository detection now works correctly. The `repositoryForDirectory` function in `atom.project` is able to detect the repository for any Directory, even if it is in a subfolder.
