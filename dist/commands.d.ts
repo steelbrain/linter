@@ -10,7 +10,6 @@ export declare class Commands {
     enableLinter(): void;
     disableLinter(): void;
     toggleActiveEditor(): void;
-    showDebug(...args: Parameters<typeof showDebug>): void;
     onShouldLint(callback: (...args: Array<any>) => any): Disposable;
     onShouldDebug(callback: (...args: Array<any>) => any): Disposable;
     onShouldToggleActiveEditor(callback: (...args: Array<any>) => any): Disposable;
