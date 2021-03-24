@@ -54,8 +54,8 @@
   ],
   "dependencies": {
     "atom-package-deps": "^7.2.3",
-    "atom-select-list": "^0.7.2",
-    "lodash": "^4.17.20",
+    "atom-select-list": "^0.8.0",
+    "lodash": "^4.17.21",
     "minimatch": "^3.0.4"
   },
   "devDependencies": {
