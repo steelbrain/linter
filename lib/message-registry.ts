@@ -18,9 +18,10 @@ export default class MessageRegistry {
   messages: Array<Message> = []
   private messagesMap: Set<Linter$Message$Map> = new Set()
   private subscriptions: CompositeDisposable = new CompositeDisposable()
-  private debouncedUpdate: () => void = debounce(this.update, 100, { leading: true })
+  private debouncedUpdate: () => void
 
   constructor() {
+    this.debouncedUpdate = debounce(this.update, 100, { leading: true })
     this.subscriptions.add(this.emitter)
   }
   set({ messages, linter, buffer }: { messages: Array<Message>; linter: Linter; buffer: TextBuffer | null }) {
