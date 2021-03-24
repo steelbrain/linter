@@ -1,10 +1,10 @@
 import { CompositeDisposable, Emitter, Disposable } from 'atom'
 
-// https://github.com/atom/atom-select-list/pull/28
+// https://github.com/atom/atom-select-list/pull/31
 let SelectListView: any
 type ToggleAction = 'enable' | 'disable'
 
-export default class ToggleProviders {
+export default class ToggleView {
   private action: ToggleAction
   private emitter: Emitter = new Emitter()
   private providers: Array<string>
