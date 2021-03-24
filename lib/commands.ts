@@ -86,7 +86,9 @@ export async function showDebug(standardLinters: Array<Linter>, indieLinters: Ar
   }
 
   const textEditor = atom.workspace.getActiveTextEditor()
-  if (textEditor === undefined) return
+  if (textEditor === undefined) {
+    return
+  }
   const textEditorScopes = Helpers.getEditorCursorScopes(textEditor)
   const sortedLinters = standardLinters.slice().sort(sortByName)
   const sortedIndieLinters = indieLinters.slice().sort(sortByName)

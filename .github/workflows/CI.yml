@@ -56,7 +56,7 @@ jobs:
 
       - name: Lint ✨
         run: pnpm test.lint
-        
+
   Release:
     needs: [Test, Lint]
     if: github.ref == 'refs/heads/master' &&

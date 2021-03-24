@@ -1,4 +1,5 @@
 /* @flow */
+/* eslint-disable no-empty-function */
 
 import fs from 'fs-plus'
 import { it } from 'jasmine-fix'

@@ -287,12 +287,16 @@ describe('Message Registry', function () {
         for (const entry of added) {
           if (knownMessages.has(entry)) {
             throw new Error('Message already exists')
-          } else knownMessages.set(entry.key, entry)
+          } else {
+            knownMessages.set(entry.key, entry)
+          }
         }
         for (const entry of removed) {
           if (knownMessages.has(entry.key)) {
             knownMessages.delete(entry.key)
-          } else throw new Error('Message does not exist')
+          } else {
+            throw new Error('Message does not exist')
+          }
         }
         if (messages.length !== knownMessages.size) {
           throw new Error('Size mismatch, registry is having hiccups')

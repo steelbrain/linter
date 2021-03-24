@@ -1,4 +1,5 @@
 'use babel'
+/* eslint-disable no-empty-function */
 
 import { Disposable } from 'atom'
 import { it, beforeEach } from 'jasmine-fix'

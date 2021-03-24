@@ -59,7 +59,9 @@ export default class IndieDelegate {
     }
 
     if (!Array.isArray(messages) || atom.inDevMode()) {
-      if (!Validate.messages(this.name, messages)) return
+      if (!Validate.messages(this.name, messages)) {
+        return
+      }
     }
     normalizeMessages(this.name, messages)
 
