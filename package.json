@@ -14,8 +14,9 @@
   "private": true,
   "scripts": {
     "format": "prettier --write .",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix && npm run format",
+    "test.format": "prettier . --check",
+    "lint": "eslint . --fix",
+    "test.lint": "eslint .",
     "test.only": "atom --test spec",
     "test": "npm run tsc.build && npm run build && npm run test.only",
     "clean": "shx rm -rf dist",
