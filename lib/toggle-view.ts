@@ -22,13 +22,13 @@ export default class ToggleProviders {
       }),
     )
   }
-  async getItems(): Promise<Array<string>> {
+  getItems(): Array<string> {
     if (this.action === 'disable') {
       return this.providers.filter(name => !this.disabledProviders.includes(name))
     }
     return this.disabledProviders
   }
-  async process(name: string): Promise<void> {
+  process(name: string): void {
     if (this.action === 'disable') {
       this.disabledProviders.push(name)
       this.emitter.emit('did-disable', name)
@@ -40,12 +40,12 @@ export default class ToggleProviders {
     }
     atom.config.set('linter.disabledProviders', this.disabledProviders)
   }
-  async show() {
+  show() {
     if (!SelectListView) {
       SelectListView = require('atom-select-list')
     }
     const selectListView = new SelectListView({
-      items: await this.getItems(),
+      items: this.getItems(),
       emptyMessage: 'No matches found',
       elementForItem: (item: any) => {
         const li = document.createElement('li')
@@ -53,9 +53,12 @@ export default class ToggleProviders {
         return li
       },
       didConfirmSelection: (item: any) => {
-        this.process(item)
-          .catch(e => console.error('[Linter] Unable to process toggle:', e))
-          .then(() => this.dispose())
+        try {
+          this.process(item)
+          this.dispose()
+        } catch (e) {
+          console.error('[Linter] Unable to process toggle:', e)
+        }
       },
       didCancelSelection: () => {
         this.dispose()
