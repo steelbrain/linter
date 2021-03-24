@@ -1,5 +1,5 @@
 dependencies:
-  atom-package-deps: 6.0.0
+  atom-package-deps: 7.2.3
   atom-select-list: 0.7.2
   lodash: 4.17.20
   minimatch: 3.0.4
@@ -679,13 +679,11 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
-  /atom-package-deps/6.0.0:
-    dependencies:
-      sb-fs: 4.0.0
-      semver: 7.3.4
+  /atom-package-deps/7.2.3:
     dev: false
+    hasBin: true
     resolution:
-      integrity: sha512-9UQx2sTvBiaIHcZ3le/B0djM+jsZXBQRPXatrmtNfjkbAOV5bGrcXzcV4U0EBfGdzB7QmWeOnwMIJwa3HvW7Kg==
+      integrity: sha512-Z1FHJS2c2xBN3wQVniG7jXDyE4mUjZlHA0tfIkCND9U/fHaZyBJPno4/jD8PtYUnhlymaHRbCsgxCU3QuKjqfQ==
   /atom-select-list/0.7.2:
     dependencies:
       etch: 0.12.8
@@ -2062,10 +2060,6 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-OwijhaRSgqvhm/0ZdAcXNZt9lYdKFpcRDT5ULUuYXPoT794UNOdU+gpT6Rzo7b4V2HUl/op6GqY894AZwv9faQ==
-  /is-utf8/0.2.1:
-    dev: false
-    resolution:
-      integrity: sha1-Sw2hRCEE0bM2NA6AeX6GXPOffXI=
   /is-wsl/2.2.0:
     dependencies:
       is-docker: 2.1.1
@@ -2259,6 +2253,7 @@ packages:
   /lru-cache/6.0.0:
     dependencies:
       yallist: 4.0.0
+    dev: true
     engines:
       node: '>=10'
     resolution:
@@ -2884,14 +2879,6 @@ packages:
     dev: true
     resolution:
       integrity: sha1-/jT40p16O+z9JJ0KqKeZtcPPZVk=
-  /sb-fs/4.0.0:
-    dependencies:
-      strip-bom-buf: 1.0.0
-    dev: false
-    engines:
-      node: '>= 8'
-    resolution:
-      integrity: sha512-UjjIHC4uahPWvKYqgknvFCCJ11S0oDahz+nsmyTCAmARKto31aoE+Lu7GGGK0nogengJEKGzFdh46ho5+IL88Q==
   /semver/5.7.1:
     dev: true
     hasBin: true
@@ -2905,6 +2892,7 @@ packages:
   /semver/7.3.4:
     dependencies:
       lru-cache: 6.0.0
+    dev: true
     engines:
       node: '>=10'
     hasBin: true
@@ -3100,14 +3088,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-AuvKTrTfQNYNIctbR1K/YGTR1756GycPsg7b9bdV9Duqur4gv6aKqHXah67Z8ImS7WEz5QVcOtlfW2rZEugt6w==
-  /strip-bom-buf/1.0.0:
-    dependencies:
-      is-utf8: 0.2.1
-    dev: false
-    engines:
-      node: '>=4'
-    resolution:
-      integrity: sha1-HLRar1dTD0yvhsf3UXnSyaUd1XI=
   /strip-bom/3.0.0:
     dev: true
     engines:
@@ -3342,6 +3322,7 @@ packages:
     resolution:
       integrity: sha512-hsRUr4FFrvhhRH12wOdfs38Gy7k2FFzB9qgN9v3aLykRq0dRcdcpz5C9FxdS2NuhOrI/628b/KSTJ3rwHysYSg==
   /yallist/4.0.0:
+    dev: true
     resolution:
       integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
   /yargs-parser/20.2.4:
@@ -3370,7 +3351,7 @@ specifiers:
   '@types/lodash': ^4.14.168
   '@types/minimatch': ^3.0.3
   '@types/node': ^14.14.22
-  atom-package-deps: ^6.0.0
+  atom-package-deps: ^7.2.3
   atom-select-list: ^0.7.2
   build-commit: 0.1.4
   cross-env: ^7.0.3
