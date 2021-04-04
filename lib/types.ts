@@ -1,4 +1,4 @@
-import { Range, Point, TextEditor, CompositeDisposable } from 'atom'
+import { Range, Point, RangeCompatible, PointCompatible, TextEditor, CompositeDisposable } from 'atom'
 
 // https://github.com/steelbrain/linter-ui-default/blob/2f71befa78718018f444456706b1ea810531572d/lib/types.d.ts#L4-L57
 export type MessageSolution =
@@ -11,8 +11,8 @@ export type MessageSolution =
     }
   | {
       title?: string
-      priority?: number
       position: Range
+      priority?: number
       apply: () => any
     }
 
@@ -37,6 +37,28 @@ export type Message = {
   severity: 'error' | 'warning' | 'info'
   solutions?: Array<MessageSolution> | (() => Promise<Array<MessageSolution>>)
   description?: string | (() => Promise<string> | string)
+}
+
+/** @deprecated Wrong but convertible message format which might some providers use by mistake.
+ * This is converted to MessageSolution by Linter using `normalizeMessages`
+ */
+export type MessageSolutionLike = Omit<MessageSolution, 'position'> & {
+  position: RangeCompatible
+}
+
+/** @deprecated Wrong but convertible message format which might some providers use by mistake
+ * This is converted to MessageSolution by Linter using `normalizeMessages`
+ */
+export type MessageLike = Omit<Message, 'location' | 'reference' | 'solutions'> & {
+  location: {
+    file: string
+    position: RangeCompatible
+  }
+  reference?: {
+    file: string
+    position?: PointCompatible
+  }
+  solutions?: Array<MessageSolutionLike> | (() => Promise<Array<MessageSolutionLike>>)
 }
 
 export type LinterResult = Array<Message> | null
