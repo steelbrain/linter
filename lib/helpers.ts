@@ -1,5 +1,5 @@
 import arrayUnique from 'lodash/uniq'
-import { Directory, Range, Point } from 'atom'
+import { Directory, Range, Point, PointCompatible, RangeCompatible } from 'atom'
 import type { TextEditor } from 'atom'
 import type { Linter, Message, MessageSolution } from './types'
 
@@ -66,20 +66,17 @@ export function updateMessageKey(message: Message) {
 export function normalizeMessages(linterName: string, messages: Array<Message>) {
   for (let i = 0, { length } = messages; i < length; ++i) {
     const message = messages[i]
-    const { reference } = message
-    if (Array.isArray(message.location.position)) {
-      message.location.position = Range.fromObject(message.location.position)
+    const { reference, solutions } = message
+    // convert RangeCompatible to Range and PointCompatible to Point
+    // NOTE (this is not covered in the types, but done for backward compatibility)
+    message.location.position = getRangeClass(message.location.position)
+    if (reference !== undefined && reference.position !== undefined) {
+      reference.position = getPointClass(reference.position)
     }
-    if (reference && Array.isArray(reference.position)) {
-      reference.position = Point.fromObject(reference.position)
-    }
-    const solutions = message.solutions
     if (Array.isArray(solutions)) {
       for (let j = 0, _length = solutions.length, solution: MessageSolution; j < _length; j++) {
         solution = solutions[j]
-        if (Array.isArray(solution.position)) {
-          solution.position = Range.fromObject(solution.position)
-        }
+        solution.position = getRangeClass(solution.position)
       }
     }
     message.version = 2
@@ -88,6 +85,22 @@ export function normalizeMessages(linterName: string, messages: Array<Message>) 
     }
     updateMessageKey(message)
   }
+}
+
+/* convert RangeCompatible to Range */
+function getPointClass(point: Point | PointCompatible) {
+  if (!(point instanceof Point)) {
+    return Point.fromObject(point)
+  }
+  return point
+}
+
+/* convert RangeCompatible to Range */
+function getRangeClass(range: Range | RangeCompatible) {
+  if (!(range instanceof Range)) {
+    return Range.fromObject(range)
+  }
+  return range
 }
 
 // update the key of the given messages
