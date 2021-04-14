@@ -1,7 +1,7 @@
 import arrayUnique from 'lodash/uniq'
-import { Directory, Range, Point } from 'atom'
+import { Directory, Range, Point, PointCompatible, RangeCompatible } from 'atom'
 import type { TextEditor } from 'atom'
-import type { Linter, Message, MessageSolution } from './types'
+import type { Linter, Message, MessageSolution, MessageLike, MessageSolutionLike } from './types'
 
 export const $version = '__$sb_linter_version'
 export const $activated = '__$sb_linter_activated'
@@ -63,30 +63,46 @@ export function updateMessageKey(message: Message) {
   ].join('')
 }
 
-export function normalizeMessages(linterName: string, messages: Array<Message>) {
+export function normalizeMessages(linterName: string, messages: Array<Message | MessageLike>) {
   for (let i = 0, { length } = messages; i < length; ++i) {
     const message = messages[i]
-    const { reference } = message
-    if (Array.isArray(message.location.position)) {
-      message.location.position = Range.fromObject(message.location.position)
+    const { reference, solutions } = message
+    // convert RangeCompatible to Range and PointCompatible to Point
+    // NOTE (this is not covered in the types, but done for backward compatibility)
+    message.location.position = getRangeClass(message.location.position)
+    if (reference !== undefined && reference.position !== undefined) {
+      reference.position = getPointClass(reference.position)
     }
-    if (reference && Array.isArray(reference.position)) {
-      reference.position = Point.fromObject(reference.position)
-    }
-    if (message.solutions && message.solutions.length) {
-      for (let j = 0, _length = message.solutions.length, solution: MessageSolution; j < _length; j++) {
-        solution = message.solutions[j]
-        if (Array.isArray(solution.position)) {
-          solution.position = Range.fromObject(solution.position)
-        }
+    if (Array.isArray(solutions)) {
+      // NOTE if solutions is a {Promise<MessageSolutionLike[]>} of an array, we don't normalize them!
+      for (let j = 0, _length = solutions.length; j < _length; j++) {
+        const solution: MessageSolution | MessageSolutionLike = solutions[j]
+        solution.position = getRangeClass(solution.position)
       }
     }
     message.version = 2
     if (!message.linterName) {
       message.linterName = linterName
     }
-    updateMessageKey(message)
+    // now the message is a {Message}
+    updateMessageKey(message as Message)
   }
+}
+
+/* convert RangeCompatible to Range */
+function getPointClass(point: Point | PointCompatible): Point {
+  if (!(point instanceof Point)) {
+    return Point.fromObject(point)
+  }
+  return point
+}
+
+/* convert RangeCompatible to Range */
+function getRangeClass(range: Range | RangeCompatible): Range {
+  if (!(range instanceof Range)) {
+    return Range.fromObject(range)
+  }
+  return range
 }
 
 // update the key of the given messages
