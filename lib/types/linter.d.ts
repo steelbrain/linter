@@ -1,6 +1,5 @@
-import { Range, Point, RangeCompatible, PointCompatible, TextEditor, CompositeDisposable } from 'atom'
+import { Range, Point, RangeCompatible, PointCompatible, TextEditor } from 'atom'
 
-// https://github.com/steelbrain/linter-ui-default/blob/2f71befa78718018f444456706b1ea810531572d/lib/types.d.ts#L4-L57
 export type MessageSolution =
   | {
       title?: string
@@ -39,6 +38,9 @@ export type Message = {
   description?: string | (() => Promise<string> | string)
 }
 
+/** alias for {Message} */
+export type LinterMessage = Message
+
 /** @deprecated Wrong but convertible message format which might some providers use by mistake.
  * This is converted to MessageSolution by Linter using `normalizeMessages`
  */
@@ -61,7 +63,7 @@ export type MessageLike = Omit<Message, 'location' | 'reference' | 'solutions'> 
   solutions?: Array<MessageSolutionLike> | (() => Promise<Array<MessageSolutionLike>>)
 }
 
-export type LinterResult = Array<Message> | null
+export type LinterResult = Array<Message> | null | undefined
 export type Linter = {
   // Automatically added
   __$sb_linter_version: number
@@ -86,57 +88,4 @@ export type MessagesPatch = {
   added: Array<Message>
   removed: Array<Message>
   messages: Array<Message>
-}
-
-export type UI = {
-  name: string
-  // panel?: Panel
-  // signal: BusySignal
-  // editors: Editors | null | undefined
-  // treeview?: TreeView
-  // commands: Commands
-  // messages: Array<Message>
-  // statusBar: StatusBar
-  // intentions: Intentions
-  subscriptions: CompositeDisposable
-  idleCallbacks: Set<number>
-  // constructor();
-  didBeginLinting(linter: Linter, filePath: string | null | undefined): void
-  didFinishLinting(linter: Linter, filePath: string | null | undefined): void
-  render(patch: MessagesPatch): void
-  dispose(): void
-}
-
-// Missing Atom API
-declare module 'atom' {
-  interface CompositeDisposable {
-    disposed: boolean
-  }
-  interface Pane {
-    getPendingItem(): TextEditor
-  }
-  interface Notification {
-    getOptions(): { detail: string }
-  }
-}
-
-// windows requestIdleCallback types
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-export type RequestIdleCallbackHandle = any
-type RequestIdleCallbackOptions = {
-  timeout: number
-}
-type RequestIdleCallbackDeadline = {
-  readonly didTimeout: boolean
-  timeRemaining: () => number
-}
-
-declare global {
-  interface Window {
-    requestIdleCallback: (
-      callback: (deadline: RequestIdleCallbackDeadline) => void,
-      opts?: RequestIdleCallbackOptions,
-    ) => RequestIdleCallbackHandle
-    cancelIdleCallback: (handle: RequestIdleCallbackHandle) => void
-  }
 }
