@@ -1,0 +1,10 @@
+import LinterUI from './main';
+import type Intentions from './intentions';
+import type { StatusBar as StatusBarRegistry } from 'atom/status-bar';
+import type { BusySignalRegistry } from 'atom-ide-base';
+export declare function activate(): void;
+export declare function deactivate(): void;
+export declare function provideUI(): LinterUI;
+export declare function provideIntentions(): Array<Intentions>;
+export declare function consumeSignal(signalService: BusySignalRegistry): void;
+export declare function consumeStatusBar(statusBarService: StatusBarRegistry): void;

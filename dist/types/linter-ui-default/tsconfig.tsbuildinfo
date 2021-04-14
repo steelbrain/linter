@@ -1,149 +1,154 @@
 {
   "program": {
     "fileInfos": {
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es5.d.ts": {
-        "version": "b3584bc5798ed422ce2516df360ffa9cf2d80b5eae852867db9ba3743145f895",
-        "signature": "b3584bc5798ed422ce2516df360ffa9cf2d80b5eae852867db9ba3743145f895",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es5.d.ts": {
+        "version": "9622e8bd7cc72a7dab819a8011ecbf81d443638082e5cb99ecf2e75ff56ffc9d",
+        "signature": "9622e8bd7cc72a7dab819a8011ecbf81d443638082e5cb99ecf2e75ff56ffc9d",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.d.ts": {
         "version": "dc47c4fa66b9b9890cf076304de2a9c5201e94b740cffdf09f87296d877d71f6",
         "signature": "dc47c4fa66b9b9890cf076304de2a9c5201e94b740cffdf09f87296d877d71f6",
         "affectsGlobalScope": false
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2016.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2016.d.ts": {
         "version": "7a387c58583dfca701b6c85e0adaf43fb17d590fb16d5b2dc0a2fbd89f35c467",
         "signature": "7a387c58583dfca701b6c85e0adaf43fb17d590fb16d5b2dc0a2fbd89f35c467",
         "affectsGlobalScope": false
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2017.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2017.d.ts": {
         "version": "8a12173c586e95f4433e0c6dc446bc88346be73ffe9ca6eec7aa63c8f3dca7f9",
         "signature": "8a12173c586e95f4433e0c6dc446bc88346be73ffe9ca6eec7aa63c8f3dca7f9",
         "affectsGlobalScope": false
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2018.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2018.d.ts": {
         "version": "5f4e733ced4e129482ae2186aae29fde948ab7182844c3a5a51dd346182c7b06",
         "signature": "5f4e733ced4e129482ae2186aae29fde948ab7182844c3a5a51dd346182c7b06",
         "affectsGlobalScope": false
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.dom.d.ts": {
-        "version": "feeeb1dd8a80fb76be42b0426e8f3ffa9bdef3c2f3c12c147e7660b1c5ba8b3b",
-        "signature": "feeeb1dd8a80fb76be42b0426e8f3ffa9bdef3c2f3c12c147e7660b1c5ba8b3b",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.dom.d.ts": {
+        "version": "abadddbf660adeec27e9a56584907d52fa1d6e1e1dc49f639a921baa951b7a84",
+        "signature": "abadddbf660adeec27e9a56584907d52fa1d6e1e1dc49f639a921baa951b7a84",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.core.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.core.d.ts": {
         "version": "46ee15e9fefa913333b61eaf6b18885900b139867d89832a515059b62cf16a17",
         "signature": "46ee15e9fefa913333b61eaf6b18885900b139867d89832a515059b62cf16a17",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.collection.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.collection.d.ts": {
         "version": "43fb1d932e4966a39a41b464a12a81899d9ae5f2c829063f5571b6b87e6d2f9c",
         "signature": "43fb1d932e4966a39a41b464a12a81899d9ae5f2c829063f5571b6b87e6d2f9c",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.generator.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.generator.d.ts": {
         "version": "cdccba9a388c2ee3fd6ad4018c640a471a6c060e96f1232062223063b0a5ac6a",
         "signature": "cdccba9a388c2ee3fd6ad4018c640a471a6c060e96f1232062223063b0a5ac6a",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts": {
         "version": "8b2a5df1ce95f78f6b74f1a555ccdb6baab0486b42d8345e0871dd82811f9b9a",
         "signature": "8b2a5df1ce95f78f6b74f1a555ccdb6baab0486b42d8345e0871dd82811f9b9a",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.promise.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.promise.d.ts": {
         "version": "2bb4b3927299434052b37851a47bf5c39764f2ba88a888a107b32262e9292b7c",
         "signature": "2bb4b3927299434052b37851a47bf5c39764f2ba88a888a107b32262e9292b7c",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.proxy.d.ts": {
-        "version": "810627a82ac06fb5166da5ada4159c4ec11978dfbb0805fe804c86406dab8357",
-        "signature": "810627a82ac06fb5166da5ada4159c4ec11978dfbb0805fe804c86406dab8357",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.proxy.d.ts": {
+        "version": "7207e317a2cb07a177e7d963ab7b8c0e85dde7f9ddb50351f830239bf597569e",
+        "signature": "7207e317a2cb07a177e7d963ab7b8c0e85dde7f9ddb50351f830239bf597569e",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.reflect.d.ts": {
-        "version": "62d80405c46c3f4c527ee657ae9d43fda65a0bf582292429aea1e69144a522a6",
-        "signature": "62d80405c46c3f4c527ee657ae9d43fda65a0bf582292429aea1e69144a522a6",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.reflect.d.ts": {
+        "version": "cb609802a8698aa28b9c56331d4b53f590ca3c1c3a255350304ae3d06017779d",
+        "signature": "cb609802a8698aa28b9c56331d4b53f590ca3c1c3a255350304ae3d06017779d",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.symbol.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.symbol.d.ts": {
         "version": "3013574108c36fd3aaca79764002b3717da09725a36a6fc02eac386593110f93",
         "signature": "3013574108c36fd3aaca79764002b3717da09725a36a6fc02eac386593110f93",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts": {
         "version": "9d122b7e8c1a5c72506eea50c0973cba55b92b5532d5cafa8a6ce2c547d57551",
         "signature": "9d122b7e8c1a5c72506eea50c0973cba55b92b5532d5cafa8a6ce2c547d57551",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2016.array.include.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2016.array.include.d.ts": {
         "version": "3be5a1453daa63e031d266bf342f3943603873d890ab8b9ada95e22389389006",
         "signature": "3be5a1453daa63e031d266bf342f3943603873d890ab8b9ada95e22389389006",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2017.object.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2017.object.d.ts": {
         "version": "17bb1fc99591b00515502d264fa55dc8370c45c5298f4a5c2083557dccba5a2a",
         "signature": "17bb1fc99591b00515502d264fa55dc8370c45c5298f4a5c2083557dccba5a2a",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts": {
         "version": "7ce9f0bde3307ca1f944119f6365f2d776d281a393b576a18a2f2893a2d75c98",
         "signature": "7ce9f0bde3307ca1f944119f6365f2d776d281a393b576a18a2f2893a2d75c98",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2017.string.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2017.string.d.ts": {
         "version": "6a6b173e739a6a99629a8594bfb294cc7329bfb7b227f12e1f7c11bc163b8577",
         "signature": "6a6b173e739a6a99629a8594bfb294cc7329bfb7b227f12e1f7c11bc163b8577",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2017.intl.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2017.intl.d.ts": {
         "version": "12a310447c5d23c7d0d5ca2af606e3bd08afda69100166730ab92c62999ebb9d",
         "signature": "12a310447c5d23c7d0d5ca2af606e3bd08afda69100166730ab92c62999ebb9d",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts": {
         "version": "b0124885ef82641903d232172577f2ceb5d3e60aed4da1153bab4221e1f6dd4e",
         "signature": "b0124885ef82641903d232172577f2ceb5d3e60aed4da1153bab4221e1f6dd4e",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts": {
         "version": "0eb85d6c590b0d577919a79e0084fa1744c1beba6fd0d4e951432fa1ede5510a",
         "signature": "0eb85d6c590b0d577919a79e0084fa1744c1beba6fd0d4e951432fa1ede5510a",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts": {
         "version": "a40c4d82bf13fcded295ac29f354eb7d40249613c15e07b53f2fc75e45e16359",
         "signature": "a40c4d82bf13fcded295ac29f354eb7d40249613c15e07b53f2fc75e45e16359",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2018.intl.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2018.intl.d.ts": {
         "version": "df9c8a72ca8b0ed62f5470b41208a0587f0f73f0a7db28e5a1272cf92537518e",
         "signature": "df9c8a72ca8b0ed62f5470b41208a0587f0f73f0a7db28e5a1272cf92537518e",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2018.promise.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2018.promise.d.ts": {
         "version": "bb2d3fb05a1d2ffbca947cc7cbc95d23e1d053d6595391bd325deb265a18d36c",
         "signature": "bb2d3fb05a1d2ffbca947cc7cbc95d23e1d053d6595391bd325deb265a18d36c",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2018.regexp.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2018.regexp.d.ts": {
         "version": "c80df75850fea5caa2afe43b9949338ce4e2de086f91713e9af1a06f973872b8",
         "signature": "c80df75850fea5caa2afe43b9949338ce4e2de086f91713e9af1a06f973872b8",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2020.bigint.d.ts": {
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2020.bigint.d.ts": {
         "version": "7b5a10e3c897fabece5a51aa85b4111727d7adb53c2734b5d37230ff96802a09",
         "signature": "7b5a10e3c897fabece5a51aa85b4111727d7adb53c2734b5d37230ff96802a09",
         "affectsGlobalScope": true
       },
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.esnext.intl.d.ts": {
-        "version": "506b80b9951c9381dc5f11897b31fca5e2a65731d96ddefa19687fbc26b23c6e",
-        "signature": "506b80b9951c9381dc5f11897b31fca5e2a65731d96ddefa19687fbc26b23c6e",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.esnext.intl.d.ts": {
+        "version": "89bf2b7a601b73ea4311eda9c41f86a58994fec1bee3b87c4a14d68d9adcdcbd",
+        "signature": "89bf2b7a601b73ea4311eda9c41f86a58994fec1bee3b87c4a14d68d9adcdcbd",
         "affectsGlobalScope": true
       },
-      "../node_modules/tslib/tslib.d.ts": {
-        "version": "55d7868222288a4054166fecbfbaeee46dd3b1b58e4a118e40e9c8c13a9fbe84",
-        "signature": "55d7868222288a4054166fecbfbaeee46dd3b1b58e4a118e40e9c8c13a9fbe84",
+      "../node_modules/solid-js/types/jsx.d.ts": {
+        "version": "c477c3a2b7a9d87bd4e77ce83d4e6255a6aa9681c12554f8b56a66ba8d5cd4f9",
+        "signature": "c477c3a2b7a9d87bd4e77ce83d4e6255a6aa9681c12554f8b56a66ba8d5cd4f9",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/solid-js/jsx-runtime.d.ts": {
+        "version": "e4bdd11e812b3f318de5962231a1c1eaba78e38cadca03595f4526cd5155770b",
+        "signature": "e4bdd11e812b3f318de5962231a1c1eaba78e38cadca03595f4526cd5155770b",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/node/globals.d.ts": {
@@ -152,8 +157,8 @@
         "affectsGlobalScope": true
       },
       "../node_modules/@types/node/async_hooks.d.ts": {
-        "version": "7698983d080f951eaf53ff81e5c7bd61abc02e4a1a21266f1bd79ea85c0dc641",
-        "signature": "7698983d080f951eaf53ff81e5c7bd61abc02e4a1a21266f1bd79ea85c0dc641",
+        "version": "d20f08527645f62facb2d66c2b7bd31ea964b59c897d00bddb1efe8c13890b72",
+        "signature": "d20f08527645f62facb2d66c2b7bd31ea964b59c897d00bddb1efe8c13890b72",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/node/buffer.d.ts": {
@@ -182,8 +187,8 @@
         "affectsGlobalScope": false
       },
       "../node_modules/@types/node/crypto.d.ts": {
-        "version": "64813a6beff756b9e3f3c06d1b648d55e7c90af2b55c64d13a69d6c7f573643d",
-        "signature": "64813a6beff756b9e3f3c06d1b648d55e7c90af2b55c64d13a69d6c7f573643d",
+        "version": "d53b352a01645c470a0d8c31bf290ba791fc28ade0ce187a4a50f5c2f826f75e",
+        "signature": "d53b352a01645c470a0d8c31bf290ba791fc28ade0ce187a4a50f5c2f826f75e",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/node/dgram.d.ts": {
@@ -332,8 +337,8 @@
         "affectsGlobalScope": false
       },
       "../node_modules/@types/node/vm.d.ts": {
-        "version": "66679e8ffbf1fddef1796c60757e54e6e6551dd9823f75ef2f80176473bdaaff",
-        "signature": "66679e8ffbf1fddef1796c60757e54e6e6551dd9823f75ef2f80176473bdaaff",
+        "version": "141a943e5690105898a67537a470f70b56d0e183441b56051d929e902376b7b2",
+        "signature": "141a943e5690105898a67537a470f70b56d0e183441b56051d929e902376b7b2",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/node/worker_threads.d.ts": {
@@ -686,139 +691,24 @@
         "signature": "00ef4a4324556eab6e45809e757354899d1ded0f5b2134465ee10e450f9c8d61",
         "affectsGlobalScope": true
       },
-      "../node_modules/@types/lodash/common/common.d.ts": {
-        "version": "3594c022901a1c8993b0f78a3f534cfb81e7b619ed215348f7f6882f3db02abc",
-        "signature": "3594c022901a1c8993b0f78a3f534cfb81e7b619ed215348f7f6882f3db02abc",
+      "../lib/types/atom.d.ts": {
+        "version": "a15f2a12954a886f8fd661959ede3eff4c6ac7093d455f5960bc4ead3723b2b4",
+        "signature": "a15f2a12954a886f8fd661959ede3eff4c6ac7093d455f5960bc4ead3723b2b4",
         "affectsGlobalScope": false
       },
-      "../node_modules/@types/lodash/common/array.d.ts": {
-        "version": "438284c7c455a29b9c0e2d1e72abc62ee93d9a163029ffe918a34c5db3b92da2",
-        "signature": "438284c7c455a29b9c0e2d1e72abc62ee93d9a163029ffe918a34c5db3b92da2",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/lodash/common/collection.d.ts": {
-        "version": "0c75b204aed9cf6ff1c7b4bed87a3ece0d9d6fc857a6350c0c95ed0c38c814e8",
-        "signature": "0c75b204aed9cf6ff1c7b4bed87a3ece0d9d6fc857a6350c0c95ed0c38c814e8",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/lodash/common/date.d.ts": {
-        "version": "187119ff4f9553676a884e296089e131e8cc01691c546273b1d0089c3533ce42",
-        "signature": "187119ff4f9553676a884e296089e131e8cc01691c546273b1d0089c3533ce42",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/lodash/common/function.d.ts": {
-        "version": "c9f396e71966bd3a890d8a36a6a497dbf260e9b868158ea7824d4b5421210afe",
-        "signature": "c9f396e71966bd3a890d8a36a6a497dbf260e9b868158ea7824d4b5421210afe",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/lodash/common/lang.d.ts": {
-        "version": "509235563ea2b939e1bbe92aae17e71e6a82ceab8f568b45fb4fce7d72523a32",
-        "signature": "509235563ea2b939e1bbe92aae17e71e6a82ceab8f568b45fb4fce7d72523a32",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/lodash/common/math.d.ts": {
-        "version": "9364c7566b0be2f7b70ff5285eb34686f83ccb01bda529b82d23b2a844653bfb",
-        "signature": "9364c7566b0be2f7b70ff5285eb34686f83ccb01bda529b82d23b2a844653bfb",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/lodash/common/number.d.ts": {
-        "version": "00baffbe8a2f2e4875367479489b5d43b5fc1429ecb4a4cc98cfc3009095f52a",
-        "signature": "00baffbe8a2f2e4875367479489b5d43b5fc1429ecb4a4cc98cfc3009095f52a",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/lodash/common/object.d.ts": {
-        "version": "c311349ec71bb69399ffc4092853e7d8a86c1ca39ddb4cd129e775c19d985793",
-        "signature": "c311349ec71bb69399ffc4092853e7d8a86c1ca39ddb4cd129e775c19d985793",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/lodash/common/seq.d.ts": {
-        "version": "3c92b6dfd43cc1c2485d9eba5ff0b74a19bb8725b692773ef1d66dac48cda4bd",
-        "signature": "3c92b6dfd43cc1c2485d9eba5ff0b74a19bb8725b692773ef1d66dac48cda4bd",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/lodash/common/string.d.ts": {
-        "version": "4908e4c00832b26ce77a629de8501b0e23a903c094f9e79a7fec313a15da796a",
-        "signature": "4908e4c00832b26ce77a629de8501b0e23a903c094f9e79a7fec313a15da796a",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/lodash/common/util.d.ts": {
-        "version": "2630a7cbb597e85d713b7ef47f2946d4280d3d4c02733282770741d40672b1a5",
-        "signature": "2630a7cbb597e85d713b7ef47f2946d4280d3d4c02733282770741d40672b1a5",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/lodash/index.d.ts": {
-        "version": "0714e2046df66c0e93c3330d30dbc0565b3e8cd3ee302cf99e4ede6220e5fec8",
-        "signature": "0714e2046df66c0e93c3330d30dbc0565b3e8cd3ee302cf99e4ede6220e5fec8",
-        "affectsGlobalScope": true
-      },
-      "../node_modules/@types/lodash/uniq.d.ts": {
-        "version": "2c705ed6e0913da9d7f85665a5f402043def9de30a1595a5cd78cba2ad0f1113",
-        "signature": "2c705ed6e0913da9d7f85665a5f402043def9de30a1595a5cd78cba2ad0f1113",
+      "../lib/types/intentions.d.ts": {
+        "version": "c9cae8294e5b37b3126bb55d3bfde951bc7f72b429dbcc718f80ec913f4dc822",
+        "signature": "c9cae8294e5b37b3126bb55d3bfde951bc7f72b429dbcc718f80ec913f4dc822",
         "affectsGlobalScope": false
       },
       "../lib/types/linter.d.ts": {
-        "version": "584593f180c6d9cd9963ecd767b6992d78dfb81e7e412321f3d6ab2a33ef8e9e",
-        "signature": "584593f180c6d9cd9963ecd767b6992d78dfb81e7e412321f3d6ab2a33ef8e9e",
+        "version": "4fd65c4bcec6e55435591a95d3b7c602372b75d0cb65367da6c803d707de6cdf",
+        "signature": "4fd65c4bcec6e55435591a95d3b7c602372b75d0cb65367da6c803d707de6cdf",
         "affectsGlobalScope": false
       },
-      "../lib/types/linter-ui-default/types/atom.d.ts": {
-        "version": "40a7ce0f1cb1da0cd28d6ca0e783fb3287a9909d3b4894a08d9506fcb20a15ae",
-        "signature": "40a7ce0f1cb1da0cd28d6ca0e783fb3287a9909d3b4894a08d9506fcb20a15ae",
-        "affectsGlobalScope": false
-      },
-      "../lib/types/linter-ui-default/types/intentions.d.ts": {
-        "version": "5eba907c51c97728375acf5ac1054b81cee0598fc74fbb88d291d6007f248228",
-        "signature": "5eba907c51c97728375acf5ac1054b81cee0598fc74fbb88d291d6007f248228",
-        "affectsGlobalScope": false
-      },
-      "../lib/types/linter-ui-default/types/linter.d.ts": {
-        "version": "dbef57bdd85e0ba279e3f9e1e71ec95e59bf82422b306c4be8c5827b6f6c78f5",
-        "signature": "dbef57bdd85e0ba279e3f9e1e71ec95e59bf82422b306c4be8c5827b6f6c78f5",
-        "affectsGlobalScope": false
-      },
-      "../lib/types/linter-ui-default/types/index.d.ts": {
-        "version": "3de199e46f47f48db134861f1d401f981e496c335b57f7c914c30c66d4895b54",
-        "signature": "3de199e46f47f48db134861f1d401f981e496c335b57f7c914c30c66d4895b54",
-        "affectsGlobalScope": false
-      },
-      "../lib/types/linter-ui-default/panel/delegate.d.ts": {
-        "version": "0d2611db111f977f787c32eff054c92cb3ffa80b28570ffd64a8c9fd2ea0f07f",
-        "signature": "0d2611db111f977f787c32eff054c92cb3ffa80b28570ffd64a8c9fd2ea0f07f",
-        "affectsGlobalScope": false
-      },
-      "../lib/types/linter-ui-default/panel/dock.d.ts": {
-        "version": "e91767998eed935c26743aa0d1cf4218202e05ab256f29ff30b9f084e12524f0",
-        "signature": "e91767998eed935c26743aa0d1cf4218202e05ab256f29ff30b9f084e12524f0",
-        "affectsGlobalScope": false
-      },
-      "../lib/types/linter-ui-default/panel/index.d.ts": {
-        "version": "b0f71456def0fbe76cf1232bbeaa7c794dfc1866e572b6e0d30782ef1ac66fda",
-        "signature": "b0f71456def0fbe76cf1232bbeaa7c794dfc1866e572b6e0d30782ef1ac66fda",
-        "affectsGlobalScope": false
-      },
-      "../lib/types/linter-ui-default/commands.d.ts": {
-        "version": "3e63da3b89f0d4bc5590b10fdaa2e05a50ce54494b152e2db2fdd99ae2c2d75a",
-        "signature": "3e63da3b89f0d4bc5590b10fdaa2e05a50ce54494b152e2db2fdd99ae2c2d75a",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/atom/status-bar/config.d.ts": {
-        "version": "564bc1cd1794d1ac395f4a608c33ec7ac9ec4434aa6c6306be64af0222e0deb4",
-        "signature": "564bc1cd1794d1ac395f4a608c33ec7ac9ec4434aa6c6306be64af0222e0deb4",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/atom/status-bar/index.d.ts": {
-        "version": "aaca5c9dd91047a4fb74a022bdb37979f22795767b062ba984a7cf4d76e93155",
-        "signature": "aaca5c9dd91047a4fb74a022bdb37979f22795767b062ba984a7cf4d76e93155",
-        "affectsGlobalScope": false
-      },
-      "../lib/types/linter-ui-default/status-bar/element.d.ts": {
-        "version": "2d4dc509e1b6cf9d241e8d0479e2ed91b69d67287e670a3f326dd58a3514d362",
-        "signature": "2d4dc509e1b6cf9d241e8d0479e2ed91b69d67287e670a3f326dd58a3514d362",
-        "affectsGlobalScope": false
-      },
-      "../lib/types/linter-ui-default/status-bar/index.d.ts": {
-        "version": "305ad3b5e4854a5576f47b0268f44c586804a80d763df3891914f49e9e3ac233",
-        "signature": "305ad3b5e4854a5576f47b0268f44c586804a80d763df3891914f49e9e3ac233",
+      "../lib/types/index.d.ts": {
+        "version": "447bae588f598035fe555331dc91c9ec68c9e3c2a68a606a29c932754e2cb8e6",
+        "signature": "447bae588f598035fe555331dc91c9ec68c9e3c2a68a606a29c932754e2cb8e6",
         "affectsGlobalScope": false
       },
       "../node_modules/atom-ide-base/types-packages/uri.d.ts": {
@@ -921,144 +811,229 @@
         "signature": "397996b87ee1d1979b610ebff6140f7e3da356cac2b9952f87fe727544e082b2",
         "affectsGlobalScope": false
       },
-      "../lib/types/linter-ui-default/busy-signal.d.ts": {
-        "version": "aeb488363e8b97b53d6e49ed8eda6341c3100ee105d9077dbbcb0f732d85b68d",
-        "signature": "aeb488363e8b97b53d6e49ed8eda6341c3100ee105d9077dbbcb0f732d85b68d",
+      "../lib/busy-signal.ts": {
+        "version": "bf9cc9bed41647683dfae9e8aec7c4ba10ead47213dc399e94c2e9c66c73752a",
+        "signature": "a8a49b38f8d7ad08b4a5a1ec7c8592244f281d732fd6e48743b1cbb073128dd5",
         "affectsGlobalScope": false
       },
-      "../lib/types/linter-ui-default/intentions.d.ts": {
-        "version": "8466de725b1f3d3d9278d2fea988a12d0e19eff461480dccf9015f28632b47f2",
-        "signature": "8466de725b1f3d3d9278d2fea988a12d0e19eff461480dccf9015f28632b47f2",
+      "../node_modules/@types/lodash/common/common.d.ts": {
+        "version": "3594c022901a1c8993b0f78a3f534cfb81e7b619ed215348f7f6882f3db02abc",
+        "signature": "3594c022901a1c8993b0f78a3f534cfb81e7b619ed215348f7f6882f3db02abc",
         "affectsGlobalScope": false
       },
-      "../lib/types/linter-ui-default/tooltip/index.d.ts": {
-        "version": "95305babee8cb9c9061a725514eb647dac9bd3d605a9bcfa07636ceb0071e5c1",
-        "signature": "95305babee8cb9c9061a725514eb647dac9bd3d605a9bcfa07636ceb0071e5c1",
+      "../node_modules/@types/lodash/common/array.d.ts": {
+        "version": "438284c7c455a29b9c0e2d1e72abc62ee93d9a163029ffe918a34c5db3b92da2",
+        "signature": "438284c7c455a29b9c0e2d1e72abc62ee93d9a163029ffe918a34c5db3b92da2",
         "affectsGlobalScope": false
       },
-      "../lib/types/linter-ui-default/editor/index.d.ts": {
-        "version": "936870224b252829383da1a8755e96be444cb4ac0d78ad65c6a8914b9e87ea1c",
-        "signature": "936870224b252829383da1a8755e96be444cb4ac0d78ad65c6a8914b9e87ea1c",
+      "../node_modules/@types/lodash/common/collection.d.ts": {
+        "version": "0c75b204aed9cf6ff1c7b4bed87a3ece0d9d6fc857a6350c0c95ed0c38c814e8",
+        "signature": "0c75b204aed9cf6ff1c7b4bed87a3ece0d9d6fc857a6350c0c95ed0c38c814e8",
         "affectsGlobalScope": false
       },
-      "../lib/types/linter-ui-default/editors.d.ts": {
-        "version": "47841d2d805c79f1d772b80df95a889ea62b2b087c85d8f52453868c841532c9",
-        "signature": "47841d2d805c79f1d772b80df95a889ea62b2b087c85d8f52453868c841532c9",
+      "../node_modules/@types/lodash/common/date.d.ts": {
+        "version": "187119ff4f9553676a884e296089e131e8cc01691c546273b1d0089c3533ce42",
+        "signature": "187119ff4f9553676a884e296089e131e8cc01691c546273b1d0089c3533ce42",
         "affectsGlobalScope": false
       },
-      "../lib/types/linter-ui-default/tree-view/index.d.ts": {
-        "version": "1c95a3d48e38c6d76aabbf09e8c4ceca68fa66c5bf0fe04331b9aa9b4e097536",
-        "signature": "1c95a3d48e38c6d76aabbf09e8c4ceca68fa66c5bf0fe04331b9aa9b4e097536",
+      "../node_modules/@types/lodash/common/function.d.ts": {
+        "version": "c9f396e71966bd3a890d8a36a6a497dbf260e9b868158ea7824d4b5421210afe",
+        "signature": "c9f396e71966bd3a890d8a36a6a497dbf260e9b868158ea7824d4b5421210afe",
         "affectsGlobalScope": false
       },
-      "../lib/types/linter-ui-default/main.d.ts": {
-        "version": "1559213b0b2cfd61509959db04cfedcf2a9418da168929a9eab4235670daa6a8",
-        "signature": "1559213b0b2cfd61509959db04cfedcf2a9418da168929a9eab4235670daa6a8",
+      "../node_modules/@types/lodash/common/lang.d.ts": {
+        "version": "509235563ea2b939e1bbe92aae17e71e6a82ceab8f568b45fb4fce7d72523a32",
+        "signature": "509235563ea2b939e1bbe92aae17e71e6a82ceab8f568b45fb4fce7d72523a32",
         "affectsGlobalScope": false
       },
-      "../lib/types/linter-ui-default.d.ts": {
-        "version": "16da0a980e712de89b248575f2286ab3ba7fccc6ef29d31609d5ff650f8713d8",
-        "signature": "16da0a980e712de89b248575f2286ab3ba7fccc6ef29d31609d5ff650f8713d8",
+      "../node_modules/@types/lodash/common/math.d.ts": {
+        "version": "9364c7566b0be2f7b70ff5285eb34686f83ccb01bda529b82d23b2a844653bfb",
+        "signature": "9364c7566b0be2f7b70ff5285eb34686f83ccb01bda529b82d23b2a844653bfb",
         "affectsGlobalScope": false
       },
-      "../lib/types/index.d.ts": {
-        "version": "41d1568805d6cd94babdb6e67c1c527bb1dd7c3ac81ca50cf1dae1de978d6448",
-        "signature": "41d1568805d6cd94babdb6e67c1c527bb1dd7c3ac81ca50cf1dae1de978d6448",
+      "../node_modules/@types/lodash/common/number.d.ts": {
+        "version": "00baffbe8a2f2e4875367479489b5d43b5fc1429ecb4a4cc98cfc3009095f52a",
+        "signature": "00baffbe8a2f2e4875367479489b5d43b5fc1429ecb4a4cc98cfc3009095f52a",
         "affectsGlobalScope": false
       },
-      "../node_modules/@types/minimatch/index.d.ts": {
-        "version": "1d1e6bd176eee5970968423d7e215bfd66828b6db8d54d17afec05a831322633",
-        "signature": "1d1e6bd176eee5970968423d7e215bfd66828b6db8d54d17afec05a831322633",
+      "../node_modules/@types/lodash/common/object.d.ts": {
+        "version": "c311349ec71bb69399ffc4092853e7d8a86c1ca39ddb4cd129e775c19d985793",
+        "signature": "c311349ec71bb69399ffc4092853e7d8a86c1ca39ddb4cd129e775c19d985793",
         "affectsGlobalScope": false
       },
-      "../lib/helpers.ts": {
-        "version": "2f0956558720364251ecdd68d292d9fc9721b9e3a64d5702ec4c176803188e98",
-        "signature": "f451f5017fa682e9bed4060fb089237f617267ee46eb84fb25ca7cb181caff37",
+      "../node_modules/@types/lodash/common/seq.d.ts": {
+        "version": "3c92b6dfd43cc1c2485d9eba5ff0b74a19bb8725b692773ef1d66dac48cda4bd",
+        "signature": "3c92b6dfd43cc1c2485d9eba5ff0b74a19bb8725b692773ef1d66dac48cda4bd",
         "affectsGlobalScope": false
       },
-      "../lib/validate/helpers.ts": {
-        "version": "8266f1b0b010c777aca4a2e34f3f3097e2d3d47447b8743d397c6ef02a71e602",
-        "signature": "765f88b98eedda0cc935e1b5efdb420dd0a46efd9e037025cae699e6d59d6bed",
+      "../node_modules/@types/lodash/common/string.d.ts": {
+        "version": "4908e4c00832b26ce77a629de8501b0e23a903c094f9e79a7fec313a15da796a",
+        "signature": "4908e4c00832b26ce77a629de8501b0e23a903c094f9e79a7fec313a15da796a",
         "affectsGlobalScope": false
       },
-      "../lib/validate/index.ts": {
-        "version": "693a78d1f70c0ad5b81da32e67e434630714f046e3bd442246c5d53dd500714f",
-        "signature": "778fca88a531fe304adca3712b75b721e5139086ee05d6caca5052f49085bdf2",
+      "../node_modules/@types/lodash/common/util.d.ts": {
+        "version": "2630a7cbb597e85d713b7ef47f2946d4280d3d4c02733282770741d40672b1a5",
+        "signature": "2630a7cbb597e85d713b7ef47f2946d4280d3d4c02733282770741d40672b1a5",
         "affectsGlobalScope": false
       },
-      "../lib/indie-delegate.ts": {
-        "version": "a42c9e61e247431e85f3bcc027e68ee26237c7cb5c394a7aa000409fc45b7c7f",
-        "signature": "864f586de8cf2021b6ff4355a6d3362ecc03d409c208d3b235710cf226cba5ed",
-        "affectsGlobalScope": false
-      },
-      "../lib/commands.ts": {
-        "version": "744ff34993e3210de11dc1b9dd9dc6337f286413367c788f7230a118f10b7045",
-        "signature": "ba7c7989c8aea3744b4efca86611a0805f745a96d5b02cfb7c59ccefc64f7bab",
-        "affectsGlobalScope": false
+      "../node_modules/@types/lodash/index.d.ts": {
+        "version": "0714e2046df66c0e93c3330d30dbc0565b3e8cd3ee302cf99e4ede6220e5fec8",
+        "signature": "0714e2046df66c0e93c3330d30dbc0565b3e8cd3ee302cf99e4ede6220e5fec8",
+        "affectsGlobalScope": true
       },
       "../node_modules/@types/lodash/debounce.d.ts": {
         "version": "a5f9563c1315cffbc1e73072d96dcd42332f4eebbdffd7c3e904f545c9e9fe24",
         "signature": "a5f9563c1315cffbc1e73072d96dcd42332f4eebbdffd7c3e904f545c9e9fe24",
         "affectsGlobalScope": false
       },
-      "../lib/editor-linter.ts": {
-        "version": "32dba52f9574a9a4e87cae53be3547c0c01c0de98172f411b70b92a9d805a3b4",
-        "signature": "d35bad98de4bf4a59e201e6577b3f3caf808dcc3090f3b527c4e840a9c16b206",
+      "../lib/tooltip/delegate.ts": {
+        "version": "62eb1d242f53fd724d56d0494602488e4cd310907919d69c443f2e01074107f8",
+        "signature": "1d03f9e614b7a9bf6e9a48fe4d3dc6bbd813fbe6ac8c033931132bf884b8fdbe",
         "affectsGlobalScope": false
       },
-      "../lib/editor-registry.ts": {
-        "version": "9a99b34a3c530c65ab99f9ba85b8e26eadccf97587f528e5201a221c5886c2f5",
-        "signature": "dbf602a3ab0bb6de315614309f5811a630ebbd10a2061299b3c846a9638cf1b9",
+      "../node_modules/@types/marked/index.d.ts": {
+        "version": "89f2f3843659ca5b5d9586344480a5f0faf7f2bb01241e5e2b65e9ab4ee28dbe",
+        "signature": "89f2f3843659ca5b5d9586344480a5f0faf7f2bb01241e5e2b65e9ab4ee28dbe",
         "affectsGlobalScope": false
       },
-      "../lib/ui-registry.ts": {
-        "version": "d34a1f00a6ab403f14b3addd0b67dd1de56bd39bedb5b4436689d28ac9db9d4a",
-        "signature": "773261ec1979706f051681f9edcd64ac5028844f2346342b18e9ae8f6d2e5920",
+      "../lib/tooltip/fix-button.tsx": {
+        "version": "36619ab92cb61e450e895b70d8b9976f021e04d9d9593477359b170d6b078ead",
+        "signature": "17ee725bae130d6123f090e4b0b46b4614d067c31b3f0b2e32f91b000446ab99",
         "affectsGlobalScope": false
       },
-      "../lib/indie-registry.ts": {
-        "version": "60add7f25bcf46e40d6897ddecb8aa4d3e4637f0cc00a6db2dc8b73f2262fce3",
-        "signature": "136df7ffb22ac8868a2f30a5d31c787883cfb9ebc626e4d2ea8bf98067eca37b",
+      "../lib/tooltip/message.tsx": {
+        "version": "a90c383f725944b6b54a32a6fb781b3b910b2b18bfc14c0d3d77c014f0034cbc",
+        "signature": "943283d4370a64287391f509e7acf0350fb64558c2f9354bb1727b0262b5ab9d",
         "affectsGlobalScope": false
       },
-      "../lib/message-registry.ts": {
-        "version": "e418289909c69135b8da9687c7ae1d78ee95a9d2a913e25f90bca26d4477fb56",
-        "signature": "ad1baa1accca40edc2915377da4f22a22a4f25a4cf80a51a6e2c01916ad8a7ae",
+      "../node_modules/atom-ide-base/commons-ui/float-pane/selectable-overlay.d.ts": {
+        "version": "0ae8447a66e111d54dd0abebfe31e3824688a8c9be6733e52105c9b16da76313",
+        "signature": "0ae8447a66e111d54dd0abebfe31e3824688a8c9be6733e52105c9b16da76313",
         "affectsGlobalScope": false
       },
-      "../lib/linter-registry.ts": {
-        "version": "e1fa9932fdbf1257ef15e92dff77f6dc2202e851df9046ca1560974424d328d0",
-        "signature": "76f9de6e7c7f7db22c9cd087501fdbea03dfcb4b24180ccbb2ceabb969ce693c",
+      "../lib/tooltip/index.tsx": {
+        "version": "34b4f86615185c69986bfe2105dd6d96225ce51a0da88124cf4a743dea00ebfa",
+        "signature": "4cabc8b6cfba4693efb8d714bab661857abda08cf1fed44ac0a3100389e3406a",
         "affectsGlobalScope": false
       },
-      "../lib/toggle-view.ts": {
-        "version": "9f530bd2da8bf176caafd43553acb04e5bbab03ec306a30fd0ba711b7c4bbe47",
-        "signature": "d61077e190bcf28e60e4dd16fbaa49ba0ee424a8d4079c9d0a97ff3f969c48db",
+      "../lib/editor/helpers.ts": {
+        "version": "d8e4eda385da46148ef8ecd4bee96598f2dc291c141533f685ced541a86dfe66",
+        "signature": "599ccb446218a915b2923bd147cca92af4ba1ac9685099094de6daa8166fc6b4",
+        "affectsGlobalScope": false
+      },
+      "../lib/editor/index.ts": {
+        "version": "472f470532bebc661c43c7376cf36042069e019ba41296aa1a12fb45f442251e",
+        "signature": "99b97bdab52c6f74ea49ea5da2f90f540bb20ba5d38fffa438c9ee99fbab47bf",
+        "affectsGlobalScope": false
+      },
+      "../lib/editors.ts": {
+        "version": "85af53b1e18d78674f5726abe56be830bf3f9db6a2314af33f9ee1d0c529b238",
+        "signature": "c8ef9761c9e40d5da5dbb7b3769e754fde649595991e66e9a32083e09baa47c4",
+        "affectsGlobalScope": false
+      },
+      "../lib/helpers.ts": {
+        "version": "18ebd812eb4930322b16d03a2c83f23ba1dbb53560beb148d092c7008e0fecc0",
+        "signature": "197444df664951c4f57e10b41523e8a7e877cbfdd51b5c215002ca70978216be",
+        "affectsGlobalScope": false
+      },
+      "../lib/commands.ts": {
+        "version": "c46d8e3ea53314443053ab8b19d4a27ab1d3da5d689e757e4eb29854511cfecd",
+        "signature": "e3b0846145d67a98d09320181dad898b65204af76903a7aa1126a9dca7f51880",
+        "affectsGlobalScope": false
+      },
+      "../lib/electron.d.ts": {
+        "version": "3b9db56622504d69ebf9eeeb231c77c5a50993c8122a91b101d1d6750a2c663d",
+        "signature": "3b9db56622504d69ebf9eeeb231c77c5a50993c8122a91b101d1d6750a2c663d",
+        "affectsGlobalScope": false
+      },
+      "../lib/panel/delegate.ts": {
+        "version": "c3f3de64e9563d1482b707cf29988edd92a0bf485ae4d73505070594d24e2e4f",
+        "signature": "e2ceef2b5027b550a18ef3e1f3d087b78b534bebd1c87f03bd370a165d6b343b",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/solid-simple-table/dist/simpletable.d.ts": {
+        "version": "0b5ff35cf730a7b23b1cc6d333bd7080db023593dc05a44e56b6538981985c6d",
+        "signature": "0b5ff35cf730a7b23b1cc6d333bd7080db023593dc05a44e56b6538981985c6d",
+        "affectsGlobalScope": false
+      },
+      "../lib/panel/component.tsx": {
+        "version": "d397e82095d4fd8e4766e5677251d0ab745327617371a285383bba0ca73c2cfb",
+        "signature": "fb29ed5135b76c611c4ec4503e0bec7e090a14630c7f6c9c0085ae4cedf6f7ee",
+        "affectsGlobalScope": false
+      },
+      "../lib/panel/dock.tsx": {
+        "version": "421bc864c12962d7ab6f53c57b36c150e648d97a9ab36b3ae38758b2fe0bf887",
+        "signature": "1adc4fa874a53ce71d149db4c72a45921582bf9b28853092a460cafb7a75247e",
+        "affectsGlobalScope": false
+      },
+      "../lib/panel/index.ts": {
+        "version": "05b7768d3216ce05b8a9560e86b7b675fc79bbbbedd71728a8fc0240f0729e51",
+        "signature": "76e1d39e9498bc4eb348463a4f2132c27706a7f412f659109043a157a06a1318",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/atom/status-bar/config.d.ts": {
+        "version": "564bc1cd1794d1ac395f4a608c33ec7ac9ec4434aa6c6306be64af0222e0deb4",
+        "signature": "564bc1cd1794d1ac395f4a608c33ec7ac9ec4434aa6c6306be64af0222e0deb4",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/atom/status-bar/index.d.ts": {
+        "version": "aaca5c9dd91047a4fb74a022bdb37979f22795767b062ba984a7cf4d76e93155",
+        "signature": "aaca5c9dd91047a4fb74a022bdb37979f22795767b062ba984a7cf4d76e93155",
+        "affectsGlobalScope": false
+      },
+      "../lib/status-bar/helpers.ts": {
+        "version": "45a1d754ebab1b011b5cee97effb68c8182d89bdda31ad23a0d76b133a913882",
+        "signature": "2098dd2d8e97ec4f8bcbfd731ed18d092ddbfdbebf598d6cc0080cab2c76658e",
+        "affectsGlobalScope": false
+      },
+      "../lib/status-bar/element.ts": {
+        "version": "7505bc61efbee123fcc4cebc01989c299e4df33d5c129ff03aa28e722a32bfcf",
+        "signature": "8cceaf14f69f096da343e9723083ae1fb7e9583a4d911a4729b0adf1682cdb2e",
+        "affectsGlobalScope": false
+      },
+      "../lib/status-bar/index.ts": {
+        "version": "be3612b70101288319177258c1b59d3c289877e2927b16d522279e3c56ed31f7",
+        "signature": "121fd11abfde60f83f9da10698fcbbced635a7297bfe29b6ca818acd101df4d7",
+        "affectsGlobalScope": false
+      },
+      "../lib/intentions.ts": {
+        "version": "644c92cb420c78214618ddb7b728831545b3f9db758a481d67ce4f05ee8994e8",
+        "signature": "18cce54dd18e92ad8dc5acc51f66e1aaa17f0807c714d66daa215fc1d9bd0cb3",
+        "affectsGlobalScope": false
+      },
+      "../lib/tree-view/helpers.ts": {
+        "version": "013fce80ebaee2a12d9d4f8846c6fd070a58a94ea441cbaa57f73a9136ca7098",
+        "signature": "4410f87441965abd11a6cb99bd7a98fa16f93641e9d6b29ffa85f0dd8968f1af",
+        "affectsGlobalScope": false
+      },
+      "../lib/tree-view/index.ts": {
+        "version": "35c54495ba8574e55e29ee94c82138f364ff6fa980b31a5bfa8179d021f46f5d",
+        "signature": "0f31a655da0d90f64662f74fe722a93894388e6f025170840725a9de53f88984",
         "affectsGlobalScope": false
       },
       "../lib/main.ts": {
-        "version": "deb32f4fee901e4307b496f0ab4005aa0112a15324f1fa66236935f4bb111a8a",
-        "signature": "8ea356568b036bea0b98c4282115555d781f9bf788dbb2d18397b4a1c369d435",
+        "version": "f1f3cc33851cc9d50585b031ee1107effc7897f87cbbbff275f87fce3b1086f3",
+        "signature": "3f9e88e281218daa150372aaef305635eda6c12c4c05fc3762719d2a02accbdb",
         "affectsGlobalScope": false
       },
       "../lib/index.ts": {
-        "version": "be3b1569f6af2b5b55f61439d74efb1a28292f9c656ee717ac056037156ad6db",
-        "signature": "d7627c79d7c45864ffee11b9c307cab882a2d1214758401aa79882173f76a5e5",
+        "version": "6bbd7d3e36f1174a5ec9242608e82d3c9101f82a6473c5aa287c7a7ab8e2219e",
+        "signature": "1fa370a2c6fb6b116341bc2a682b30851e728dcdd7ffb62844331d31094ac161",
         "affectsGlobalScope": false
       },
-      "../lib/types/atom.d.ts": {
-        "version": "228d809f68d24e9b4b8b9436cb099038377923440acfa0a6e690b1241a3ab459",
-        "signature": "228d809f68d24e9b4b8b9436cb099038377923440acfa0a6e690b1241a3ab459",
-        "affectsGlobalScope": false
+      "../node_modules/@types/chance/index.d.ts": {
+        "version": "c53885bb5ff4ead8f93762c8d913146c1889c8f1efc2f2778608679932138300",
+        "signature": "c53885bb5ff4ead8f93762c8d913146c1889c8f1efc2f2778608679932138300",
+        "affectsGlobalScope": true
       },
-      "../node_modules/@types/estree/index.d.ts": {
-        "version": "89ccbe04e737ce613f5f04990271cfa84901446350b8551b0555ddf19319723b",
-        "signature": "89ccbe04e737ce613f5f04990271cfa84901446350b8551b0555ddf19319723b",
+      "../node_modules/@types/http-proxy/index.d.ts": {
+        "version": "62245a56a6df2b5fbe569bee7d8a95e662477e38317262070dd3e82eaa8eecb6",
+        "signature": "62245a56a6df2b5fbe569bee7d8a95e662477e38317262070dd3e82eaa8eecb6",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/jasmine/index.d.ts": {
-        "version": "2c23cf04e1fa16783615b625c0ef5d865b11a7019b6e72c6b523928e379cd011",
-        "signature": "2c23cf04e1fa16783615b625c0ef5d865b11a7019b6e72c6b523928e379cd011",
+        "version": "a60ffffe90db9de78de30318b31d2bbe9c7d12fade604626db7294b3b9d53200",
+        "signature": "a60ffffe90db9de78de30318b31d2bbe9c7d12fade604626db7294b3b9d53200",
         "affectsGlobalScope": true
       },
       "../node_modules/@types/json-schema/index.d.ts": {
@@ -1071,9 +1046,19 @@
         "signature": "96d14f21b7652903852eef49379d04dbda28c16ed36468f8c9fa08f7c14c9538",
         "affectsGlobalScope": false
       },
+      "../node_modules/@types/parse-json/index.d.ts": {
+        "version": "2b8264b2fefd7367e0f20e2c04eed5d3038831fe00f5efbc110ff0131aab899b",
+        "signature": "2b8264b2fefd7367e0f20e2c04eed5d3038831fe00f5efbc110ff0131aab899b",
+        "affectsGlobalScope": false
+      },
       "../node_modules/@types/prop-types/index.d.ts": {
         "version": "a7e32dcb90bf0c1b7a1e4ac89b0f7747cbcba25e7beddc1ebf17be1e161842ad",
         "signature": "a7e32dcb90bf0c1b7a1e4ac89b0f7747cbcba25e7beddc1ebf17be1e161842ad",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/q/index.d.ts": {
+        "version": "f9a2dd6a6084665f093ed0e9664b8e673be2a45e342a59dd4e0e4e552e68a9ad",
+        "signature": "f9a2dd6a6084665f093ed0e9664b8e673be2a45e342a59dd4e0e4e552e68a9ad",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/react/global.d.ts": {
@@ -1082,8 +1067,8 @@
         "affectsGlobalScope": true
       },
       "../node_modules/csstype/index.d.ts": {
-        "version": "0a6f28e1d77b99b0ef7da2f0bf50f301ea8a7eb7b4f573e458e725452a477bd2",
-        "signature": "0a6f28e1d77b99b0ef7da2f0bf50f301ea8a7eb7b4f573e458e725452a477bd2",
+        "version": "2421504d4ad8486abdb522b7bcdd4caafbcf4a320cdf7b19e780df258c639d7f",
+        "signature": "2421504d4ad8486abdb522b7bcdd4caafbcf4a320cdf7b19e780df258c639d7f",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/scheduler/tracing.d.ts": {
@@ -1106,11 +1091,6 @@
         "signature": "7f70a9bac13a5ceadb6feacef228ea9461f195ce7263b0fe1f2b96da19715d8d",
         "affectsGlobalScope": true
       },
-      "../node_modules/@types/resolve/index.d.ts": {
-        "version": "8a19491eba2108d5c333c249699f40aff05ad312c04a17504573b27d91f0aede",
-        "signature": "8a19491eba2108d5c333c249699f40aff05ad312c04a17504573b27d91f0aede",
-        "affectsGlobalScope": false
-      },
       "../node_modules/@types/scheduler/index.d.ts": {
         "version": "3169db033165677f1d414baf0c82ba27801089ca1b66d97af464512a47df31b5",
         "signature": "3169db033165677f1d414baf0c82ba27801089ca1b66d97af464512a47df31b5",
@@ -1128,14 +1108,12 @@
       }
     },
     "options": {
-      "module": 99,
-      "skipLibCheck": true,
       "strict": true,
       "strictNullChecks": true,
       "noUnusedLocals": true,
       "noUnusedParameters": true,
       "noImplicitReturns": true,
-      "noImplicitAny": true,
+      "noImplicitAny": false,
       "noImplicitThis": true,
       "noFallthroughCasesInSwitch": true,
       "declaration": true,
@@ -1146,8 +1124,9 @@
       "inlineSourceMap": false,
       "inlineSources": true,
       "preserveSymlinks": true,
-      "removeComments": true,
-      "jsx": 2,
+      "removeComments": false,
+      "jsx": 1,
+      "jsxImportSource": "solid-js",
       "lib": [
         "lib.es2018.d.ts",
         "lib.dom.d.ts"
@@ -1155,201 +1134,187 @@
       "target": 5,
       "allowJs": true,
       "esModuleInterop": true,
+      "module": 1,
       "moduleResolution": 2,
-      "importHelpers": true,
+      "resolveJsonModule": true,
+      "importHelpers": false,
       "outDir": "./",
-      "noEmitOnError": false,
-      "configFilePath": "../lib/tsconfig.json",
-      "noEmitHelpers": true,
-      "noEmit": false,
-      "emitDeclarationOnly": false,
-      "noResolve": false
+      "paths": {
+        "solid-js": [
+          "../node_modules/solid-js/dist/solid.js"
+        ],
+        "solid-js/web": [
+          "../node_modules/solid-js/web/dist/web.js"
+        ]
+      },
+      "pathsBasePath": "C:/Users/aminy/Documents/GitHub/JavaScript/@linter/linter-ui-default/lib",
+      "project": "../lib/tsconfig.json",
+      "emitDeclarationOnly": true,
+      "configFilePath": "../lib/tsconfig.json"
     },
     "referencedMap": {
+      "../lib/busy-signal.ts": [
+        "../lib/types/index.d.ts",
+        "../node_modules/@types/atom/index.d.ts",
+        "../node_modules/atom-ide-base/types-packages/main.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
       "../lib/commands.ts": [
         "../lib/helpers.ts",
-        "../lib/indie-delegate.ts",
         "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/tslib/tslib.d.ts"
+        "../node_modules/@types/node/assert.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
       ],
-      "../lib/editor-linter.ts": [
+      "../lib/editor/helpers.ts": [
+        "../lib/tooltip/index.tsx",
+        "../node_modules/@types/atom/index.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/editor/index.ts": [
+        "../lib/editor/helpers.ts",
+        "../lib/helpers.ts",
+        "../lib/tooltip/index.tsx",
+        "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts",
         "../node_modules/@types/lodash/debounce.d.ts",
-        "../node_modules/tslib/tslib.d.ts"
+        "../node_modules/solid-js/jsx-runtime.d.ts"
       ],
-      "../lib/editor-registry.ts": [
-        "../lib/editor-linter.ts",
+      "../lib/editors.ts": [
+        "../lib/editor/index.ts",
+        "../lib/helpers.ts",
+        "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/tslib/tslib.d.ts"
+        "../node_modules/solid-js/jsx-runtime.d.ts"
       ],
       "../lib/helpers.ts": [
+        "../lib/editors.ts",
+        "../lib/electron.d.ts",
         "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/@types/lodash/uniq.d.ts",
-        "../node_modules/@types/minimatch/index.d.ts",
-        "../node_modules/tslib/tslib.d.ts"
+        "../node_modules/solid-js/jsx-runtime.d.ts"
       ],
       "../lib/index.ts": [
+        "../lib/intentions.ts",
         "../lib/main.ts",
         "../lib/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/tslib/tslib.d.ts"
+        "../node_modules/@types/atom/status-bar/index.d.ts",
+        "../node_modules/atom-ide-base/types-packages/main.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
       ],
-      "../lib/indie-delegate.ts": [
+      "../lib/intentions.ts": [
         "../lib/helpers.ts",
         "../lib/types/index.d.ts",
-        "../lib/validate/index.ts",
         "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/tslib/tslib.d.ts"
-      ],
-      "../lib/indie-registry.ts": [
-        "../lib/indie-delegate.ts",
-        "../lib/types/index.d.ts",
-        "../lib/validate/index.ts",
-        "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/tslib/tslib.d.ts"
-      ],
-      "../lib/linter-registry.ts": [
-        "../lib/helpers.ts",
-        "../lib/types/index.d.ts",
-        "../lib/validate/index.ts",
-        "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/tslib/tslib.d.ts"
+        "../node_modules/solid-js/jsx-runtime.d.ts"
       ],
       "../lib/main.ts": [
+        "../lib/busy-signal.ts",
         "../lib/commands.ts",
-        "../lib/editor-registry.ts",
-        "../lib/indie-registry.ts",
-        "../lib/linter-registry.ts",
-        "../lib/message-registry.ts",
-        "../lib/toggle-view.ts",
+        "../lib/editors.ts",
+        "../lib/intentions.ts",
+        "../lib/panel/index.ts",
+        "../lib/status-bar/index.ts",
+        "../lib/tree-view/index.ts",
         "../lib/types/index.d.ts",
-        "../lib/ui-registry.ts",
         "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/@types/lodash/uniq.d.ts",
-        "../node_modules/tslib/tslib.d.ts"
+        "../node_modules/solid-js/jsx-runtime.d.ts"
       ],
-      "../lib/message-registry.ts": [
+      "../lib/panel/component.tsx": [
         "../lib/helpers.ts",
+        "../lib/panel/delegate.ts",
+        "../lib/types/index.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts",
+        "../node_modules/solid-simple-table/dist/simpletable.d.ts"
+      ],
+      "../lib/panel/delegate.ts": [
+        "../lib/helpers.ts",
+        "../lib/types/index.d.ts",
+        "../node_modules/@types/atom/index.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/panel/dock.tsx": [
+        "../lib/helpers.ts",
+        "../lib/panel/component.tsx",
+        "../lib/panel/delegate.ts",
+        "../node_modules/@types/atom/index.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/panel/index.ts": [
+        "../lib/panel/delegate.ts",
+        "../lib/panel/dock.tsx",
+        "../lib/types/index.d.ts",
+        "../node_modules/@types/atom/index.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/status-bar/element.ts": [
+        "../lib/status-bar/helpers.ts",
+        "../node_modules/@types/atom/index.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/status-bar/helpers.ts": [
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/status-bar/index.ts": [
+        "../lib/helpers.ts",
+        "../lib/status-bar/element.ts",
+        "../lib/types/index.d.ts",
+        "../node_modules/@types/atom/index.d.ts",
+        "../node_modules/@types/atom/status-bar/index.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/tooltip/delegate.ts": [
+        "../node_modules/@types/atom/index.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/tooltip/fix-button.tsx": [
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/tooltip/index.tsx": [
+        "../lib/helpers.ts",
+        "../lib/tooltip/delegate.ts",
+        "../lib/tooltip/message.tsx",
+        "../lib/types/index.d.ts",
+        "../node_modules/@types/atom/index.d.ts",
+        "../node_modules/atom-ide-base/commons-ui/float-pane/selectable-overlay.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/tooltip/message.tsx": [
+        "../lib/helpers.ts",
+        "../lib/tooltip/delegate.ts",
+        "../lib/tooltip/fix-button.tsx",
+        "../lib/types/index.d.ts",
+        "../node_modules/@types/marked/index.d.ts",
+        "../node_modules/@types/node/url.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/tree-view/helpers.ts": [
+        "../lib/helpers.ts",
+        "../lib/tree-view/index.ts",
+        "../lib/types/index.d.ts",
+        "../node_modules/@types/node/path.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/tree-view/index.ts": [
+        "../lib/tree-view/helpers.ts",
         "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts",
         "../node_modules/@types/lodash/debounce.d.ts",
-        "../node_modules/tslib/tslib.d.ts"
-      ],
-      "../lib/toggle-view.ts": [
-        "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/tslib/tslib.d.ts"
+        "../node_modules/solid-js/jsx-runtime.d.ts"
       ],
       "../lib/types/atom.d.ts": [
-        "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/@types/atom/linter/config.d.ts",
-        "../node_modules/@types/atom/src/config-schema.d.ts",
-        "../node_modules/@types/atom/status-bar/config.d.ts"
+        "../node_modules/@types/atom/index.d.ts"
       ],
       "../lib/types/index.d.ts": [
-        "../lib/types/linter-ui-default.d.ts",
+        "../lib/types/atom.d.ts",
+        "../lib/types/intentions.d.ts",
         "../lib/types/linter.d.ts"
       ],
-      "../lib/types/linter-ui-default.d.ts": [
-        "../lib/types/linter-ui-default/main.d.ts"
-      ],
-      "../lib/types/linter-ui-default/busy-signal.d.ts": [
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/atom-ide-base/types-packages/main.d.ts"
-      ],
-      "../lib/types/linter-ui-default/commands.d.ts": [
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/editor/index.d.ts": [
-        "../lib/types/linter-ui-default/tooltip/index.d.ts",
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/editors.d.ts": [
-        "../lib/types/linter-ui-default/editor/index.d.ts",
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/intentions.d.ts": [
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/main.d.ts": [
-        "../lib/types/linter-ui-default/busy-signal.d.ts",
-        "../lib/types/linter-ui-default/commands.d.ts",
-        "../lib/types/linter-ui-default/editors.d.ts",
-        "../lib/types/linter-ui-default/intentions.d.ts",
-        "../lib/types/linter-ui-default/panel/index.d.ts",
-        "../lib/types/linter-ui-default/status-bar/index.d.ts",
-        "../lib/types/linter-ui-default/tree-view/index.d.ts",
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/panel/delegate.d.ts": [
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/panel/dock.d.ts": [
-        "../lib/types/linter-ui-default/panel/delegate.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/panel/index.d.ts": [
-        "../lib/types/linter-ui-default/panel/delegate.d.ts",
-        "../lib/types/linter-ui-default/panel/dock.d.ts",
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/status-bar/element.d.ts": [
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/status-bar/index.d.ts": [
-        "../lib/types/linter-ui-default/status-bar/element.d.ts",
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/@types/atom/status-bar/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/tooltip/index.d.ts": [
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/tree-view/index.d.ts": [
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/types/atom.d.ts": [
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/types/index.d.ts": [
-        "../lib/types/linter-ui-default/types/atom.d.ts",
-        "../lib/types/linter-ui-default/types/intentions.d.ts",
-        "../lib/types/linter-ui-default/types/linter.d.ts"
-      ],
-      "../lib/types/linter-ui-default/types/intentions.d.ts": [
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/types/linter.d.ts": [
+      "../lib/types/intentions.d.ts": [
         "../node_modules/@types/atom/index.d.ts"
       ],
       "../lib/types/linter.d.ts": [
         "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/ui-registry.ts": [
-        "../lib/types/index.d.ts",
-        "../lib/validate/index.ts",
-        "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/tslib/tslib.d.ts"
-      ],
-      "../lib/validate/helpers.ts": [
-        "../node_modules/tslib/tslib.d.ts"
-      ],
-      "../lib/validate/index.ts": [
-        "../lib/types/index.d.ts",
-        "../lib/validate/helpers.ts",
-        "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/tslib/tslib.d.ts"
       ],
       "../node_modules/@types/atom/dependencies/first-mate/index.d.ts": [
         "../node_modules/@types/atom/dependencies/first-mate/src/first-mate.d.ts"
@@ -1465,7 +1430,6 @@
         "../node_modules/@types/node/index.d.ts"
       ],
       "../node_modules/@types/atom/linter/config.d.ts": [
-        "../lib/types/atom.d.ts",
         "../node_modules/@types/atom/index.d.ts",
         "../node_modules/@types/atom/src/config-schema.d.ts",
         "../node_modules/@types/atom/status-bar/config.d.ts"
@@ -1488,7 +1452,6 @@
         "../node_modules/@types/atom/index.d.ts"
       ],
       "../node_modules/@types/atom/src/config-schema.d.ts": [
-        "../lib/types/atom.d.ts",
         "../node_modules/@types/atom/index.d.ts",
         "../node_modules/@types/atom/linter/config.d.ts",
         "../node_modules/@types/atom/status-bar/config.d.ts"
@@ -1596,7 +1559,6 @@
         "../node_modules/@types/atom/index.d.ts"
       ],
       "../node_modules/@types/atom/status-bar/config.d.ts": [
-        "../lib/types/atom.d.ts",
         "../node_modules/@types/atom/index.d.ts",
         "../node_modules/@types/atom/linter/config.d.ts",
         "../node_modules/@types/atom/src/config-schema.d.ts"
@@ -1606,6 +1568,15 @@
       ],
       "../node_modules/@types/dompurify/index.d.ts": [
         "../node_modules/@types/trusted-types/index.d.ts"
+      ],
+      "../node_modules/@types/http-proxy/index.d.ts": [
+        "../node_modules/@types/node/events.d.ts",
+        "../node_modules/@types/node/http.d.ts",
+        "../node_modules/@types/node/https.d.ts",
+        "../node_modules/@types/node/index.d.ts",
+        "../node_modules/@types/node/net.d.ts",
+        "../node_modules/@types/node/stream.d.ts",
+        "../node_modules/@types/node/url.d.ts"
       ],
       "../node_modules/@types/lodash/common/array.d.ts": [
         "../node_modules/@types/lodash/common/collection.d.ts",
@@ -1791,9 +1762,6 @@
         "../node_modules/@types/lodash/common/seq.d.ts",
         "../node_modules/@types/lodash/common/string.d.ts",
         "../node_modules/@types/lodash/common/util.d.ts"
-      ],
-      "../node_modules/@types/lodash/uniq.d.ts": [
-        "../node_modules/@types/lodash/index.d.ts"
       ],
       "../node_modules/@types/node/assert.d.ts": [
         "../node_modules/@types/node/assert.d.ts"
@@ -2032,8 +2000,8 @@
         "../node_modules/@types/scheduler/tracing.d.ts",
         "../node_modules/csstype/index.d.ts"
       ],
-      "../node_modules/@types/resolve/index.d.ts": [
-        "../node_modules/@types/node/index.d.ts"
+      "../node_modules/atom-ide-base/commons-ui/float-pane/selectable-overlay.d.ts": [
+        "../node_modules/@types/atom/index.d.ts"
       ],
       "../node_modules/atom-ide-base/types-packages/busy-signal.d.ts": [
         "../node_modules/atom-ide-base/types-packages/uri.d.ts"
@@ -2096,6 +2064,9 @@
       ],
       "../node_modules/atom-ide-base/types-packages/text-edit.d.ts": [
         "../node_modules/@types/atom/index.d.ts"
+      ],
+      "../node_modules/solid-js/jsx-runtime.d.ts": [
+        "../node_modules/solid-js/types/jsx.d.ts"
       ],
       "../../../../../../node_modules/@types/glob/index.d.ts": [
         "../../../../../../node_modules/@types/minimatch/index.d.ts",
@@ -2104,151 +2075,118 @@
       ]
     },
     "exportedModulesMap": {
+      "../lib/busy-signal.ts": [
+        "../lib/types/index.d.ts",
+        "../node_modules/@types/atom/index.d.ts",
+        "../node_modules/atom-ide-base/types-packages/main.d.ts"
+      ],
       "../lib/commands.ts": [
-        "../lib/indie-delegate.ts",
         "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts"
       ],
-      "../lib/editor-linter.ts": [
+      "../lib/editor/helpers.ts": [
+        "../lib/tooltip/index.tsx",
         "../node_modules/@types/atom/index.d.ts"
       ],
-      "../lib/editor-registry.ts": [
-        "../lib/editor-linter.ts",
+      "../lib/editor/index.ts": [
+        "../lib/tooltip/index.tsx",
+        "../lib/types/index.d.ts",
+        "../node_modules/@types/atom/index.d.ts"
+      ],
+      "../lib/editors.ts": [
+        "../lib/editor/index.ts",
+        "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts"
       ],
       "../lib/helpers.ts": [
+        "../lib/editors.ts",
         "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts"
       ],
       "../lib/index.ts": [
-        "../lib/indie-delegate.ts",
-        "../lib/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
+        "../lib/intentions.ts",
+        "../lib/main.ts",
+        "../node_modules/@types/atom/status-bar/index.d.ts",
+        "../node_modules/atom-ide-base/types-packages/main.d.ts"
       ],
-      "../lib/indie-delegate.ts": [
-        "../lib/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/indie-registry.ts": [
-        "../lib/indie-delegate.ts",
-        "../lib/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/linter-registry.ts": [
+      "../lib/intentions.ts": [
         "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts"
       ],
       "../lib/main.ts": [
-        "../lib/indie-delegate.ts",
-        "../lib/types/index.d.ts"
-      ],
-      "../lib/message-registry.ts": [
+        "../lib/busy-signal.ts",
+        "../lib/commands.ts",
+        "../lib/editors.ts",
+        "../lib/intentions.ts",
+        "../lib/panel/index.ts",
+        "../lib/status-bar/index.ts",
+        "../lib/tree-view/index.ts",
         "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts"
       ],
-      "../lib/toggle-view.ts": [
+      "../lib/panel/component.tsx": [
+        "../lib/panel/delegate.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/panel/delegate.ts": [
+        "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts"
       ],
-      "../lib/types/atom.d.ts": [
-        "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/@types/atom/linter/config.d.ts",
-        "../node_modules/@types/atom/src/config-schema.d.ts",
-        "../node_modules/@types/atom/status-bar/config.d.ts"
-      ],
-      "../lib/types/index.d.ts": [
-        "../lib/types/linter-ui-default.d.ts",
-        "../lib/types/linter.d.ts"
-      ],
-      "../lib/types/linter-ui-default.d.ts": [
-        "../lib/types/linter-ui-default/main.d.ts"
-      ],
-      "../lib/types/linter-ui-default/busy-signal.d.ts": [
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts",
-        "../node_modules/atom-ide-base/types-packages/main.d.ts"
-      ],
-      "../lib/types/linter-ui-default/commands.d.ts": [
-        "../lib/types/linter-ui-default/types/index.d.ts",
+      "../lib/panel/dock.tsx": [
+        "../lib/panel/delegate.ts",
         "../node_modules/@types/atom/index.d.ts"
       ],
-      "../lib/types/linter-ui-default/editor/index.d.ts": [
-        "../lib/types/linter-ui-default/tooltip/index.d.ts",
-        "../lib/types/linter-ui-default/types/index.d.ts",
+      "../lib/panel/index.ts": [
+        "../lib/panel/delegate.ts",
+        "../lib/panel/dock.tsx",
+        "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts"
       ],
-      "../lib/types/linter-ui-default/editors.d.ts": [
-        "../lib/types/linter-ui-default/editor/index.d.ts",
-        "../lib/types/linter-ui-default/types/index.d.ts",
+      "../lib/status-bar/element.ts": [
         "../node_modules/@types/atom/index.d.ts"
       ],
-      "../lib/types/linter-ui-default/intentions.d.ts": [
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/main.d.ts": [
-        "../lib/types/linter-ui-default/busy-signal.d.ts",
-        "../lib/types/linter-ui-default/commands.d.ts",
-        "../lib/types/linter-ui-default/editors.d.ts",
-        "../lib/types/linter-ui-default/intentions.d.ts",
-        "../lib/types/linter-ui-default/panel/index.d.ts",
-        "../lib/types/linter-ui-default/status-bar/index.d.ts",
-        "../lib/types/linter-ui-default/tree-view/index.d.ts",
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/panel/delegate.d.ts": [
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/panel/dock.d.ts": [
-        "../lib/types/linter-ui-default/panel/delegate.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/panel/index.d.ts": [
-        "../lib/types/linter-ui-default/panel/delegate.d.ts",
-        "../lib/types/linter-ui-default/panel/dock.d.ts",
-        "../lib/types/linter-ui-default/types/index.d.ts",
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/status-bar/element.d.ts": [
-        "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/types/linter-ui-default/status-bar/index.d.ts": [
-        "../lib/types/linter-ui-default/status-bar/element.d.ts",
-        "../lib/types/linter-ui-default/types/index.d.ts",
+      "../lib/status-bar/index.ts": [
+        "../lib/status-bar/element.ts",
+        "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts",
         "../node_modules/@types/atom/status-bar/index.d.ts"
       ],
-      "../lib/types/linter-ui-default/tooltip/index.d.ts": [
-        "../lib/types/linter-ui-default/types/index.d.ts",
+      "../lib/tooltip/delegate.ts": [
         "../node_modules/@types/atom/index.d.ts"
       ],
-      "../lib/types/linter-ui-default/tree-view/index.d.ts": [
-        "../lib/types/linter-ui-default/types/index.d.ts",
+      "../lib/tooltip/fix-button.tsx": [
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/tooltip/index.tsx": [
+        "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts"
       ],
-      "../lib/types/linter-ui-default/types/atom.d.ts": [
+      "../lib/tooltip/message.tsx": [
+        "../lib/tooltip/delegate.ts",
+        "../lib/types/index.d.ts",
+        "../node_modules/solid-js/jsx-runtime.d.ts"
+      ],
+      "../lib/tree-view/helpers.ts": [
+        "../lib/tree-view/index.ts",
+        "../lib/types/index.d.ts"
+      ],
+      "../lib/tree-view/index.ts": [
+        "../lib/types/index.d.ts",
         "../node_modules/@types/atom/index.d.ts"
       ],
-      "../lib/types/linter-ui-default/types/index.d.ts": [
-        "../lib/types/linter-ui-default/types/atom.d.ts",
-        "../lib/types/linter-ui-default/types/intentions.d.ts",
-        "../lib/types/linter-ui-default/types/linter.d.ts"
-      ],
-      "../lib/types/linter-ui-default/types/intentions.d.ts": [
+      "../lib/types/atom.d.ts": [
         "../node_modules/@types/atom/index.d.ts"
       ],
-      "../lib/types/linter-ui-default/types/linter.d.ts": [
+      "../lib/types/index.d.ts": [
+        "../lib/types/atom.d.ts",
+        "../lib/types/intentions.d.ts",
+        "../lib/types/linter.d.ts"
+      ],
+      "../lib/types/intentions.d.ts": [
         "../node_modules/@types/atom/index.d.ts"
       ],
       "../lib/types/linter.d.ts": [
         "../node_modules/@types/atom/index.d.ts"
-      ],
-      "../lib/ui-registry.ts": [
-        "../lib/types/index.d.ts"
-      ],
-      "../lib/validate/index.ts": [
-        "../lib/types/index.d.ts"
       ],
       "../node_modules/@types/atom/dependencies/first-mate/index.d.ts": [
         "../node_modules/@types/atom/dependencies/first-mate/src/first-mate.d.ts"
@@ -2364,7 +2302,6 @@
         "../node_modules/@types/node/index.d.ts"
       ],
       "../node_modules/@types/atom/linter/config.d.ts": [
-        "../lib/types/atom.d.ts",
         "../node_modules/@types/atom/index.d.ts",
         "../node_modules/@types/atom/src/config-schema.d.ts",
         "../node_modules/@types/atom/status-bar/config.d.ts"
@@ -2387,7 +2324,6 @@
         "../node_modules/@types/atom/index.d.ts"
       ],
       "../node_modules/@types/atom/src/config-schema.d.ts": [
-        "../lib/types/atom.d.ts",
         "../node_modules/@types/atom/index.d.ts",
         "../node_modules/@types/atom/linter/config.d.ts",
         "../node_modules/@types/atom/status-bar/config.d.ts"
@@ -2495,7 +2431,6 @@
         "../node_modules/@types/atom/index.d.ts"
       ],
       "../node_modules/@types/atom/status-bar/config.d.ts": [
-        "../lib/types/atom.d.ts",
         "../node_modules/@types/atom/index.d.ts",
         "../node_modules/@types/atom/linter/config.d.ts",
         "../node_modules/@types/atom/src/config-schema.d.ts"
@@ -2505,6 +2440,15 @@
       ],
       "../node_modules/@types/dompurify/index.d.ts": [
         "../node_modules/@types/trusted-types/index.d.ts"
+      ],
+      "../node_modules/@types/http-proxy/index.d.ts": [
+        "../node_modules/@types/node/events.d.ts",
+        "../node_modules/@types/node/http.d.ts",
+        "../node_modules/@types/node/https.d.ts",
+        "../node_modules/@types/node/index.d.ts",
+        "../node_modules/@types/node/net.d.ts",
+        "../node_modules/@types/node/stream.d.ts",
+        "../node_modules/@types/node/url.d.ts"
       ],
       "../node_modules/@types/lodash/common/array.d.ts": [
         "../node_modules/@types/lodash/common/collection.d.ts",
@@ -2690,9 +2634,6 @@
         "../node_modules/@types/lodash/common/seq.d.ts",
         "../node_modules/@types/lodash/common/string.d.ts",
         "../node_modules/@types/lodash/common/util.d.ts"
-      ],
-      "../node_modules/@types/lodash/uniq.d.ts": [
-        "../node_modules/@types/lodash/index.d.ts"
       ],
       "../node_modules/@types/node/assert.d.ts": [
         "../node_modules/@types/node/assert.d.ts"
@@ -2931,8 +2872,8 @@
         "../node_modules/@types/scheduler/tracing.d.ts",
         "../node_modules/csstype/index.d.ts"
       ],
-      "../node_modules/@types/resolve/index.d.ts": [
-        "../node_modules/@types/node/index.d.ts"
+      "../node_modules/atom-ide-base/commons-ui/float-pane/selectable-overlay.d.ts": [
+        "../node_modules/@types/atom/index.d.ts"
       ],
       "../node_modules/atom-ide-base/types-packages/busy-signal.d.ts": [
         "../node_modules/atom-ide-base/types-packages/uri.d.ts"
@@ -2996,6 +2937,9 @@
       "../node_modules/atom-ide-base/types-packages/text-edit.d.ts": [
         "../node_modules/@types/atom/index.d.ts"
       ],
+      "../node_modules/solid-js/jsx-runtime.d.ts": [
+        "../node_modules/solid-js/types/jsx.d.ts"
+      ],
       "../../../../../../node_modules/@types/glob/index.d.ts": [
         "../../../../../../node_modules/@types/minimatch/index.d.ts",
         "../node_modules/@types/node/events.d.ts",
@@ -3003,48 +2947,103 @@
       ]
     },
     "semanticDiagnosticsPerFile": [
-      "../lib/commands.ts",
-      "../lib/editor-linter.ts",
-      "../lib/editor-registry.ts",
-      "../lib/helpers.ts",
-      "../lib/index.ts",
-      "../lib/indie-delegate.ts",
-      "../lib/indie-registry.ts",
+      "../lib/busy-signal.ts",
       [
-        "../lib/linter-registry.ts",
+        "../lib/commands.ts",
         [
           {
-            "file": "../lib/linter-registry.ts",
-            "start": 4266,
-            "length": 8,
+            "file": "../lib/commands.ts",
+            "start": 3234,
+            "length": 17,
             "code": 2345,
             "category": 1,
             "messageText": {
-              "messageText": "Argument of type 'Message[] | undefined' is not assignable to parameter of type 'Message[]'.",
+              "messageText": "Argument of type 'MessageSolution[] | (() => Promise<MessageSolution[]>)' is not assignable to parameter of type 'MessageSolution[]'.",
               "category": 1,
               "code": 2345,
               "next": [
                 {
-                  "messageText": "Type 'undefined' is not assignable to type 'Message[]'.",
+                  "messageText": "Type '() => Promise<MessageSolution[]>' is not assignable to type 'MessageSolution[]'.",
                   "category": 1,
                   "code": 2322
                 }
               ]
             }
+          }
+        ]
+      ],
+      "../lib/editor/helpers.ts",
+      [
+        "../lib/editor/index.ts",
+        [
+          {
+            "file": "../lib/editor/index.ts",
+            "start": 10812,
+            "length": 18,
+            "code": 2339,
+            "category": 1,
+            "messageText": "Property 'previousEventState' does not exist on type 'Marker'."
           },
           {
-            "file": "../lib/linter-registry.ts",
-            "start": 4406,
-            "length": 8,
+            "file": "../lib/editor/index.ts",
+            "start": 11205,
+            "length": 6,
             "code": 2345,
             "category": 1,
             "messageText": {
-              "messageText": "Argument of type 'Message[] | undefined' is not assignable to parameter of type '(Message | MessageLike)[]'.",
+              "messageText": "Argument of type 'DisplayMarker | Marker' is not assignable to parameter of type 'DisplayMarker'.",
               "category": 1,
               "code": 2345,
               "next": [
                 {
-                  "messageText": "Type 'undefined' is not assignable to type '(Message | MessageLike)[]'.",
+                  "messageText": "Type 'Marker' is missing the following properties from type 'DisplayMarker': getProperties, setProperties, matchesProperties, getBufferRange, and 15 more.",
+                  "category": 1,
+                  "code": 2740
+                }
+              ]
+            }
+          },
+          {
+            "file": "../lib/editor/index.ts",
+            "start": 11610,
+            "length": 6,
+            "code": 2345,
+            "category": 1,
+            "messageText": {
+              "messageText": "Argument of type 'DisplayMarker | Marker' is not assignable to parameter of type 'DisplayMarker'.",
+              "category": 1,
+              "code": 2345,
+              "next": [
+                {
+                  "messageText": "Type 'Marker' is not assignable to type 'DisplayMarker'.",
+                  "category": 1,
+                  "code": 2322
+                }
+              ]
+            }
+          }
+        ]
+      ],
+      "../lib/editors.ts",
+      "../lib/electron.d.ts",
+      "../lib/helpers.ts",
+      "../lib/index.ts",
+      [
+        "../lib/intentions.ts",
+        [
+          {
+            "file": "../lib/intentions.ts",
+            "start": 955,
+            "length": 9,
+            "code": 2322,
+            "category": 1,
+            "messageText": {
+              "messageText": "Type 'MessageSolution[] | (() => Promise<MessageSolution[]>)' is not assignable to type 'MessageSolution[]'.",
+              "category": 1,
+              "code": 2322,
+              "next": [
+                {
+                  "messageText": "Type '() => Promise<MessageSolution[]>' is not assignable to type 'MessageSolution[]'.",
                   "category": 1,
                   "code": 2322
                 }
@@ -3054,102 +3053,86 @@
         ]
       ],
       "../lib/main.ts",
-      "../lib/message-registry.ts",
-      "../lib/toggle-view.ts",
-      "../lib/types/atom.d.ts",
-      "../lib/types/index.d.ts",
-      "../lib/types/linter-ui-default.d.ts",
-      "../lib/types/linter-ui-default/busy-signal.d.ts",
-      "../lib/types/linter-ui-default/commands.d.ts",
-      "../lib/types/linter-ui-default/editor/index.d.ts",
-      "../lib/types/linter-ui-default/editors.d.ts",
-      "../lib/types/linter-ui-default/intentions.d.ts",
-      "../lib/types/linter-ui-default/main.d.ts",
-      "../lib/types/linter-ui-default/panel/delegate.d.ts",
-      "../lib/types/linter-ui-default/panel/dock.d.ts",
-      "../lib/types/linter-ui-default/panel/index.d.ts",
-      "../lib/types/linter-ui-default/status-bar/element.d.ts",
-      "../lib/types/linter-ui-default/status-bar/index.d.ts",
-      "../lib/types/linter-ui-default/tooltip/index.d.ts",
-      "../lib/types/linter-ui-default/tree-view/index.d.ts",
-      "../lib/types/linter-ui-default/types/atom.d.ts",
-      "../lib/types/linter-ui-default/types/index.d.ts",
-      "../lib/types/linter-ui-default/types/intentions.d.ts",
-      "../lib/types/linter-ui-default/types/linter.d.ts",
-      "../lib/types/linter.d.ts",
+      "../lib/panel/component.tsx",
+      "../lib/panel/delegate.ts",
+      "../lib/panel/dock.tsx",
+      "../lib/panel/index.ts",
+      "../lib/status-bar/element.ts",
+      "../lib/status-bar/helpers.ts",
+      "../lib/status-bar/index.ts",
       [
-        "../lib/ui-registry.ts",
+        "../lib/tooltip/delegate.ts",
         [
           {
-            "file": "../lib/ui-registry.ts",
-            "start": 943,
-            "length": 8,
-            "code": 2345,
+            "file": "../lib/tooltip/delegate.ts",
+            "start": 1094,
+            "length": 13,
+            "code": 2339,
             "category": 1,
-            "messageText": {
-              "messageText": "Argument of type 'string | null' is not assignable to parameter of type 'string'.",
-              "category": 1,
-              "code": 2345,
-              "next": [
-                {
-                  "messageText": "Type 'null' is not assignable to type 'string'.",
-                  "category": 1,
-                  "code": 2322
-                }
-              ]
-            }
-          },
+            "messageText": "Property 'originalEvent' does not exist on type 'CommandEvent<EventTarget>'."
+          }
+        ]
+      ],
+      "../lib/tooltip/fix-button.tsx",
+      "../lib/tooltip/index.tsx",
+      [
+        "../lib/tooltip/message.tsx",
+        [
           {
-            "file": "../lib/ui-registry.ts",
-            "start": 1134,
-            "length": 8,
+            "file": "../lib/tooltip/message.tsx",
+            "start": 4633,
+            "length": 17,
             "code": 2345,
             "category": 1,
             "messageText": {
-              "messageText": "Argument of type 'string | null' is not assignable to parameter of type 'string'.",
+              "messageText": "Argument of type 'MessageSolution[] | (() => Promise<MessageSolution[]>)' is not assignable to parameter of type 'MessageSolution[]'.",
               "category": 1,
               "code": 2345,
               "next": [
                 {
-                  "messageText": "Type 'null' is not assignable to type 'string'.",
+                  "messageText": "Type '() => Promise<MessageSolution[]>' is missing the following properties from type 'MessageSolution[]': pop, push, concat, join, and 25 more.",
                   "category": 1,
-                  "code": 2322
+                  "code": 2740
                 }
               ]
             }
           }
         ]
       ],
-      "../lib/validate/helpers.ts",
-      "../lib/validate/index.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.dom.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.collection.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.core.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.generator.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.promise.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.proxy.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.reflect.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.symbol.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2016.array.include.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2016.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2017.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2017.intl.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2017.object.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2017.string.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2018.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2018.intl.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2018.promise.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2018.regexp.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es2020.bigint.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.es5.d.ts",
-      "../node_modules/.pnpm/typescript@4.2.3/node_modules/typescript/lib/lib.esnext.intl.d.ts",
+      "../lib/tree-view/helpers.ts",
+      "../lib/tree-view/index.ts",
+      "../lib/types/atom.d.ts",
+      "../lib/types/index.d.ts",
+      "../lib/types/intentions.d.ts",
+      "../lib/types/linter.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.dom.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.collection.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.core.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.generator.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.promise.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.proxy.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.reflect.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.symbol.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2016.array.include.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2016.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2017.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2017.intl.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2017.object.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2017.string.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2018.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2018.intl.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2018.promise.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2018.regexp.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es2020.bigint.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.es5.d.ts",
+      "../node_modules/.pnpm/typescript@4.1.3/node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "../node_modules/@types/atom/dependencies/event-kit/index.d.ts",
       "../node_modules/@types/atom/dependencies/first-mate/index.d.ts",
       "../node_modules/@types/atom/dependencies/first-mate/src/first-mate.d.ts",
@@ -3216,8 +3199,9 @@
       "../node_modules/@types/atom/src/workspace.d.ts",
       "../node_modules/@types/atom/status-bar/config.d.ts",
       "../node_modules/@types/atom/status-bar/index.d.ts",
+      "../node_modules/@types/chance/index.d.ts",
       "../node_modules/@types/dompurify/index.d.ts",
-      "../node_modules/@types/estree/index.d.ts",
+      "../node_modules/@types/http-proxy/index.d.ts",
       "../node_modules/@types/jasmine/index.d.ts",
       "../node_modules/@types/json-schema/index.d.ts",
       "../node_modules/@types/json5/index.d.ts",
@@ -3235,8 +3219,7 @@
       "../node_modules/@types/lodash/common/util.d.ts",
       "../node_modules/@types/lodash/debounce.d.ts",
       "../node_modules/@types/lodash/index.d.ts",
-      "../node_modules/@types/lodash/uniq.d.ts",
-      "../node_modules/@types/minimatch/index.d.ts",
+      "../node_modules/@types/marked/index.d.ts",
       "../node_modules/@types/node/assert.d.ts",
       "../node_modules/@types/node/async_hooks.d.ts",
       "../node_modules/@types/node/base.d.ts",
@@ -3283,15 +3266,17 @@
       "../node_modules/@types/node/wasi.d.ts",
       "../node_modules/@types/node/worker_threads.d.ts",
       "../node_modules/@types/node/zlib.d.ts",
+      "../node_modules/@types/parse-json/index.d.ts",
       "../node_modules/@types/prop-types/index.d.ts",
+      "../node_modules/@types/q/index.d.ts",
       "../node_modules/@types/react-dom/index.d.ts",
       "../node_modules/@types/react/global.d.ts",
       "../node_modules/@types/react/index.d.ts",
       "../node_modules/@types/requestidlecallback/index.d.ts",
-      "../node_modules/@types/resolve/index.d.ts",
       "../node_modules/@types/scheduler/index.d.ts",
       "../node_modules/@types/scheduler/tracing.d.ts",
       "../node_modules/@types/trusted-types/index.d.ts",
+      "../node_modules/atom-ide-base/commons-ui/float-pane/selectable-overlay.d.ts",
       "../node_modules/atom-ide-base/types-packages/busy-signal.d.ts",
       "../node_modules/atom-ide-base/types-packages/code-actions.d.ts",
       "../node_modules/atom-ide-base/types-packages/code-format.d.ts",
@@ -3309,10 +3294,12 @@
       "../node_modules/atom-ide-base/types-packages/text-edit.d.ts",
       "../node_modules/atom-ide-base/types-packages/uri.d.ts",
       "../node_modules/csstype/index.d.ts",
-      "../node_modules/tslib/tslib.d.ts",
+      "../node_modules/solid-js/jsx-runtime.d.ts",
+      "../node_modules/solid-js/types/jsx.d.ts",
+      "../node_modules/solid-simple-table/dist/simpletable.d.ts",
       "../../../../../../node_modules/@types/glob/index.d.ts",
       "../../../../../../node_modules/@types/minimatch/index.d.ts"
     ]
   },
-  "version": "4.2.3"
+  "version": "4.1.3"
 }
