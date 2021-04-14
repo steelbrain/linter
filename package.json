@@ -66,6 +66,8 @@
     "@types/lodash": "^4.14.168",
     "@types/minimatch": "^3.0.3",
     "@types/node": "^14.14.35",
+    "@types/requestidlecallback": "^0.3.1",
+    "atom-ide-base": "^2.6.0",
     "build-commit": "0.1.4",
     "cross-env": "^7.0.3",
     "eslint": "^7.22.0",
