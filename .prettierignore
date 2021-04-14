@@ -6,3 +6,4 @@ changelog.md
 coverage
 build
 dist
+lib/types/linter-ui-default

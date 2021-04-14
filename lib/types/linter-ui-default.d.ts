@@ -1,1 +1,1 @@
-export { default as UI } from "./linter-ui-default/main"
+export { default as UI } from './linter-ui-default/main'
