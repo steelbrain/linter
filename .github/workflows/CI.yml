@@ -42,20 +42,14 @@ jobs:
         name: Commit lint ✨
         uses: wagoid/commitlint-github-action@v2
 
-      - uses: UziTech/action-setup-atom@v1
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v1.2.1
-        with:
-          version: latest
-
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Format ✨
-        run: pnpm test.format
+        run: npm run test.format
 
       - name: Lint ✨
-        run: pnpm test.lint
+        run: npm run test.lint
 
   Release:
     needs: [Test, Lint]
