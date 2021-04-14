@@ -74,6 +74,7 @@ export function normalizeMessages(linterName: string, messages: Array<Message | 
       reference.position = getPointClass(reference.position)
     }
     if (Array.isArray(solutions)) {
+      // NOTE if solutions is a {Promise<MessageSolutionLike[]>} of an array, we don't normalize them!
       for (let j = 0, _length = solutions.length; j < _length; j++) {
         const solution: MessageSolution | MessageSolutionLike = solutions[j]
         solution.position = getRangeClass(solution.position)

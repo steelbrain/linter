@@ -46,7 +46,7 @@ export type MessageSolutionLike = Omit<MessageSolution, 'position'> & {
   position: RangeCompatible
 }
 
-/** @deprecated Wrong but convertible message format which might some providers use by mistake
+/** @deprecated Wrong but convertible message format which some providers might use.
  * This is converted to MessageSolution by Linter using `normalizeMessages`
  */
 export type MessageLike = Omit<Message, 'location' | 'reference' | 'solutions'> & {
