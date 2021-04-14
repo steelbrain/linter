@@ -21,10 +21,12 @@
     "test": "npm run tsc.build && npm run build && npm run test.only",
     "clean": "shx rm -rf dist",
     "get.ui-types": "node ./scripts/get-ui-types.js",
+    "tsc.types": "(tsc -p ./lib/tsconfig.json --emitDeclarationOnly || echo done) && shx cp -r ./lib/types dist/types",
     "tsc.dev": "npm run clean && cross-env NODE_ENV=development tsc --watch -p lib/tsconfig.json || echo done",
     "tsc.build": "npm run clean && cross-env NODE_ENV=production tsc -p lib/tsconfig.json || echo done",
     "dev": "npm run clean && cross-env NODE_ENV=development cross-env BABEL_KEEP_MODULES=true rollup -c -w",
-    "build": "cross-env NODE_ENV=production cross-env BABEL_KEEP_MODULES=true rollup -c",
+    "build.bundle": "cross-env NODE_ENV=production cross-env BABEL_KEEP_MODULES=true rollup -c",
+    "build": "npm run tsc.types && npm run build.bundle",
     "build-commit": "npm run clean && build-commit -o dist",
     "prepare": "npm run get.ui-types && npm run clean && npm run build",
     "prepublishOnly": "npm run build-commit"
