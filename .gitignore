@@ -5,3 +5,4 @@ node_modules
 spec/fixtures/ignored.txt
 dist
 package-lock.json
+lib/types/linter-ui-default

@@ -27,5 +27,6 @@
     "importHelpers": false,
     "outDir": "../dist"
   },
-  "compileOnSave": false
+  "compileOnSave": false,
+  "exclude": ["types/linter-ui-default/**/*"]
 }
