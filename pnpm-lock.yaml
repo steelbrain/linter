@@ -15,7 +15,7 @@ specifiers:
   eslint: ^7.22.0
   eslint-config-atomic: ^1.12.4
   fs-plus: ^3.1.1
-  gitly: ^2.0.3
+  gitly: ^2.1.1
   jasmine-fix: ^1.3.1
   lodash: ^4.17.21
   minimatch: ^3.0.4
@@ -45,7 +45,7 @@ devDependencies:
   eslint: 7.22.0
   eslint-config-atomic: 1.12.4_eslint@7.22.0
   fs-plus: 3.1.1
-  gitly: 2.0.3
+  gitly: 2.1.1
   jasmine-fix: 1.3.1
   prettier-config-atomic: 1.0.1
   rollup: 2.42.3
@@ -1878,8 +1878,8 @@ packages:
       has-symbols: 1.0.1
     dev: true
 
-  /gitly/2.0.3:
-    resolution: {integrity: sha512-xpbBJ4IZJbLXmggispcRlppo9hsYI90lxzYuLPEYQ4FaOG5j+o1K1823MD54KFIyMgBzS5lnlInvXgEibG2uuA==}
+  /gitly/2.1.1:
+    resolution: {integrity: sha512-xaaWlW388dI3fBf/5rrnensZVZ99tbTSt7XEfs1KGSrurjfGGvVxcVR/xkl7b4cTsUVcGr0uW3N3+rOE8mJeWw==}
     dependencies:
       axios: 0.21.1
       tar: 6.1.0
