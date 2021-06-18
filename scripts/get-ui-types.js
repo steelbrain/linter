@@ -16,4 +16,9 @@ const { tmpdir } = require('os')
 
   shx([, , 'mv', join(extractFolder, 'dist'), distFolder])
   shx([, , 'rm', '-rf', extractFolder])
+
+  // avoid circular types
+  shx([, , 'rm', '-rf', join(distFolder, 'types', 'linter')])
+  shx([, , 'rm', '-rf', join(distFolder, 'types', 'linter.d.ts')])
+  shx([, , 'cp', join(root, 'lib', 'types', 'linter.d.ts'), join(distFolder, 'types', 'linter.d.ts')])
 })()
