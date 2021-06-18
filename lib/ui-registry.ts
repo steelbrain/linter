@@ -26,12 +26,12 @@ export default class UIRegistry {
       provider.render(messages)
     })
   }
-  didBeginLinting(linter: Linter, filePath: string | null | undefined = null) {
+  didBeginLinting(linter: Linter, filePath: string) {
     this.providers.forEach(function (provider) {
       provider.didBeginLinting(linter, filePath)
     })
   }
-  didFinishLinting(linter: Linter, filePath: string | null | undefined = null) {
+  didFinishLinting(linter: Linter, filePath: string) {
     this.providers.forEach(function (provider) {
       provider.didFinishLinting(linter, filePath)
     })

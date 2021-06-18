@@ -32,11 +32,11 @@ describe('UI Registry', function () {
 
     uiRegistry.didBeginLinting(testObjB)
     expect(uiProvider.didBeginLinting.mostRecentCall.args[0]).toBe(testObjB)
-    expect(uiProvider.didBeginLinting.mostRecentCall.args[1]).toBe(null)
+    expect(uiProvider.didBeginLinting.mostRecentCall.args[1]).toBe(undefined)
 
     uiRegistry.didFinishLinting(testObjC)
     expect(uiProvider.didFinishLinting.mostRecentCall.args[0]).toBe(testObjC)
-    expect(uiProvider.didFinishLinting.mostRecentCall.args[1]).toBe(null)
+    expect(uiProvider.didFinishLinting.mostRecentCall.args[1]).toBe(undefined)
 
     uiRegistry.dispose()
     expect(uiProvider.dispose).toHaveBeenCalled()
