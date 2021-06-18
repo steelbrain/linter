@@ -24,7 +24,7 @@ $ apm install linter
 
 Or you can install from Settings view by searching for `Base Linter`, (this package might not show up when searching for `Linter`).
 
-If nothing seems to happen after installing the linter package and at least one language package, you may have to install the `linter-ui-default package`.  This package handles displaying results and errors in the Atom UI.
+Linter automatically installs `linter-ui-default`, which is required for the functionality of this package.
 
 #### API Documentation
 
