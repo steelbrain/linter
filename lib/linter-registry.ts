@@ -33,6 +33,9 @@ export default class LinterRegistry {
         this.lintPreviewTabs = lintPreviewTabs
       }),
       atom.config.observe('linter.disabledProviders', disabledProviders => {
+        if (disabledProviders.length !== 0) {
+          console.warn(`Linter package: disabled linter providers: ${disabledProviders}`)
+        }
         this.disabledProviders = disabledProviders
       }),
     )
@@ -105,7 +108,7 @@ export default class LinterRegistry {
               return
             }
 
-            if (messages === null) {
+            if (messages === null || messages === undefined) {
               // NOTE: Do NOT update the messages when providers return null
               return
             }

@@ -334,7 +334,7 @@ describe('LinterRegistry', function () {
       expect(await promise).toBe(true)
       expect(timesUpdated).toBe(1)
       expect(timesFinished).toBe(4)
-      expect(atom.notifications.getNotifications().length).toBe(2)
+      expect(atom.notifications.getNotifications().length).toBe(1)
     })
     it('triggers the finish event even when the provider crashes', async function () {
       let timesBegan = 0
