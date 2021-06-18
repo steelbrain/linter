@@ -108,7 +108,7 @@ export default class LinterRegistry {
               return
             }
 
-            if (messages === null) {
+            if (messages === null || messages === undefined) {
               // NOTE: Do NOT update the messages when providers return null
               return
             }
