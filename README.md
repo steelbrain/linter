@@ -24,6 +24,8 @@ $ apm install linter
 
 Or you can install from Settings view by searching for `Base Linter`, (this package might not show up when searching for `Linter`).
 
+Linter automatically installs `linter-ui-default`, which is required for the functionality of this package.
+
 #### API Documentation
 
 Please navigate to [steelbrain.me/linter](http://steelbrain.me/linter/) for Linter v2 documentation.
