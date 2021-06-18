@@ -6,7 +6,7 @@ export default class UIRegistry {
     delete(provider: UI): void;
     getProviders(): Array<UI>;
     render(messages: MessagesPatch): void;
-    didBeginLinting(linter: Linter, filePath?: string | null | undefined): void;
-    didFinishLinting(linter: Linter, filePath?: string | null | undefined): void;
+    didBeginLinting(linter: Linter, filePath: string): void;
+    didFinishLinting(linter: Linter, filePath: string): void;
     dispose(): void;
 }
