@@ -23,6 +23,7 @@ specifiers:
   rollup: ^2.52.1
   rollup-plugin-atomic: ^2.3.2
   shx: ^0.3.3
+  solid-js: ^0.26.5
   temp: ^0.9.4
   typescript: ^4.3.4
 
@@ -51,6 +52,7 @@ devDependencies:
   rollup: 2.52.1
   rollup-plugin-atomic: 2.3.2_@types+node@15.12.2
   shx: 0.3.3
+  solid-js: 0.26.5
   temp: 0.9.4
   typescript: 4.3.4
 
@@ -3241,6 +3243,10 @@ packages:
       ansi-styles: 4.3.0
       astral-regex: 2.0.0
       is-fullwidth-code-point: 3.0.0
+    dev: true
+
+  /solid-js/0.26.5:
+    resolution: {integrity: sha512-cMjxcVoyRBgnfSpwYxXPM5WF800guR+x/01RDBFQjAAkqU7X28GbRkTNKcyQ1KHcFOnzEsG18J+JJ9/PvqyNmw==}
     dev: true
 
   /source-map-resolve/0.6.0:
