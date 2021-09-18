@@ -42,7 +42,7 @@ export type Message = {
 export type LinterMessage = Message
 
 /**
- * @deprecated Wrong but convertible message format which might some providers use by mistake. This is converted to
+ * @deprecated Wrong but convertible message format which some providers might use by mistake. This is converted to
  *   MessageSolution by Linter using `normalizeMessages`
  */
 export type MessageSolutionLike = Omit<MessageSolution, 'position'> & {
