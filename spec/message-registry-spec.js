@@ -333,7 +333,7 @@ describe('Message Registry', function () {
     })
 
     // This functionality was removed in https://github.com/steelbrain/linter/pull/1706 due to performance reasons
-    //   it('notices changes on last messages instead of relying on their keys and invaildates them', function() {
+    //   it('notices changes on last messages instead of relying on their keys and invalidates them', function() {
     //     let called = 0
     //
     //     const linter: Object = { name: 'any' }
